@@ -7,7 +7,7 @@
     <Version>0.1.0</Version>
     <Authors>Kilfour</Authors>
     <PackageId>QuickFuzzr</PackageId>
-    <Description>Easily create random objects or hierarchies thereof in c#, ... part two.</Description>
+    <Description>A type-walking cheetah with a hand full of random.</Description>
     <RepositoryUrl>https://github.com/kilfour/QuickFuzzr</RepositoryUrl>
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <PackageTags>LINQ;fuzzing;testing;diagnostics;random-data;generators</PackageTags>
