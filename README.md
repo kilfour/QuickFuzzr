@@ -61,6 +61,7 @@ Jumping slightly ahead of ourselves as below example will use methods that are e
 E.g. :
 ```
 Fuzz.ChooseFrom(someValues).Unique("key").Many(2)
+```
 
 
 

@@ -13,6 +13,7 @@
 E.g. :
 ```
 Fuzz.ChooseFrom(someValues).Unique(""key"").Many(2)
+```
 ",
 			Order = 1)]
 		public void SimpleCombination()
