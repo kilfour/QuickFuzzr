@@ -22,8 +22,8 @@ When executing above generator it will return a SomeThingToGenerate object where
 		public void UsesReplacement()
 		{
 			var generator =
-				from _ in MGen.Constant(42).Replace()
-				from result in MGen.One<SomeThingToGenerate>()
+				from _ in Fuzz.Constant(42).Replace()
+				from result in Fuzz.One<SomeThingToGenerate>()
 				select result;
 
 			var value = generator.Generate();
@@ -39,8 +39,8 @@ When executing above generator it will return a SomeThingToGenerate object where
 		public void NullableUsesReplacement()
 		{
 			var generator =
-				from _ in MGen.Int(42, 42).Replace()
-				from result in MGen.One<SomeThingToGenerate>()
+				from _ in Fuzz.Int(42, 42).Replace()
+				from result in Fuzz.One<SomeThingToGenerate>()
 				select result;
 			CheckIf.GeneratedValuesShouldEventuallySatisfyAll(generator.Select(a => a.ANullableProperty),
 				("is null", a => a == null), ("is not null", a => a != null));
@@ -54,8 +54,8 @@ When executing above generator it will return a SomeThingToGenerate object where
 		public void NullableReplace()
 		{
 			var generator =
-				from _ in MGen.Int(666, 666).Nullable().NeverReturnNull().Replace()
-				from result in MGen.One<SomeThingToGenerate>()
+				from _ in Fuzz.Int(666, 666).Nullable().NeverReturnNull().Replace()
+				from result in Fuzz.One<SomeThingToGenerate>()
 				select result;
 			var value = generator.Generate();
 			Assert.True(value.AnInt < 100, value.AnInt.ToString());
@@ -79,10 +79,10 @@ When executing above generator result1 will have all integers set to 42 and resu
 		public void MultipleReplacements()
 		{
 			var generator =
-				from _ in MGen.Constant(42).Replace()
-				from result1 in MGen.One<SomeThingToGenerate>()
-				from __ in MGen.Constant(666).Replace()
-				from result2 in MGen.One<SomeThingToGenerate>()
+				from _ in Fuzz.Constant(42).Replace()
+				from result1 in Fuzz.One<SomeThingToGenerate>()
+				from __ in Fuzz.Constant(666).Replace()
+				from result2 in Fuzz.One<SomeThingToGenerate>()
 				select new[] { result1, result2 };
 
 			var array = generator.Generate();
@@ -97,7 +97,7 @@ When executing above generator result1 will have all integers set to 42 and resu
 			Order = 5)]
 		public void ReturnsUnit()
 		{
-			var generator = MGen.Int(42, 42).Replace();
+			var generator = Fuzz.Int(42, 42).Replace();
 			Assert.Equal(Unit.Instance, generator.Generate());
 		}
 
@@ -105,8 +105,8 @@ When executing above generator result1 will have all integers set to 42 and resu
 		public void JustChecking()
 		{
 			var generator =
-				from i in MGen.ChooseFromThese(42, 43).Unique("key")
-				from result in MGen.One<SomeThingToGenerate>().Apply(s => s.AnInt = i)
+				from i in Fuzz.ChooseFromThese(42, 43).Unique("key")
+				from result in Fuzz.One<SomeThingToGenerate>().Apply(s => s.AnInt = i)
 				select result;
 
 			var values = generator.Many(2).Generate().ToArray();

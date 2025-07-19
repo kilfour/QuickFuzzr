@@ -15,7 +15,7 @@ F.i. `MGen.Constant(41).Apply(i =>  i + 1)` will return 42.",
 			Order = 1)]
 		public void FunctionIsApplied()
 		{
-			var generator = MGen.Constant(41).Apply(i => i + 1);
+			var generator = Fuzz.Constant(41).Apply(i => i + 1);
 			Assert.Equal(42, generator.Generate());
 		}
 
@@ -33,8 +33,8 @@ var generator =
 		public void RoundingExample()
 		{
 			var generator =
-				from _ in MGen.Decimal().Apply(d => Math.Round(d, 2)).Replace()
-				from result in MGen.One<SomeThingToGenerate>()
+				from _ in Fuzz.Decimal().Apply(d => Math.Round(d, 2)).Replace()
+				from result in Fuzz.One<SomeThingToGenerate>()
 				select result;
 			var value = generator.Generate().MyProperty;
 			//var count = BitConverter.GetBytes(decimal.GetBits(generator.Generate().MyProperty)[3])[2];
@@ -51,7 +51,7 @@ E.g. `MGen.One<SomeThingToGenerate>().Apply(session.Save)`.",
 			Order = 3)]
 		public void ActionIsApplied()
 		{
-			var generator = MGen.One<SomeThingToGenerate>().Apply(thing => thing.MyProperty = 42);
+			var generator = Fuzz.One<SomeThingToGenerate>().Apply(thing => thing.MyProperty = 42);
 
 			Assert.Equal(42, generator.Generate().MyProperty);
 		}
@@ -70,12 +70,12 @@ There is no `MGen.For<T>().Apply(Func<T, T> func)` as For can only be used for o
 			Order = 4)]
 		public void AsConventionWithGenerator()
 		{
-			var generator = MGen.For<SomeThingToGenerate>().Apply(thing => thing.MyProperty = 42);
+			var generator = Fuzz.For<SomeThingToGenerate>().Apply(thing => thing.MyProperty = 42);
 			Assert.Equal(Unit.Instance, generator.Generate());
 
 			var newGenerator =
 				from g in generator
-				from result in MGen.One<SomeThingToGenerate>()
+				from result in Fuzz.One<SomeThingToGenerate>()
 				select result;
 
 			Assert.Equal(42, newGenerator.Generate().MyProperty);
@@ -98,9 +98,9 @@ MGen.For<SomeChild>().Apply(MGen.ChooseFrom(parents), (child, parent) => parent.
 		{
 			var generator =
 				from convention in
-					MGen.For<SomeThingToGenerate>()
-						.Apply(MGen.Int(1, 3).Unique("SomeKey"), (thing, i) => thing.MyProperty = i)
-				from result in MGen.One<SomeThingToGenerate>()
+					Fuzz.For<SomeThingToGenerate>()
+						.Apply(Fuzz.Int(1, 3).Unique("SomeKey"), (thing, i) => thing.MyProperty = i)
+				from result in Fuzz.One<SomeThingToGenerate>()
 				select result;
 
 			var valueGen = generator.Many(2).Generate();

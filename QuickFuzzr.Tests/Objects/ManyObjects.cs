@@ -12,7 +12,7 @@
 			Order = 1)]
 		public void CorrectAmountOfElements()
 		{
-			var values = MGen.One<SomeThingToGenerate>().Many(2).Generate();
+			var values = Fuzz.One<SomeThingToGenerate>().Many(2).Generate();
 			Assert.Equal(2, values.Count());
 			Assert.IsAssignableFrom<IEnumerable<SomeThingToGenerate>>(values);
 		}
@@ -24,7 +24,7 @@
 			Order = 1)]
 		public void CorrectAmountOfElementsMinMax()
 		{
-			var values = MGen.One<SomeThingToGenerate>().Many(2, 2).Generate();
+			var values = Fuzz.One<SomeThingToGenerate>().Many(2, 2).Generate();
 			Assert.Equal(2, values.Count());
 			Assert.IsAssignableFrom<IEnumerable<SomeThingToGenerate>>(values);
 		}

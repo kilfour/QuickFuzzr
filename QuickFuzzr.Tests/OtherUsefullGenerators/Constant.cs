@@ -12,7 +12,7 @@
 			Order = 1)]
 		public void JustReturnsValue()
 		{
-			Assert.Equal(42, MGen.Constant(42).Generate());
+			Assert.Equal(42, Fuzz.Constant(42).Generate());
 		}
 
 		public class ConstantAttribute : OtherUsefullGeneratorsAttribute

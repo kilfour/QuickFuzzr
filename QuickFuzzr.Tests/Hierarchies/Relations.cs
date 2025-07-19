@@ -23,9 +23,9 @@ var generator =
 		public void SetOneToOne()
 		{
 			var generator =
-				from product in MGen.One<ProductItem>()
-				from setProduct in MGen.For<OrderLine>().Customize(order => order.Product, product)
-				from orderline in MGen.One<OrderLine>()
+				from product in Fuzz.One<ProductItem>()
+				from setProduct in Fuzz.For<OrderLine>().Customize(order => order.Product, product)
+				from orderline in Fuzz.One<OrderLine>()
 				select orderline;
 
 			var value = generator.Generate();
@@ -53,9 +53,9 @@ This forces enumeration and is necessary because the lines are not enumerated ov
 		public void OneToMany()
 		{
 			var generator =
-				from order in MGen.One<Order>()
-				from addLine in MGen.For<OrderLine>().Apply(order.AddOrderLine)
-				from lines in MGen.One<OrderLine>().Many(2).ToArray()
+				from order in Fuzz.One<Order>()
+				from addLine in Fuzz.For<OrderLine>().Apply(order.AddOrderLine)
+				from lines in Fuzz.One<OrderLine>().Many(2).ToArray()
 				select order;
 
 			var value = generator.Generate();
@@ -71,9 +71,9 @@ This forces enumeration and is necessary because the lines are not enumerated ov
 		public void OneToManyVerifying()
 		{
 			var generator =
-				from order in MGen.One<Order>()
-				from addLine in MGen.For<OrderLine>().Apply(order.AddOrderLine)
-				from lines in MGen.One<OrderLine>().Many(2)
+				from order in Fuzz.One<Order>()
+				from addLine in Fuzz.For<OrderLine>().Apply(order.AddOrderLine)
+				from lines in Fuzz.One<OrderLine>().Many(2)
 				select lines;
 
 			var value = generator.Generate().ToArray();
@@ -100,8 +100,8 @@ var generator =
 		public void ThroughConstructor()
 		{
 			var generator =
-				from category in MGen.One<Category>()
-				from subCategory in MGen.One(() => new SubCategory(category)).Many(2)
+				from category in Fuzz.One<Category>()
+				from subCategory in Fuzz.One(() => new SubCategory(category)).Many(2)
 				select category;
 
 			var value = generator.Generate();

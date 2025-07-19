@@ -2,7 +2,7 @@
 
 namespace QuickFuzzr
 {
-	public static partial class MGen
+	public static partial class Fuzz
 	{
 		public static Generator<T?> Nullable<T>(this Generator<T> generator)
 			where T : struct

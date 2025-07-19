@@ -11,7 +11,7 @@
 			Order = 1)]
 		public void Zero()
 		{
-			var generator = MGen.DateTime(new DateTime(2000, 1, 1), new DateTime(2000, 1, 5));
+			var generator = Fuzz.DateTime(new DateTime(2000, 1, 1), new DateTime(2000, 1, 5));
 			for (int i = 0; i < 10; i++)
 			{
 				var value = generator.Generate();
@@ -26,7 +26,7 @@
 			Order = 2)]
 		public void DefaultGeneratorNeverGeneratesZero()
 		{
-			var generator = MGen.DateTime();
+			var generator = Fuzz.DateTime();
 			for (int i = 0; i < 50; i++)
 			{
 				var val = generator.Generate();
@@ -41,7 +41,7 @@
 			Order = 3)]
 		public void Nullable()
 		{
-			var generator = MGen.DateTime().Nullable();
+			var generator = Fuzz.DateTime().Nullable();
 			var isSomeTimesNull = false;
 			var isSomeTimesNotNull = false;
 			for (int i = 0; i < 50; i++)
@@ -65,7 +65,7 @@
 			Order = 4)]
 		public void Property()
 		{
-			var generator = MGen.One<SomeThingToGenerate>();
+			var generator = Fuzz.One<SomeThingToGenerate>();
 			for (int i = 0; i < 10; i++)
 			{
 				Assert.NotEqual(new DateTime(), generator.Generate().AProperty);
@@ -78,7 +78,7 @@
 			Order = 5)]
 		public void NullableProperty()
 		{
-			var generator = MGen.One<SomeThingToGenerate>();
+			var generator = Fuzz.One<SomeThingToGenerate>();
 			var isSomeTimesNull = false;
 			var isSomeTimesNotNull = false;
 			for (int i = 0; i < 50; i++)

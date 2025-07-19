@@ -8,10 +8,10 @@ namespace QuickFuzzr.Tests.CreatingCustomGenerators
 		public void LikeSo()
 		{
 			var generator =
-				from s in MGen.Constant("SomeString")
+				from s in Fuzz.Constant("SomeString")
 				from c in Counter()
-				from defaultString in MGen.Constant(s + c).Replace()
-				from thing in MGen.One<SomethingToGenerate>()
+				from defaultString in Fuzz.Constant(s + c).Replace()
+				from thing in Fuzz.One<SomethingToGenerate>()
 				select thing;
 
 			var values = generator.Many(6).Generate().ToArray();

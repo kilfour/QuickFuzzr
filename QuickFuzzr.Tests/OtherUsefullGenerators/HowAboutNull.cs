@@ -15,7 +15,7 @@ namespace QuickFuzzr.Tests.OtherUsefullGenerators
 			Order = 1)]
 		public void Nullable()
 		{
-			var generator = MGen.Int().Nullable();
+			var generator = Fuzz.Int().Nullable();
 			var seenNull = false;
 			var seenValue = false;
 			var tries = 0;
@@ -49,7 +49,7 @@ namespace QuickFuzzr.Tests.OtherUsefullGenerators
 			Order = 3)]
 		public void NullableRef()
 		{
-			var generator = MGen.String().NullableRef();
+			var generator = Fuzz.String().NullableRef();
 			var seenNull = false;
 			var seenValue = false;
 			var tries = 0;

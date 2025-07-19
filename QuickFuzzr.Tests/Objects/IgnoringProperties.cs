@@ -20,8 +20,8 @@ MGen.For<SomeThingToGenerate>().Ignore(s => s.Id)
 		public void StaysDefaultValue()
 		{
 			var generator =
-				from _ in MGen.For<SomeThingToGenerate>().Ignore(s => s.AnInt)
-				from result in MGen.One<SomeThingToGenerate>()
+				from _ in Fuzz.For<SomeThingToGenerate>().Ignore(s => s.AnInt)
+				from result in Fuzz.One<SomeThingToGenerate>()
 				select result;
 			Assert.Equal(0, generator.Generate().AnInt);
 		}
@@ -33,8 +33,8 @@ MGen.For<SomeThingToGenerate>().Ignore(s => s.Id)
 		public void WorksForDerived()
 		{
 			var generator =
-				from _ in MGen.For<SomeThingToGenerate>().Ignore(s => s.AnInt)
-				from result in MGen.One<SomeThingDerivedToGenerate>()
+				from _ in Fuzz.For<SomeThingToGenerate>().Ignore(s => s.AnInt)
+				from result in Fuzz.One<SomeThingDerivedToGenerate>()
 				select result;
 			Assert.Equal(0, generator.Generate().AnInt);
 		}
@@ -48,8 +48,8 @@ For this use `MGen.For<SomeThingToGenerate>().IgnoreAll()`",
 		public void IgnoreAll()
 		{
 			var generator =
-				from _ in MGen.For<SomeThingToGenerate>().IgnoreAll()
-				from result in MGen.One<SomeThingToGenerate>()
+				from _ in Fuzz.For<SomeThingToGenerate>().IgnoreAll()
+				from result in Fuzz.One<SomeThingToGenerate>()
 				select result;
 			Assert.Equal(0, generator.Generate().AnInt);
 		}
@@ -62,9 +62,9 @@ For this use `MGen.For<SomeThingToGenerate>().IgnoreAll()`",
 		public void IgnoreAllDerived()
 		{
 			var generator =
-				from r in MGen.Constant(13).Replace()
-				from _ in MGen.For<SomeThingToGenerate>().IgnoreAll()
-				from result in MGen.One<SomeThingDerivedToGenerate>()
+				from r in Fuzz.Constant(13).Replace()
+				from _ in Fuzz.For<SomeThingToGenerate>().IgnoreAll()
+				from result in Fuzz.One<SomeThingDerivedToGenerate>()
 				select result;
 			var thing = generator.Generate();
 			Assert.Equal(13, thing.AnInt);
@@ -77,7 +77,7 @@ For this use `MGen.For<SomeThingToGenerate>().IgnoreAll()`",
 			Order = 4)]
 		public void ReturnsUnit()
 		{
-			var generator = MGen.For<SomeThingToGenerate>().Ignore(s => s.AnInt);
+			var generator = Fuzz.For<SomeThingToGenerate>().Ignore(s => s.AnInt);
 			Assert.Equal(Unit.Instance, generator.Generate());
 		}
 

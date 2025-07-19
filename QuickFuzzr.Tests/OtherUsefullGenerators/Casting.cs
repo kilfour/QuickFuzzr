@@ -16,7 +16,7 @@ Useful f.i. to generate numeric strings.",
 			Order = 1)]
 		public void AsString()
 		{
-			Assert.IsType<string>(MGen.Int().AsString().Generate());
+			Assert.IsType<string>(Fuzz.Int().AsString().Generate());
 		}
 
 		[Fact]
@@ -26,7 +26,7 @@ Useful f.i. to generate numeric strings.",
 			Order = 1)]
 		public void AsObject()
 		{
-			Assert.IsType<Generator<object>>(MGen.Int().AsObject());
+			Assert.IsType<Generator<object>>(Fuzz.Int().AsObject());
 		}
 
 		[Fact]
@@ -36,7 +36,7 @@ Useful f.i. to generate numeric strings.",
 			Order = 1)]
 		public void Nullable()
 		{
-			var generator = MGen.Int().Nullable();
+			var generator = Fuzz.Int().Nullable();
 			var seenNull = false;
 			var seenValue = false;
 			var tries = 0;

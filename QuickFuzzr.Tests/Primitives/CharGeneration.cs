@@ -13,7 +13,7 @@
 			Order = 1)]
 		public void DefaultGeneratorAlwaysBetweenLowerCaseAAndLowerCaseZ()
 		{
-			var generator = MGen.Char();
+			var generator = Fuzz.Char();
 			for (int i = 0; i < 100; i++)
 			{
 				var val = generator.Generate();
@@ -24,7 +24,7 @@
 		[Fact]
 		public void IsRandom()
 		{
-			var generator = MGen.Char();
+			var generator = Fuzz.Char();
 			var val = generator.Generate();
 			var differs = false;
 			for (int i = 0; i < 10; i++)
@@ -41,7 +41,7 @@
 			Order = 2)]
 		public void Nullable()
 		{
-			var generator = MGen.Char().Nullable();
+			var generator = Fuzz.Char().Nullable();
 			var isSomeTimesNull = false;
 			var isSomeTimesNotNull = false;
 			for (int i = 0; i < 50; i++)
@@ -65,7 +65,7 @@
 			Order = 3)]
 		public void Property()
 		{
-			var generator = MGen.One<SomeThingToGenerate>();
+			var generator = Fuzz.One<SomeThingToGenerate>();
 			for (int i = 0; i < 10; i++)
 			{
 				var value = generator.Generate().AProperty;
@@ -79,7 +79,7 @@
 			Order = 4)]
 		public void NullableProperty()
 		{
-			var generator = MGen.One<SomeThingToGenerate>();
+			var generator = Fuzz.One<SomeThingToGenerate>();
 			var isSomeTimesNull = false;
 			var isSomeTimesNotNull = false;
 			for (int i = 0; i < 50; i++)

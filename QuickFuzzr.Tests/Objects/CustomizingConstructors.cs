@@ -20,9 +20,9 @@ MGen.For<SomeThing>().Construct(MGen.Constant(42))
 		public void Works()
 		{
 			var generator =
-				from i in MGen.For<SomeThing>().Ignore(a => a.AnInt1)
-				from c in MGen.For<SomeThing>().Construct(MGen.Constant(42))
-				from r in MGen.One<SomeThing>()
+				from i in Fuzz.For<SomeThing>().Ignore(a => a.AnInt1)
+				from c in Fuzz.For<SomeThing>().Construct(Fuzz.Constant(42))
+				from r in Fuzz.One<SomeThing>()
 				select r;
 			Assert.Equal(42, generator.Generate().AnInt1);
 		}
@@ -36,10 +36,10 @@ MGen.For<SomeThing>().Construct(MGen.Constant(42))
 		public void WorksTwoArgs()
 		{
 			var generator =
-				from i1 in MGen.For<SomeThing>().Ignore(a => a.AnInt1)
-				from i2 in MGen.For<SomeThing>().Ignore(a => a.AnInt2)
-				from c in MGen.For<SomeThing>().Construct(MGen.Constant(42), MGen.Constant(43))
-				from r in MGen.One<SomeThing>()
+				from i1 in Fuzz.For<SomeThing>().Ignore(a => a.AnInt1)
+				from i2 in Fuzz.For<SomeThing>().Ignore(a => a.AnInt2)
+				from c in Fuzz.For<SomeThing>().Construct(Fuzz.Constant(42), Fuzz.Constant(43))
+				from r in Fuzz.One<SomeThing>()
 				select r;
 			var result = generator.Generate();
 			Assert.Equal(42, result.AnInt1);
@@ -53,11 +53,11 @@ MGen.For<SomeThing>().Construct(MGen.Constant(42))
 		public void WorksThreeArgs()
 		{
 			var generator =
-				from i1 in MGen.For<SomeThing>().Ignore(a => a.AnInt1)
-				from i2 in MGen.For<SomeThing>().Ignore(a => a.AnInt2)
-				from i3 in MGen.For<SomeThing>().Ignore(a => a.AnInt3)
-				from c in MGen.For<SomeThing>().Construct(MGen.Constant(42), MGen.Constant(43), MGen.Constant(44))
-				from r in MGen.One<SomeThing>()
+				from i1 in Fuzz.For<SomeThing>().Ignore(a => a.AnInt1)
+				from i2 in Fuzz.For<SomeThing>().Ignore(a => a.AnInt2)
+				from i3 in Fuzz.For<SomeThing>().Ignore(a => a.AnInt3)
+				from c in Fuzz.For<SomeThing>().Construct(Fuzz.Constant(42), Fuzz.Constant(43), Fuzz.Constant(44))
+				from r in Fuzz.One<SomeThing>()
 				select r;
 			var result = generator.Generate();
 			Assert.Equal(42, result.AnInt1);
@@ -72,12 +72,12 @@ MGen.For<SomeThing>().Construct(MGen.Constant(42))
 		public void WorksFourArgs()
 		{
 			var generator =
-				from i1 in MGen.For<SomeThing>().Ignore(a => a.AnInt1)
-				from i2 in MGen.For<SomeThing>().Ignore(a => a.AnInt2)
-				from i3 in MGen.For<SomeThing>().Ignore(a => a.AnInt3)
-				from i4 in MGen.For<SomeThing>().Ignore(a => a.AnInt4)
-				from c in MGen.For<SomeThing>().Construct(MGen.Constant(42), MGen.Constant(43), MGen.Constant(44), MGen.Constant(45))
-				from r in MGen.One<SomeThing>()
+				from i1 in Fuzz.For<SomeThing>().Ignore(a => a.AnInt1)
+				from i2 in Fuzz.For<SomeThing>().Ignore(a => a.AnInt2)
+				from i3 in Fuzz.For<SomeThing>().Ignore(a => a.AnInt3)
+				from i4 in Fuzz.For<SomeThing>().Ignore(a => a.AnInt4)
+				from c in Fuzz.For<SomeThing>().Construct(Fuzz.Constant(42), Fuzz.Constant(43), Fuzz.Constant(44), Fuzz.Constant(45))
+				from r in Fuzz.One<SomeThing>()
 				select r;
 			var result = generator.Generate();
 			Assert.Equal(42, result.AnInt1);
@@ -96,13 +96,13 @@ After that, ... you're on your own.",
 		public void WorksFiveArgs()
 		{
 			var generator =
-				from i1 in MGen.For<SomeThing>().Ignore(a => a.AnInt1)
-				from i2 in MGen.For<SomeThing>().Ignore(a => a.AnInt2)
-				from i3 in MGen.For<SomeThing>().Ignore(a => a.AnInt3)
-				from i4 in MGen.For<SomeThing>().Ignore(a => a.AnInt4)
-				from i5 in MGen.For<SomeThing>().Ignore(a => a.AString)
-				from c in MGen.For<SomeThing>().Construct(MGen.Constant(42), MGen.Constant(43), MGen.Constant(44), MGen.Constant(45), MGen.Constant("answer"))
-				from r in MGen.One<SomeThing>()
+				from i1 in Fuzz.For<SomeThing>().Ignore(a => a.AnInt1)
+				from i2 in Fuzz.For<SomeThing>().Ignore(a => a.AnInt2)
+				from i3 in Fuzz.For<SomeThing>().Ignore(a => a.AnInt3)
+				from i4 in Fuzz.For<SomeThing>().Ignore(a => a.AnInt4)
+				from i5 in Fuzz.For<SomeThing>().Ignore(a => a.AString)
+				from c in Fuzz.For<SomeThing>().Construct(Fuzz.Constant(42), Fuzz.Constant(43), Fuzz.Constant(44), Fuzz.Constant(45), Fuzz.Constant("answer"))
+				from r in Fuzz.One<SomeThing>()
 				select r;
 			var result = generator.Generate();
 			Assert.Equal(42, result.AnInt1);
@@ -121,13 +121,13 @@ After that, ... you're on your own.",
 		public void FactoryCtor()
 		{
 			var generator =
-				from i1 in MGen.For<SomeThing>().Ignore(a => a.AnInt1)
-				from i2 in MGen.For<SomeThing>().Ignore(a => a.AnInt2)
-				from i3 in MGen.For<SomeThing>().Ignore(a => a.AnInt3)
-				from i4 in MGen.For<SomeThing>().Ignore(a => a.AnInt4)
-				from i5 in MGen.For<SomeThing>().Ignore(a => a.AString)
-				from c in MGen.For<SomeThing>().Construct(() => new SomeThing(1, 2, 3, 4, "5"))
-				from r in MGen.One<SomeThing>()
+				from i1 in Fuzz.For<SomeThing>().Ignore(a => a.AnInt1)
+				from i2 in Fuzz.For<SomeThing>().Ignore(a => a.AnInt2)
+				from i3 in Fuzz.For<SomeThing>().Ignore(a => a.AnInt3)
+				from i4 in Fuzz.For<SomeThing>().Ignore(a => a.AnInt4)
+				from i5 in Fuzz.For<SomeThing>().Ignore(a => a.AString)
+				from c in Fuzz.For<SomeThing>().Construct(() => new SomeThing(1, 2, 3, 4, "5"))
+				from r in Fuzz.One<SomeThing>()
 				select r;
 			var result = generator.Generate();
 			Assert.Equal(1, result.AnInt1);
@@ -192,7 +192,7 @@ After that, ... you're on your own.",
 			Order = 99)]
 		public void ReturnsUnit()
 		{
-			var generator = MGen.For<SomeThing>().Customize(s => s.AnInt1, 42);
+			var generator = Fuzz.For<SomeThing>().Customize(s => s.AnInt1, 42);
 			Assert.Equal(Unit.Instance, generator.Generate());
 		}
 

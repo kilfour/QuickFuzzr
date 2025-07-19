@@ -14,7 +14,7 @@
 		{
 			for (int i = 0; i < 10; i++)
 			{
-				Assert.Equal(42, MGen.Constant(42).Nullable().NeverReturnNull().Generate());
+				Assert.Equal(42, Fuzz.Constant(42).Nullable().NeverReturnNull().Generate());
 			}
 		}
 

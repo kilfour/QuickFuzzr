@@ -12,7 +12,7 @@ public class OneObject
 		Order = 1)]
 	public void FillsPrimitives()
 	{
-		Assert.NotEqual(0, MGen.One<SomeThingToGenerate>().Generate().AProperty);
+		Assert.NotEqual(0, Fuzz.One<SomeThingToGenerate>().Generate().AProperty);
 	}
 
 	[Fact]
@@ -22,7 +22,7 @@ public class OneObject
 		Order = 2)]
 	public void FillsEnumerations()
 	{
-		var generator = MGen.One<SomeThingToGenerate>();
+		var generator = Fuzz.One<SomeThingToGenerate>();
 		var one = false;
 		var two = false;
 		for (int i = 0; i < 20; i++)
@@ -42,7 +42,7 @@ public class OneObject
 		Order = 3)]
 	public void FillsObjectProperties()
 	{
-		var generator = MGen.One<RootObject>();
+		var generator = Fuzz.One<RootObject>();
 		var result = generator.Generate();
 		Assert.NotNull(result);
 		Assert.NotNull(result.Nest);
@@ -59,8 +59,8 @@ public class OneObject
 		Order = 4)]
 	public void FillsPrivateSetterProperties()
 	{
-		Assert.NotEqual(0, MGen.One<SomeThingToGenerate>().Generate().APropertyWithPrivateSetters);
-		var generator = MGen.One<SomeThingToGenerate>();
+		Assert.NotEqual(0, Fuzz.One<SomeThingToGenerate>().Generate().APropertyWithPrivateSetters);
+		var generator = Fuzz.One<SomeThingToGenerate>();
 		var one = false;
 		var two = false;
 		for (int i = 0; i < 20; i++)
@@ -90,8 +90,8 @@ public class OneObject
 		Order = 10)]
 	public void CanGenerateObjectsProtectedAndPrivate()
 	{
-		MGen.One<SomeThingProtectedToGenerate>().Generate();
-		MGen.One<SomeThingPrivateToGenerate>().Generate();
+		Fuzz.One<SomeThingProtectedToGenerate>().Generate();
+		Fuzz.One<SomeThingPrivateToGenerate>().Generate();
 	}
 
 	[Fact]
@@ -102,8 +102,8 @@ public class OneObject
 	public void CustomConstructor()
 	{
 		var generator =
-			from ignore in MGen.For<SomeThingWithAnAnswer>().Ignore(e => e.Answer)
-			from result in MGen.One(() => new SomeThingWithAnAnswer(42))
+			from ignore in Fuzz.For<SomeThingWithAnAnswer>().Ignore(e => e.Answer)
+			from result in Fuzz.One(() => new SomeThingWithAnAnswer(42))
 			select result;
 		Assert.Equal(42, generator.Generate().Answer);
 	}

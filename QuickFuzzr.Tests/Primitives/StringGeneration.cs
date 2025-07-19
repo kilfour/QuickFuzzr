@@ -13,7 +13,7 @@
 		public void DefaultGeneratorStringElementsAlwaysBetweenLowerCaseAAndLowerCaseZ()
 		{
 			var valid = "abcdefghijklmnopqrstuvwxyz".ToCharArray();
-			var generator = MGen.String();
+			var generator = Fuzz.String();
 			for (int i = 0; i < 10; i++)
 			{
 				var val = generator.Generate();
@@ -27,7 +27,7 @@
 			Order = 1)]
 		public void Zero()
 		{
-			var generator = MGen.String(5, 7);
+			var generator = Fuzz.String(5, 7);
 			for (int i = 0; i < 10; i++)
 			{
 				var val = generator.Generate();
@@ -42,7 +42,7 @@
 			Order = 2)]
 		public void DefaultGeneratorStringIsBetweenOneAndTen()
 		{
-			var generator = MGen.String();
+			var generator = Fuzz.String();
 			for (int i = 0; i < 10; i++)
 			{
 				var val = generator.Generate();
@@ -57,7 +57,7 @@
 			Order = 3)]
 		public void Property()
 		{
-			var generator = MGen.One<SomeThingToGenerate>();
+			var generator = Fuzz.One<SomeThingToGenerate>();
 			for (int i = 0; i < 10; i++)
 			{
 				var value = generator.Generate().AProperty;
@@ -72,7 +72,7 @@
 			Order = 4)]
 		public void Nullable()
 		{
-			var generator = MGen.String().NullableRef();
+			var generator = Fuzz.String().NullableRef();
 			var isSomeTimesNull = false;
 			var isSomeTimesNotNull = false;
 			for (int i = 0; i < 50; i++)

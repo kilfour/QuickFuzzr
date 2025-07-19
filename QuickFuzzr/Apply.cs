@@ -2,7 +2,7 @@
 
 namespace QuickFuzzr;
 
-public static partial class MGen
+public static partial class Fuzz
 {
 	public static Generator<T> Apply<T>(this Generator<T> generator, Action<T> action)
 	{

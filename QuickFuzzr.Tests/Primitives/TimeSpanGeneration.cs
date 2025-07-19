@@ -13,7 +13,7 @@ public class TimeSpanGeneration
 		Order = 1)]
 	public void OverloadRange()
 	{
-		CheckIf.GeneratedValuesShouldAllSatisfy(MGen.TimeSpan(5),
+		CheckIf.GeneratedValuesShouldAllSatisfy(Fuzz.TimeSpan(5),
 			("Ticks >= 1", a => a.Ticks >= 1), ("Ticks < 5", a => a.Ticks < 5));
 	}
 
@@ -23,7 +23,7 @@ public class TimeSpanGeneration
 		Order = 2)]
 	public void GeneratesValuesBetweenOneIncludedAndThousandExcluded()
 	{
-		CheckIf.GeneratedValuesShouldAllSatisfy(MGen.TimeSpan(),
+		CheckIf.GeneratedValuesShouldAllSatisfy(Fuzz.TimeSpan(),
 			("Ticks >= 1", a => a.Ticks >= 1), ("Ticks < 1000", a => a.Ticks < 1000));
 	}
 
@@ -33,7 +33,7 @@ public class TimeSpanGeneration
 		Order = 3)]
 	public void Nullable()
 	{
-		CheckIf.GeneratesNullAndNotNull(MGen.TimeSpan().Nullable());
+		CheckIf.GeneratesNullAndNotNull(Fuzz.TimeSpan().Nullable());
 	}
 
 	[Fact]
@@ -43,7 +43,7 @@ public class TimeSpanGeneration
 	public void Property()
 	{
 		CheckIf.GeneratedValuesShouldAllSatisfy(
-			MGen.One<SomeThingToGenerate>().Select(a => a.AProperty),
+			Fuzz.One<SomeThingToGenerate>().Select(a => a.AProperty),
 			("not zero", a => a.Ticks != 0));
 	}
 
@@ -54,7 +54,7 @@ public class TimeSpanGeneration
 	public void NullableProperty()
 	{
 		CheckIf.GeneratesNullAndNotNull(
-			MGen.One<SomeThingToGenerate>().Select(a => a.ANullableProperty));
+			Fuzz.One<SomeThingToGenerate>().Select(a => a.ANullableProperty));
 	}
 
 	public class SomeThingToGenerate

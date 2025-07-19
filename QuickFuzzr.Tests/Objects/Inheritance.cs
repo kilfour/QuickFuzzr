@@ -22,8 +22,8 @@ MGen.For<SomeThingAbstract>().GenerateAsOneOf(
 		public void UsingDerived()
 		{
 			var generator =
-				from _ in MGen.For<SomeThingAbstract>().GenerateAsOneOf(typeof(SomeThingDerivedToGenerate))
-				from thing in MGen.One<SomeThingAbstract>()
+				from _ in Fuzz.For<SomeThingAbstract>().GenerateAsOneOf(typeof(SomeThingDerivedToGenerate))
+				from thing in Fuzz.One<SomeThingAbstract>()
 				select thing;
 			var result = generator.Generate();
 			Assert.IsType<SomeThingDerivedToGenerate>(result);
@@ -35,7 +35,7 @@ MGen.For<SomeThingAbstract>().GenerateAsOneOf(
 			Order = 4)]
 		public void ReturnsUnit()
 		{
-			var generator = MGen.For<SomeThingAbstract>().GenerateAsOneOf(typeof(SomeThingDerivedToGenerate));
+			var generator = Fuzz.For<SomeThingAbstract>().GenerateAsOneOf(typeof(SomeThingDerivedToGenerate));
 			Assert.Equal(Unit.Instance, generator.Generate());
 		}
 

@@ -16,7 +16,7 @@ Full details below in the chapter 'The Primitive Generators'.",
 			Order = 1)]
 		public void ForAnInt()
 		{
-			Assert.NotEqual(0, MGen.Int().Generate());
+			Assert.NotEqual(0, Fuzz.Int().Generate());
 		}
 	}
 	public class GeneratingPrimitivesAttribute : DocAttribute

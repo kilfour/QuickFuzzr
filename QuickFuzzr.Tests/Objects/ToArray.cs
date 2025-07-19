@@ -18,9 +18,9 @@ referencing it.
 		public void SameValues()
 		{
 			var values =
-				(from ints in MGen.Int().Many(2).ToArray()
-				 from one in MGen.Constant(ints)
-				 from two in MGen.Constant(ints)
+				(from ints in Fuzz.Int().Many(2).ToArray()
+				 from one in Fuzz.Constant(ints)
+				 from two in Fuzz.Constant(ints)
 				 select new { one, two })
 				.Generate();
 			Assert.IsType<int[]>(values.one);

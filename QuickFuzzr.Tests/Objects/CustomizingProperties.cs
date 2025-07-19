@@ -20,8 +20,8 @@ MGen.For<SomeThingToGenerate>().Customize(s => s.MyProperty, MGen.Constant(42))
 		public void StaysDefaultValue()
 		{
 			var generator =
-				from c in MGen.For<SomeThingToGenerate>().Customize(s => s.AnInt, MGen.Constant(42))
-				from r in MGen.One<SomeThingToGenerate>()
+				from c in Fuzz.For<SomeThingToGenerate>().Customize(s => s.AnInt, Fuzz.Constant(42))
+				from r in Fuzz.One<SomeThingToGenerate>()
 				select r;
 			Assert.Equal(42, generator.Generate().AnInt);
 		}
@@ -33,8 +33,8 @@ MGen.For<SomeThingToGenerate>().Customize(s => s.MyProperty, MGen.Constant(42))
 		public void UsingValue()
 		{
 			var generator =
-				from c in MGen.For<SomeThingToGenerate>().Customize(s => s.AnInt, 42)
-				from r in MGen.One<SomeThingToGenerate>()
+				from c in Fuzz.For<SomeThingToGenerate>().Customize(s => s.AnInt, 42)
+				from r in Fuzz.One<SomeThingToGenerate>()
 				select r;
 			Assert.Equal(42, generator.Generate().AnInt);
 		}
@@ -46,8 +46,8 @@ MGen.For<SomeThingToGenerate>().Customize(s => s.MyProperty, MGen.Constant(42))
 		public void WorksForDerived()
 		{
 			var generator =
-				from _ in MGen.For<SomeThingToGenerate>().Customize(s => s.AnInt, 42)
-				from result in MGen.One<SomeThingDerivedToGenerate>()
+				from _ in Fuzz.For<SomeThingToGenerate>().Customize(s => s.AnInt, 42)
+				from result in Fuzz.One<SomeThingDerivedToGenerate>()
 				select result;
 			Assert.Equal(42, generator.Generate().AnInt);
 		}
@@ -71,7 +71,7 @@ MGen.For<SomeThingToGenerate>().Customize(s => s.MyProperty, MGen.Constant(42))
 			Order = 99)]
 		public void ReturnsUnit()
 		{
-			var generator = MGen.For<SomeThingToGenerate>().Customize(s => s.AnInt, 42);
+			var generator = Fuzz.For<SomeThingToGenerate>().Customize(s => s.AnInt, 42);
 			Assert.Equal(Unit.Instance, generator.Generate());
 		}
 		public class SomeThingToGenerate

@@ -14,7 +14,7 @@ namespace QuickFuzzr.Tests.Primitives
 			Order = 1)]
 		public void DefaultGenerator()
 		{
-			CheckIf.TheseValuesAreGenerated(MGen.Enum<MyEnumeration>(),
+			CheckIf.TheseValuesAreGenerated(Fuzz.Enum<MyEnumeration>(),
 				MyEnumeration.MyOne, MyEnumeration.Mytwo);
 		}
 
@@ -25,7 +25,7 @@ namespace QuickFuzzr.Tests.Primitives
 		public void Property()
 		{
 			CheckIf.TheseValuesAreGenerated(
-				MGen.One<SomeThingToGenerate>().Select(a => a.AnEnumeration),
+				Fuzz.One<SomeThingToGenerate>().Select(a => a.AnEnumeration),
 				MyEnumeration.MyOne, MyEnumeration.Mytwo);
 		}
 
@@ -36,7 +36,7 @@ namespace QuickFuzzr.Tests.Primitives
 		public void NullableProperty()
 		{
 			CheckIf.GeneratesNullAndNotNull(
-				MGen.One<SomeThingToGenerate>().Select(a => a.ANullableProperty));
+				Fuzz.One<SomeThingToGenerate>().Select(a => a.ANullableProperty));
 		}
 
 		[Fact]
@@ -45,7 +45,7 @@ namespace QuickFuzzr.Tests.Primitives
 			Order = 3)]
 		public void Throws()
 		{
-			Assert.Throws<ArgumentException>(() => MGen.Enum<int>().Generate());
+			Assert.Throws<ArgumentException>(() => Fuzz.Enum<int>().Generate());
 		}
 
 		public class SomeThingToGenerate

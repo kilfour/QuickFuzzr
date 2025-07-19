@@ -22,9 +22,9 @@ Will output something like `28ziicuiq56`.",
 		public void SimpleCombination()
 		{
 			var generator =
-				from a in MGen.Constant(42)
-				from b in MGen.Constant("Hello")
-				from c in MGen.Constant(666)
+				from a in Fuzz.Constant(42)
+				from b in Fuzz.Constant("Hello")
+				from c in Fuzz.Constant(666)
 				select a + b + c;
 
 			Assert.Equal("42Hello666", generator.Generate());
@@ -48,9 +48,9 @@ All strings in the generated object will have the pattern defined by 'stringGene
 		public void ReusingGenerators()
 		{
 			var generator =
-				from a in MGen.Constant(42)
-				from b in MGen.Constant("Hello")
-				from c in MGen.Constant(666)
+				from a in Fuzz.Constant(42)
+				from b in Fuzz.Constant("Hello")
+				from c in Fuzz.Constant(666)
 				select a + b + c;
 
 			Assert.Equal("42Hello666", generator.Generate());
@@ -73,7 +73,7 @@ Generates: ""-----"".",
 		public void AvoidingTransform()
 		{
 			var generator =
-				from chars in MGen.Constant('-').Many(5)
+				from chars in Fuzz.Constant('-').Many(5)
 				let composed = chars.Aggregate("", (a, b) => a + b.ToString())
 				select composed;
 			var result = generator.Generate();

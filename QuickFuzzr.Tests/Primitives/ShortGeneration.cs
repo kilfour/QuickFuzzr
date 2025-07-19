@@ -11,7 +11,7 @@
 			Order = 1)]
 		public void Zero()
 		{
-			var generator = MGen.Short(0, 0);
+			var generator = Fuzz.Short(0, 0);
 			for (int i = 0; i < 10; i++)
 			{
 				Assert.Equal(0, generator.Generate());
@@ -24,7 +24,7 @@
 			Order = 2)]
 		public void DefaultGeneratorBetweenOneAndHundred()
 		{
-			var generator = MGen.Short();
+			var generator = Fuzz.Short();
 			for (int i = 0; i < 10; i++)
 			{
 				var val = generator.Generate();
@@ -39,7 +39,7 @@
 			Order = 3)]
 		public void Nullable()
 		{
-			var generator = MGen.Short().Nullable();
+			var generator = Fuzz.Short().Nullable();
 			var isSomeTimesNull = false;
 			var isSomeTimesNotNull = false;
 			for (int i = 0; i < 50; i++)
@@ -63,7 +63,7 @@
 			Order = 4)]
 		public void Property()
 		{
-			var generator = MGen.One<SomeThingToGenerate>();
+			var generator = Fuzz.One<SomeThingToGenerate>();
 			for (int i = 0; i < 10; i++)
 			{
 				Assert.NotEqual(0, generator.Generate().AProperty);
@@ -76,7 +76,7 @@
 			Order = 5)]
 		public void NullableProperty()
 		{
-			var generator = MGen.One<SomeThingToGenerate>();
+			var generator = Fuzz.One<SomeThingToGenerate>();
 			var isSomeTimesNull = false;
 			var isSomeTimesNotNull = false;
 			for (int i = 0; i < 50; i++)

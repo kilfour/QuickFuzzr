@@ -13,7 +13,7 @@ public class BoolGeneration
 		Order = 1)]
 	public void DefaultGeneratorGeneratesTrueOrFalse()
 	{
-		CheckIf.TheseValuesAreGenerated(MGen.Bool(), true, false);
+		CheckIf.TheseValuesAreGenerated(Fuzz.Bool(), true, false);
 	}
 
 	[Fact]
@@ -22,7 +22,7 @@ public class BoolGeneration
 		Order = 2)]
 	public void Nullable()
 	{
-		CheckIf.GeneratesNullAndNotNull(MGen.Bool().Nullable());
+		CheckIf.GeneratesNullAndNotNull(Fuzz.Bool().Nullable());
 	}
 
 	[Fact]
@@ -32,7 +32,7 @@ public class BoolGeneration
 	public void Property()
 	{
 		CheckIf.TheseValuesAreGenerated(
-			MGen.One<SomeThingToGenerate>().Select(x => x.AProperty), true, false);
+			Fuzz.One<SomeThingToGenerate>().Select(x => x.AProperty), true, false);
 	}
 
 	[Fact]
@@ -42,7 +42,7 @@ public class BoolGeneration
 	public void NullableProperty()
 	{
 		CheckIf.GeneratesNullAndNotNull(
-			MGen.One<SomeThingToGenerate>().Select(x => x.ANullableProperty));
+			Fuzz.One<SomeThingToGenerate>().Select(x => x.ANullableProperty));
 	}
 
 	public class SomeThingToGenerate

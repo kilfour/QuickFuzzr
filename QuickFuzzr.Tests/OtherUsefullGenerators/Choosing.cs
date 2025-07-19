@@ -14,7 +14,7 @@ F.i. `MGen.ChooseFrom(new []{ 1, 2 })` will return either 1 or 2.",
 			Order = 1)]
 		public void Enumerable()
 		{
-			var generator = MGen.ChooseFrom(new[] { 1, 2 });
+			var generator = Fuzz.ChooseFrom(new[] { 1, 2 });
 			var one = false;
 			var two = false;
 			for (int i = 0; i < 20; i++)
@@ -36,7 +36,7 @@ I.e. : `MGen.ChooseFromThese(1, 2)`",
 			Order = 2)]
 		public void Params()
 		{
-			var generator = MGen.ChooseFromThese(1, 2);
+			var generator = Fuzz.ChooseFromThese(1, 2);
 			var one = false;
 			var two = false;
 			for (int i = 0; i < 20; i++)
@@ -58,7 +58,7 @@ I.e. : `MGen.ChooseFromWithDefaultWhenEmpty(new List<int>())`, which returns the
 			Order = 2)]
 		public void ParamsEmpty_int_list_returns_zero()
 		{
-			var generator = MGen.ChooseFromWithDefaultWhenEmpty(new List<int>());
+			var generator = Fuzz.ChooseFromWithDefaultWhenEmpty(new List<int>());
 			Assert.Equal(0, generator.Generate());
 		}
 
@@ -71,7 +71,7 @@ I.e. : `MGen.ChooseGenerator(MGen.Constant(1), MGen.Constant(2))`",
 			Order = 2)]
 		public void Gens()
 		{
-			var generator = MGen.ChooseGenerator(MGen.Constant(1), MGen.Constant(2));
+			var generator = Fuzz.ChooseGenerator(Fuzz.Constant(1), Fuzz.Constant(2));
 			var one = false;
 			var two = false;
 			for (int i = 0; i < 20; i++)

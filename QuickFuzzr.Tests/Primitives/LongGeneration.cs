@@ -11,7 +11,7 @@
 			Order = 1)]
 		public void Zero()
 		{
-			var generator = MGen.Long(0, 0);
+			var generator = Fuzz.Long(0, 0);
 			for (long i = 0; i < 10; i++)
 			{
 				Assert.Equal(0, generator.Generate());
@@ -24,7 +24,7 @@
 			Order = 1.1)]
 		public void Throws()
 		{
-			Assert.Throws<ArgumentException>(() => MGen.Long(1, 0).Generate());
+			Assert.Throws<ArgumentException>(() => Fuzz.Long(1, 0).Generate());
 		}
 
 		[Fact]
@@ -33,7 +33,7 @@
 			Order = 2)]
 		public void DefaultGeneratorNeverGeneratesZero()
 		{
-			var generator = MGen.Long();
+			var generator = Fuzz.Long();
 			for (long i = 0; i < 10; i++)
 			{
 				Assert.NotEqual(0, generator.Generate());
@@ -46,7 +46,7 @@
 			Order = 3)]
 		public void Nullable()
 		{
-			var generator = MGen.Long().Nullable();
+			var generator = Fuzz.Long().Nullable();
 			var isSomeTimesNull = false;
 			var isSomeTimesNotNull = false;
 			for (long i = 0; i < 50; i++)
@@ -70,7 +70,7 @@
 			Order = 4)]
 		public void Property()
 		{
-			var generator = MGen.One<SomeThingToGenerate>();
+			var generator = Fuzz.One<SomeThingToGenerate>();
 			for (long i = 0; i < 10; i++)
 			{
 				Assert.NotEqual(0, generator.Generate().AProperty);
@@ -83,7 +83,7 @@
 			Order = 5)]
 		public void Long32Property()
 		{
-			var generator = MGen.One<SomeThingToGenerate>();
+			var generator = Fuzz.One<SomeThingToGenerate>();
 			for (long i = 0; i < 10; i++)
 			{
 				Assert.NotEqual(0, generator.Generate().AnInt64Property);
@@ -96,7 +96,7 @@
 			Order = 6)]
 		public void NullableProperty()
 		{
-			var generator = MGen.One<SomeThingToGenerate>();
+			var generator = Fuzz.One<SomeThingToGenerate>();
 			var isSomeTimesNull = false;
 			var isSomeTimesNotNull = false;
 			for (long i = 0; i < 50; i++)

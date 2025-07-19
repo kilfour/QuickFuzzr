@@ -12,7 +12,7 @@
 			Order = 1)]
 		public void IsUnique()
 		{
-			var generator = MGen.ChooseFromThese(1, 2).Unique("TheKey").Many(2);
+			var generator = Fuzz.ChooseFromThese(1, 2).Unique("TheKey").Many(2);
 			for (int i = 0; i < 100; i++)
 			{
 				var value = generator.Generate().ToArray();
@@ -27,7 +27,7 @@
 			Order = 2)]
 		public void Throws()
 		{
-			var generator = MGen.Constant(1).Unique("TheKey").Many(2);
+			var generator = Fuzz.Constant(1).Unique("TheKey").Many(2);
 			var ex = Assert.Throws<HeyITriedFiftyTimesButCouldNotGetADifferentValue>(() => generator.Generate().ToArray());
 			Assert.Contains("TheKey", ex.Message);
 		}
@@ -42,8 +42,8 @@
 			for (int i = 0; i < 100; i++)
 			{
 				var generator =
-					from one in MGen.ChooseFromThese(1, 2).Unique(1)
-					from two in MGen.ChooseFromThese(1, 2).Unique(2)
+					from one in Fuzz.ChooseFromThese(1, 2).Unique(1)
+					from two in Fuzz.ChooseFromThese(1, 2).Unique(2)
 					select new[] { one, two };
 				var value = generator.Many(2).Generate().ToArray();
 				var valueOne = value[0];
@@ -64,8 +64,8 @@
 			for (int i = 0; i < 100; i++)
 			{
 				var generator =
-					from one in MGen.ChooseFromThese(1, 2).Unique(1)
-					from two in MGen.ChooseFromThese(1, 2).Unique(1)
+					from one in Fuzz.ChooseFromThese(1, 2).Unique(1)
+					from two in Fuzz.ChooseFromThese(1, 2).Unique(1)
 					select new[] { one, two };
 
 				var valueOne = generator.Generate();

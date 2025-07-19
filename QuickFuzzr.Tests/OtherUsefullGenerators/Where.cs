@@ -12,7 +12,7 @@
 			Order = 1)]
 		public void Filters()
 		{
-			var generator = MGen.ChooseFromThese(1, 2, 3).Where(a => a != 1);
+			var generator = Fuzz.ChooseFromThese(1, 2, 3).Where(a => a != 1);
 			for (int i = 0; i < 100; i++)
 			{
 				var value = generator.Generate();
@@ -23,7 +23,7 @@
 		[Fact]
 		public void WorksWithAllGenerators()
 		{
-			var generator = MGen.Int(1, 5).Where(a => a != 1);
+			var generator = Fuzz.Int(1, 5).Where(a => a != 1);
 			for (int i = 0; i < 100; i++)
 			{
 				var value = generator.Generate();
