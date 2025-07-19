@@ -1,7 +1,7 @@
 # QuickFuzzr 
 > A type-walking cheetah with a hand full of random. 
 ## Introduction
-An evolution from the QuickFuzzerate library.
+An evolution from the QuickMGenerate library.
 
 ## Generating Primitives
 ### Introduction
