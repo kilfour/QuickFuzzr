@@ -1,0 +1,11 @@
+elm-stuff
+*/bin/*
+*/obj/*
+_ReSharper.*/
+*.user
+*.suo
+*log.txt
+temp*.md
+*.log
+.quickacid/
+.quickpulse/
