@@ -1,7 +1,7 @@
 ﻿namespace QuickFuzzr.Tests.Primitives
 {
 	[Strings(
-		Content = "Use `MGen.String()`.",
+		Content = "Use `Fuzz.String()`.",
 		Order = 0)]
 	public class StringGeneration
 	{
@@ -23,7 +23,7 @@
 
 		[Fact]
 		[Strings(
-			Content = "The overload `MGen.String(int min, int max)` generates an string of length higher or equal than min and lower than max.",
+			Content = "The overload `Fuzz.String(int min, int max)` generates an string of length higher or equal than min and lower than max.",
 			Order = 1)]
 		public void Zero()
 		{

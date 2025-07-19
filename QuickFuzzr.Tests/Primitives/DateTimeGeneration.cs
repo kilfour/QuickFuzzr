@@ -1,13 +1,13 @@
 ﻿namespace QuickFuzzr.Tests.Primitives
 {
 	[DateTimes(
-		Content = "Use `MGen.DateTime()`.",
+		Content = "Use `Fuzz.DateTime()`.",
 		Order = 0)]
 	public class DateTimeGeneration
 	{
 		[Fact]
 		[DateTimes(
-			Content = "The overload `MGen.DateTimes(DateTime min, DateTime max)` generates a DateTime higher or equal than min and lower than max.",
+			Content = "The overload `Fuzz.DateTimes(DateTime min, DateTime max)` generates a DateTime higher or equal than min and lower than max.",
 			Order = 1)]
 		public void Zero()
 		{

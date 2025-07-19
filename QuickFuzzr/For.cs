@@ -91,7 +91,7 @@ namespace QuickFuzzr
 			// 			{
 			// 				throw new InvalidOperationException(
 			// 					$"Recursive call detected in ConstructFrom for type '{typeof(T)}'. " +
-			// 					$"This usually means the generator passed to ConstructFrom indirectly calls MGen.One<{typeof(T).Name}>(), " +
+			// 					$"This usually means the generator passed to ConstructFrom indirectly calls Fuzz.One<{typeof(T).Name}>(), " +
 			// 					$"causing infinite recursion.");
 			// 			}
 

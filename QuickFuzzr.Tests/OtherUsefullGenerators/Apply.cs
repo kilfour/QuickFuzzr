@@ -11,7 +11,7 @@ namespace QuickFuzzr.Tests.OtherUsefullGenerators
 		[Apply(
 			Content =
 @"Applies the specified Function to the generated value, returning the result.
-F.i. `MGen.Constant(41).Apply(i =>  i + 1)` will return 42.",
+F.i. `Fuzz.Constant(41).Apply(i =>  i + 1)` will return 42.",
 			Order = 1)]
 		public void FunctionIsApplied()
 		{
@@ -25,8 +25,8 @@ F.i. `MGen.Constant(41).Apply(i =>  i + 1)` will return 42.",
 @"Par example, when you want all decimals to be rounded to a certain precision : 
 ```
 var generator = 
-	from _ in MGen.Decimal().Apply(d => Math.Round(d, 2)).Replace()
-	from result in MGen.One<SomeThingToGenerate>()
+	from _ in Fuzz.Decimal().Apply(d => Math.Round(d, 2)).Replace()
+	from result in Fuzz.One<SomeThingToGenerate>()
 	select result;
 ```",
 			Order = 2)]
@@ -47,7 +47,7 @@ var generator =
 			Content =
 @"An overload exists with signature `Apply<T>(Action<T> action)`.
 This is useful when dealing with objects and you just don't want to return said object.
-E.g. `MGen.One<SomeThingToGenerate>().Apply(session.Save)`.",
+E.g. `Fuzz.One<SomeThingToGenerate>().Apply(session.Save)`.",
 			Order = 3)]
 		public void ActionIsApplied()
 		{
@@ -61,11 +61,11 @@ E.g. `MGen.One<SomeThingToGenerate>().Apply(session.Save)`.",
 			Content =
 @"This function also exists as a convention instead of a generator.
 
-E.g. `MGen.For<SomeThingToGenerate>().Apply(session.Save)`.
+E.g. `Fuzz.For<SomeThingToGenerate>().Apply(session.Save)`.
 
 In this case nothing is generated but instead the function will be applied to all objects of type T during generation.
 
-There is no `MGen.For<T>().Apply(Func<T, T> func)` as For can only be used for objects, so there is no need for it really.
+There is no `Fuzz.For<T>().Apply(Func<T, T> func)` as For can only be used for objects, so there is no need for it really.
 ",
 			Order = 4)]
 		public void AsConventionWithGenerator()
@@ -90,7 +90,7 @@ This generator then provides a value which can be used in the action parameter.
 E.g. : 
 ```
 var parents = ...
-MGen.For<SomeChild>().Apply(MGen.ChooseFrom(parents), (child, parent) => parent.Add(child))
+Fuzz.For<SomeChild>().Apply(Fuzz.ChooseFrom(parents), (child, parent) => parent.Add(child))
 ```
 ",
 			Order = 5)]

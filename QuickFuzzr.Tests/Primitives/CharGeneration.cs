@@ -1,7 +1,7 @@
 ﻿namespace QuickFuzzr.Tests.Primitives
 {
 	[Chars(
-		Content = "Use `MGen.Char()`. \n\nNo overload Exists.",
+		Content = "Use `Fuzz.Char()`. \n\nNo overload exists.",
 		Order = 0)]
 	public class CharGeneration
 	{

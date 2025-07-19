@@ -1,46 +1,15 @@
-﻿namespace QuickFuzzr.UnderTheHood
+﻿namespace QuickFuzzr.UnderTheHood;
+
+public readonly struct Unit : IComparable<Unit>, IEquatable<Unit>
 {
-	public struct Unit
-		: IComparable<Unit>, IEquatable<Unit>
-	{
-		private static readonly Unit TheInstance = new Unit();
+	public static readonly Unit Instance = new();
 
-		public static Unit Instance
-		{
-			get
-			{
-				return TheInstance;
-			}
-		}
+	public static bool operator ==(Unit left, Unit right) => true;
+	public static bool operator !=(Unit left, Unit right) => false;
 
-		public static bool operator ==(Unit left, Unit right)
-		{
-			return true;
-		}
+	public override bool Equals(object? obj) => obj is Unit;
+	public override int GetHashCode() => 0;
 
-		public static bool operator !=(Unit left, Unit right)
-		{
-			return false;
-		}
-
-		public override bool Equals(object obj)
-		{
-			return obj is Unit;
-		}
-
-		public override int GetHashCode()
-		{
-			return 0;
-		}
-
-		int IComparable<Unit>.CompareTo(Unit other)
-		{
-			return 0;
-		}
-
-		bool IEquatable<Unit>.Equals(Unit other)
-		{
-			return true;
-		}
-	}
+	public int CompareTo(Unit other) => 0;
+	public bool Equals(Unit other) => true;
 }

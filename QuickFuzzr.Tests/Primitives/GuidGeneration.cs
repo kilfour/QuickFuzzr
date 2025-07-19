@@ -1,7 +1,7 @@
 ﻿namespace QuickFuzzr.Tests.Primitives
 {
 	[Guids(
-		Content = "Use `MGen.Guid()`.\n\nThere is no overload.",
+		Content = "Use `Fuzz.Guid()`.\n\nThere is no overload.",
 		Order = 0)]
 	public class GuidGeneration
 	{

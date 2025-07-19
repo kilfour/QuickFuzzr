@@ -3,7 +3,7 @@
 namespace QuickFuzzr.Tests.Primitives;
 
 [Booleans(
-	Content = "Use `MGen.Bool()`. \n\nNo overload Exists.",
+	Content = "Use `Fuzz.Bool()`. \n\nNo overload exists.",
 	Order = 0)]
 public class BoolGeneration
 {

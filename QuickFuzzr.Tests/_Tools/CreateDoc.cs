@@ -53,6 +53,6 @@ public class CreateDoc
 @"# QuickFuzzr 
 
 ## Introduction
-An evolution from the QuickMGenerate library.
+An evolution from the QuickFuzzerate library.
 ";
 }

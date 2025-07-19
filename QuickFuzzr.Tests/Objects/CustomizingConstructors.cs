@@ -4,18 +4,18 @@ namespace QuickFuzzr.Tests.Objects
 {
 	[CustomizingConstructors(
 		Content =
-@"Use the `MGen.For<T>().Construct<TArg>(Expression<Func<T, TProperty>> func, Generator<TProperty>)` method chain.
+@"Use the `Fuzz.For<T>().Construct<TArg>(Expression<Func<T, TProperty>> func, Generator<TProperty>)` method chain.
 
 F.i. :
 ```
-MGen.For<SomeThing>().Construct(MGen.Constant(42))
+Fuzz.For<SomeThing>().Construct(Fuzz.Constant(42))
 ```",
 		Order = 0)]
 	public class CustomizingConstructors
 	{
 		[Fact]
 		[CustomizingConstructors(
-			Content = "Subsequent calls to `MGen.One<T>()` will then use the registered constructor.",
+			Content = "Subsequent calls to `Fuzz.One<T>()` will then use the registered constructor.",
 			Order = 1)]
 		public void Works()
 		{
@@ -31,7 +31,7 @@ MGen.For<SomeThing>().Construct(MGen.Constant(42))
 		[CustomizingConstructors(
 			Content =
 @"Various overloads exist : 
- -  `MGen.For<T>().Construct<T1, T2>(Generator<T1> g1, Generator<T2> g2)`",
+ -  `Fuzz.For<T>().Construct<T1, T2>(Generator<T1> g1, Generator<T2> g2)`",
 			Order = 2)]
 		public void WorksTwoArgs()
 		{
@@ -48,7 +48,7 @@ MGen.For<SomeThing>().Construct(MGen.Constant(42))
 
 		[Fact]
 		[CustomizingConstructors(
-			Content = " -  `MGen.For<T>().Construct<T1, T2>(Generator<T1> g1, Generator<T2> g2, Generator<T3> g3)`",
+			Content = " -  `Fuzz.For<T>().Construct<T1, T2>(Generator<T1> g1, Generator<T2> g2, Generator<T3> g3)`",
 			Order = 3)]
 		public void WorksThreeArgs()
 		{
@@ -67,7 +67,7 @@ MGen.For<SomeThing>().Construct(MGen.Constant(42))
 
 		[Fact]
 		[CustomizingConstructors(
-			Content = " -  `MGen.For<T>().Construct<T1, T2>(Generator<T1> g1, Generator<T2> g2, Generator<T3> g3, Generator<T4> g4)`",
+			Content = " -  `Fuzz.For<T>().Construct<T1, T2>(Generator<T1> g1, Generator<T2> g2, Generator<T3> g3, Generator<T4> g4)`",
 			Order = 4)]
 		public void WorksFourArgs()
 		{
@@ -89,7 +89,7 @@ MGen.For<SomeThing>().Construct(MGen.Constant(42))
 		[Fact]
 		[CustomizingConstructors(
 			Content =
-@" -  `MGen.For<T>().Construct<T1, T2>(Generator<T1> g1, Generator<T2> g2, Generator<T3> g3, Generator<T4> g4, Generator<T5> g5)`  
+@" -  `Fuzz.For<T>().Construct<T1, T2>(Generator<T1> g1, Generator<T2> g2, Generator<T3> g3, Generator<T4> g4, Generator<T5> g5)`  
 
 After that, ... you're on your own.",
 			Order = 5)]
@@ -116,7 +116,7 @@ After that, ... you're on your own.",
 		[CustomizingConstructors(
 			Content =
 @"Or use the factory method overload:  
-`MGen.For<T>().Construct<T>(Func<T> ctor)`",
+`Fuzz.For<T>().Construct<T>(Func<T> ctor)`",
 			Order = 6)]
 		public void FactoryCtor()
 		{
@@ -142,7 +142,7 @@ After that, ... you're on your own.",
 		// 		[Fact]
 		// 		[CustomizingConstructors(
 		// 			Content =
-		// @"Lastly, in cases like recursive structures, you can use `MGen.For<T>().ConstructFrom<T>(Func<Generator<T>> generator)`.
+		// @"Lastly, in cases like recursive structures, you can use `Fuzz.For<T>().ConstructFrom<T>(Func<Generator<T>> generator)`.
 		// While the double `T` might look a bit unusual, this method allows you to pass an entire generator — along with all its configuration and conventions — into the component system.
 		// This ensures the generator runs **within the current state**, respects recursion limits, and participates fully in `Tree(...)`, `Apply(...)`, or `IgnoreAll(...)` logic.
 		// It's especially useful when values can't be constructed via simple constructors but must come from custom generator logic.
@@ -151,13 +151,13 @@ After that, ... you're on your own.",
 		// 		public void FromGenerator()
 		// 		{
 		// 			var innerGenerator =
-		// 				from _ in MGen.Constant(42).Replace()
-		// 				from r in MGen.One(() => new SomeThing())
+		// 				from _ in Fuzz.Constant(42).Replace()
+		// 				from r in Fuzz.One(() => new SomeThing())
 		// 				select r;
 
 		// 			var generator =
-		// 				from c in MGen.For<SomeThing>().ConstructFrom(innerGenerator)
-		// 				from r in MGen.One<SomeThing>()
+		// 				from c in Fuzz.For<SomeThing>().ConstructFrom(innerGenerator)
+		// 				from r in Fuzz.One<SomeThing>()
 		// 				select r;
 		// 			var result = generator.Generate();
 		// 			Assert.Equal(42, result.AnInt1);
@@ -175,13 +175,13 @@ After that, ... you're on your own.",
 		// 		public void FromGeneratorFromThrows()
 		// 		{
 		// 			var innerGenerator =
-		// 				from _ in MGen.Constant(42).Replace()
-		// 				from r in MGen.One<SomeThing>()
+		// 				from _ in Fuzz.Constant(42).Replace()
+		// 				from r in Fuzz.One<SomeThing>()
 		// 				select r;
 
 		// 			var generator =
-		// 				from c in MGen.For<SomeThing>().ConstructFrom(innerGenerator)
-		// 				from r in MGen.One<SomeThing>()
+		// 				from c in Fuzz.For<SomeThing>().ConstructFrom(innerGenerator)
+		// 				from r in Fuzz.One<SomeThing>()
 		// 				select r;
 		// 			Assert.Throws<InvalidOperationException>(() => generator.Generate());
 		// 		}

@@ -3,14 +3,14 @@
 namespace QuickFuzzr.Tests.Primitives
 {
 	[GeneratingPrimitives(
-		Content = "The MGen class has many methods which can be used to obtain a corresponding primitive.",
+		Content = "The Fuzz class has many methods which can be used to obtain a corresponding primitive.",
 		Order = 0)]
 	public class JustAnExample
 	{
 		[Fact]
 		[GeneratingPrimitives(
 			Content =
-@"F.i. `MGen.Int()`. 
+@"F.i. `Fuzz.Int()`. 
 
 Full details below in the chapter 'The Primitive Generators'.",
 			Order = 1)]

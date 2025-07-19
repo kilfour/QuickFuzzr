@@ -1,13 +1,13 @@
 ﻿namespace QuickFuzzr.Tests.Primitives
 {
 	[Longs(
-		Content = "Use `MGen.Long()`.",
+		Content = "Use `Fuzz.Long()`.",
 		Order = 0)]
 	public class LongGeneration
 	{
 		[Fact]
 		[Longs(
-			Content = "The overload `MGen.Long(long min, long max)` generates a long higher or equal than min and lower than max.",
+			Content = "The overload `Fuzz.Long(long min, long max)` generates a long higher or equal than min and lower than max.",
 			Order = 1)]
 		public void Zero()
 		{

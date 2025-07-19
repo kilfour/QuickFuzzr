@@ -1,13 +1,13 @@
 ﻿namespace QuickFuzzr.Tests.Primitives
 {
 	[Decimals(
-		Content = "Use `MGen.Decimal()`.",
+		Content = "Use `Fuzz.Decimal()`.",
 		Order = 0)]
 	public class DecimalGeneration
 	{
 		[Fact]
 		[Decimals(
-			Content = "The overload `MGen.Decimal(decimal min, decimal max)` generates a decimal higher or equal than min and lower than max.",
+			Content = "The overload `Fuzz.Decimal(decimal min, decimal max)` generates a decimal higher or equal than min and lower than max.",
 			Order = 1)]
 		public void Zero()
 		{

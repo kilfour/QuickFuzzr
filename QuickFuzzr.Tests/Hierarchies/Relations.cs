@@ -12,9 +12,9 @@
 
 ```
 var generator =
-	from product in MGen.One<ProductItem>()
-	from setProduct in MGen.For<OrderLine>().Customize(orderline => orderline.Product, product)
-	from orderline in MGen.One<OrderLine>()
+	from product in Fuzz.One<ProductItem>()
+	from setProduct in Fuzz.For<OrderLine>().Customize(orderline => orderline.Product, product)
+	from orderline in Fuzz.One<OrderLine>()
 	select orderline;
 ```
 ",
@@ -40,9 +40,9 @@ E.g. :
 
 ```
 var generator =
-	from order in MGen.One<Order>()
-	from addLine in MGen.For<OrderLine>().Apply(order.AddOrderLine)
-	from lines in MGen.One<OrderLine>().Many(20).ToArray()
+	from order in Fuzz.One<Order>()
+	from addLine in Fuzz.For<OrderLine>().Apply(order.AddOrderLine)
+	from lines in Fuzz.One<OrderLine>().Many(20).ToArray()
 	select order;
 ```
 Note the `ToArray` call on the orderlines. 
@@ -90,8 +90,8 @@ E.g. :
 
 ```
 var generator =
-	from category in MGen.One<Category>()
-	from subCategory in MGen.One(() => new SubCategory(category)).Many(20)
+	from category in Fuzz.One<Category>()
+	from subCategory in Fuzz.One(() => new SubCategory(category)).Many(20)
 	select category;
 ```
 ",

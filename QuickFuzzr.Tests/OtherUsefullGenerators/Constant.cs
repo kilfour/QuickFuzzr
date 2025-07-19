@@ -1,7 +1,7 @@
 ﻿namespace QuickFuzzr.Tests.OtherUsefullGenerators
 {
 	[Constant(
-		Content = "Use `MGen.Constant<T>(T value)`.",
+		Content = "Use `Fuzz.Constant<T>(T value)`.",
 		Order = 0)]
 	public class Constant
 	{

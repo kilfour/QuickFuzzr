@@ -1,13 +1,13 @@
 ﻿namespace QuickFuzzr.Tests.Primitives
 {
 	[Shorts(
-		Content = "Use `MGen.Short()`.",
+		Content = "Use `Fuzz.Short()`.",
 		Order = 0)]
 	public class ShortGeneration
 	{
 		[Fact]
 		[Shorts(
-			Content = "The overload `MGen.Short(short min, short max)` generates a short higher or equal than min and lower than max.",
+			Content = "The overload `Fuzz.Short(short min, short max)` generates a short higher or equal than min and lower than max.",
 			Order = 1)]
 		public void Zero()
 		{

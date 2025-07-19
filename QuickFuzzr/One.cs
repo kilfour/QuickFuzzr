@@ -119,7 +119,7 @@ namespace QuickFuzzr
 				!declaredType.IsAssignableFrom(actualType))
 			{
 				throw new InvalidOperationException(
-					$"MGen created an instance of type '{actualType}' " +
+					$"Fuzz created an instance of type '{actualType}' " +
 					$"but expected a type assignable to '{declaredType}'. " +
 					$"This might be due to an internal framework subclass " +
 					$"like 'JsonValueCustomized<T>'. Consider using IgnoreAll() " +

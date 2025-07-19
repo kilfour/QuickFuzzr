@@ -3,13 +3,13 @@
 namespace QuickFuzzr.Tests.Primitives;
 
 [TimeSpans(
-	Content = "Use `MGen.TimeSpan()`.",
+	Content = "Use `Fuzz.TimeSpan()`.",
 	Order = 0)]
 public class TimeSpanGeneration
 {
 	[Fact]
 	[TimeSpans(
-		Content = "The overload `MGen.TimeSpan(int max)` generates a TimeSpan with Ticks higher or equal than 1 and lower than max.",
+		Content = "The overload `Fuzz.TimeSpan(int max)` generates a TimeSpan with Ticks higher or equal than 1 and lower than max.",
 		Order = 1)]
 	public void OverloadRange()
 	{

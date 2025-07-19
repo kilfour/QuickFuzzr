@@ -1,7 +1,7 @@
 namespace QuickFuzzr.Tests.Combining
 {
 	[LinqSyntax(
-		Content = "Each MGen Generator can be used as a building block and combined using query expressions.",
+		Content = "Each Fuzz Generator can be used as a building block and combined using query expressions.",
 		Order = 0)]
 	public class LinqSyntax
 	{
@@ -11,9 +11,9 @@ namespace QuickFuzzr.Tests.Combining
 @"F.i. the following :
 ```
 var stringGenerator =
-	from a in MGen.Int()
-	from b in MGen.String()
-	from c in MGen.Int()
+	from a in Fuzz.Int()
+	from b in Fuzz.String()
+	from c in Fuzz.Int()
 	select a + b + c;
 Console.WriteLine(stringGenerator.Generate());
 ```
@@ -39,7 +39,7 @@ In the following :
 ```
 var generator =
 	from str in stringGenerator.Replace()
-	from thing in MGen.One<SomeThingToGenerate>()
+	from thing in Fuzz.One<SomeThingToGenerate>()
 	select thing;
 ```
 We reuse the 'stringGenerator' defined above and replace the default string generator with our custom one. 
@@ -64,7 +64,7 @@ as this can be easily achieved using Linq.
 
 ```
 var generator =
-	from chars in MGen.Constant('-').Many(5)
+	from chars in Fuzz.Constant('-').Many(5)
 	let composed = chars.Aggregate("", (a, b) => a + b.ToString())
 	select composed;
 ```

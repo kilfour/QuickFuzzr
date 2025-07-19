@@ -1,13 +1,13 @@
 ﻿namespace QuickFuzzr.Tests.Primitives
 {
 	[Ints(
-		Content = "Use `MGen.Int()`.",
+		Content = "Use `Fuzz.Int()`.",
 		Order = 0)]
 	public class IntGeneration
 	{
 		[Fact]
 		[Ints(
-			Content = "The overload `MGen.Int(int min, int max)` generates an int higher or equal than min and lower than max.",
+			Content = "The overload `Fuzz.Int(int min, int max)` generates an int higher or equal than min and lower than max.",
 			Order = 1)]
 		public void Zero()
 		{

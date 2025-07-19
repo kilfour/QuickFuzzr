@@ -4,11 +4,11 @@ namespace QuickFuzzr.Tests.Objects
 {
 	[Inheritance(
 		Content =
-@"Use The `MGen.For<T>().GenerateAsOneOf(params Type[] types)` method chain.
+@"Use The `Fuzz.For<T>().GenerateAsOneOf(params Type[] types)` method chain.
 
 F.i. :
 ```
-MGen.For<SomeThingAbstract>().GenerateAsOneOf(
+Fuzz.For<SomeThingAbstract>().GenerateAsOneOf(
 	typeof(SomethingDerived), typeof(SomethingElseDerived))
 ```",
 		Order = 0)]

@@ -20,7 +20,7 @@
 // Example :
 // ```
 // InspectorContext.Current = myConcreteInspectorInstance;
-// MGen.Constant(42).Inspect(a => ([""my tag""], ""a log message"", new { label = ""constant"", value = a }));
+// Fuzz.Constant(42).Inspect(a => ([""my tag""], ""a log message"", new { label = ""constant"", value = a }));
 // ```
 // Several `Inspector` types are provided by QuickFuzzr.
 // ",
@@ -36,7 +36,7 @@
 // 	{
 // 		var valueLogger = new ValueLogger<object>();
 // 		InspectorContext.Current = valueLogger;
-// 		var generator = MGen.Constant(42).Inspect();
+// 		var generator = Fuzz.Constant(42).Inspect();
 // 		generator.Generate();
 // 		Assert.Single(valueLogger.Values);
 // 		Assert.Equal(42, valueLogger.Values[0]);
@@ -54,7 +54,7 @@
 // 		var writer = new WriteToJsonFile();
 // 		var valueLogger = new ValueLogger<object>();
 // 		InspectorContext.Current = valueLogger;
-// 		var generator = MGen.Constant(42).Inspect();
+// 		var generator = Fuzz.Constant(42).Inspect();
 // 		generator.Generate();
 // 		Assert.Single(valueLogger.Values);
 // 		Assert.Equal(42, valueLogger.Values[0]);

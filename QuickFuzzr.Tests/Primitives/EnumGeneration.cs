@@ -3,7 +3,7 @@
 namespace QuickFuzzr.Tests.Primitives
 {
 	[Enums(
-		Content = "Use `MGen.Enum<T>()`, where T is the type of Enum you want to generate. \n\nNo overload Exists.",
+		Content = "Use `Fuzz.Enum<T>()`, where T is the type of Enum you want to generate. \n\nNo overload exists.",
 		Order = 0)]
 	public class EnumGeneration
 	{

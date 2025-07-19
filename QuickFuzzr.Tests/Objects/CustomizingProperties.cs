@@ -4,11 +4,11 @@ namespace QuickFuzzr.Tests.Objects
 {
 	[CustomizingProperties(
 		Content =
-@"Use the `MGen.For<T>().Customize<TProperty>(Expression<Func<T, TProperty>> func, Generator<TProperty>)` method chain.
+@"Use the `Fuzz.For<T>().Customize<TProperty>(Expression<Func<T, TProperty>> func, Generator<TProperty>)` method chain.
 
 F.i. :
 ```
-MGen.For<SomeThingToGenerate>().Customize(s => s.MyProperty, MGen.Constant(42))
+Fuzz.For<SomeThingToGenerate>().Customize(s => s.MyProperty, Fuzz.Constant(42))
 ```",
 		Order = 0)]
 	public class CustomizingProperties
@@ -59,8 +59,8 @@ MGen.For<SomeThingToGenerate>().Customize(s => s.MyProperty, MGen.Constant(42))
 		//public void Field()
 		//{
 		//    var generator =
-		//        from _ in MGen.For<SomeThingToGenerate>().Customize(s => s.AnIntField, 42)
-		//        from result in MGen.One<SomeThingDerivedToGenerate>()
+		//        from _ in Fuzz.For<SomeThingToGenerate>().Customize(s => s.AnIntField, 42)
+		//        from result in Fuzz.One<SomeThingDerivedToGenerate>()
 		//        select result;
 		//    Assert.Equal(42, generator.Generate().AnIntField);
 		//}

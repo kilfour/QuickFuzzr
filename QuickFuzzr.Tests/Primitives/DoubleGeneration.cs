@@ -1,13 +1,13 @@
 ﻿namespace QuickFuzzr.Tests.Primitives
 {
 	[Doubles(
-		Content = "Use `MGen.Double()`.",
+		Content = "Use `Fuzz.Double()`.",
 		Order = 0)]
 	public class DoubleGeneration
 	{
 		[Fact]
 		[Doubles(
-			Content = "The overload `MGen.Double(double min, double max)` generates a double higher or equal than min and lower than max.",
+			Content = "The overload `Fuzz.Double(double min, double max)` generates a double higher or equal than min and lower than max.",
 			Order = 1)]
 		public void Zero()
 		{

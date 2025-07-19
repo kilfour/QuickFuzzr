@@ -12,8 +12,8 @@ namespace QuickFuzzr.Tests.Objects
 @"Example
 ```
 var generator =
-	from _ in MGen.Constant(42).Replace()
-	from result in MGen.One<SomeThingToGenerate>()
+	from _ in Fuzz.Constant(42).Replace()
+	from result in Fuzz.One<SomeThingToGenerate>()
 	select result;
 ```
 When executing above generator it will return a SomeThingToGenerate object where all integers have the value 42.
@@ -34,7 +34,7 @@ When executing above generator it will return a SomeThingToGenerate object where
 		[Fact]
 		[ReplacingPrimitiveGenerators(
 			Content =
-@"Replacing a primitive generator automatically impacts it's nullable counterpart.",
+@"Replacing a primitive generator automatically impacts its nullable counterpart.",
 			Order = 2)]
 		public void NullableUsesReplacement()
 		{
@@ -68,10 +68,10 @@ When executing above generator it will return a SomeThingToGenerate object where
 @"Replacements can occur multiple times during one generation :
 ```
 var generator =
-	from _ in MGen.Constant(42).Replace()
-	from result1 in MGen.One<SomeThingToGenerate>()
-	from __ in MGen.Constant(666).Replace()
-	from result2 in MGen.One<SomeThingToGenerate>()
+	from _ in Fuzz.Constant(42).Replace()
+	from result1 in Fuzz.One<SomeThingToGenerate>()
+	from __ in Fuzz.Constant(666).Replace()
+	from result2 in Fuzz.One<SomeThingToGenerate>()
 	select new[] { result1, result2 };
 ```
 When executing above generator result1 will have all integers set to 42 and result2 to 666.",

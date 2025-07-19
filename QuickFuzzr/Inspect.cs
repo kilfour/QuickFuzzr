@@ -2,7 +2,7 @@
 
 namespace QuickFuzzr;
 
-public static partial class MGenInspecting
+public static partial class FuzzInspecting
 {
 	public static Generator<T> Inspect<T>(this Generator<T> generator)
 	{

@@ -28,7 +28,7 @@ namespace QuickFuzzr
 			return
 				type
 					.GetFields(BindingFlags.Public | BindingFlags.Static)
-					.Select(i => i.GetRawConstantValue());
+					.Select(i => i.GetRawConstantValue())!;
 		}
 	}
 }

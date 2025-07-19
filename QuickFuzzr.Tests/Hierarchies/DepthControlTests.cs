@@ -50,7 +50,7 @@ public class DepthControlTests
 		Content =
 @"If we then do :
 ```csharp
-Console.WriteLine(MGen.One<Recurse>().Generate().ToString());
+Console.WriteLine(Fuzz.One<Recurse>().Generate().ToString());
 ```
 It outputs : 
 ```
@@ -79,8 +79,8 @@ Revisiting our example we can see that both types have indeed been generated wit
 For instance:
 ```csharp
 var generator =
-	from _ in MGen.For<Recurse>().Depth(2, 2)
-	from recurse in MGen.One<Recurse>()
+	from _ in Fuzz.For<Recurse>().Depth(2, 2)
+	from recurse in Fuzz.One<Recurse>()
 	select recurse;
 Console.WriteLine(generator.Generate().ToString());
 ```

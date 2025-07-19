@@ -4,11 +4,11 @@ namespace QuickFuzzr.Tests.Objects
 {
 	[IgnoringProperties(
 		Content =
-@"Use the `MGen.For<T>().Ignore<TProperty>(Expression<Func<T, TProperty>> func)` method chain.
+@"Use the `Fuzz.For<T>().Ignore<TProperty>(Expression<Func<T, TProperty>> func)` method chain.
 
 F.i. :
 ```
-MGen.For<SomeThingToGenerate>().Ignore(s => s.Id)
+Fuzz.For<SomeThingToGenerate>().Ignore(s => s.Id)
 ```",
 		Order = 0)]
 	public class IgnoringProperties
@@ -43,7 +43,7 @@ MGen.For<SomeThingToGenerate>().Ignore(s => s.Id)
 		[IgnoringProperties(
 			Content =
 @"Sometimes it is useful to ignore all properties while generating an object.  
-For this use `MGen.For<SomeThingToGenerate>().IgnoreAll()`",
+For this use `Fuzz.For<SomeThingToGenerate>().IgnoreAll()`",
 			Order = 3)]
 		public void IgnoreAll()
 		{

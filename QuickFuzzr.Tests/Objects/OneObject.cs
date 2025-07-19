@@ -1,7 +1,7 @@
 ﻿namespace QuickFuzzr.Tests.Objects;
 
 [OneObject(
-	Content = "Use `MGen.One<T>()`, where T is the type of object you want to generate.",
+	Content = "Use `Fuzz.One<T>()`, where T is the type of object you want to generate.",
 	Order = 0)]
 public class OneObject
 {
@@ -18,7 +18,7 @@ public class OneObject
 	[Fact]
 	[OneObject(
 		Content =
-@"- The enumeration properties of the object will be automatically filled in using the default (or replaced) MGen.Enum<T> generator.",
+@"- The enumeration properties of the object will be automatically filled in using the default (or replaced) Fuzz.Enum<T> generator.",
 		Order = 2)]
 	public void FillsEnumerations()
 	{
@@ -38,7 +38,7 @@ public class OneObject
 	[Fact]
 	[OneObject(
 		Content =
-@"- The object properties will also be automatically filled in using the default (or replaced) generators, similar to calling MGen.One<TProperty>() and setting the value using `Apply` (see below) explicitely.",
+@"- The object properties will also be automatically filled in using the default (or replaced) generators, similar to calling Fuzz.One<TProperty>() and setting the value using `Apply` (see below) explicitly.",
 		Order = 3)]
 	public void FillsObjectProperties()
 	{
@@ -80,7 +80,7 @@ public class OneObject
 	//	        Order = 4)]
 	//	    public void FillsPublicFields()
 	//	    {
-	//	        Assert.NotEqual(0, MGen.One<SomeThingToGenerate>().Generate().APublicField);
+	//	        Assert.NotEqual(0, Fuzz.One<SomeThingToGenerate>().Generate().APublicField);
 	//	    }
 
 	[Fact]
@@ -97,7 +97,7 @@ public class OneObject
 	[Fact]
 	[OneObject(
 		Content =
-@"- The overload `MGen.One<T>(Func<T> constructor)` allows for specific constructor selection.",
+@"- The overload `Fuzz.One<T>(Func<T> constructor)` allows for specific constructor selection.",
 		Order = 11)]
 	public void CustomConstructor()
 	{

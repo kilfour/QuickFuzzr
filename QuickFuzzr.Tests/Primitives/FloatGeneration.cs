@@ -1,13 +1,13 @@
 ﻿namespace QuickFuzzr.Tests.Primitives
 {
 	[Floats(
-		Content = "Use `MGen.Float()`.",
+		Content = "Use `Fuzz.Float()`.",
 		Order = 0)]
 	public class FloatGeneration
 	{
 		[Fact]
 		[Floats(
-			Content = "The overload `MGen.Float(float min, float max)` generates a float higher or equal than min and lower than max.",
+			Content = "The overload `Fuzz.Float(float min, float max)` generates a float higher or equal than min and lower than max.",
 			Order = 1)]
 		public void Zero()
 		{
