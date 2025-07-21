@@ -17,11 +17,15 @@
   <ItemGroup>
     <Using Include="Xunit" />
   </ItemGroup>
+  
+  <ItemGroup>
+    <PackageReference Include="QuickPulse" Version="0.2.0" /> 
+  </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\QuickFuzzr\QuickFuzzr.csproj" />
     <ProjectReference Include="..\..\QuickAcid\QuickAcid\QuickAcid.csproj" />
-    <ProjectReference Include="..\..\QuickPulse\QuickPulse\QuickPulse.csproj" />
+    <ProjectReference Include="..\QuickFuzzr\QuickFuzzr.csproj" />
+    <!-- <ProjectReference Include="..\..\QuickPulse\QuickPulse\QuickPulse.csproj" /> -->
   </ItemGroup>
 
 </Project>
