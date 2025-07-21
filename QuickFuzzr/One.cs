@@ -127,19 +127,6 @@ namespace QuickFuzzr
 			}
 		}
 
-
-		// private static Type GetTypeToGenerate(State s, Type type)
-		// {
-		// 	var typeToGenerate = type;
-		// 	if (s.InheritanceInfo.ContainsKey(typeToGenerate))
-		// 	{
-		// 		var derivedTypes = s.InheritanceInfo[typeToGenerate];
-		// 		var index = s.Random.Next(0, derivedTypes.Count);
-		// 		typeToGenerate = derivedTypes[index];
-		// 	}
-		// 	return typeToGenerate;
-		// }
-
 		private static Type GetTypeToGenerate(State s, Type type, Type? typeToExlude)
 		{
 			var typeToGenerate = type;
