@@ -14,7 +14,7 @@ Or via the .NET CLI:
 
 ```bash
 dotnet add package QuickFuzzr
-``
+```
 
 ## Generating Primitives
 ### Introduction
