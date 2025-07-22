@@ -2,6 +2,19 @@
 > A type-walking cheetah with a hand full of random. 
 ## Introduction
 An evolution from the QuickMGenerate library.
+## Installation
+
+QuickFuzzrQuickFuzzr is available on NuGet:
+
+```bash
+Install-Package QuickFuzzr
+```
+
+Or via the .NET CLI:
+
+```bash
+dotnet add package QuickFuzzr
+``
 
 ## Generating Primitives
 ### Introduction
