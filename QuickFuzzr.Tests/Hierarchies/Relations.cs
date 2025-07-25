@@ -1,13 +1,15 @@
-﻿namespace QuickFuzzr.Tests.Hierarchies
-{
-	[Relations(
-		Content = "In the same way one can `Customize` primitives, this can also be done for references.",
-		Order = 0)]
-	public class Relations
-	{
+﻿using QuickPulse.Explains;
 
-		[Relations(
-			Content =
+namespace QuickFuzzr.Tests.Hierarchies;
+
+[Doc(Order = "1-4-1",
+Caption = "Relations",
+	Content = "In the same way one can `Customize` primitives, this can also be done for references.")]
+public class Relations
+{
+
+	[Doc(Order = "1-4-1-1",
+		Content =
 @"E.g. :
 
 ```
@@ -17,23 +19,22 @@ var generator =
 	from orderline in Fuzz.One<OrderLine>()
 	select orderline;
 ```
-",
-			Order = 1)]
-		[Fact]
-		public void SetOneToOne()
-		{
-			var generator =
-				from product in Fuzz.One<ProductItem>()
-				from setProduct in Fuzz.For<OrderLine>().Customize(order => order.Product, product)
-				from orderline in Fuzz.One<OrderLine>()
-				select orderline;
+")]
+	[Fact]
+	public void SetOneToOne()
+	{
+		var generator =
+			from product in Fuzz.One<ProductItem>()
+			from setProduct in Fuzz.For<OrderLine>().Customize(order => order.Product, product)
+			from orderline in Fuzz.One<OrderLine>()
+			select orderline;
 
-			var value = generator.Generate();
-			Assert.NotNull(value.Product);
-		}
+		var value = generator.Generate();
+		Assert.NotNull(value.Product);
+	}
 
-		[Relations(
-			Content =
+	[Doc(Order = "1-4-1-2",
+		Content =
 @"In case of a one-to-many relation where the collection is inaccessible, but a method is provided for adding the many to the one,
 we can use the `Apply` method, which is explained in detail in the chapter 'Other Useful Generators'.
 E.g. :
@@ -47,44 +48,42 @@ var generator =
 ```
 Note the `ToArray` call on the orderlines. 
 This forces enumeration and is necessary because the lines are not enumerated over just by selecting the order.
-",
-			Order = 2)]
-		[Fact]
-		public void OneToMany()
-		{
-			var generator =
-				from order in Fuzz.One<Order>()
-				from addLine in Fuzz.For<OrderLine>().Apply(order.AddOrderLine)
-				from lines in Fuzz.One<OrderLine>().Many(2).ToArray()
-				select order;
+")]
+	[Fact]
+	public void OneToMany()
+	{
+		var generator =
+			from order in Fuzz.One<Order>()
+			from addLine in Fuzz.For<OrderLine>().Apply(order.AddOrderLine)
+			from lines in Fuzz.One<OrderLine>().Many(2).ToArray()
+			select order;
 
-			var value = generator.Generate();
-			Assert.Equal(2, value.OrderLines.Count());
-		}
-
-
-		[Relations(
-			Content =
-@"If we were to select the lines instead of the order, `ToArray` would not be necessary.",
-			Order = 2)]
-		[Fact]
-		public void OneToManyVerifying()
-		{
-			var generator =
-				from order in Fuzz.One<Order>()
-				from addLine in Fuzz.For<OrderLine>().Apply(order.AddOrderLine)
-				from lines in Fuzz.One<OrderLine>().Many(2)
-				select lines;
-
-			var value = generator.Generate().ToArray();
-			Assert.NotNull(value[0].MyOrder);
-			Assert.NotNull(value[1].MyOrder);
-			Assert.Equal(value[0].MyOrder, value[1].MyOrder);
-		}
+		var value = generator.Generate();
+		Assert.Equal(2, value.OrderLines.Count());
+	}
 
 
-		[Relations(
-			Content =
+	[Doc(Order = "1-4-1-3",
+		Content =
+@"If we were to select the lines instead of the order, `ToArray` would not be necessary.")]
+	[Fact]
+	public void OneToManyVerifying()
+	{
+		var generator =
+			from order in Fuzz.One<Order>()
+			from addLine in Fuzz.For<OrderLine>().Apply(order.AddOrderLine)
+			from lines in Fuzz.One<OrderLine>().Many(2)
+			select lines;
+
+		var value = generator.Generate().ToArray();
+		Assert.NotNull(value[0].MyOrder);
+		Assert.NotNull(value[1].MyOrder);
+		Assert.Equal(value[0].MyOrder, value[1].MyOrder);
+	}
+
+
+	[Doc(Order = "1-4-1-4",
+		Content =
 @"Relations defined by constructor injection can be generated using the `One<T>(Func<T> constructor)` overload.
 E.g. :
 
@@ -94,68 +93,57 @@ var generator =
 	from subCategory in Fuzz.One(() => new SubCategory(category)).Many(20)
 	select category;
 ```
-",
-			Order = 3)]
-		[Fact]
-		public void ThroughConstructor()
+")]
+	[Fact]
+	public void ThroughConstructor()
+	{
+		var generator =
+			from category in Fuzz.One<Category>()
+			from subCategory in Fuzz.One(() => new SubCategory(category)).Many(2)
+			select category;
+
+		var value = generator.Generate();
+		Assert.Equal(2, value.SubCategories.Count());
+	}
+
+	public class Order
+	{
+		public Order()
 		{
-			var generator =
-				from category in Fuzz.One<Category>()
-				from subCategory in Fuzz.One(() => new SubCategory(category)).Many(2)
-				select category;
-
-			var value = generator.Generate();
-			Assert.Equal(2, value.SubCategories.Count());
+			OrderLines = new List<OrderLine>();
 		}
-
-		public class Order
+		public List<OrderLine> OrderLines { get; set; }
+		public void AddOrderLine(OrderLine line)
 		{
-			public Order()
-			{
-				OrderLines = new List<OrderLine>();
-			}
-			public List<OrderLine> OrderLines { get; set; }
-			public void AddOrderLine(OrderLine line)
-			{
-				line.MyOrder = this;
-				OrderLines.Add(line);
-			}
+			line.MyOrder = this;
+			OrderLines.Add(line);
 		}
+	}
 
-		public class OrderLine
+	public class OrderLine
+	{
+		public Order? MyOrder { get; set; }
+		public ProductItem? Product { get; set; }
+	}
+
+	public class ProductItem { }
+
+	public class Category
+	{
+		public Category()
 		{
-			public Order? MyOrder { get; set; }
-			public ProductItem? Product { get; set; }
+			SubCategories = new List<SubCategory>();
 		}
+		public List<SubCategory> SubCategories { get; set; }
+	}
 
-		public class ProductItem { }
-
-		public class Category
+	public class SubCategory
+	{
+		public SubCategory(Category category)
 		{
-			public Category()
-			{
-				SubCategories = new List<SubCategory>();
-			}
-			public List<SubCategory> SubCategories { get; set; }
+			MyCategory = category;
+			category.SubCategories.Add(this);
 		}
-
-		public class SubCategory
-		{
-			public SubCategory(Category category)
-			{
-				MyCategory = category;
-				category.SubCategories.Add(this);
-			}
-			public Category MyCategory { get; set; }
-		}
-
-		public class RelationsAttribute : GeneratingHierarchiesAttribute
-		{
-			public RelationsAttribute()
-			{
-				Caption = "Relations.";
-				CaptionOrder = 1;
-			}
-		}
+		public Category MyCategory { get; set; }
 	}
 }

@@ -1,5 +1,6 @@
-﻿using QuickFuzzr.Tests._Tools;
+﻿
 using QuickFuzzr.UnderTheHood;
+using QuickPulse.Explains;
 
 
 namespace QuickFuzzr.Tests.Hierarchies;
@@ -20,7 +21,8 @@ public class Recurse
 
 public class NoRecurse { }
 
-[DepthControl(
+[Doc(Order = "1-4-2",
+	Caption = "Depth Control",
 	Content =
 @"As mentioned in the *A simple object section*: “The object properties will also be automatically filled in.”
 However, this automatic population only applies to the first level of object properties.
@@ -41,12 +43,11 @@ public class Recurse
 		return $""{{ Recurse: Child = {childString}, OtherChild = {otherChildString} }}"";
 	}
 }
-```",
-	Order = 0)]
+```")]
 public class DepthControlTests
 {
 	[Fact]
-	[DepthControl(
+	[Doc(Order = "1-4-2-1",
 		Content =
 @"If we then do :
 ```csharp
@@ -59,8 +60,7 @@ It outputs :
 While this may seem counter-intuitive, it is an intentional default to prevent infinite recursion or overly deep object trees.
 Internally, a `DepthConstraint(int Min, int Max)` is registered per type.
 The default values are `new(1, 1)`.  
-Revisiting our example we can see that both types have indeed been generated with these default values.",
-		Order = 1)]
+Revisiting our example we can see that both types have indeed been generated with these default values.")]
 	public void DefaultDepth()
 	{
 		var generator = Fuzz.One<Recurse>();
@@ -73,7 +73,7 @@ Revisiting our example we can see that both types have indeed been generated wit
 	}
 
 	[Fact]
-	[DepthControl(
+	[Doc(Order = "1-4-2-2",
 		Content =
 @"You can control generation depth per type using the `.Depth(min, max)` combinator.  
 For instance:
@@ -90,8 +90,7 @@ Outputs:
 , OtherChild = { NoRecurse } 
 }
 ```
- ",
-		Order = 2)]
+ ")]
 	public void WithDepth2()
 	{
 		var generator =
@@ -109,7 +108,7 @@ Outputs:
 	}
 
 	[Fact]
-	[DepthControl(
+	[Doc(Order = "1-4-2-3",
 		Content =
 @"Recap:
 ```
@@ -130,8 +129,7 @@ Depth(3, 3)
   	OtherChild = { NoRecurse } 
 }
 ```
- ",
-		Order = 3)]
+ ")]
 	public void WithDepth3()
 	{
 
@@ -152,11 +150,10 @@ Depth(3, 3)
 	}
 
 	[Fact]
-	[DepthControl(
+	[Doc(Order = "1-4-2-4",
 		Content =
 @"Using for instance `.Depth(1, 3)` allows the generator to randomly choose a depth between 1 and 3 (inclusive) for that type.
-This means some instances will be shallow, while others may be more deeply nested, introducing variability within the defined bounds.",
-		Order = 4)]
+This means some instances will be shallow, while others may be more deeply nested, introducing variability within the defined bounds.")]
 	public void WithDepth_1_3()
 	{
 		var generator =
@@ -164,7 +161,7 @@ This means some instances will be shallow, while others may be more deeply neste
 			from value in Fuzz.One<Recurse>()
 			select value;
 
-		CheckIf.GeneratedValuesShouldEventuallySatisfyAll(
+		_Tools.CheckIf.GeneratedValuesShouldEventuallySatisfyAll(
 			generator.Select(GetDepthString),
 			("has depth 1", d => d == "1"),
 			("has depth 2", d => d == "2"),
@@ -182,9 +179,8 @@ This means some instances will be shallow, while others may be more deeply neste
 	}
 
 	[Fact]
-	[DepthControl(
-		Content = "**Note :** The `Depth(...)` combinator does not actually generate anything, it only influences further generation.",
-		Order = 40)]
+	[Doc(Order = "1-4-2-5",
+		Content = "**Note :** The `Depth(...)` combinator does not actually generate anything, it only influences further generation.")]
 	public void ReturnsUnit()
 	{
 		var generator = Fuzz.For<SomeComponent>().Depth(1, 1);
@@ -212,14 +208,5 @@ This means some instances will be shallow, while others may be more deeply neste
 	public class SomeThingRecursive
 	{
 		public SomeThingRecursive? Curse { get; set; }
-	}
-
-	public class DepthControlAttribute : GeneratingHierarchiesAttribute
-	{
-		public DepthControlAttribute()
-		{
-			Caption = "Depth Control.";
-			CaptionOrder = 10;
-		}
 	}
 }

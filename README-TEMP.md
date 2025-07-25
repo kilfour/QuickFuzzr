@@ -148,3 +148,134 @@ var generator =
 ```
 When executing above generator result1 will have all integers set to 42 and result2 to 666.
 *Note :* The Replace combinator does not actually generate anything, it only influences further generation.
+## Generating Hierarchies
+### Relations
+In the same way one can `Customize` primitives, this can also be done for references.
+E.g. :
+
+```
+var generator =
+	from product in Fuzz.One<ProductItem>()
+	from setProduct in Fuzz.For<OrderLine>().Customize(orderline => orderline.Product, product)
+	from orderline in Fuzz.One<OrderLine>()
+	select orderline;
+```
+
+In case of a one-to-many relation where the collection is inaccessible, but a method is provided for adding the many to the one,
+we can use the `Apply` method, which is explained in detail in the chapter 'Other Useful Generators'.
+E.g. :
+
+```
+var generator =
+	from order in Fuzz.One<Order>()
+	from addLine in Fuzz.For<OrderLine>().Apply(order.AddOrderLine)
+	from lines in Fuzz.One<OrderLine>().Many(20).ToArray()
+	select order;
+```
+Note the `ToArray` call on the orderlines. 
+This forces enumeration and is necessary because the lines are not enumerated over just by selecting the order.
+
+If we were to select the lines instead of the order, `ToArray` would not be necessary.
+Relations defined by constructor injection can be generated using the `One<T>(Func<T> constructor)` overload.
+E.g. :
+
+```
+var generator =
+	from category in Fuzz.One<Category>()
+	from subCategory in Fuzz.One(() => new SubCategory(category)).Many(20)
+	select category;
+```
+
+### Depth Control
+As mentioned in the *A simple object section*: “The object properties will also be automatically filled in.”
+However, this automatic population only applies to the first level of object properties.
+Deeper properties will remain null unless configured otherwise.  
+So if we have the following class :
+```csharp
+public class NoRecurse { }
+public class Recurse
+{
+	public Recurse Child { get; set; }
+	public NoRecurse OtherChild { get; set; }
+	public override string ToString()
+	{
+		var childString =
+			Child == null ? "<null>" : Child.ToString();
+		var otherChildString =
+			OtherChild == null ? "<null>" : "{ NoRecurse }";
+		return $"{{ Recurse: Child = {childString}, OtherChild = {otherChildString} }}";
+	}
+}
+```
+If we then do :
+```csharp
+Console.WriteLine(Fuzz.One<Recurse>().Generate().ToString());
+```
+It outputs : 
+```
+{ Recurse: Child = <null>, OtherChild = { NoRecurse } }
+```
+While this may seem counter-intuitive, it is an intentional default to prevent infinite recursion or overly deep object trees.
+Internally, a `DepthConstraint(int Min, int Max)` is registered per type.
+The default values are `new(1, 1)`.  
+Revisiting our example we can see that both types have indeed been generated with these default values.
+You can control generation depth per type using the `.Depth(min, max)` combinator.  
+For instance:
+```csharp
+var generator =
+	from _ in Fuzz.For<Recurse>().Depth(2, 2)
+	from recurse in Fuzz.One<Recurse>()
+	select recurse;
+Console.WriteLine(generator.Generate().ToString());
+```
+Outputs:
+```
+{ Recurse: Child = { Recurse: Child = <null>, OtherChild = { NoRecurse } }
+, OtherChild = { NoRecurse } 
+}
+```
+ 
+Recap:
+```
+Depth(1, 1)
+{ Recurse: Child = <null>, OtherChild = { NoRecurse } }
+
+Depth(2, 2)
+{ Recurse: 
+	Child = { Recurse: Child = <null>, OtherChild = { NoRecurse } },
+  	OtherChild = { NoRecurse } 
+}
+
+Depth(3, 3)
+{ Recurse: 
+	Child = { Recurse: 
+		Child = { Recurse: Child = <null>, OtherChild = { NoRecurse } },
+        OtherChild = { NoRecurse } },
+  	OtherChild = { NoRecurse } 
+}
+```
+ 
+Using for instance `.Depth(1, 3)` allows the generator to randomly choose a depth between 1 and 3 (inclusive) for that type.
+This means some instances will be shallow, while others may be more deeply nested, introducing variability within the defined bounds.
+**Note :** The `Depth(...)` combinator does not actually generate anything, it only influences further generation.
+### Trees
+Depth control together with the `.GenerateAsOneOf(...)` combinator mentioned above and the previously unmentioned `TreeLeaf<T>()` one allows you to build tree type hierarchies.  
+Given the canonical abstract Tree, concrete Branch and Leaf example model, we can generate this like so:
+```csharp
+var generator =
+	from _d in Fuzz.For<Tree>().Depth(1, 3)
+	from _i in Fuzz.For<Tree>().GenerateAsOneOf(typeof(Branch), typeof(Leaf))
+	from _l in Fuzz.For<Tree>().TreeLeaf<Leaf>()
+	from tree in Fuzz.One<Tree>()
+	select tree;
+```
+Our leaf has an int value property, so the following:
+```csharp
+Console.WriteLine(generator.Generate().ToString());
+```	
+Would output something like:
+```
+Node(Leaf(31), Node(Leaf(71), Leaf(10)))
+```
+
+**Note :** The `TreeLeaf<T>()` combinator does not actually generate anything, it only influences further generation.

@@ -1,13 +1,8 @@
-﻿using QuickFuzzr.Tests._Tools;
+﻿
 
-namespace QuickFuzzr.Tests.Hierarchies
-{
-	public class GeneratingHierarchiesAttribute : DocAttribute
-	{
-		public GeneratingHierarchiesAttribute()
-		{
-			Chapter = "Generating Hierarchies";
-			ChapterOrder = 15;
-		}
-	}
-}
+using QuickPulse.Explains;
+
+namespace QuickFuzzr.Tests.Hierarchies;
+
+[Doc(Order = "1-4", Caption = "Generating Hierarchies")]
+public class GeneratingHierarchies { }

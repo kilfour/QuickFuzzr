@@ -1,12 +1,14 @@
-﻿using QuickFuzzr.Tests._Tools;
+﻿
 using QuickFuzzr.UnderTheHood;
+using QuickPulse.Explains;
 
 namespace QuickFuzzr.Tests.Hierarchies;
 
 public class TreeTests
 {
 	[Fact]
-	[Trees(
+	[Doc(Order = "1-4-3",
+		Caption = "Trees",
 		Content =
 @"Depth control together with the `.GenerateAsOneOf(...)` combinator mentioned above and the previously unmentioned `TreeLeaf<T>()` one allows you to build tree type hierarchies.  
 Given the canonical abstract Tree, concrete Branch and Leaf example model, we can generate this like so:
@@ -26,8 +28,7 @@ Would output something like:
 ```
 Node(Leaf(31), Node(Leaf(71), Leaf(10)))
 ```
-",
-		Order = 1)]
+")]
 	public void Trees()
 	{
 		var generator =
@@ -39,7 +40,7 @@ Node(Leaf(31), Node(Leaf(71), Leaf(10)))
 
 		var validLabels = new[] { "E", "LE", "RE", "LLE", "LRE", "RLE", "RRE" };
 
-		CheckIf.GeneratedValuesShouldEventuallySatisfyAll(200,
+		_Tools.CheckIf.GeneratedValuesShouldEventuallySatisfyAll(200,
 			generator,
 			("has E", s => s.Split("|").Contains("E")),
 			("has LE", s => s.Split("|").Contains("LE")),
@@ -53,9 +54,8 @@ Node(Leaf(31), Node(Leaf(71), Leaf(10)))
 	}
 
 	[Fact]
-	[Trees(
-		Content = "**Note :** The `TreeLeaf<T>()` combinator does not actually generate anything, it only influences further generation.",
-		Order = 40)]
+	[Doc(Order = "1-4-3-1",
+		Content = "**Note :** The `TreeLeaf<T>()` combinator does not actually generate anything, it only influences further generation.")]
 	public void ReturnsUnit()
 	{
 		var generator = Fuzz.For<Tree>().Depth(1, 1);
@@ -92,15 +92,6 @@ Node(Leaf(31), Node(Leaf(71), Leaf(10)))
 		{
 			return string.Join("|",
 				labels.Split('|').Select(label => prefix + label));
-		}
-	}
-
-	public class TreesAttribute : GeneratingHierarchiesAttribute
-	{
-		public TreesAttribute()
-		{
-			Caption = "Trees.";
-			CaptionOrder = 20;
 		}
 	}
 }
