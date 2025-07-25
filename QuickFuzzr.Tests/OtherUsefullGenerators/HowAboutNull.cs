@@ -1,18 +1,16 @@
-﻿using QuickFuzzr.UnderTheHood;
+﻿using QuickPulse.Explains;
 
 namespace QuickFuzzr.Tests.OtherUsefullGenerators
 {
-	[AboutNull(
-		Content = "Various extension methods allow for influencing null generation.",
-		Order = 0)]
+	[Doc(Order = "1-5-6", Caption = "How About Null(s)?",
+		Content = "Various extension methods allow for influencing null generation.")]
 	public class HowAboutNull
 	{
 		[Fact]
-		[AboutNull(
+		[Doc(Order = "1-5-6-1",
 			Content =
 @"- `.Nullable()` : Casts a `Generator<T>` to `Generator<T?>`. In addition generates null 1 out of 5 times.  
-> Used for value types.",
-			Order = 1)]
+> Used for value types.")]
 		public void Nullable()
 		{
 			var generator = Fuzz.Int().Nullable();
@@ -32,21 +30,19 @@ namespace QuickFuzzr.Tests.OtherUsefullGenerators
 		}
 
 		[Fact]
-		[AboutNull(
+		[Doc(Order = "1-5-6-2",
 			Content =
-@"- `.Nullable(int timesBeforeResultIsNullAproximation)` : overload of `Nullable()`, generates null 1 out of `timesBeforeResultIsNullAproximation` times .",
-			Order = 2)]
+@"- `.Nullable(int timesBeforeResultIsNullAproximation)` : overload of `Nullable()`, generates null 1 out of `timesBeforeResultIsNullAproximation` times .")]
 		public void NullableWithArgument()
 		{
 			// really don't know how to test this one
 		}
 
 		[Fact]
-		[AboutNull(
+		[Doc(Order = "1-5-6-3",
 			Content =
 @"- `.NullableRef()` : Casts a `Generator<T>` to `Generator<T?>`. In addition generates null 1 out of 5 times.  
-> Used for reference types, including `string`.",
-			Order = 3)]
+> Used for reference types, including `string`.")]
 		public void NullableRef()
 		{
 			var generator = Fuzz.String().NullableRef();
@@ -66,22 +62,12 @@ namespace QuickFuzzr.Tests.OtherUsefullGenerators
 		}
 
 		[Fact]
-		[AboutNull(
+		[Doc(Order = "1-5-6-4",
 			Content =
-@"- `.NullableRef(int timesBeforeResultIsNullAproximation)` : overload of `NullableRef()`, generates null 1 out of `timesBeforeResultIsNullAproximation` times .",
-			Order = 4)]
+@"- `.NullableRef(int timesBeforeResultIsNullAproximation)` : overload of `NullableRef()`, generates null 1 out of `timesBeforeResultIsNullAproximation` times .")]
 		public void NullableRefWithArgument()
 		{
 			// really don't know how to test this one
-		}
-
-		public class AboutNullAttribute : OtherUsefullGeneratorsAttribute
-		{
-			public AboutNullAttribute()
-			{
-				Caption = "How About Null(s)?";
-				CaptionOrder = 11;
-			}
 		}
 	}
 }

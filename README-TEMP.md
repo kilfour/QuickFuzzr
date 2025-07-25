@@ -279,3 +279,80 @@ Node(Leaf(31), Node(Leaf(71), Leaf(10)))
 ```
 
 **Note :** The `TreeLeaf<T>()` combinator does not actually generate anything, it only influences further generation.
+## Other Useful Generators
+### Apply
+Use the `.Apply<T>(Func<T, T> func)` extension method.
+Applies the specified Function to the generated value, returning the result.
+F.i. `Fuzz.Constant(41).Apply(i =>  i + 1)` will return 42.
+Par example, when you want all decimals to be rounded to a certain precision : 
+```
+var generator = 
+	from _ in Fuzz.Decimal().Apply(d => Math.Round(d, 2)).Replace()
+	from result in Fuzz.One<SomeThingToGenerate>()
+	select result;
+```
+An overload exists with signature `Apply<T>(Action<T> action)`.
+This is useful when dealing with objects and you just don't want to return said object.
+E.g. `Fuzz.One<SomeThingToGenerate>().Apply(session.Save)`.
+This function also exists as a convention instead of a generator.
+
+E.g. `Fuzz.For<SomeThingToGenerate>().Apply(session.Save)`.
+
+In this case nothing is generated but instead the function will be applied to all objects of type T during generation.
+
+There is no `Fuzz.For<T>().Apply(Func<T, T> func)` as For can only be used for objects, so there is no need for it really.
+
+Lastly the convention based `Apply` has an overload which takes another generator.
+This generator then provides a value which can be used in the action parameter.
+
+E.g. : 
+```
+var parents = ...
+Fuzz.For<SomeChild>().Apply(Fuzz.ChooseFrom(parents), (child, parent) => parent.Add(child))
+```
+
+### Picking an element out of a range
+Use `Fuzz.ChooseFrom<T>(IEnumerable<T> values)`.
+Picks a random value from a list of options.
+
+F.i. `Fuzz.ChooseFrom(new []{ 1, 2 })` will return either 1 or 2.
+A helper method exists for ease of use when you want to pass in constant values as in the example above. 
+
+I.e. : `Fuzz.ChooseFromThese(1, 2)`
+Another method provides a _semi-safe_ way to pick from what might be an empty list. 
+
+I.e. : `Fuzz.ChooseFromWithDefaultWhenEmpty(new List<int>())`, which returns the default, in this case zero.
+You can also pick from a set of Generators. 
+
+I.e. : `Fuzz.ChooseGenerator(Fuzz.Constant(1), Fuzz.Constant(2))`
+### Generating unique values
+Use the `.Unique(object key)` extension method.
+Makes sure that every generated value is unique.
+When asking for more unique values than the generator can supply, an exception is thrown.
+Multiple unique generators can be defined in one 'composed' generator, without interfering with eachother by using a different key.
+When using the same key for multiple unique generators all values across these generators are unique.
+An overload exist taking a function as an argument allowing for a dynamic key.
+Use the `.Where(Func<T, bool>)` extension method.
+Makes sure that every generated value passes the supplied predicate.
+### Casting Generators
+Various extension methods allow for casting the generated value.
+ - `.AsString()` : Invokes `.ToString()` on the generated value and 
+casts the generator from `Generator<T>` to `Generator<string>`. 
+Useful f.i. to generate numeric strings.
+ - `.AsObject()` : Simply casts the generator itself from `Generator<T>` to `Generator<object>`. Mostly used internally.
+ - `.Nullable()` : Casts a `Generator<T>` to `Generator<T?>`. In addition generates null 1 out of 5 times.
+ - `.Nullable(int timesBeforeResultIsNullAproximation)` : overload of `Nullable()`, generates null 1 out of `timesBeforeResultIsNullAproximation` times .
+### How About Null(s)?
+Various extension methods allow for influencing null generation.
+- `.Nullable()` : Casts a `Generator<T>` to `Generator<T?>`. In addition generates null 1 out of 5 times.  
+> Used for value types.
+- `.Nullable(int timesBeforeResultIsNullAproximation)` : overload of `Nullable()`, generates null 1 out of `timesBeforeResultIsNullAproximation` times .
+- `.NullableRef()` : Casts a `Generator<T>` to `Generator<T?>`. In addition generates null 1 out of 5 times.  
+> Used for reference types, including `string`.
+- `.NullableRef(int timesBeforeResultIsNullAproximation)` : overload of `NullableRef()`, generates null 1 out of `timesBeforeResultIsNullAproximation` times .
+### 'Generating' constants
+Use `Fuzz.Constant<T>(T value)`.
+This generator is most useful in combination with others and is used to inject constants into combined generators.
+### 'Never return null
+Use the `.NeverReturnNull()` extension method.`.
+Only available on generators that provide `Nullable<T>` values, this one makes sure that, you guessed it, the nullable generator never returns null.

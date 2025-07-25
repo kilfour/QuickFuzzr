@@ -1,27 +1,18 @@
-﻿namespace QuickFuzzr.Tests.OtherUsefullGenerators
+﻿using QuickPulse.Explains;
+
+namespace QuickFuzzr.Tests.OtherUsefullGenerators
 {
-	[Constant(
-		Content = "Use `Fuzz.Constant<T>(T value)`.",
-		Order = 0)]
+	[Doc(Order = "1-5-7", Caption = "'Generating' constants",
+		Content = "Use `Fuzz.Constant<T>(T value)`.")]
 	public class Constant
 	{
 		[Fact]
-		[Constant(
+		[Doc(Order = "1-5-7-1",
 			Content =
-@"This generator is most useful in combination with others and is used to inject constants into combined generators.",
-			Order = 1)]
+@"This generator is most useful in combination with others and is used to inject constants into combined generators.")]
 		public void JustReturnsValue()
 		{
 			Assert.Equal(42, Fuzz.Constant(42).Generate());
-		}
-
-		public class ConstantAttribute : OtherUsefullGeneratorsAttribute
-		{
-			public ConstantAttribute()
-			{
-				Caption = "'Generating' constants.";
-				CaptionOrder = 20;
-			}
 		}
 	}
 }

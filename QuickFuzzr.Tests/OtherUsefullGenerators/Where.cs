@@ -1,44 +1,33 @@
-﻿namespace QuickFuzzr.Tests.OtherUsefullGenerators
+﻿using QuickPulse.Explains;
+
+namespace QuickFuzzr.Tests.OtherUsefullGenerators;
+
+[Doc(Order = "1-5-4",
+	Content = "Use the `.Where(Func<T, bool>)` extension method.")]
+public class Where
 {
-	[Where(
-		Content = "Use the `.Where(Func<T, bool>)` extension method.",
-		Order = 0)]
-	public class Where
+	[Fact]
+	[Doc(Order = "1-5-4-1",
+		Content =
+			@"Makes sure that every generated value passes the supplied predicate.")]
+	public void Filters()
 	{
-		[Fact]
-		[Where(
-			Content =
-				@"Makes sure that every generated value passes the supplied predicate.",
-			Order = 1)]
-		public void Filters()
+		var generator = Fuzz.ChooseFromThese(1, 2, 3).Where(a => a != 1);
+		for (int i = 0; i < 100; i++)
 		{
-			var generator = Fuzz.ChooseFromThese(1, 2, 3).Where(a => a != 1);
-			for (int i = 0; i < 100; i++)
-			{
-				var value = generator.Generate();
-				Assert.NotEqual(1, value);
-			}
+			var value = generator.Generate();
+			Assert.NotEqual(1, value);
 		}
+	}
 
-		[Fact]
-		public void WorksWithAllGenerators()
+	[Fact]
+	public void WorksWithAllGenerators()
+	{
+		var generator = Fuzz.Int(1, 5).Where(a => a != 1);
+		for (int i = 0; i < 100; i++)
 		{
-			var generator = Fuzz.Int(1, 5).Where(a => a != 1);
-			for (int i = 0; i < 100; i++)
-			{
-				var value = generator.Generate();
-				Assert.NotEqual(1, value);
-			}
-		}
-
-
-		public class WhereAttribute : OtherUsefullGeneratorsAttribute
-		{
-			public WhereAttribute()
-			{
-				Caption = "Filtering generated values.";
-				CaptionOrder = 5;
-			}
+			var value = generator.Generate();
+			Assert.NotEqual(1, value);
 		}
 	}
 }
