@@ -1,135 +1,119 @@
-﻿namespace QuickFuzzr.Tests.Primitives
+﻿using QuickPulse.Explains;
+
+namespace QuickFuzzr.Tests.Primitives;
+
+[Doc(Order = "1-6-1", Caption = "Integers",
+	Content = "Use `Fuzz.Int()`.")]
+public class IntGeneration
 {
-	[Ints(
-		Content = "Use `Fuzz.Int()`.",
-		Order = 0)]
-	public class IntGeneration
+	[Fact]
+	[Doc(Order = "1-6-1-1",
+		Content = "The overload `Fuzz.Int(int min, int max)` generates an int higher or equal than min and lower than max.")]
+	public void Zero()
 	{
-		[Fact]
-		[Ints(
-			Content = "The overload `Fuzz.Int(int min, int max)` generates an int higher or equal than min and lower than max.",
-			Order = 1)]
-		public void Zero()
+		var generator = Fuzz.Int(0, 0);
+		for (int i = 0; i < 10; i++)
 		{
-			var generator = Fuzz.Int(0, 0);
-			for (int i = 0; i < 10; i++)
+			Assert.Equal(0, generator.Generate());
+		}
+	}
+
+	[Fact]
+	[Doc(Order = "1-6-1-2",
+		Content = "Throws an ArgumentException if min > max.")]
+	public void Throws()
+	{
+		Assert.Throws<ArgumentException>(() => Fuzz.Int(1, 0).Generate());
+	}
+
+	[Fact]
+	[Doc(Order = "1-6-1-3",
+		Content = "The default generator is (min = 1, max = 100).")]
+	public void DefaultGeneratorNeverGeneratesZero()
+	{
+		var generator = Fuzz.Int();
+		for (int i = 0; i < 10; i++)
+		{
+			var val = generator.Generate();
+			Assert.True(val >= 1);
+			Assert.True(val < 100);
+		}
+	}
+
+	[Fact]
+	[Doc(Order = "1-6-1-4",
+		Content = "Can be made to return `int?` using the `.Nullable()` combinator.")]
+	public void Nullable()
+	{
+		var generator = Fuzz.Int().Nullable();
+		var isSomeTimesNull = false;
+		var isSomeTimesNotNull = false;
+		for (int i = 0; i < 100; i++)
+		{
+			var value = generator.Generate();
+			if (value.HasValue)
 			{
-				Assert.Equal(0, generator.Generate());
+				isSomeTimesNotNull = true;
+				Assert.NotEqual(0, value.Value);
 			}
+			else
+				isSomeTimesNull = true;
 		}
+		Assert.True(isSomeTimesNull);
+		Assert.True(isSomeTimesNotNull);
+	}
 
-		[Fact]
-		[Ints(
-			Content = "Throws an ArgumentException if min > max.",
-			Order = 2)]
-		public void Throws()
+	[Fact]
+	[Doc(Order = "1-6-1-5",
+		Content = " - `int` is automatically detected and generated for object properties.")]
+	public void Property()
+	{
+		var generator = Fuzz.One<SomeThingToGenerate>();
+		for (int i = 0; i < 10; i++)
 		{
-			Assert.Throws<ArgumentException>(() => Fuzz.Int(1, 0).Generate());
+			Assert.NotEqual(0, generator.Generate().AProperty);
 		}
+	}
 
-		[Fact]
-		[Ints(
-			Content = "The default generator is (min = 1, max = 100).",
-			Order = 3)]
-		public void DefaultGeneratorNeverGeneratesZero()
+	[Fact]
+	[Doc(Order = "1-6-1-6",
+		Content = " - `Int32` is automatically detected and generated for object properties.")]
+	public void Int32Property()
+	{
+		var generator = Fuzz.One<SomeThingToGenerate>();
+		for (int i = 0; i < 10; i++)
 		{
-			var generator = Fuzz.Int();
-			for (int i = 0; i < 10; i++)
+			Assert.NotEqual(0, generator.Generate().AnInt32Property);
+		}
+	}
+
+	[Fact]
+	[Doc(Order = "1-6-1-7",
+		Content = " - `int?` is automatically detected and generated for object properties.")]
+	public void NullableProperty()
+	{
+		var generator = Fuzz.One<SomeThingToGenerate>();
+		var isSomeTimesNull = false;
+		var isSomeTimesNotNull = false;
+		for (int i = 0; i < 50; i++)
+		{
+			var value = generator.Generate().ANullableProperty;
+			if (value.HasValue)
 			{
-				var val = generator.Generate();
-				Assert.True(val >= 1);
-				Assert.True(val < 100);
+				isSomeTimesNotNull = true;
+				Assert.NotEqual(0, value.Value);
 			}
+			else
+				isSomeTimesNull = true;
 		}
+		Assert.True(isSomeTimesNull);
+		Assert.True(isSomeTimesNotNull);
+	}
 
-		[Fact]
-		[Ints(
-			Content = "Can be made to return `int?` using the `.Nullable()` combinator.",
-			Order = 4)]
-		public void Nullable()
-		{
-			var generator = Fuzz.Int().Nullable();
-			var isSomeTimesNull = false;
-			var isSomeTimesNotNull = false;
-			for (int i = 0; i < 100; i++)
-			{
-				var value = generator.Generate();
-				if (value.HasValue)
-				{
-					isSomeTimesNotNull = true;
-					Assert.NotEqual(0, value.Value);
-				}
-				else
-					isSomeTimesNull = true;
-			}
-			Assert.True(isSomeTimesNull);
-			Assert.True(isSomeTimesNotNull);
-		}
-
-		[Fact]
-		[Ints(
-			Content = " - `int` is automatically detected and generated for object properties.",
-			Order = 5)]
-		public void Property()
-		{
-			var generator = Fuzz.One<SomeThingToGenerate>();
-			for (int i = 0; i < 10; i++)
-			{
-				Assert.NotEqual(0, generator.Generate().AProperty);
-			}
-		}
-
-		[Fact]
-		[Ints(
-			Content = " - `Int32` is automatically detected and generated for object properties.",
-			Order = 6)]
-		public void Int32Property()
-		{
-			var generator = Fuzz.One<SomeThingToGenerate>();
-			for (int i = 0; i < 10; i++)
-			{
-				Assert.NotEqual(0, generator.Generate().AnInt32Property);
-			}
-		}
-
-		[Fact]
-		[Ints(
-			Content = " - `int?` is automatically detected and generated for object properties.",
-			Order = 7)]
-		public void NullableProperty()
-		{
-			var generator = Fuzz.One<SomeThingToGenerate>();
-			var isSomeTimesNull = false;
-			var isSomeTimesNotNull = false;
-			for (int i = 0; i < 50; i++)
-			{
-				var value = generator.Generate().ANullableProperty;
-				if (value.HasValue)
-				{
-					isSomeTimesNotNull = true;
-					Assert.NotEqual(0, value.Value);
-				}
-				else
-					isSomeTimesNull = true;
-			}
-			Assert.True(isSomeTimesNull);
-			Assert.True(isSomeTimesNotNull);
-		}
-
-		public class SomeThingToGenerate
-		{
-			public int AProperty { get; set; }
-			public Int32 AnInt32Property { get; set; }
-			public int? ANullableProperty { get; set; }
-		}
-
-		public class IntsAttribute : ThePrimitiveGeneratorsAttribute
-		{
-			public IntsAttribute()
-			{
-				Caption = "Integers.";
-				CaptionOrder = 0;
-			}
-		}
+	public class SomeThingToGenerate
+	{
+		public int AProperty { get; set; }
+		public Int32 AnInt32Property { get; set; }
+		public int? ANullableProperty { get; set; }
 	}
 }

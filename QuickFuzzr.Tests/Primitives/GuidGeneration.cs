@@ -1,14 +1,14 @@
 ﻿namespace QuickFuzzr.Tests.Primitives
 {
-	[Guids(
-		Content = "Use `Fuzz.Guid()`.\n\nThere is no overload.",
-		Order = 0)]
+	// [Guids(
+	// 	Content = "Use `Fuzz.Guid()`.\n\nThere is no overload.",
+	// 	Order = 0)]
 	public class GuidGeneration
 	{
 		[Fact]
-		[Guids(
-			Content = "The default generator never generates Guid.Empty.",
-			Order = 2)]
+		// [Guids(
+		// 	Content = "The default generator never generates Guid.Empty.",
+		// 	Order = 2)]
 		public void NeverGuidEmpty()
 		{
 			var generator = Fuzz.Guid();
@@ -20,9 +20,9 @@
 		}
 
 		[Fact]
-		[Guids(
-			Content = "Can be made to return `Guid?` using the `.Nullable()` combinator.",
-			Order = 3)]
+		// [Guids(
+		// 	Content = "Can be made to return `Guid?` using the `.Nullable()` combinator.",
+		// 	Order = 3)]
 		public void Nullable()
 		{
 			var generator = Fuzz.Guid().Nullable();
@@ -44,9 +44,9 @@
 		}
 
 		[Fact]
-		[Guids(
-			Content = " - `Guid` is automatically detected and generated for object properties.",
-			Order = 4)]
+		// [Guids(
+		// 	Content = " - `Guid` is automatically detected and generated for object properties.",
+		// 	Order = 4)]
 		public void Property()
 		{
 			var generator = Fuzz.One<SomeThingToGenerate>();
@@ -57,9 +57,9 @@
 		}
 
 		[Fact]
-		[Guids(
-			Content = " - `Guid?` is automatically detected and generated for object properties.",
-			Order = 5)]
+		// [Guids(
+		// 	Content = " - `Guid?` is automatically detected and generated for object properties.",
+		// 	Order = 5)]
 		public void NullableProperty()
 		{
 			var generator = Fuzz.One<SomeThingToGenerate>();
@@ -86,13 +86,13 @@
 			public Guid? ANullableProperty { get; set; }
 		}
 
-		public class GuidsAttribute : ThePrimitiveGeneratorsAttribute
-		{
-			public GuidsAttribute()
-			{
-				Caption = "Guids.";
-				CaptionOrder = 10;
-			}
-		}
+		// public class GuidsAttribute : ThePrimitiveGeneratorsAttribute
+		// {
+		// 	public GuidsAttribute()
+		// 	{
+		// 		Caption = "Guids.";
+		// 		CaptionOrder = 10;
+		// 	}
+		// }
 	}
 }

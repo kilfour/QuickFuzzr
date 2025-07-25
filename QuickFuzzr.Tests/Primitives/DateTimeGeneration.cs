@@ -1,14 +1,14 @@
 ﻿namespace QuickFuzzr.Tests.Primitives
 {
-	[DateTimes(
-		Content = "Use `Fuzz.DateTime()`.",
-		Order = 0)]
+	// [DateTimes(Caption = "DateTimes",
+	// 	Content = "Use `Fuzz.DateTime()`.",
+	// 	Order = 0)]
 	public class DateTimeGeneration
 	{
 		[Fact]
-		[DateTimes(
-			Content = "The overload `Fuzz.DateTimes(DateTime min, DateTime max)` generates a DateTime higher or equal than min and lower than max.",
-			Order = 1)]
+		// [DateTimes(
+		// 	Content = "The overload `Fuzz.DateTimes(DateTime min, DateTime max)` generates a DateTime higher or equal than min and lower than max.",
+		// 	Order = 1)]
 		public void Zero()
 		{
 			var generator = Fuzz.DateTime(new DateTime(2000, 1, 1), new DateTime(2000, 1, 5));
@@ -21,9 +21,9 @@
 		}
 
 		[Fact]
-		[DateTimes(
-			Content = "The default generator is (min = new DateTime(1970, 1, 1), max = new DateTime(2020, 12, 31)).",
-			Order = 2)]
+		// [DateTimes(
+		// 	Content = "The default generator is (min = new DateTime(1970, 1, 1), max = new DateTime(2020, 12, 31)).",
+		// 	Order = 2)]
 		public void DefaultGeneratorNeverGeneratesZero()
 		{
 			var generator = Fuzz.DateTime();
@@ -36,9 +36,9 @@
 		}
 
 		[Fact]
-		[DateTimes(
-			Content = "Can be made to return `DateTime?` using the `.Nullable()` combinator.",
-			Order = 3)]
+		// [DateTimes(
+		// 	Content = "Can be made to return `DateTime?` using the `.Nullable()` combinator.",
+		// 	Order = 3)]
 		public void Nullable()
 		{
 			var generator = Fuzz.DateTime().Nullable();
@@ -60,9 +60,9 @@
 		}
 
 		[Fact]
-		[DateTimes(
-			Content = " - `DateTime` is automatically detected and generated for object properties.",
-			Order = 4)]
+		// [DateTimes(
+		// 	Content = " - `DateTime` is automatically detected and generated for object properties.",
+		// 	Order = 4)]
 		public void Property()
 		{
 			var generator = Fuzz.One<SomeThingToGenerate>();
@@ -73,9 +73,9 @@
 		}
 
 		[Fact]
-		[DateTimes(
-			Content = " - `DateTime?` is automatically detected and generated for object properties.",
-			Order = 5)]
+		// [DateTimes(
+		// 	Content = " - `DateTime?` is automatically detected and generated for object properties.",
+		// 	Order = 5)]
 		public void NullableProperty()
 		{
 			var generator = Fuzz.One<SomeThingToGenerate>();
@@ -100,15 +100,6 @@
 		{
 			public DateTime AProperty { get; set; }
 			public DateTime? ANullableProperty { get; set; }
-		}
-
-		public class DateTimesAttribute : ThePrimitiveGeneratorsAttribute
-		{
-			public DateTimesAttribute()
-			{
-				Caption = "DateTimes.";
-				CaptionOrder = 6;
-			}
 		}
 	}
 }

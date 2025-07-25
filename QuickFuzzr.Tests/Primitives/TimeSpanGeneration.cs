@@ -2,15 +2,15 @@
 
 namespace QuickFuzzr.Tests.Primitives;
 
-[TimeSpans(
-	Content = "Use `Fuzz.TimeSpan()`.",
-	Order = 0)]
+// [TimeSpans(
+// 	Content = "Use `Fuzz.TimeSpan()`.",
+// 	Order = 0)]
 public class TimeSpanGeneration
 {
 	[Fact]
-	[TimeSpans(
-		Content = "The overload `Fuzz.TimeSpan(int max)` generates a TimeSpan with Ticks higher or equal than 1 and lower than max.",
-		Order = 1)]
+	// [TimeSpans(
+	// 	Content = "The overload `Fuzz.TimeSpan(int max)` generates a TimeSpan with Ticks higher or equal than 1 and lower than max.",
+	// 	Order = 1)]
 	public void OverloadRange()
 	{
 		CheckIf.GeneratedValuesShouldAllSatisfy(Fuzz.TimeSpan(5),
@@ -18,9 +18,9 @@ public class TimeSpanGeneration
 	}
 
 	[Fact]
-	[TimeSpans(
-		Content = "The default generator is (max = 1000).",
-		Order = 2)]
+	// [TimeSpans(
+	// 	Content = "The default generator is (max = 1000).",
+	// 	Order = 2)]
 	public void GeneratesValuesBetweenOneIncludedAndThousandExcluded()
 	{
 		CheckIf.GeneratedValuesShouldAllSatisfy(Fuzz.TimeSpan(),
@@ -28,18 +28,18 @@ public class TimeSpanGeneration
 	}
 
 	[Fact]
-	[TimeSpans(
-		Content = "Can be made to return `TimeSpan?` using the `.Nullable()` combinator.",
-		Order = 3)]
+	// [TimeSpans(
+	// 	Content = "Can be made to return `TimeSpan?` using the `.Nullable()` combinator.",
+	// 	Order = 3)]
 	public void Nullable()
 	{
 		CheckIf.GeneratesNullAndNotNull(Fuzz.TimeSpan().Nullable());
 	}
 
 	[Fact]
-	[TimeSpans(
-		Content = " - `TimeSpan` is automatically detected and generated for object properties.",
-		Order = 4)]
+	// [TimeSpans(
+	// 	Content = " - `TimeSpan` is automatically detected and generated for object properties.",
+	// 	Order = 4)]
 	public void Property()
 	{
 		CheckIf.GeneratedValuesShouldAllSatisfy(
@@ -48,9 +48,9 @@ public class TimeSpanGeneration
 	}
 
 	[Fact]
-	[TimeSpans(
-		Content = " - `TimeSpan?` is automatically detected and generated for object properties.",
-		Order = 5)]
+	// [TimeSpans(
+	// 	Content = " - `TimeSpan?` is automatically detected and generated for object properties.",
+	// 	Order = 5)]
 	public void NullableProperty()
 	{
 		CheckIf.GeneratesNullAndNotNull(
@@ -63,12 +63,12 @@ public class TimeSpanGeneration
 		public TimeSpan? ANullableProperty { get; set; }
 	}
 
-	public class TimeSpansAttribute : ThePrimitiveGeneratorsAttribute
-	{
-		public TimeSpansAttribute()
-		{
-			Caption = "TimeSpans.";
-			CaptionOrder = 12;
-		}
-	}
+	// public class TimeSpansAttribute : ThePrimitiveGeneratorsAttribute
+	// {
+	// 	public TimeSpansAttribute()
+	// 	{
+	// 		Caption = "TimeSpans.";
+	// 		CaptionOrder = 12;
+	// 	}
+	// }
 }

@@ -1,14 +1,14 @@
 ﻿namespace QuickFuzzr.Tests.Primitives
 {
-	[Shorts(
-		Content = "Use `Fuzz.Short()`.",
-		Order = 0)]
+	// [Shorts(
+	// 	Content = "Use `Fuzz.Short()`.",
+	// 	Order = 0)]
 	public class ShortGeneration
 	{
 		[Fact]
-		[Shorts(
-			Content = "The overload `Fuzz.Short(short min, short max)` generates a short higher or equal than min and lower than max.",
-			Order = 1)]
+		// [Shorts(
+		// 	Content = "The overload `Fuzz.Short(short min, short max)` generates a short higher or equal than min and lower than max.",
+		// 	Order = 1)]
 		public void Zero()
 		{
 			var generator = Fuzz.Short(0, 0);
@@ -19,9 +19,9 @@
 		}
 
 		[Fact]
-		[Shorts(
-			Content = "The default generator is (min = 1, max = 100).",
-			Order = 2)]
+		// [Shorts(
+		// 	Content = "The default generator is (min = 1, max = 100).",
+		// 	Order = 2)]
 		public void DefaultGeneratorBetweenOneAndHundred()
 		{
 			var generator = Fuzz.Short();
@@ -34,9 +34,9 @@
 		}
 
 		[Fact]
-		[Shorts(
-			Content = "Can be made to return `short?` using the `.Nullable()` combinator.",
-			Order = 3)]
+		// [Shorts(
+		// 	Content = "Can be made to return `short?` using the `.Nullable()` combinator.",
+		// 	Order = 3)]
 		public void Nullable()
 		{
 			var generator = Fuzz.Short().Nullable();
@@ -58,9 +58,9 @@
 		}
 
 		[Fact]
-		[Shorts(
-			Content = " - `short` is automatically detected and generated for object properties.",
-			Order = 4)]
+		// [Shorts(
+		// 	Content = " - `short` is automatically detected and generated for object properties.",
+		// 	Order = 4)]
 		public void Property()
 		{
 			var generator = Fuzz.One<SomeThingToGenerate>();
@@ -71,9 +71,9 @@
 		}
 
 		[Fact]
-		[Shorts(
-			Content = " - `short?` is automatically detected and generated for object properties.",
-			Order = 5)]
+		// [Shorts(
+		// 	Content = " - `short?` is automatically detected and generated for object properties.",
+		// 	Order = 5)]
 		public void NullableProperty()
 		{
 			var generator = Fuzz.One<SomeThingToGenerate>();
@@ -100,13 +100,13 @@
 			public short? ANullableProperty { get; set; }
 		}
 
-		public class ShortsAttribute : ThePrimitiveGeneratorsAttribute
-		{
-			public ShortsAttribute()
-			{
-				Caption = "Shorts.";
-				CaptionOrder = 11;
-			}
-		}
+		// public class ShortsAttribute : ThePrimitiveGeneratorsAttribute
+		// {
+		// 	public ShortsAttribute()
+		// 	{
+		// 		Caption = "Shorts.";
+		// 		CaptionOrder = 11;
+		// 	}
+		// }
 	}
 }

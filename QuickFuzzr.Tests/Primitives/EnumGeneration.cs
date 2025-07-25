@@ -2,16 +2,16 @@
 
 namespace QuickFuzzr.Tests.Primitives
 {
-	[Enums(
-		Content = "Use `Fuzz.Enum<T>()`, where T is the type of Enum you want to generate. \n\nNo overload exists.",
-		Order = 0)]
+	// [Enums(
+	// 	Content = "Use `Fuzz.Enum<T>()`, where T is the type of Enum you want to generate. \n\nNo overload exists.",
+	// 	Order = 0)]
 	public class EnumGeneration
 	{
 		[Fact]
-		[Enums(
-			Content =
-"The default generator just picks a random value from all enemeration values.",
-			Order = 1)]
+		// 		[Enums(
+		// 			Content =
+		// "The default generator just picks a random value from all enemeration values.",
+		// 			Order = 1)]
 		public void DefaultGenerator()
 		{
 			CheckIf.TheseValuesAreGenerated(Fuzz.Enum<MyEnumeration>(),
@@ -19,9 +19,9 @@ namespace QuickFuzzr.Tests.Primitives
 		}
 
 		[Fact]
-		[Enums(
-			Content = " - An Enumeration is automatically detected and generated for object properties.",
-			Order = 2)]
+		// [Enums(
+		// 	Content = " - An Enumeration is automatically detected and generated for object properties.",
+		// 	Order = 2)]
 		public void Property()
 		{
 			CheckIf.TheseValuesAreGenerated(
@@ -30,9 +30,9 @@ namespace QuickFuzzr.Tests.Primitives
 		}
 
 		[Fact]
-		[Enums(
-			Content = " - A nullable Enumeration is automatically detected and generated for object properties.",
-			Order = 3)]
+		// [Enums(
+		// 	Content = " - A nullable Enumeration is automatically detected and generated for object properties.",
+		// 	Order = 3)]
 		public void NullableProperty()
 		{
 			CheckIf.GeneratesNullAndNotNull(
@@ -40,9 +40,9 @@ namespace QuickFuzzr.Tests.Primitives
 		}
 
 		[Fact]
-		[Enums(
-			Content = " - Passing in a non Enum type for T throws an ArgumentException.",
-			Order = 3)]
+		// [Enums(
+		// 	Content = " - Passing in a non Enum type for T throws an ArgumentException.",
+		// 	Order = 3)]
 		public void Throws()
 		{
 			Assert.Throws<ArgumentException>(() => Fuzz.Enum<int>().Generate());
@@ -56,13 +56,13 @@ namespace QuickFuzzr.Tests.Primitives
 
 		public enum MyEnumeration { MyOne, Mytwo }
 
-		public class EnumsAttribute : ThePrimitiveGeneratorsAttribute
-		{
-			public EnumsAttribute()
-			{
-				Caption = "Enums.";
-				CaptionOrder = 20;
-			}
-		}
+		// public class EnumsAttribute : ThePrimitiveGeneratorsAttribute
+		// {
+		// 	public EnumsAttribute()
+		// 	{
+		// 		Caption = "Enums.";
+		// 		CaptionOrder = 20;
+		// 	}
+		// }
 	}
 }

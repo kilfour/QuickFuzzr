@@ -353,6 +353,39 @@ Various extension methods allow for influencing null generation.
 ### 'Generating' constants
 Use `Fuzz.Constant<T>(T value)`.
 This generator is most useful in combination with others and is used to inject constants into combined generators.
+## The Primitive Generators
+### Integers
+Use `Fuzz.Int()`.
+The overload `Fuzz.Int(int min, int max)` generates an int higher or equal than min and lower than max.
+Throws an ArgumentException if min > max.
+The default generator is (min = 1, max = 100).
+Can be made to return `int?` using the `.Nullable()` combinator.
+ - `int` is automatically detected and generated for object properties.
+ - `Int32` is automatically detected and generated for object properties.
+ - `int?` is automatically detected and generated for object properties.
+### Chars
+Use `Fuzz.Char()`. 
+
+No overload exists.
+The default generator always generates a char between lower case 'a' and lower case 'z'.
+Can be made to return `char?` using the `.Nullable()` combinator.
+ - `char` is automatically detected and generated for object properties.
+ - `char?` is automatically detected and generated for object properties.
+Use `Fuzz.String()`.
+### Strings
+The generator always generates every char element of the string to be between lower case 'a' and lower case 'z'.
+The overload `Fuzz.String(int min, int max)` generates an string of length higher or equal than min and lower than max.
+The Default generator generates a string of length higher than 0 and lower than 10.
+ - `string` is automatically detected and generated for object properties.
+Can be made to return `string?` using the `.NullableRef()` combinator.
+### Booleans
+Use `Fuzz.Bool()`. 
+
+No overload exists.
+The default generator generates True or False.
+Can be made to return `bool?` using the `.Nullable()` combinator.
+ - `bool` is automatically detected and generated for object properties.
+ - `bool?` is automatically detected and generated for object properties.
 ### 'Never return null
 Use the `.NeverReturnNull()` extension method.`.
 Only available on generators that provide `Nullable<T>` values, this one makes sure that, you guessed it, the nullable generator never returns null.

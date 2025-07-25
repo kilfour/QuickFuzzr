@@ -1,47 +1,44 @@
-﻿using QuickFuzzr.Tests._Tools;
+﻿
+
+using QuickPulse.Explains;
 
 namespace QuickFuzzr.Tests.Primitives;
 
-[Booleans(
-	Content = "Use `Fuzz.Bool()`. \n\nNo overload exists.",
-	Order = 0)]
+[Doc(Order = "1-6-4", Caption = "Booleans",
+	Content = "Use `Fuzz.Bool()`. \n\nNo overload exists.")]
 public class BoolGeneration
 {
 	[Fact]
-	[Booleans(
-		Content = "The default generator generates True or False.",
-		Order = 1)]
+	[Doc(Order = "1-6-4-1",
+		Content = "The default generator generates True or False.")]
 	public void DefaultGeneratorGeneratesTrueOrFalse()
 	{
-		CheckIf.TheseValuesAreGenerated(Fuzz.Bool(), true, false);
+		_Tools.CheckIf.TheseValuesAreGenerated(Fuzz.Bool(), true, false);
 	}
 
 	[Fact]
-	[Booleans(
-		Content = "Can be made to return `bool?` using the `.Nullable()` combinator.",
-		Order = 2)]
+	[Doc(Order = "1-6-4-2",
+		Content = "Can be made to return `bool?` using the `.Nullable()` combinator.")]
 	public void Nullable()
 	{
-		CheckIf.GeneratesNullAndNotNull(Fuzz.Bool().Nullable());
+		_Tools.CheckIf.GeneratesNullAndNotNull(Fuzz.Bool().Nullable());
 	}
 
 	[Fact]
-	[Booleans(
-		Content = " - `bool` is automatically detected and generated for object properties.",
-		Order = 3)]
+	[Doc(Order = "1-6-4-3",
+		Content = " - `bool` is automatically detected and generated for object properties.")]
 	public void Property()
 	{
-		CheckIf.TheseValuesAreGenerated(
+		_Tools.CheckIf.TheseValuesAreGenerated(
 			Fuzz.One<SomeThingToGenerate>().Select(x => x.AProperty), true, false);
 	}
 
 	[Fact]
-	[Booleans(
-		Content = " - `bool?` is automatically detected and generated for object properties.",
-		Order = 4)]
+	[Doc(Order = "1-6-4-4",
+		Content = " - `bool?` is automatically detected and generated for object properties.")]
 	public void NullableProperty()
 	{
-		CheckIf.GeneratesNullAndNotNull(
+		_Tools.CheckIf.GeneratesNullAndNotNull(
 			Fuzz.One<SomeThingToGenerate>().Select(x => x.ANullableProperty));
 	}
 
@@ -49,14 +46,5 @@ public class BoolGeneration
 	{
 		public bool AProperty { get; set; }
 		public bool? ANullableProperty { get; set; }
-	}
-
-	public class BooleansAttribute : ThePrimitiveGeneratorsAttribute
-	{
-		public BooleansAttribute()
-		{
-			Caption = "Booleans.";
-			CaptionOrder = 3;
-		}
 	}
 }

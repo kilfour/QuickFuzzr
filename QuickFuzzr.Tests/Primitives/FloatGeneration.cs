@@ -1,14 +1,14 @@
 ﻿namespace QuickFuzzr.Tests.Primitives
 {
-	[Floats(
-		Content = "Use `Fuzz.Float()`.",
-		Order = 0)]
+	// [Floats(
+	// 	Content = "Use `Fuzz.Float()`.",
+	// 	Order = 0)]
 	public class FloatGeneration
 	{
 		[Fact]
-		[Floats(
-			Content = "The overload `Fuzz.Float(float min, float max)` generates a float higher or equal than min and lower than max.",
-			Order = 1)]
+		// [Floats(
+		// 	Content = "The overload `Fuzz.Float(float min, float max)` generates a float higher or equal than min and lower than max.",
+		// 	Order = 1)]
 		public void Zero()
 		{
 			var generator = Fuzz.Float(0, 0);
@@ -19,18 +19,18 @@
 		}
 
 		[Fact]
-		[Floats(
-			Content = "Throws an ArgumentException if min > max.",
-			Order = 1.1)]
+		// [Floats(
+		// 	Content = "Throws an ArgumentException if min > max.",
+		// 	Order = 1.1)]
 		public void Throws()
 		{
 			Assert.Throws<ArgumentException>(() => Fuzz.Float(1, 0).Generate());
 		}
 
 		[Fact]
-		[Floats(
-			Content = "The default generator is (min = 1, max = 100).",
-			Order = 2)]
+		// [Floats(
+		// 	Content = "The default generator is (min = 1, max = 100).",
+		// 	Order = 2)]
 		public void DefaultGeneratorBetweenOneAndHundred()
 		{
 			var generator = Fuzz.Float();
@@ -43,9 +43,9 @@
 		}
 
 		[Fact]
-		[Floats(
-			Content = "Can be made to return `float?` using the `.Nullable()` combinator.",
-			Order = 3)]
+		// [Floats(
+		// 	Content = "Can be made to return `float?` using the `.Nullable()` combinator.",
+		// 	Order = 3)]
 		public void Nullable()
 		{
 			var generator = Fuzz.Float().Nullable();
@@ -67,9 +67,9 @@
 		}
 
 		[Fact]
-		[Floats(
-			Content = " - `float` is automatically detected and generated for object properties.",
-			Order = 4)]
+		// [Floats(
+		// 	Content = " - `float` is automatically detected and generated for object properties.",
+		// 	Order = 4)]
 		public void Property()
 		{
 			var generator = Fuzz.One<SomeThingToGenerate>();
@@ -80,9 +80,9 @@
 		}
 
 		[Fact]
-		[Floats(
-			Content = " - `float?` is automatically detected and generated for object properties.",
-			Order = 5)]
+		// [Floats(
+		// 	Content = " - `float?` is automatically detected and generated for object properties.",
+		// 	Order = 5)]
 		public void NullableProperty()
 		{
 			var generator = Fuzz.One<SomeThingToGenerate>();
@@ -109,13 +109,13 @@
 			public float? ANullableProperty { get; set; }
 		}
 
-		public class FloatsAttribute : ThePrimitiveGeneratorsAttribute
-		{
-			public FloatsAttribute()
-			{
-				Caption = "Floats.";
-				CaptionOrder = 9;
-			}
-		}
+		// public class FloatsAttribute : ThePrimitiveGeneratorsAttribute
+		// {
+		// 	public FloatsAttribute()
+		// 	{
+		// 		Caption = "Floats.";
+		// 		CaptionOrder = 9;
+		// 	}
+		// }
 	}
 }

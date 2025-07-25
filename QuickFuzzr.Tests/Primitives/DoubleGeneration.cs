@@ -1,14 +1,14 @@
 ﻿namespace QuickFuzzr.Tests.Primitives
 {
-	[Doubles(
-		Content = "Use `Fuzz.Double()`.",
-		Order = 0)]
+	// [Doubles(Caption = "Doubles",
+	// 	Content = "Use `Fuzz.Double()`.",
+	// 	Order = 0)]
 	public class DoubleGeneration
 	{
 		[Fact]
-		[Doubles(
-			Content = "The overload `Fuzz.Double(double min, double max)` generates a double higher or equal than min and lower than max.",
-			Order = 1)]
+		// [Doubles(
+		// 	Content = "The overload `Fuzz.Double(double min, double max)` generates a double higher or equal than min and lower than max.",
+		// 	Order = 1)]
 		public void Zero()
 		{
 			var generator = Fuzz.Double(0, 0);
@@ -19,18 +19,18 @@
 		}
 
 		[Fact]
-		[Doubles(
-			Content = "Throws an ArgumentException if min > max.",
-			Order = 1.1)]
+		// [Doubles(
+		// 	Content = "Throws an ArgumentException if min > max.",
+		// 	Order = 1.1)]
 		public void Throws()
 		{
 			Assert.Throws<ArgumentException>(() => Fuzz.Double(1, 0).Generate());
 		}
 
 		[Fact]
-		[Doubles(
-			Content = "The default generator is (min = 1, max = 100).",
-			Order = 2)]
+		// [Doubles(
+		// 	Content = "The default generator is (min = 1, max = 100).",
+		// 	Order = 2)]
 		public void DefaultGeneratorBetweenOneAndHundred()
 		{
 			var generator = Fuzz.Double();
@@ -43,9 +43,9 @@
 		}
 
 		[Fact]
-		[Doubles(
-			Content = "Can be made to return `double?` using the `.Nullable()` combinator.",
-			Order = 3)]
+		// [Doubles(
+		// 	Content = "Can be made to return `double?` using the `.Nullable()` combinator.",
+		// 	Order = 3)]
 		public void Nullable()
 		{
 			var generator = Fuzz.Double().Nullable();
@@ -67,9 +67,9 @@
 		}
 
 		[Fact]
-		[Doubles(
-			Content = " - `double` is automatically detected and generated for object properties.",
-			Order = 4)]
+		// [Doubles(
+		// 	Content = " - `double` is automatically detected and generated for object properties.",
+		// 	Order = 4)]
 		public void Property()
 		{
 			var generator = Fuzz.One<SomeThingToGenerate>();
@@ -80,9 +80,9 @@
 		}
 
 		[Fact]
-		[Doubles(
-			Content = " - `double?` is automatically detected and generated for object properties.",
-			Order = 5)]
+		// [Doubles(
+		// 	Content = " - `double?` is automatically detected and generated for object properties.",
+		// 	Order = 5)]
 		public void NullableProperty()
 		{
 			var generator = Fuzz.One<SomeThingToGenerate>();
@@ -107,15 +107,6 @@
 		{
 			public double AProperty { get; set; }
 			public double? ANullableProperty { get; set; }
-		}
-
-		public class DoublesAttribute : ThePrimitiveGeneratorsAttribute
-		{
-			public DoublesAttribute()
-			{
-				Caption = "Doubles.";
-				CaptionOrder = 8;
-			}
 		}
 	}
 }

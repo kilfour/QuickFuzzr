@@ -1,14 +1,14 @@
 ﻿namespace QuickFuzzr.Tests.Primitives
 {
-	[Longs(
-		Content = "Use `Fuzz.Long()`.",
-		Order = 0)]
+	// [Longs(
+	// 	Content = "Use `Fuzz.Long()`.",
+	// 	Order = 0)]
 	public class LongGeneration
 	{
 		[Fact]
-		[Longs(
-			Content = "The overload `Fuzz.Long(long min, long max)` generates a long higher or equal than min and lower than max.",
-			Order = 1)]
+		// [Longs(
+		// 	Content = "The overload `Fuzz.Long(long min, long max)` generates a long higher or equal than min and lower than max.",
+		// 	Order = 1)]
 		public void Zero()
 		{
 			var generator = Fuzz.Long(0, 0);
@@ -19,18 +19,18 @@
 		}
 
 		[Fact]
-		[Longs(
-			Content = "Throws an ArgumentException if min > max.",
-			Order = 1.1)]
+		// [Longs(
+		// 	Content = "Throws an ArgumentException if min > max.",
+		// 	Order = 1.1)]
 		public void Throws()
 		{
 			Assert.Throws<ArgumentException>(() => Fuzz.Long(1, 0).Generate());
 		}
 
 		[Fact]
-		[Longs(
-			Content = "The default generator is (min = 1, max = 100).",
-			Order = 2)]
+		// [Longs(
+		// 	Content = "The default generator is (min = 1, max = 100).",
+		// 	Order = 2)]
 		public void DefaultGeneratorNeverGeneratesZero()
 		{
 			var generator = Fuzz.Long();
@@ -41,9 +41,9 @@
 		}
 
 		[Fact]
-		[Longs(
-			Content = "Can be made to return `long?` using the `.Nullable()` combinator.",
-			Order = 3)]
+		// [Longs(
+		// 	Content = "Can be made to return `long?` using the `.Nullable()` combinator.",
+		// 	Order = 3)]
 		public void Nullable()
 		{
 			var generator = Fuzz.Long().Nullable();
@@ -65,9 +65,9 @@
 		}
 
 		[Fact]
-		[Longs(
-			Content = " - `long` is automatically detected and generated for object properties.",
-			Order = 4)]
+		// [Longs(
+		// 	Content = " - `long` is automatically detected and generated for object properties.",
+		// 	Order = 4)]
 		public void Property()
 		{
 			var generator = Fuzz.One<SomeThingToGenerate>();
@@ -78,9 +78,9 @@
 		}
 
 		[Fact]
-		[Longs(
-			Content = " - `Int64` is automatically detected and generated for object properties.",
-			Order = 5)]
+		// [Longs(
+		// 	Content = " - `Int64` is automatically detected and generated for object properties.",
+		// 	Order = 5)]
 		public void Long32Property()
 		{
 			var generator = Fuzz.One<SomeThingToGenerate>();
@@ -91,9 +91,9 @@
 		}
 
 		[Fact]
-		[Longs(
-			Content = " - `long?` is automatically detected and generated for object properties.",
-			Order = 6)]
+		// [Longs(
+		// 	Content = " - `long?` is automatically detected and generated for object properties.",
+		// 	Order = 6)]
 		public void NullableProperty()
 		{
 			var generator = Fuzz.One<SomeThingToGenerate>();
@@ -121,13 +121,13 @@
 			public long? ANullableProperty { get; set; }
 		}
 
-		public class LongsAttribute : ThePrimitiveGeneratorsAttribute
-		{
-			public LongsAttribute()
-			{
-				Caption = "Longs.";
-				CaptionOrder = 7;
-			}
-		}
+		// 	public class LongsAttribute : ThePrimitiveGeneratorsAttribute
+		// 	{
+		// 		public LongsAttribute()
+		// 		{
+		// 			Caption = "Longs.";
+		// 			CaptionOrder = 7;
+		// 		}
+		// 	}
 	}
 }
