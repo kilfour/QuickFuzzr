@@ -1,12 +1,14 @@
-﻿namespace QuickFuzzr.Tests.Combining
+﻿using QuickPulse.Explains;
+
+namespace QuickFuzzr.Tests.Combining
 {
-	[UsingExtensions(
-		Content = "When applying the various extension methods onto a generator, they get *combined* into a new generator.",
-		Order = 0)]
+	[Doc(Order = "1-2-2",
+		Caption = "Using Extensions",
+		Content = "When applying the various extension methods onto a generator, they get *combined* into a new generator.")]
 	public class UsingExtensions
 	{
 		[Fact]
-		[UsingExtensions(
+		[Doc(Order = "1-2-2-1",
 			Content =
 @"Jumping slightly ahead of ourselves as below example will use methods that are explained more thoroughly further below.
 
@@ -14,8 +16,7 @@ E.g. :
 ```
 Fuzz.ChooseFrom(someValues).Unique(""key"").Many(2)
 ```
-",
-			Order = 1)]
+")]
 		public void SimpleCombination()
 		{
 			var generator =
@@ -25,15 +26,6 @@ Fuzz.ChooseFrom(someValues).Unique(""key"").Many(2)
 			{
 				var values = generator.Generate().ToArray();
 				Assert.Equal(values[0] == 1 ? 2 : 1, values[1]);
-			}
-		}
-
-		public class UsingExtensionsAttribute : CombiningGeneratorsAttribute
-		{
-			public UsingExtensionsAttribute()
-			{
-				Caption = "Using Extensions.";
-				CaptionOrder = 1;
 			}
 		}
 	}

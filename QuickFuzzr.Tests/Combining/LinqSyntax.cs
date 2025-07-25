@@ -1,13 +1,15 @@
-namespace QuickFuzzr.Tests.Combining
+using QuickPulse.Explains;
+
+namespace QuickFuzzr.Tests.Combining;
+
+[Doc(Order = "1-2-1",
+	Caption = "Linq Syntax",
+	Content = "Each Fuzz Generator can be used as a building block and combined using query expressions.")]
+public class LinqSyntax
 {
-	[LinqSyntax(
-		Content = "Each Fuzz Generator can be used as a building block and combined using query expressions.",
-		Order = 0)]
-	public class LinqSyntax
-	{
-		[Fact]
-		[LinqSyntax(
-			Content =
+	[Fact]
+	[Doc(Order = "1-2-1-1",
+		Content =
 @"F.i. the following :
 ```
 var stringGenerator =
@@ -17,22 +19,21 @@ var stringGenerator =
 	select a + b + c;
 Console.WriteLine(stringGenerator.Generate());
 ```
-Will output something like `28ziicuiq56`.",
-			Order = 1)]
-		public void SimpleCombination()
-		{
-			var generator =
-				from a in Fuzz.Constant(42)
-				from b in Fuzz.Constant("Hello")
-				from c in Fuzz.Constant(666)
-				select a + b + c;
+Will output something like `28ziicuiq56`.")]
+	public void SimpleCombination()
+	{
+		var generator =
+			from a in Fuzz.Constant(42)
+			from b in Fuzz.Constant("Hello")
+			from c in Fuzz.Constant(666)
+			select a + b + c;
 
-			Assert.Equal("42Hello666", generator.Generate());
-		}
+		Assert.Equal("42Hello666", generator.Generate());
+	}
 
-		[Fact]
-		[LinqSyntax(
-			Content =
+	[Fact]
+	[Doc(Order = "1-2-1-2",
+		Content =
 @"Generators are reusable building blocks. 
 
 In the following :
@@ -43,22 +44,21 @@ var generator =
 	select thing;
 ```
 We reuse the 'stringGenerator' defined above and replace the default string generator with our custom one. 
-All strings in the generated object will have the pattern defined by 'stringGenerator'.",
-			Order = 2)]
-		public void ReusingGenerators()
-		{
-			var generator =
-				from a in Fuzz.Constant(42)
-				from b in Fuzz.Constant("Hello")
-				from c in Fuzz.Constant(666)
-				select a + b + c;
+All strings in the generated object will have the pattern defined by 'stringGenerator'.")]
+	public void ReusingGenerators()
+	{
+		var generator =
+			from a in Fuzz.Constant(42)
+			from b in Fuzz.Constant("Hello")
+			from c in Fuzz.Constant(666)
+			select a + b + c;
 
-			Assert.Equal("42Hello666", generator.Generate());
-		}
+		Assert.Equal("42Hello666", generator.Generate());
+	}
 
-		[Fact]
-		[LinqSyntax(
-			Content =
+	[Fact]
+	[Doc(Order = "1-2-1-3",
+		Content =
 @"This approach removes the problem of combinatoral explosion. No need for a Transform<T, U>(...) combinator for example
 as this can be easily achieved using Linq. 
 
@@ -68,25 +68,14 @@ var generator =
 	let composed = chars.Aggregate("", (a, b) => a + b.ToString())
 	select composed;
 ```
-Generates: ""-----"".",
-			Order = 2)]
-		public void AvoidingTransform()
-		{
-			var generator =
-				from chars in Fuzz.Constant('-').Many(5)
-				let composed = chars.Aggregate("", (a, b) => a + b.ToString())
-				select composed;
-			var result = generator.Generate();
-			Assert.Equal("-----", result);
-		}
-
-		public class LinqSyntaxAttribute : CombiningGeneratorsAttribute
-		{
-			public LinqSyntaxAttribute()
-			{
-				Caption = "Linq Syntax.";
-				CaptionOrder = 0;
-			}
-		}
+Generates: ""-----"".")]
+	public void AvoidingTransform()
+	{
+		var generator =
+			from chars in Fuzz.Constant('-').Many(5)
+			let composed = chars.Aggregate("", (a, b) => a + b.ToString())
+			select composed;
+		var result = generator.Generate();
+		Assert.Equal("-----", result);
 	}
 }

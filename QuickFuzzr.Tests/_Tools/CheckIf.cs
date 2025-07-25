@@ -45,7 +45,7 @@ public static class CheckIf
             from _s in "Assayer".Assay(
                 [.. labeledChecks.Select(a => (a.Item1, (Func<bool>)(() => inspector.HasValueThatSatisfies(a.Item2))))])
             select Acid.Test;
-        new QState(run).Testify(numberOfExecutions);
+        QState.Run(run).WithOneRun().And(numberOfExecutions.ExecutionsPerRun());
     }
 
     public static void GeneratedValuesShouldAllSatisfy<T>(
@@ -64,7 +64,7 @@ public static class CheckIf
             from input in "Generator".Input(generator.Inspect())
             from _ in CombineSpecs(input, labeledChecks) // Move this to QuickAcid
             select Acid.Test;
-        new QState(run).Testify(numberOfExecutions);
+        QState.Run(run).WithOneRun().And(numberOfExecutions.ExecutionsPerRun());
     }
 
     private static QAcidScript<Acid> CombineSpecs<T>(T input, IEnumerable<(string, Func<T, bool>)> checks)

@@ -73,6 +73,25 @@
 			}
 		}
 
+		[Fact]
+		[Unique(
+			Content =
+@"An overload exist taking a function as an argument allowing for a dynamic key.",
+			Order = 4)]
+		public void Dynamic_Key()
+		{
+			for (int i = 0; i < 100; i++)
+			{
+				var generator =
+					from one in Fuzz.ChooseFromThese(1, 2).Unique(() => 1)
+					from two in Fuzz.ChooseFromThese(1, 2).Unique(() => 1)
+					select new[] { one, two };
+
+				var valueOne = generator.Generate();
+				Assert.Equal(valueOne[0] == 1 ? 2 : 1, valueOne[1]);
+			}
+		}
+
 		public class UniqueAttribute : OtherUsefullGeneratorsAttribute
 		{
 			public UniqueAttribute()

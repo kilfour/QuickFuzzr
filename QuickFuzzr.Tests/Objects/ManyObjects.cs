@@ -1,43 +1,33 @@
-﻿namespace QuickFuzzr.Tests.Objects
+﻿using QuickPulse.Explains;
+
+namespace QuickFuzzr.Tests.Objects;
+
+[Doc(Order = "1-3-5",
+Caption = "Many Objects",
+	Content = "Use The `.Many(int number)` generator extension.")]
+public class ManyObjects
 {
-	[ManyObjects(
-		Content = "Use The `.Many(int number)` generator extension.",
-		Order = 0)]
-	public class ManyObjects
+	[Fact]
+	[Doc(Order = "1-3-5-1",
+		Content =
+@"The generator will generate an IEnumerable<T> of `int number` elements where T is the result type of the extended generator.")]
+	public void CorrectAmountOfElements()
 	{
-		[Fact]
-		[ManyObjects(
-			Content =
-@"The generator will generate an IEnumerable<T> of `int number` elements where T is the result type of the extended generator.",
-			Order = 1)]
-		public void CorrectAmountOfElements()
-		{
-			var values = Fuzz.One<SomeThingToGenerate>().Many(2).Generate();
-			Assert.Equal(2, values.Count());
-			Assert.IsAssignableFrom<IEnumerable<SomeThingToGenerate>>(values);
-		}
-
-		[Fact]
-		[ManyObjects(
-			Content =
-@"An overload exists (`.Many(int min, int max`) where the number of elements is in between the specified arguments.",
-			Order = 1)]
-		public void CorrectAmountOfElementsMinMax()
-		{
-			var values = Fuzz.One<SomeThingToGenerate>().Many(2, 2).Generate();
-			Assert.Equal(2, values.Count());
-			Assert.IsAssignableFrom<IEnumerable<SomeThingToGenerate>>(values);
-		}
-
-		public class SomeThingToGenerate { }
-
-		public class ManyObjectsAttribute : GeneratingObjectsAttribute
-		{
-			public ManyObjectsAttribute()
-			{
-				Caption = "Many objects.";
-				CaptionOrder = 10;
-			}
-		}
+		var values = Fuzz.One<SomeThingToGenerate>().Many(2).Generate();
+		Assert.Equal(2, values.Count());
+		Assert.IsAssignableFrom<IEnumerable<SomeThingToGenerate>>(values);
 	}
+
+	[Fact]
+	[Doc(Order = "1-3-5-2",
+		Content =
+@"An overload exists (`.Many(int min, int max`) where the number of elements is in between the specified arguments.")]
+	public void CorrectAmountOfElementsMinMax()
+	{
+		var values = Fuzz.One<SomeThingToGenerate>().Many(2, 2).Generate();
+		Assert.Equal(2, values.Count());
+		Assert.IsAssignableFrom<IEnumerable<SomeThingToGenerate>>(values);
+	}
+
+	public class SomeThingToGenerate { }
 }

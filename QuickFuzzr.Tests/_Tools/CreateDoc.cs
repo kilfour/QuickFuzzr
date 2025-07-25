@@ -1,11 +1,18 @@
 ﻿using System.Text;
 using QuickFuzzr;
+using QuickPulse.Explains;
 
 namespace QuickFuzzr.Tests._Tools;
 
 public class CreateDoc
 {
 	[Fact]
+	public void Now()
+	{
+		new Document().ToFile("README-TEMP.md", typeof(CreateDoc).Assembly);
+	}
+
+	[Fact(Skip = "not now")]
 	public void Go()
 	{
 		var typeattributes =
@@ -24,7 +31,7 @@ public class CreateDoc
 
 		var chapters = attributes.OrderBy(a => a.ChapterOrder).Select(a => a.Chapter).Distinct();
 		var sb = new StringBuilder();
-		sb.AppendLine(Introduction);
+		//sb.AppendLine(Introduction);
 		foreach (var chapter in chapters)
 		{
 			sb.AppendFormat("## {0}", chapter);

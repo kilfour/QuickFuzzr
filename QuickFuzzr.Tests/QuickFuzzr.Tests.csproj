@@ -25,7 +25,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\QuickAcid\QuickAcid\QuickAcid.csproj" />
     <ProjectReference Include="..\QuickFuzzr\QuickFuzzr.csproj" />
-    <!-- <ProjectReference Include="..\..\QuickPulse\QuickPulse\QuickPulse.csproj" /> -->
+    <ProjectReference Include="..\..\QuickPulse.Explains\QuickPulse.Explains\QuickPulse.Explains.csproj" />
   </ItemGroup>
 
 </Project>
