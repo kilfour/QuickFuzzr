@@ -223,27 +223,6 @@ namespace QuickFuzzr
 							return new Result<Unit>(Unit.Instance, s);
 						};
 			}
-
-			public Generator<Unit> Apply(Action<T> action)
-			{
-				return
-					s =>
-						{
-							s.AddActionToApplyFor(typeof(T), (s, o) => action((T)o));
-							return new Result<Unit>(Unit.Instance, s);
-						};
-			}
-
-			public Generator<Unit> Apply<TGen>(Generator<TGen> generator, Action<T, TGen> action)
-			{
-				return
-					s =>
-						   {
-							   Action<State, object> objectAction = (s1, o) => action((T)o, generator(s1).Value);
-							   s.AddActionToApplyFor(typeof(T), objectAction);
-							   return new Result<Unit>(Unit.Instance, s);
-						   };
-			}
 		}
 	}
 }

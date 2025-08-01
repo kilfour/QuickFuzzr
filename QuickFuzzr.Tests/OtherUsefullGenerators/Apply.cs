@@ -53,61 +53,6 @@ E.g. `Fuzz.One<SomeThingToGenerate>().Apply(session.Save)`.")]
 		Assert.Equal(42, generator.Generate().MyProperty);
 	}
 
-	[Fact]
-	[Doc(Order = "1-5-1-4",
-		Content =
-@"This function also exists as a convention instead of a generator.
-
-E.g. `Fuzz.For<SomeThingToGenerate>().Apply(session.Save)`.
-
-In this case nothing is generated but instead the function will be applied to all objects of type T during generation.
-
-There is no `Fuzz.For<T>().Apply(Func<T, T> func)` as For can only be used for objects, so there is no need for it really.
-")]
-	public void AsConventionWithGenerator()
-	{
-		var generator = Fuzz.For<SomeThingToGenerate>().Apply(thing => thing.MyProperty = 42);
-		Assert.Equal(Unit.Instance, generator.Generate());
-
-		var newGenerator =
-			from g in generator
-			from result in Fuzz.One<SomeThingToGenerate>()
-			select result;
-
-		Assert.Equal(42, newGenerator.Generate().MyProperty);
-	}
-
-	[Fact]
-	[Doc(Order = "1-5-1-5",
-		Content =
-@"Lastly the convention based `Apply` has an overload which takes another generator.
-This generator then provides a value which can be used in the action parameter.
-
-E.g. : 
-```
-var parents = ...
-Fuzz.For<SomeChild>().Apply(Fuzz.ChooseFrom(parents), (child, parent) => parent.Add(child))
-```
-")]
-	public void AsConvention()
-	{
-		var generator =
-			from convention in
-				Fuzz.For<SomeThingToGenerate>()
-					.Apply(Fuzz.Int(1, 3).Unique("SomeKey"), (thing, i) => thing.MyProperty = i)
-			from result in Fuzz.One<SomeThingToGenerate>()
-			select result;
-
-		var valueGen = generator.Many(2).Generate();
-		var value = valueGen.ToList();
-		var valueOne = value[0].MyProperty;
-		var valueTwo = value[1].MyProperty;
-		if (valueOne == 1)
-			Assert.Equal(2, valueTwo);
-		else
-			Assert.Equal(1, valueTwo);
-	}
-
 	public class SomeThingToGenerate
 	{
 		public decimal MyProperty { get; set; }

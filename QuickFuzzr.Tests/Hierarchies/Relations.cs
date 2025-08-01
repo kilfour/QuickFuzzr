@@ -42,8 +42,8 @@ E.g. :
 ```
 var generator =
 	from order in Fuzz.One<Order>()
-	from addLine in Fuzz.For<OrderLine>().Apply(order.AddOrderLine)
-	from lines in Fuzz.One<OrderLine>().Many(20).ToArray()
+	from lines in Fuzz.One<OrderLine>()
+		.Apply(a => order.AddOrderLine(a)).Many(20).ToArray()
 	select order;
 ```
 Note the `ToArray` call on the orderlines. 
@@ -54,8 +54,8 @@ This forces enumeration and is necessary because the lines are not enumerated ov
 	{
 		var generator =
 			from order in Fuzz.One<Order>()
-			from addLine in Fuzz.For<OrderLine>().Apply(order.AddOrderLine)
-			from lines in Fuzz.One<OrderLine>().Many(2).ToArray()
+			from lines in Fuzz.One<OrderLine>()
+				.Apply(a => order.AddOrderLine(a)).Many(2).ToArray()
 			select order;
 
 		var value = generator.Generate();
@@ -70,9 +70,8 @@ This forces enumeration and is necessary because the lines are not enumerated ov
 	public void OneToManyVerifying()
 	{
 		var generator =
-			from order in Fuzz.One<Order>()
-			from addLine in Fuzz.For<OrderLine>().Apply(order.AddOrderLine)
 			from lines in Fuzz.One<OrderLine>().Many(2)
+			from order in Fuzz.One<Order>().Apply(a => lines.ForEach(b => a.AddOrderLine(b)))
 			select lines;
 
 		var value = generator.Generate().ToArray();
