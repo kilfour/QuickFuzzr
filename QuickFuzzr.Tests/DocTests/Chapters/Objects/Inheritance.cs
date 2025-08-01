@@ -1,7 +1,7 @@
 ﻿using QuickFuzzr.UnderTheHood;
 using QuickPulse.Explains;
 
-namespace QuickFuzzr.Tests.Objects;
+namespace QuickFuzzr.Tests.DocTests.Chapters.Objects;
 
 [DocFile]
 [DocContent(@"Use The `Fuzz.For<T>().GenerateAsOneOf(params Type[] types)` method chain.

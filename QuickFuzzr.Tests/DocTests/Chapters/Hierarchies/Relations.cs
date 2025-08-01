@@ -1,6 +1,7 @@
-﻿using QuickPulse.Explains;
+﻿using QuickFuzzr;
+using QuickPulse.Explains;
 
-namespace QuickFuzzr.Tests.Hierarchies;
+namespace QuickFuzzr.Tests.DocTests.Chapters.Hierarchies;
 
 [DocFile]
 [DocContent("In the same way one can `Customize` primitives, this can also be done for references.")]

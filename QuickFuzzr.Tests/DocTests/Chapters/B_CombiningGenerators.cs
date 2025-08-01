@@ -1,4 +1,4 @@
-using QuickFuzzr.Tests.Combining;
+using QuickFuzzr.Tests.DocTests.Chapters.Combining;
 using QuickPulse.Explains;
 
 namespace QuickFuzzr.Tests.DocTests.Chapters;

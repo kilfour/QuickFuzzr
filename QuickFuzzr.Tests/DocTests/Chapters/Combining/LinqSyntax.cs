@@ -1,6 +1,6 @@
 using QuickPulse.Explains;
 
-namespace QuickFuzzr.Tests.Combining;
+namespace QuickFuzzr.Tests.DocTests.Chapters.Combining;
 
 [DocContent("Each Fuzz Generator can be used as a building block and combined using query expressions.")]
 public class LinqSyntax

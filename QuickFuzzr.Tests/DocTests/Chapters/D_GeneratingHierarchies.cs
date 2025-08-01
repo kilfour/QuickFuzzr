@@ -1,8 +1,7 @@
-﻿
-
+﻿using QuickFuzzr.Tests.DocTests.Chapters.Hierarchies;
 using QuickPulse.Explains;
 
-namespace QuickFuzzr.Tests.Hierarchies;
+namespace QuickFuzzr.Tests.DocTests.Chapters;
 
 [DocFile]
 [DocInclude(typeof(Relations))]

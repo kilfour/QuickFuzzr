@@ -1,9 +1,8 @@
-﻿
-using QuickFuzzr.UnderTheHood;
+﻿using QuickFuzzr.UnderTheHood;
 using QuickPulse.Explains;
 
 
-namespace QuickFuzzr.Tests.Hierarchies;
+namespace QuickFuzzr.Tests.DocTests.Chapters.Hierarchies;
 
 public class Recurse
 {

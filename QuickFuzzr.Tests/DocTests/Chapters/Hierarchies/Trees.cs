@@ -1,8 +1,9 @@
 ﻿
+using QuickFuzzr;
 using QuickFuzzr.UnderTheHood;
 using QuickPulse.Explains;
 
-namespace QuickFuzzr.Tests.Hierarchies;
+namespace QuickFuzzr.Tests.DocTests.Chapters.Hierarchies;
 
 [DocFile]
 public class Trees

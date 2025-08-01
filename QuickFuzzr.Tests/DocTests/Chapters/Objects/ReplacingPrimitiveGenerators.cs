@@ -1,8 +1,7 @@
-﻿
-using QuickFuzzr.UnderTheHood;
+﻿using QuickFuzzr.UnderTheHood;
 using QuickPulse.Explains;
 
-namespace QuickFuzzr.Tests.Objects;
+namespace QuickFuzzr.Tests.DocTests.Chapters.Objects;
 
 [DocFile]
 [DocContent("Use the `.Replace()` extension method.")]

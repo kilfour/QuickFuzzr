@@ -1,6 +1,6 @@
 ﻿using QuickPulse.Explains;
 
-namespace QuickFuzzr.Tests.Objects;
+namespace QuickFuzzr.Tests.DocTests.Chapters.Objects;
 
 [DocFile]
 [DocContent("Use `Fuzz.One<T>()`, where T is the type of object you want to generate.")]

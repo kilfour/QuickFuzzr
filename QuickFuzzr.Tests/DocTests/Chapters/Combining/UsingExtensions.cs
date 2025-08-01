@@ -1,6 +1,7 @@
-﻿using QuickPulse.Explains;
+﻿using QuickFuzzr;
+using QuickPulse.Explains;
 
-namespace QuickFuzzr.Tests.Combining
+namespace QuickFuzzr.Tests.DocTests.Chapters.Combining
 {
 	[DocContent("When applying the various extension methods onto a generator, they get *combined* into a new generator.")]
 	public class UsingExtensions
