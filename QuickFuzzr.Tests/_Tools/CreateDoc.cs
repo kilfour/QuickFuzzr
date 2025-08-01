@@ -1,6 +1,6 @@
 ﻿using System.Text;
 using QuickFuzzr;
-using QuickPulse.Explains;
+using QuickPulse.Explains.Deprecated;
 
 namespace QuickFuzzr.Tests._Tools;
 

@@ -1,6 +1,6 @@
 ﻿
 
-using QuickPulse.Explains;
+using QuickPulse.Explains.Deprecated;
 
 namespace QuickFuzzr.Tests.OtherUsefullGenerators
 {

@@ -123,7 +123,7 @@ Similar to the `ToArray` method. But instead of an Array, this one returns a, yo
 Use the `.Replace()` extension method.
 
 Example
-```
+```csharp
 var generator =
 	from _ in Fuzz.Constant(42).Replace()
 	from result in Fuzz.One<SomeThingToGenerate>()
