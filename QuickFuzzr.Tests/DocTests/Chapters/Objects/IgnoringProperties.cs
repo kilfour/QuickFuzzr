@@ -1,12 +1,10 @@
 ﻿using QuickFuzzr.UnderTheHood;
-using QuickPulse.Explains.Deprecated;
+using QuickPulse.Explains;
 
 namespace QuickFuzzr.Tests.Objects;
 
-[Doc(Order = "1-3-2",
-Caption = "Ignoring properties",
-	Content =
-@"Use the `Fuzz.For<T>().Ignore<TProperty>(Expression<Func<T, TProperty>> func)` method chain.
+[DocFile]
+[DocContent(@"Use the `Fuzz.For<T>().Ignore<TProperty>(Expression<Func<T, TProperty>> func)` method chain.
 
 F.i. :
 ```
@@ -15,8 +13,7 @@ Fuzz.For<SomeThingToGenerate>().Ignore(s => s.Id)
 public class IgnoringProperties
 {
 	[Fact]
-	[Doc(Order = "1-3-2-1",
-		Content = "The property specified will be ignored during generation.")]
+	[DocContent("The property specified will be ignored during generation.")]
 	public void StaysDefaultValue()
 	{
 		var generator =
@@ -27,8 +24,7 @@ public class IgnoringProperties
 	}
 
 	[Fact]
-	[Doc(Order = "1-3-2-2",
-		Content = "Derived classes generated also ignore the base property.")]
+	[DocContent("Derived classes generated also ignore the base property.")]
 	public void WorksForDerived()
 	{
 		var generator =
@@ -39,9 +35,7 @@ public class IgnoringProperties
 	}
 
 	[Fact]
-	[Doc(Order = "1-3-2-3",
-		Content =
-@"Sometimes it is useful to ignore all properties while generating an object.  
+	[DocContent(@"Sometimes it is useful to ignore all properties while generating an object.  
 For this use `Fuzz.For<SomeThingToGenerate>().IgnoreAll()`")]
 	public void IgnoreAll()
 	{
@@ -53,9 +47,7 @@ For this use `Fuzz.For<SomeThingToGenerate>().IgnoreAll()`")]
 	}
 
 	[Fact]
-	[Doc(Order = "1-3-2-4",
-		Content =
-@"`IgnoreAll()` does not ignore properties on derived classes, even inherited properties.")]
+	[DocContent(@"`IgnoreAll()` does not ignore properties on derived classes, even inherited properties.")]
 	public void IgnoreAllDerived()
 	{
 		var generator =
@@ -69,8 +61,7 @@ For this use `Fuzz.For<SomeThingToGenerate>().IgnoreAll()`")]
 	}
 
 	[Fact]
-	[Doc(Order = "1-3-2-5",
-		Content = "**Note :** `The Ignore(...)` combinator does not actually generate anything, it only influences further generation.")]
+	[DocContent("**Note :** `The Ignore(...)` combinator does not actually generate anything, it only influences further generation.")]
 	public void ReturnsUnit()
 	{
 		var generator = Fuzz.For<SomeThingToGenerate>().Ignore(s => s.AnInt);

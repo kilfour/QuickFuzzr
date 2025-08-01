@@ -1,9 +1,10 @@
-﻿using QuickPulse.Explains;
+﻿using QuickFuzzr.Tests.Objects;
+using QuickPulse.Explains;
 
-namespace QuickFuzzr.Tests.Objects;
+namespace QuickFuzzr.Tests.DocTests.Chapters;
 
 [DocFile]
-[DocInclude(typeof(OneObject))]
+[DocInclude(typeof(ASimpleObject))]
 [DocInclude(typeof(IgnoringProperties))]
 [DocInclude(typeof(CustomizingProperties))]
 [DocInclude(typeof(CustomizingConstructors))]

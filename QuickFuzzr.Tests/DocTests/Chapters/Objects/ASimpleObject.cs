@@ -1,25 +1,20 @@
-﻿using QuickPulse.Explains.Deprecated;
+﻿using QuickPulse.Explains;
 
 namespace QuickFuzzr.Tests.Objects;
 
-[Doc(Order = "1-3-1",
-	Caption = "A simple object",
-	Content = "Use `Fuzz.One<T>()`, where T is the type of object you want to generate.")]
-public class OneObject
+[DocFile]
+[DocContent("Use `Fuzz.One<T>()`, where T is the type of object you want to generate.")]
+public class ASimpleObject
 {
 	[Fact]
-	[Doc(Order = "1-3-1-1",
-		Content =
-@"- The primitive properties of the object will be automatically filled in using the default (or replaced) generators.")]
+	[DocContent("- The primitive properties of the object will be automatically filled in using the default (or replaced) generators.")]
 	public void FillsPrimitives()
 	{
 		Assert.NotEqual(0, Fuzz.One<SomeThingToGenerate>().Generate().AProperty);
 	}
 
 	[Fact]
-	[Doc(Order = "1-3-1-2",
-		Content =
-@"- The enumeration properties of the object will be automatically filled in using the default (or replaced) Fuzz.Enum<T> generator.")]
+	[DocContent("- The enumeration properties of the object will be automatically filled in using the default (or replaced) Fuzz.Enum<T> generator.")]
 	public void FillsEnumerations()
 	{
 		var generator = Fuzz.One<SomeThingToGenerate>();
@@ -36,9 +31,7 @@ public class OneObject
 	}
 
 	[Fact]
-	[Doc(Order = "1-3-1-3",
-		Content =
-@"- The object properties will also be automatically filled in using the default (or replaced) generators, similar to calling Fuzz.One<TProperty>() and setting the value using `Apply` (see below) explicitly.")]
+	[DocContent("- The object properties will also be automatically filled in using the default (or replaced) generators, similar to calling Fuzz.One<TProperty>() and setting the value using `Apply` (see below) explicitly.")]
 	public void FillsObjectProperties()
 	{
 		var generator = Fuzz.One<RootObject>();
@@ -52,9 +45,7 @@ public class OneObject
 	public class NestedObject { public int Value { get; set; } }
 
 	[Fact]
-	[Doc(Order = "1-3-1-4",
-		Content =
-@"- Also works for properties with private setters.")]
+	[DocContent("- Also works for properties with private setters.")]
 	public void FillsPrivateSetterProperties()
 	{
 		Assert.NotEqual(0, Fuzz.One<SomeThingToGenerate>().Generate().APropertyWithPrivateSetters);
@@ -72,9 +63,7 @@ public class OneObject
 	}
 
 	[Fact]
-	[Doc(Order = "1-3-1-5",
-		Content =
-@"- Can generate any object that has a parameterless constructor, be it public, protected, or private.")]
+	[DocContent("- Can generate any object that has a parameterless constructor, be it public, protected, or private.")]
 	public void CanGenerateObjectsProtectedAndPrivate()
 	{
 		Fuzz.One<SomeThingProtectedToGenerate>().Generate();
@@ -82,9 +71,7 @@ public class OneObject
 	}
 
 	[Fact]
-	[Doc(Order = "1-3-1-6",
-		Content =
-@"- The overload `Fuzz.One<T>(Func<T> constructor)` allows for specific constructor selection.")]
+	[DocContent("- The overload `Fuzz.One<T>(Func<T> constructor)` allows for specific constructor selection.")]
 	public void CustomConstructor()
 	{
 		var generator =
