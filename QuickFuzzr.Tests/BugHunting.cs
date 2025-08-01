@@ -1,6 +1,6 @@
 namespace QuickFuzzr.Tests;
 
-public class Bar
+public class BugHunting
 {
     [Fact]
     public void Is_It_The_Many_The_Choose_Or_The_Apply()

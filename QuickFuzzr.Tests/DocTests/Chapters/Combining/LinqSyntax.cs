@@ -1,15 +1,12 @@
-using QuickPulse.Explains.Deprecated;
+using QuickPulse.Explains;
 
 namespace QuickFuzzr.Tests.Combining;
 
-[Doc(Order = "1-2-1",
-	Caption = "Linq Syntax",
-	Content = "Each Fuzz Generator can be used as a building block and combined using query expressions.")]
+[DocContent("Each Fuzz Generator can be used as a building block and combined using query expressions.")]
 public class LinqSyntax
 {
 	[Fact]
-	[Doc(Order = "1-2-1-1",
-		Content =
+	[DocContent(
 @"F.i. the following :
 ```
 var stringGenerator =
@@ -32,8 +29,7 @@ Will output something like `28ziicuiq56`.")]
 	}
 
 	[Fact]
-	[Doc(Order = "1-2-1-2",
-		Content =
+	[DocContent(
 @"Generators are reusable building blocks. 
 
 In the following :
@@ -57,8 +53,7 @@ All strings in the generated object will have the pattern defined by 'stringGene
 	}
 
 	[Fact]
-	[Doc(Order = "1-2-1-3",
-		Content =
+	[DocContent(
 @"This approach removes the problem of combinatoral explosion. No need for a Transform<T, U>(...) combinator for example
 as this can be easily achieved using Linq. 
 

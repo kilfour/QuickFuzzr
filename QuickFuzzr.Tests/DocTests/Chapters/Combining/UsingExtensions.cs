@@ -1,15 +1,12 @@
-﻿using QuickPulse.Explains.Deprecated;
+﻿using QuickPulse.Explains;
 
 namespace QuickFuzzr.Tests.Combining
 {
-	[Doc(Order = "1-2-2",
-		Caption = "Using Extensions",
-		Content = "When applying the various extension methods onto a generator, they get *combined* into a new generator.")]
+	[DocContent("When applying the various extension methods onto a generator, they get *combined* into a new generator.")]
 	public class UsingExtensions
 	{
 		[Fact]
-		[Doc(Order = "1-2-2-1",
-			Content =
+		[DocContent(
 @"Jumping slightly ahead of ourselves as below example will use methods that are explained more thoroughly further below.
 
 E.g. :

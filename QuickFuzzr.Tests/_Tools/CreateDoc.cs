@@ -1,5 +1,7 @@
 ﻿using System.Text;
 using QuickFuzzr;
+using QuickFuzzr.Tests.DocTests;
+using QuickPulse.Explains;
 using QuickPulse.Explains.Deprecated;
 
 namespace QuickFuzzr.Tests._Tools;
@@ -9,7 +11,8 @@ public class CreateDoc
 	[Fact]
 	public void Now()
 	{
-		new Document().ToFile("README-TEMP.md", typeof(CreateDoc).Assembly);
+		//new Document().ToFile("README-TEMP.md", typeof(CreateDoc).Assembly);
+		Explain.This<QuickFuzzrTests>("README-TEMP.md");
 	}
 
 	[Fact(Skip = "not now")]
