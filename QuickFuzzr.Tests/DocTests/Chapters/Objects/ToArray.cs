@@ -1,16 +1,13 @@
-﻿using QuickPulse.Explains.Deprecated;
+﻿using QuickPulse.Explains;
 
 namespace QuickFuzzr.Tests.Objects;
 
-[Doc(Order = "1-3-7",
-Caption = "ToArray",
-		Content = "Use The `.ToArray()` generator extension.")]
+[DocFile]
+[DocContent("Use The `.ToArray()` generator extension.")]
 public class ToArray
 {
 	[Fact]
-	[Doc(Order = "1-3-7-1",
-		Content =
-@"The `Many` generator above returns an IEnumerable.
+	[DocContent(@"The `Many` generator above returns an IEnumerable.
 This means it's value would be regenerated if we were to iterate over it more than once.
 Use `ToArray` to *fix* the IEnumerable in place, so that it will return the same result with each iteration.
 It can also be used to force evaluation in case the IEnumerable is not enumerated over because there's nothing in your select clause

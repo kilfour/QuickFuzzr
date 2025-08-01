@@ -1,6 +1,6 @@
 ﻿
 using QuickFuzzr.UnderTheHood;
-using QuickPulse.Explains.Deprecated;
+using QuickPulse.Explains;
 
 
 namespace QuickFuzzr.Tests.Hierarchies;
@@ -21,10 +21,8 @@ public class Recurse
 
 public class NoRecurse { }
 
-[Doc(Order = "1-4-2",
-	Caption = "Depth Control",
-	Content =
-@"As mentioned in the *A simple object section*: “The object properties will also be automatically filled in.”
+[DocFile]
+[DocContent(@"As mentioned in the *A simple object section*: “The object properties will also be automatically filled in.”
 However, this automatic population only applies to the first level of object properties.
 Deeper properties will remain null unless configured otherwise.  
 So if we have the following class :
@@ -44,11 +42,10 @@ public class Recurse
 	}
 }
 ```")]
-public class DepthControlTests
+public class DepthControl
 {
 	[Fact]
-	[Doc(Order = "1-4-2-1",
-		Content =
+	[DocContent(
 @"If we then do :
 ```csharp
 Console.WriteLine(Fuzz.One<Recurse>().Generate().ToString());
@@ -73,8 +70,7 @@ Revisiting our example we can see that both types have indeed been generated wit
 	}
 
 	[Fact]
-	[Doc(Order = "1-4-2-2",
-		Content =
+	[DocContent(
 @"You can control generation depth per type using the `.Depth(min, max)` combinator.  
 For instance:
 ```csharp
@@ -108,8 +104,7 @@ Outputs:
 	}
 
 	[Fact]
-	[Doc(Order = "1-4-2-3",
-		Content =
+	[DocContent(
 @"Recap:
 ```
 Depth(1, 1)
@@ -150,8 +145,7 @@ Depth(3, 3)
 	}
 
 	[Fact]
-	[Doc(Order = "1-4-2-4",
-		Content =
+	[DocContent(
 @"Using for instance `.Depth(1, 3)` allows the generator to randomly choose a depth between 1 and 3 (inclusive) for that type.
 This means some instances will be shallow, while others may be more deeply nested, introducing variability within the defined bounds.")]
 	public void WithDepth_1_3()
@@ -179,8 +173,7 @@ This means some instances will be shallow, while others may be more deeply neste
 	}
 
 	[Fact]
-	[Doc(Order = "1-4-2-5",
-		Content = "**Note :** The `Depth(...)` combinator does not actually generate anything, it only influences further generation.")]
+	[DocContent("**Note :** The `Depth(...)` combinator does not actually generate anything, it only influences further generation.")]
 	public void ReturnsUnit()
 	{
 		var generator = Fuzz.For<SomeComponent>().Depth(1, 1);

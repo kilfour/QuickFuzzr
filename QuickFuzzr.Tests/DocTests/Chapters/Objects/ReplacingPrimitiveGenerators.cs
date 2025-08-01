@@ -1,18 +1,15 @@
 ﻿
 using QuickFuzzr.UnderTheHood;
-using QuickPulse.Explains.Deprecated;
+using QuickPulse.Explains;
 
 namespace QuickFuzzr.Tests.Objects;
 
-[Doc(Order = "1-3-9",
-Caption = "Replacing Primitive Generators",
-Content = @"Use the `.Replace()` extension method.")]
+[DocFile]
+[DocContent("Use the `.Replace()` extension method.")]
 public class ReplacingPrimitiveGenerators
 {
 	[Fact]
-	[Doc(Order = "1-3-9",
-		Content =
-@"Example
+	[DocContent(@"Example
 ```
 var generator =
 	from _ in Fuzz.Constant(42).Replace()
@@ -34,9 +31,7 @@ When executing above generator it will return a SomeThingToGenerate object where
 	}
 
 	[Fact]
-	[Doc(Order = "1-3-9",
-		Content =
-@"Replacing a primitive generator automatically impacts its nullable counterpart.")]
+	[DocContent("Replacing a primitive generator automatically impacts its nullable counterpart.")]
 	public void NullableUsesReplacement()
 	{
 		var generator =
@@ -48,9 +43,7 @@ When executing above generator it will return a SomeThingToGenerate object where
 	}
 
 	[Fact]
-	[Doc(Order = "1-3-9",
-		Content =
-@"Replacing a nullable primitive generator does not impacts it's non-nullable counterpart.")]
+	[DocContent("Replacing a nullable primitive generator does not impacts it's non-nullable counterpart.")]
 	public void NullableReplace()
 	{
 		var generator =
@@ -63,16 +56,15 @@ When executing above generator it will return a SomeThingToGenerate object where
 	}
 
 	[Fact]
-	[Doc(Order = "1-3-9",
-		Content =
-@"Replacements can occur multiple times during one generation :
+	[DocContent(@"Replacements can occur multiple times during one generation :
 ```
 var generator =
 	from _ in Fuzz.Constant(42).Replace()
 	from result1 in Fuzz.One<SomeThingToGenerate>()
 	from __ in Fuzz.Constant(666).Replace()
 	from result2 in Fuzz.One<SomeThingToGenerate>()
-	select new[] { result1, result2 };
+	select new[] { result1, result2
+};
 ```
 When executing above generator result1 will have all integers set to 42 and result2 to 666.")]
 	public void MultipleReplacements()
@@ -91,25 +83,11 @@ When executing above generator result1 will have all integers set to 42 and resu
 	}
 
 	[Fact]
-	[Doc(Order = "1-3-9",
-		Content = "*Note :* The Replace combinator does not actually generate anything, it only influences further generation.")]
+	[DocContent("*Note :* The Replace combinator does not actually generate anything, it only influences further generation.")]
 	public void ReturnsUnit()
 	{
 		var generator = Fuzz.Int(42, 42).Replace();
 		Assert.Equal(Unit.Instance, generator.Generate());
-	}
-
-	[Fact]
-	public void JustChecking()
-	{
-		var generator =
-			from i in Fuzz.ChooseFromThese(42, 43).Unique("key")
-			from result in Fuzz.One<SomeThingToGenerate>().Apply(s => s.AnInt = i)
-			select result;
-
-		var values = generator.Many(2).Generate().ToArray();
-
-		Assert.NotEqual(values[0].AnInt, values[1].AnInt);
 	}
 
 	public class SomeThingToGenerate

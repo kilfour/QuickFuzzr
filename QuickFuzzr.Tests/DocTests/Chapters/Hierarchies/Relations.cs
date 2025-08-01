@@ -1,15 +1,14 @@
-﻿using QuickPulse.Explains.Deprecated;
+﻿using QuickPulse.Explains;
 
 namespace QuickFuzzr.Tests.Hierarchies;
 
-[Doc(Order = "1-4-1",
-Caption = "Relations",
-	Content = "In the same way one can `Customize` primitives, this can also be done for references.")]
+[DocFile]
+[DocContent("In the same way one can `Customize` primitives, this can also be done for references.")]
 public class Relations
 {
 
-	[Doc(Order = "1-4-1-1",
-		Content =
+	[Fact]
+	[DocContent(
 @"E.g. :
 
 ```
@@ -20,7 +19,6 @@ var generator =
 	select orderline;
 ```
 ")]
-	[Fact]
 	public void SetOneToOne()
 	{
 		var generator =
@@ -33,8 +31,8 @@ var generator =
 		Assert.NotNull(value.Product);
 	}
 
-	[Doc(Order = "1-4-1-2",
-		Content =
+	[Fact]
+	[DocContent(
 @"In case of a one-to-many relation where the collection is inaccessible, but a method is provided for adding the many to the one,
 we can use the `Apply` method, which is explained in detail in the chapter 'Other Useful Generators'.
 E.g. :
@@ -49,7 +47,6 @@ var generator =
 Note the `ToArray` call on the orderlines. 
 This forces enumeration and is necessary because the lines are not enumerated over just by selecting the order.
 ")]
-	[Fact]
 	public void OneToMany()
 	{
 		var generator =
@@ -63,10 +60,9 @@ This forces enumeration and is necessary because the lines are not enumerated ov
 	}
 
 
-	[Doc(Order = "1-4-1-3",
-		Content =
-@"If we were to select the lines instead of the order, `ToArray` would not be necessary.")]
 	[Fact]
+	[DocContent(
+@"If we were to select the lines instead of the order, `ToArray` would not be necessary.")]
 	public void OneToManyVerifying()
 	{
 		var generator =
@@ -81,8 +77,8 @@ This forces enumeration and is necessary because the lines are not enumerated ov
 	}
 
 
-	[Doc(Order = "1-4-1-4",
-		Content =
+	[Fact]
+	[DocContent(
 @"Relations defined by constructor injection can be generated using the `One<T>(Func<T> constructor)` overload.
 E.g. :
 
@@ -93,7 +89,6 @@ var generator =
 	select category;
 ```
 ")]
-	[Fact]
 	public void ThroughConstructor()
 	{
 		var generator =

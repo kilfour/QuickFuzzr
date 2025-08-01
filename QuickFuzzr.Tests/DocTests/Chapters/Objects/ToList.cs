@@ -1,17 +1,13 @@
-﻿using QuickPulse.Explains.Deprecated;
+﻿using QuickPulse.Explains;
 
 namespace QuickFuzzr.Tests.Objects;
 
-[Doc(Order = "1-3-8",
-	Caption = "ToList",
-	Content = "Use The `.ToList()` generator extension.")]
+[DocFile]
+[DocContent("Use The `.ToList()` generator extension.")]
 public class ToList
 {
 	[Fact]
-	[Doc(Order = "1-3-8-1",
-		Content =
-@"Similar to the `ToArray` method. But instead of an Array, this one returns a, you guessed it, List. 
-")]
+	[DocContent("Similar to the `ToArray` method. But instead of an Array, this one returns, you guessed it, a List.")]
 	public void SameValues()
 	{
 		var values =

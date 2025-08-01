@@ -1,16 +1,14 @@
 ﻿
 using QuickFuzzr.UnderTheHood;
-using QuickPulse.Explains.Deprecated;
+using QuickPulse.Explains;
 
 namespace QuickFuzzr.Tests.Hierarchies;
 
-public class TreeTests
+[DocFile]
+public class Trees
 {
 	[Fact]
-	[Doc(Order = "1-4-3",
-		Caption = "Trees",
-		Content =
-@"Depth control together with the `.GenerateAsOneOf(...)` combinator mentioned above and the previously unmentioned `TreeLeaf<T>()` one allows you to build tree type hierarchies.  
+	[DocContent(@"Depth control together with the `.GenerateAsOneOf(...)` combinator mentioned above and the previously unmentioned `TreeLeaf<T>()` one allows you to build tree type hierarchies.  
 Given the canonical abstract Tree, concrete Branch and Leaf example model, we can generate this like so:
 ```csharp
 var generator =
@@ -29,7 +27,7 @@ Would output something like:
 Node(Leaf(31), Node(Leaf(71), Leaf(10)))
 ```
 ")]
-	public void Trees()
+	public void TreesTest()
 	{
 		var generator =
 			from _ in Fuzz.For<Tree>().Depth(1, 3)
@@ -54,8 +52,7 @@ Node(Leaf(31), Node(Leaf(71), Leaf(10)))
 	}
 
 	[Fact]
-	[Doc(Order = "1-4-3-1",
-		Content = "**Note :** The `TreeLeaf<T>()` combinator does not actually generate anything, it only influences further generation.")]
+	[DocContent("**Note :** The `TreeLeaf<T>()` combinator does not actually generate anything, it only influences further generation.")]
 	public void ReturnsUnit()
 	{
 		var generator = Fuzz.For<Tree>().Depth(1, 1);
