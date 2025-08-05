@@ -1,16 +1,12 @@
-﻿
+﻿using QuickPulse.Explains;
 
-using QuickPulse.Explains.Deprecated;
+namespace QuickFuzzr.Tests.DocTests.Chapters.OtherUsefullGenerators;
 
-namespace QuickFuzzr.Tests.OtherUsefullGenerators;
-
-[Doc(Order = "1-5-2", Caption = "Picking an element out of a range",
-	Content = "Use `Fuzz.ChooseFrom<T>(IEnumerable<T> values)`.")]
+[DocContent("Use `Fuzz.ChooseFrom<T>(IEnumerable<T> values)`.")]
 public class Choosing
 {
 	[Fact]
-	[Doc(Order = "1-5-2-1",
-		Content =
+	[DocContent(
 @"Picks a random value from a list of options.
 
 F.i. `Fuzz.ChooseFrom(new []{ 1, 2 })` will return either 1 or 2.")]
@@ -30,8 +26,7 @@ F.i. `Fuzz.ChooseFrom(new []{ 1, 2 })` will return either 1 or 2.")]
 	}
 
 	[Fact]
-	[Doc(Order = "1-5-2-2",
-		Content =
+	[DocContent(
 @"A helper method exists for ease of use when you want to pass in constant values as in the example above. 
 
 I.e. : `Fuzz.ChooseFromThese(1, 2)`")]
@@ -51,8 +46,7 @@ I.e. : `Fuzz.ChooseFromThese(1, 2)`")]
 	}
 
 	[Fact]
-	[Doc(Order = "1-5-2-3",
-		Content =
+	[DocContent(
 @"Another method provides a _semi-safe_ way to pick from what might be an empty list. 
 
 I.e. : `Fuzz.ChooseFromWithDefaultWhenEmpty(new List<int>())`, which returns the default, in this case zero.")]
@@ -63,8 +57,7 @@ I.e. : `Fuzz.ChooseFromWithDefaultWhenEmpty(new List<int>())`, which returns the
 	}
 
 	[Fact]
-	[Doc(Order = "1-5-2-4",
-		Content =
+	[DocContent(
 @"You can also pick from a set of Generators. 
 
 I.e. : `Fuzz.ChooseGenerator(Fuzz.Constant(1), Fuzz.Constant(2))`")]

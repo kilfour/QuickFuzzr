@@ -1,15 +1,12 @@
-﻿using QuickFuzzr.UnderTheHood;
-using QuickPulse.Explains.Deprecated;
+﻿using QuickPulse.Explains;
 
-namespace QuickFuzzr.Tests.OtherUsefullGenerators;
+namespace QuickFuzzr.Tests.DocTests.Chapters.OtherUsefullGenerators;
 
-[Doc(Order = "1-5-1", Caption = "Apply",
-	Content = "Use the `.Apply<T>(Func<T, T> func)` extension method.")]
+[DocContent("Use the `.Apply<T>(Func<T, T> func)` extension method.")]
 public class Apply
 {
 	[Fact]
-	[Doc(Order = "1-5-1-1",
-		Content =
+	[DocContent(
 @"Applies the specified Function to the generated value, returning the result.
 F.i. `Fuzz.Constant(41).Apply(i =>  i + 1)` will return 42.")]
 	public void FunctionIsApplied()
@@ -19,8 +16,7 @@ F.i. `Fuzz.Constant(41).Apply(i =>  i + 1)` will return 42.")]
 	}
 
 	[Fact]
-	[Doc(Order = "1-5-1-2",
-		Content =
+	[DocContent(
 @"Par example, when you want all decimals to be rounded to a certain precision : 
 ```
 var generator = 
@@ -41,8 +37,7 @@ var generator =
 	}
 
 	[Fact]
-	[Doc(Order = "1-5-1-3",
-		Content =
+	[DocContent(
 @"An overload exists with signature `Apply<T>(Action<T> action)`.
 This is useful when dealing with objects and you just don't want to return said object.
 E.g. `Fuzz.One<SomeThingToGenerate>().Apply(session.Save)`.")]
@@ -57,5 +52,4 @@ E.g. `Fuzz.One<SomeThingToGenerate>().Apply(session.Save)`.")]
 	{
 		public decimal MyProperty { get; set; }
 	}
-
 }

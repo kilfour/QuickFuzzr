@@ -3,11 +3,10 @@ using QuickPulse.Explains;
 
 namespace QuickFuzzr.Tests.DocTests.Chapters.Objects;
 
-[DocFile]
 [DocContent(@"Use the `Fuzz.For<T>().Construct<TArg>(Expression<Func<T, TProperty>> func, Generator<TProperty>)` method chain.
 
 F.i. :
-```
+```csharp
 Fuzz.For<SomeThing>().Construct(Fuzz.Constant(42))
 ```")]
 public class CustomizingConstructors

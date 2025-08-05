@@ -2,7 +2,6 @@
 
 namespace QuickFuzzr.Tests.DocTests.Chapters.Objects;
 
-[DocFile]
 [DocContent("Use The `.ToList()` generator extension.")]
 public class ToList
 {

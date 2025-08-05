@@ -1,10 +1,10 @@
 ﻿using QuickPulse.Explains.Deprecated;
 
-namespace QuickFuzzr.Tests.Primitives;
+namespace QuickFuzzr.Tests.DocTests.Chapters.Primitives;
 
 [Doc(Order = "1-6-2", Caption = "Chars",
 	Content = "Use `Fuzz.Char()`. \n\nNo overload exists.")]
-public class CharGeneration
+public class Chars
 {
 	private readonly char[] valid = "abcdefghijklmnopqrstuvwxyz".ToCharArray();
 

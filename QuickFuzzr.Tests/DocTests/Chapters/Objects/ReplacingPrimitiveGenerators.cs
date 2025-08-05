@@ -3,7 +3,6 @@ using QuickPulse.Explains;
 
 namespace QuickFuzzr.Tests.DocTests.Chapters.Objects;
 
-[DocFile]
 [DocContent("Use the `.Replace()` extension method.")]
 public class ReplacingPrimitiveGenerators
 {

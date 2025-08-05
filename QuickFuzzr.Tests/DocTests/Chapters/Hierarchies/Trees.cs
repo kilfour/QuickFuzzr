@@ -5,7 +5,6 @@ using QuickPulse.Explains;
 
 namespace QuickFuzzr.Tests.DocTests.Chapters.Hierarchies;
 
-[DocFile]
 public class Trees
 {
 	[Fact]

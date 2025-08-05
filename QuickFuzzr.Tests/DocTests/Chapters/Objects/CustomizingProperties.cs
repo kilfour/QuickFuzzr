@@ -3,7 +3,6 @@ using QuickPulse.Explains;
 
 namespace QuickFuzzr.Tests.DocTests.Chapters.Objects;
 
-[DocFile]
 [DocContent(@"Use the `Fuzz.For<T>().Customize<TProperty>(Expression<Func<T, TProperty>> func, Generator<TProperty>)` method chain.
 
 F.i. :

@@ -1,15 +1,13 @@
-﻿using QuickPulse.Explains.Deprecated;
+﻿using QuickPulse.Explains;
 
-namespace QuickFuzzr.Tests.OtherUsefullGenerators;
+namespace QuickFuzzr.Tests.DocTests.Chapters.OtherUsefullGenerators;
 
-[Doc(Order = "1-5-4",
-	Content = "Use the `.Where(Func<T, bool>)` extension method.")]
-public class Where
+
+[DocContent("Use the `.Where(Func<T, bool>)` extension method.")]
+public class FilteringValues
 {
 	[Fact]
-	[Doc(Order = "1-5-4-1",
-		Content =
-			@"Makes sure that every generated value passes the supplied predicate.")]
+	[DocContent("Makes sure that every generated value passes the supplied predicate.")]
 	public void Filters()
 	{
 		var generator = Fuzz.ChooseFromThese(1, 2, 3).Where(a => a != 1);

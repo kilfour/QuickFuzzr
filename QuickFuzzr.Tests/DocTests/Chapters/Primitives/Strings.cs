@@ -1,10 +1,10 @@
 ﻿using QuickPulse.Explains.Deprecated;
 
-namespace QuickFuzzr.Tests.Primitives;
+namespace QuickFuzzr.Tests.DocTests.Chapters.Primitives;
 
 [Doc(Order = "1-6-3",
 	Content = "Use `Fuzz.String()`.")]
-public class StringGeneration
+public class Strings
 {
 	[Fact]
 	[Doc(Order = "1-6-3", Caption = "Strings",

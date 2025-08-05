@@ -1,15 +1,13 @@
-﻿using QuickPulse.Explains.Deprecated;
+﻿using QuickFuzzr;
+using QuickPulse.Explains;
 
-namespace QuickFuzzr.Tests.OtherUsefullGenerators;
+namespace QuickFuzzr.Tests.DocTests.Chapters.OtherUsefullGenerators;
 
-[Doc(Order = "1-5-3", Caption = "Generating unique values",
-	Content = "Use the `.Unique(object key)` extension method.")]
-public class Unique
+[DocContent("Using the `.Unique(object key)` extension method.")]
+public class UniqueValues
 {
 	[Fact]
-	[Doc(Order = "1-5-3-1",
-		Content =
-			@"Makes sure that every generated value is unique.")]
+	[DocContent("Makes sure that every generated value is unique.")]
 	public void IsUnique()
 	{
 		var generator = Fuzz.ChooseFromThese(1, 2).Unique("TheKey").Many(2);
@@ -21,9 +19,7 @@ public class Unique
 	}
 
 	[Fact]
-	[Doc(Order = "1-5-3-2",
-		Content =
-			@"When asking for more unique values than the generator can supply, an exception is thrown.")]
+	[DocContent("When asking for more unique values than the generator can supply, an exception is thrown.")]
 	public void Throws()
 	{
 		var generator = Fuzz.Constant(1).Unique("TheKey").Many(2);
@@ -32,9 +28,7 @@ public class Unique
 	}
 
 	[Fact]
-	[Doc(Order = "1-5-3-3",
-		Content =
-@"Multiple unique generators can be defined in one 'composed' generator, without interfering with eachother by using a different key.")]
+	[DocContent("Multiple unique generators can be defined in one 'composed' generator, without interfering with eachother by using a different key.")]
 	public void Multiple()
 	{
 		for (int i = 0; i < 100; i++)
@@ -53,9 +47,7 @@ public class Unique
 	}
 
 	[Fact]
-	[Doc(Order = "1-5-3-4",
-		Content =
-@"When using the same key for multiple unique generators all values across these generators are unique.")]
+	[DocContent("When using the same key for multiple unique generators all values across these generators are unique.")]
 	public void MultipleSameKey()
 	{
 		for (int i = 0; i < 100; i++)
@@ -71,9 +63,7 @@ public class Unique
 	}
 
 	[Fact]
-	[Doc(Order = "1-5-3-5",
-		Content =
-@"An overload exist taking a function as an argument allowing for a dynamic key.")]
+	[DocContent("An overload exist taking a function as an argument allowing for a dynamic key.")]
 	public void Dynamic_Key()
 	{
 		for (int i = 0; i < 100; i++)

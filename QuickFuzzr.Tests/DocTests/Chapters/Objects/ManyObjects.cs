@@ -2,7 +2,6 @@
 
 namespace QuickFuzzr.Tests.DocTests.Chapters.Objects;
 
-[DocFile]
 [DocContent("Use The `.Many(int number)` generator extension.")]
 public class ManyObjects
 {

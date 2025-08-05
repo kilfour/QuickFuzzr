@@ -1,11 +1,11 @@
 ﻿using QuickFuzzr.Tests._Tools;
 
-namespace QuickFuzzr.Tests.Primitives;
+namespace QuickFuzzr.Tests.DocTests.Chapters.Primitives;
 
 // [TimeSpans(
 // 	Content = "Use `Fuzz.TimeSpan()`.",
 // 	Order = 0)]
-public class TimeSpanGeneration
+public class TimeSpans
 {
 	[Fact]
 	// [TimeSpans(

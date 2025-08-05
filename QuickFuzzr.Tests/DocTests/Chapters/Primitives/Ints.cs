@@ -1,10 +1,10 @@
 ﻿using QuickPulse.Explains.Deprecated;
 
-namespace QuickFuzzr.Tests.Primitives;
+namespace QuickFuzzr.Tests.DocTests.Chapters.Primitives;
 
 [Doc(Order = "1-6-1", Caption = "Integers",
 	Content = "Use `Fuzz.Int()`.")]
-public class IntGeneration
+public class Ints
 {
 	[Fact]
 	[Doc(Order = "1-6-1-1",

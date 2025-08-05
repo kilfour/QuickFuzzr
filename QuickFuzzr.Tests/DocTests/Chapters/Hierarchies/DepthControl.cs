@@ -20,7 +20,6 @@ public class Recurse
 
 public class NoRecurse { }
 
-[DocFile]
 [DocContent(@"As mentioned in the *A simple object section*: “The object properties will also be automatically filled in.”
 However, this automatic population only applies to the first level of object properties.
 Deeper properties will remain null unless configured otherwise.  

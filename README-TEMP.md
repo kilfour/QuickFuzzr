@@ -96,7 +96,7 @@ Derived classes generated also use the custom property.
 Use the `Fuzz.For<T>().Construct<TArg>(Expression<Func<T, TProperty>> func, Generator<TProperty>)` method chain.
 
 F.i. :
-```
+```csharp
 Fuzz.For<SomeThing>().Construct(Fuzz.Constant(42))
 ```
 Subsequent calls to `Fuzz.One<T>()` will then use the registered constructor.
@@ -160,3 +160,193 @@ var generator =
 ```
 When executing above generator result1 will have all integers set to 42 and result2 to 666.
 *Note :* The Replace combinator does not actually generate anything, it only influences further generation.
+## Generating Hierarchies
+### Relations
+In the same way one can `Customize` primitives, this can also be done for references.
+E.g. :
+
+```
+var generator =
+	from product in Fuzz.One<ProductItem>()
+	from setProduct in Fuzz.For<OrderLine>().Customize(orderline => orderline.Product, product)
+	from orderline in Fuzz.One<OrderLine>()
+	select orderline;
+```
+
+In case of a one-to-many relation where the collection is inaccessible, but a method is provided for adding the many to the one,
+we can use the `Apply` method, which is explained in detail in the chapter 'Other Useful Generators'.
+E.g. :
+
+```
+var generator =
+	from order in Fuzz.One<Order>()
+	from lines in Fuzz.One<OrderLine>()
+		.Apply(a => order.AddOrderLine(a)).Many(20).ToArray()
+	select order;
+```
+Note the `ToArray` call on the orderlines. 
+This forces enumeration and is necessary because the lines are not enumerated over just by selecting the order.
+
+If we were to select the lines instead of the order, `ToArray` would not be necessary.
+Relations defined by constructor injection can be generated using the `One<T>(Func<T> constructor)` overload.
+E.g. :
+
+```csharp
+var generator =
+	from category in Fuzz.One<Category>()
+	from subCategory in Fuzz.One(() => new SubCategory(category)).Many(20)
+	select category;
+```
+
+### Depth Control
+As mentioned in the *A simple object section*: “The object properties will also be automatically filled in.”
+However, this automatic population only applies to the first level of object properties.
+Deeper properties will remain null unless configured otherwise.  
+So if we have the following class :
+```csharp
+public class NoRecurse { }
+public class Recurse
+{
+	public Recurse Child { get; set; }
+	public NoRecurse OtherChild { get; set; }
+	public override string ToString()
+	{
+		var childString =
+			Child == null ? "<null>" : Child.ToString();
+		var otherChildString =
+			OtherChild == null ? "<null>" : "{ NoRecurse }";
+		return $"{{ Recurse: Child = {childString}, OtherChild = {otherChildString} }}";
+	}
+}
+```
+If we then do :
+```csharp
+Console.WriteLine(Fuzz.One<Recurse>().Generate().ToString());
+```
+It outputs : 
+```
+{ Recurse: Child = <null>, OtherChild = { NoRecurse } }
+```
+While this may seem counter-intuitive, it is an intentional default to prevent infinite recursion or overly deep object trees.
+Internally, a `DepthConstraint(int Min, int Max)` is registered per type.
+The default values are `new(1, 1)`.  
+Revisiting our example we can see that both types have indeed been generated with these default values.
+You can control generation depth per type using the `.Depth(min, max)` combinator.  
+For instance:
+```csharp
+var generator =
+	from _ in Fuzz.For<Recurse>().Depth(2, 2)
+	from recurse in Fuzz.One<Recurse>()
+	select recurse;
+Console.WriteLine(generator.Generate().ToString());
+```
+Outputs:
+```
+{ Recurse: Child = { Recurse: Child = <null>, OtherChild = { NoRecurse } }
+, OtherChild = { NoRecurse } 
+}
+```
+ 
+Recap:
+```
+Depth(1, 1)
+{ Recurse: Child = <null>, OtherChild = { NoRecurse } }
+
+Depth(2, 2)
+{ Recurse: 
+	Child = { Recurse: Child = <null>, OtherChild = { NoRecurse } },
+  	OtherChild = { NoRecurse } 
+}
+
+Depth(3, 3)
+{ Recurse: 
+	Child = { Recurse: 
+		Child = { Recurse: Child = <null>, OtherChild = { NoRecurse } },
+        OtherChild = { NoRecurse } },
+  	OtherChild = { NoRecurse } 
+}
+```
+ 
+Using for instance `.Depth(1, 3)` allows the generator to randomly choose a depth between 1 and 3 (inclusive) for that type.
+This means some instances will be shallow, while others may be more deeply nested, introducing variability within the defined bounds.
+**Note :** The `Depth(...)` combinator does not actually generate anything, it only influences further generation.
+### Trees
+Depth control together with the `.GenerateAsOneOf(...)` combinator mentioned above and the previously unmentioned `TreeLeaf<T>()` one allows you to build tree type hierarchies.  
+Given the canonical abstract Tree, concrete Branch and Leaf example model, we can generate this like so:
+```csharp
+var generator =
+	from _d in Fuzz.For<Tree>().Depth(1, 3)
+	from _i in Fuzz.For<Tree>().GenerateAsOneOf(typeof(Branch), typeof(Leaf))
+	from _l in Fuzz.For<Tree>().TreeLeaf<Leaf>()
+	from tree in Fuzz.One<Tree>()
+	select tree;
+```
+Our leaf has an int value property, so the following:
+```csharp
+Console.WriteLine(generator.Generate().ToString());
+```	
+Would output something like:
+```
+Node(Leaf(31), Node(Leaf(71), Leaf(10)))
+```
+
+**Note :** The `TreeLeaf<T>()` combinator does not actually generate anything, it only influences further generation.
+## Other Usefull Generators
+### Apply
+Use the `.Apply<T>(Func<T, T> func)` extension method.
+Applies the specified Function to the generated value, returning the result.
+F.i. `Fuzz.Constant(41).Apply(i =>  i + 1)` will return 42.
+Par example, when you want all decimals to be rounded to a certain precision : 
+```
+var generator = 
+	from _ in Fuzz.Decimal().Apply(d => Math.Round(d, 2)).Replace()
+	from result in Fuzz.One<SomeThingToGenerate>()
+	select result;
+```
+An overload exists with signature `Apply<T>(Action<T> action)`.
+This is useful when dealing with objects and you just don't want to return said object.
+E.g. `Fuzz.One<SomeThingToGenerate>().Apply(session.Save)`.
+### Choosing
+Use `Fuzz.ChooseFrom<T>(IEnumerable<T> values)`.
+Picks a random value from a list of options.
+
+F.i. `Fuzz.ChooseFrom(new []{ 1, 2 })` will return either 1 or 2.
+A helper method exists for ease of use when you want to pass in constant values as in the example above. 
+
+I.e. : `Fuzz.ChooseFromThese(1, 2)`
+Another method provides a _semi-safe_ way to pick from what might be an empty list. 
+
+I.e. : `Fuzz.ChooseFromWithDefaultWhenEmpty(new List<int>())`, which returns the default, in this case zero.
+You can also pick from a set of Generators. 
+
+I.e. : `Fuzz.ChooseGenerator(Fuzz.Constant(1), Fuzz.Constant(2))`
+### Unique Values
+Using the `.Unique(object key)` extension method.
+Makes sure that every generated value is unique.
+When asking for more unique values than the generator can supply, an exception is thrown.
+Multiple unique generators can be defined in one 'composed' generator, without interfering with eachother by using a different key.
+When using the same key for multiple unique generators all values across these generators are unique.
+An overload exist taking a function as an argument allowing for a dynamic key.
+### Filtering Values
+Use the `.Where(Func<T, bool>)` extension method.
+Makes sure that every generated value passes the supplied predicate.
+### Casting Generators
+Various extension methods allow for casting the generated value.
+ - `.AsString()` : Invokes `.ToString()` on the generated value and 
+casts the generator from `Generator<T>` to `Generator<string>`. 
+Useful f.i. to generate numeric strings.
+ - `.AsObject()` : Simply casts the generator itself from `Generator<T>` to `Generator<object>`. Mostly used internally.
+ - `.Nullable()` : Casts a `Generator<T>` to `Generator<T?>`. In addition generates null 1 out of 5 times.
+ - `.Nullable(int timesBeforeResultIsNullAproximation)` : overload of `Nullable()`, generates null 1 out of `timesBeforeResultIsNullAproximation` times .
+### How About Null(s) ?
+Various extension methods allow for influencing null generation.
+- `.Nullable()` : Casts a `Generator<T>` to `Generator<T?>`. In addition generates null 1 out of 5 times.  
+> Used for value types.
+- `.Nullable(int timesBeforeResultIsNullAproximation)` : overload of `Nullable()`, generates null 1 out of `timesBeforeResultIsNullAproximation` times .
+- `.NullableRef()` : Casts a `Generator<T>` to `Generator<T?>`. In addition generates null 1 out of 5 times.  
+> Used for reference types, including `string`.
+- `.NullableRef(int timesBeforeResultIsNullAproximation)` : overload of `NullableRef()`, generates null 1 out of `timesBeforeResultIsNullAproximation` times .
+- `.NeverReturnNull()` : Only available on generators that provide `Nullable<T>` values, this one makes sure that, you guessed it, the nullable generator never returns null.
+### 'Generating' constants
+Use `Fuzz.Constant<T>(T value)`.
+This generator is most useful in combination with others and is used to inject constants into combined generators.

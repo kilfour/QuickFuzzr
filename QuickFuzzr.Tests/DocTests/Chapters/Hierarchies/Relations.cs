@@ -3,7 +3,6 @@ using QuickPulse.Explains;
 
 namespace QuickFuzzr.Tests.DocTests.Chapters.Hierarchies;
 
-[DocFile]
 [DocContent("In the same way one can `Customize` primitives, this can also be done for references.")]
 public class Relations
 {
@@ -83,7 +82,7 @@ This forces enumeration and is necessary because the lines are not enumerated ov
 @"Relations defined by constructor injection can be generated using the `One<T>(Func<T> constructor)` overload.
 E.g. :
 
-```
+```csharp
 var generator =
 	from category in Fuzz.One<Category>()
 	from subCategory in Fuzz.One(() => new SubCategory(category)).Many(20)

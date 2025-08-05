@@ -1,12 +1,10 @@
-﻿
+﻿using QuickPulse.Explains.Deprecated;
 
-using QuickPulse.Explains.Deprecated;
-
-namespace QuickFuzzr.Tests.Primitives;
+namespace QuickFuzzr.Tests.DocTests.Chapters.Primitives;
 
 [Doc(Order = "1-6-4", Caption = "Booleans",
 	Content = "Use `Fuzz.Bool()`. \n\nNo overload exists.")]
-public class BoolGeneration
+public class Booleans
 {
 	[Fact]
 	[Doc(Order = "1-6-4-1",

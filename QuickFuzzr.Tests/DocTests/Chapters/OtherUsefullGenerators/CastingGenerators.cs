@@ -1,15 +1,13 @@
 ﻿using QuickFuzzr.UnderTheHood;
-using QuickPulse.Explains.Deprecated;
+using QuickPulse.Explains;
 
-namespace QuickFuzzr.Tests.OtherUsefullGenerators;
+namespace QuickFuzzr.Tests.DocTests.Chapters.OtherUsefullGenerators;
 
-[Doc(Order = "1-5-5", Caption = "Casting Generators",
-	Content = "Various extension methods allow for casting the generated value.")]
-public class Casting
+[DocContent("Various extension methods allow for casting the generated value.")]
+public class CastingGenerators
 {
 	[Fact]
-	[Doc(Order = "1-5-5-1",
-		Content =
+	[DocContent(
 @" - `.AsString()` : Invokes `.ToString()` on the generated value and 
 casts the generator from `Generator<T>` to `Generator<string>`. 
 Useful f.i. to generate numeric strings.")]
@@ -19,8 +17,7 @@ Useful f.i. to generate numeric strings.")]
 	}
 
 	[Fact]
-	[Doc(Order = "1-5-5-2",
-		Content =
+	[DocContent(
 @" - `.AsObject()` : Simply casts the generator itself from `Generator<T>` to `Generator<object>`. Mostly used internally.")]
 	public void AsObject()
 	{
@@ -28,8 +25,7 @@ Useful f.i. to generate numeric strings.")]
 	}
 
 	[Fact]
-	[Doc(Order = "1-5-5-3",
-		Content =
+	[DocContent(
 @" - `.Nullable()` : Casts a `Generator<T>` to `Generator<T?>`. In addition generates null 1 out of 5 times.")]
 	public void Nullable()
 	{
@@ -50,8 +46,7 @@ Useful f.i. to generate numeric strings.")]
 	}
 
 	[Fact]
-	[Doc(Order = "1-5-5-4",
-		Content =
+	[DocContent(
 @" - `.Nullable(int timesBeforeResultIsNullAproximation)` : overload of `Nullable()`, generates null 1 out of `timesBeforeResultIsNullAproximation` times .")]
 	public void NullableWithArgument()
 	{
