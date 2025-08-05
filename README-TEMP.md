@@ -350,3 +350,12 @@ Various extension methods allow for influencing null generation.
 ### 'Generating' constants
 Use `Fuzz.Constant<T>(T value)`.
 This generator is most useful in combination with others and is used to inject constants into combined generators.
+## The Primitive Generators
+### Booleans
+Use `Fuzz.Bool()`. 
+
+No overload exists.
+The default generator generates True or False.
+Can be made to return `bool?` using the `.Nullable()` combinator.
+ - `bool` is automatically detected and generated for object properties.
+ - `bool?` is automatically detected and generated for object properties.

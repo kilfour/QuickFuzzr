@@ -1,16 +1,14 @@
-﻿using QuickPulse.Explains.Deprecated;
+﻿using QuickPulse.Explains;
 
 namespace QuickFuzzr.Tests.DocTests.Chapters.Primitives;
 
-[Doc(Order = "1-6-2", Caption = "Chars",
-	Content = "Use `Fuzz.Char()`. \n\nNo overload exists.")]
+[DocContent("Use `Fuzz.Char()`. *No overload exists.*")]
 public class Chars
 {
 	private readonly char[] valid = "abcdefghijklmnopqrstuvwxyz".ToCharArray();
 
 	[Fact]
-	[Doc(Order = "1-6-2-1",
-		Content = "The default generator always generates a char between lower case 'a' and lower case 'z'.")]
+	[DocContent("- The default generator always generates a char between lower case 'a' and lower case 'z'.")]
 	public void DefaultGeneratorAlwaysBetweenLowerCaseAAndLowerCaseZ()
 	{
 		var generator = Fuzz.Char();
@@ -36,8 +34,7 @@ public class Chars
 	}
 
 	[Fact]
-	[Doc(Order = "1-6-2-2",
-		Content = "Can be made to return `char?` using the `.Nullable()` combinator.")]
+	[DocContent("- Can be made to return `char?` using the `.Nullable()` combinator.")]
 	public void Nullable()
 	{
 		var generator = Fuzz.Char().Nullable();
@@ -59,8 +56,7 @@ public class Chars
 	}
 
 	[Fact]
-	[Doc(Order = "1-6-2-3",
-		Content = " - `char` is automatically detected and generated for object properties.")]
+	[DocContent("- `char` is automatically detected and generated for object properties.")]
 	public void Property()
 	{
 		var generator = Fuzz.One<SomeThingToGenerate>();
@@ -72,8 +68,7 @@ public class Chars
 	}
 
 	[Fact]
-	[Doc(Order = "1-6-2-4",
-		Content = " - `char?` is automatically detected and generated for object properties.")]
+	[DocContent("- `char?` is automatically detected and generated for object properties.")]
 	public void NullableProperty()
 	{
 		var generator = Fuzz.One<SomeThingToGenerate>();

@@ -2,7 +2,6 @@
 using QuickFuzzr;
 using QuickFuzzr.Tests.DocTests;
 using QuickPulse.Explains;
-using QuickPulse.Explains.Deprecated;
 
 namespace QuickFuzzr.Tests._Tools;
 
