@@ -1,7 +1,5 @@
 # Quick Fuzzr
 > A type-walking cheetah with a hand full of random.
-## Introduction
-An evolution from the QuickMGenerate library.
 ## Installation
 QuickFuzzrQuickFuzzr is available on NuGet:
 ```bash
@@ -350,6 +348,25 @@ Various extension methods allow for influencing null generation.
 ### 'Generating' constants
 Use `Fuzz.Constant<T>(T value)`.
 This generator is most useful in combination with others and is used to inject constants into combined generators.
+## Creating Custom Generators
+Any function that returns a value of type `Generator<T>` can be used as a generator.
+
+`Generator<T>` is defined as a delegate like so :
+```csharp
+public delegate IResult<TValue> Generator<out TValue>(State input)
+```
+So f.i. to define a generator that always returns the number forty-two we need a function that returns the following :
+```csharp
+return s => new Result<State, int>(42, s);
+```
+As you can see from the signature a state object is passed to the generator.
+This is where the random seed lives.
+If you want any kind of random, it is advised to use that one, like so :
+```csharp
+return s => new Result<State, int>(s.Random.Next(42, 666), s);
+```
+
+
 ## The Primitive Generators
 ### Booleans
 Use `Fuzz.Bool()`. *No overload exists.*

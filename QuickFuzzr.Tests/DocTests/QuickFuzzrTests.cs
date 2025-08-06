@@ -6,8 +6,6 @@ namespace QuickFuzzr.Tests.DocTests;
 [DocContent(@"> A type-walking cheetah with a hand full of random.")]
 public class QuickFuzzrTests
 {
-    [DocHeader("Introduction")]
-    [DocContent("An evolution from the QuickMGenerate library.")]
     [DocHeader("Installation")]
     [DocContent(@"QuickFuzzrQuickFuzzr is available on NuGet:
 ```bash

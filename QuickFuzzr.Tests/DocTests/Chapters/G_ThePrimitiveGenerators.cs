@@ -18,4 +18,4 @@ namespace QuickFuzzr.Tests.DocTests.Chapters;
 [DocInclude(typeof(Strings))]
 [DocInclude(typeof(TimeSpans))]
 
-public class F_ThePrimitiveGenerators { }
+public class G_ThePrimitiveGenerators { }
