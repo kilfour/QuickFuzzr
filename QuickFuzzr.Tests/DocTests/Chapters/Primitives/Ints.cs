@@ -1,14 +1,12 @@
-﻿using QuickPulse.Explains.Deprecated;
+﻿using QuickPulse.Explains;
 
 namespace QuickFuzzr.Tests.DocTests.Chapters.Primitives;
 
-[Doc(Order = "1-6-1", Caption = "Integers",
-	Content = "Use `Fuzz.Int()`.")]
+[DocContent("Use `Fuzz.Int()`.")]
 public class Ints
 {
 	[Fact]
-	[Doc(Order = "1-6-1-1",
-		Content = "The overload `Fuzz.Int(int min, int max)` generates an int higher or equal than min and lower than max.")]
+	[DocContent( "- The overload `Fuzz.Int(int min, int max)` generates an int higher or equal than min and lower than max.")]
 	public void Zero()
 	{
 		var generator = Fuzz.Int(0, 0);
@@ -19,16 +17,14 @@ public class Ints
 	}
 
 	[Fact]
-	[Doc(Order = "1-6-1-2",
-		Content = "Throws an ArgumentException if min > max.")]
+	[DocContent("- Throws an ArgumentException if min > max.")]
 	public void Throws()
 	{
 		Assert.Throws<ArgumentException>(() => Fuzz.Int(1, 0).Generate());
 	}
 
 	[Fact]
-	[Doc(Order = "1-6-1-3",
-		Content = "The default generator is (min = 1, max = 100).")]
+	[DocContent("- The default generator is (min = 1, max = 100).")]
 	public void DefaultGeneratorNeverGeneratesZero()
 	{
 		var generator = Fuzz.Int();
@@ -41,8 +37,7 @@ public class Ints
 	}
 
 	[Fact]
-	[Doc(Order = "1-6-1-4",
-		Content = "Can be made to return `int?` using the `.Nullable()` combinator.")]
+	[DocContent("- Can be made to return `int?` using the `.Nullable()` combinator.")]
 	public void Nullable()
 	{
 		var generator = Fuzz.Int().Nullable();
@@ -64,8 +59,7 @@ public class Ints
 	}
 
 	[Fact]
-	[Doc(Order = "1-6-1-5",
-		Content = " - `int` is automatically detected and generated for object properties.")]
+	[DocContent("- `int` is automatically detected and generated for object properties.")]
 	public void Property()
 	{
 		var generator = Fuzz.One<SomeThingToGenerate>();
@@ -76,8 +70,7 @@ public class Ints
 	}
 
 	[Fact]
-	[Doc(Order = "1-6-1-6",
-		Content = " - `Int32` is automatically detected and generated for object properties.")]
+	[DocContent("- `Int32` is automatically detected and generated for object properties.")]
 	public void Int32Property()
 	{
 		var generator = Fuzz.One<SomeThingToGenerate>();
@@ -88,8 +81,7 @@ public class Ints
 	}
 
 	[Fact]
-	[Doc(Order = "1-6-1-7",
-		Content = " - `int?` is automatically detected and generated for object properties.")]
+	[DocContent("- `int?` is automatically detected and generated for object properties.")]
 	public void NullableProperty()
 	{
 		var generator = Fuzz.One<SomeThingToGenerate>();

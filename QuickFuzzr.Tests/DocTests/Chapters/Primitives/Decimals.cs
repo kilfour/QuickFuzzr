@@ -1,14 +1,12 @@
-﻿namespace QuickFuzzr.Tests.DocTests.Chapters.Primitives;
+﻿using QuickPulse.Explains;
 
-// [Decimals(Caption = "Decimals",
-// 	Content = "Use `Fuzz.Decimal()`.",
-// 	Order = 0)]
+namespace QuickFuzzr.Tests.DocTests.Chapters.Primitives;
+
+[DocContent("Use `Fuzz.Decimal()`.")]
 public class Decimals
 {
 	[Fact]
-	// [Decimals(
-	// 	Content = "The overload `Fuzz.Decimal(decimal min, decimal max)` generates a decimal higher or equal than min and lower than max.",
-	// 	Order = 1)]
+	[DocContent("- The overload `Fuzz.Decimal(decimal min, decimal max)` generates a decimal higher or equal than min and lower than max.")]
 	public void Zero()
 	{
 		var generator = Fuzz.Decimal(0, 0);
@@ -18,18 +16,14 @@ public class Decimals
 		}
 	}
 	[Fact]
-	// [Decimals(
-	// 	Content = "Throws an ArgumentException if min > max.",
-	// 	Order = 1.1)]
+	[DocContent("- Throws an ArgumentException if min > max.")]
 	public void Throws()
 	{
 		Assert.Throws<ArgumentException>(() => Fuzz.Decimal(1, 0).Generate());
 	}
 
 	[Fact]
-	// [Decimals(
-	// 	Content = "The default generator is (min = 1, max = 100).",
-	// 	Order = 2)]
+	[DocContent("- The default generator is (min = 1, max = 100).")]
 	public void DefaultGeneratorBetweenOneAndHundred()
 	{
 		var generator = Fuzz.Decimal();
@@ -42,9 +36,7 @@ public class Decimals
 	}
 
 	[Fact]
-	// [Decimals(
-	// 	Content = "Can be made to return `decimal?` using the `.Nullable()` combinator.",
-	// 	Order = 3)]
+	[DocContent("- Can be made to return `decimal?` using the `.Nullable()` combinator.")]
 	public void Nullable()
 	{
 		var generator = Fuzz.Decimal().Nullable();
@@ -66,9 +58,7 @@ public class Decimals
 	}
 
 	[Fact]
-	// [Decimals(
-	// 	Content = " - `decimal` is automatically detected and generated for object properties.",
-	// 	Order = 4)]
+	[DocContent("- `decimal` is automatically detected and generated for object properties.")]
 	public void Property()
 	{
 		var generator = Fuzz.One<SomeThingToGenerate>();
@@ -79,9 +69,7 @@ public class Decimals
 	}
 
 	[Fact]
-	// [Decimals(
-	// 	Content = " - `decimal?` is automatically detected and generated for object properties.",
-	// 	Order = 5)]
+	[DocContent("- `decimal?` is automatically detected and generated for object properties.")]
 	public void NullableProperty()
 	{
 		var generator = Fuzz.One<SomeThingToGenerate>();

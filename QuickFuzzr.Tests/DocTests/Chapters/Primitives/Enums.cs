@@ -1,17 +1,13 @@
 ﻿using QuickFuzzr.Tests._Tools;
+using QuickPulse.Explains;
 
 namespace QuickFuzzr.Tests.DocTests.Chapters.Primitives;
 
-// [Enums(
-// 	Content = "Use `Fuzz.Enum<T>()`, where T is the type of Enum you want to generate. \n\nNo overload exists.",
-// 	Order = 0)]
+[DocContent("Use `Fuzz.Enum<T>()`, where T is the type of Enum you want to generate. *No overload exists.*")]
 public class Enums
 {
 	[Fact]
-	// 		[Enums(
-	// 			Content =
-	// "The default generator just picks a random value from all enemeration values.",
-	// 			Order = 1)]
+	[DocContent("- The default generator just picks a random value from all enemeration values.")]
 	public void DefaultGenerator()
 	{
 		CheckIf.TheseValuesAreGenerated(Fuzz.Enum<MyEnumeration>(),
@@ -19,9 +15,7 @@ public class Enums
 	}
 
 	[Fact]
-	// [Enums(
-	// 	Content = " - An Enumeration is automatically detected and generated for object properties.",
-	// 	Order = 2)]
+	[DocContent("- An Enumeration is automatically detected and generated for object properties.")]
 	public void Property()
 	{
 		CheckIf.TheseValuesAreGenerated(
@@ -30,9 +24,7 @@ public class Enums
 	}
 
 	[Fact]
-	// [Enums(
-	// 	Content = " - A nullable Enumeration is automatically detected and generated for object properties.",
-	// 	Order = 3)]
+	[DocContent("- A nullable Enumeration is automatically detected and generated for object properties.")]
 	public void NullableProperty()
 	{
 		CheckIf.GeneratesNullAndNotNull(
@@ -40,9 +32,7 @@ public class Enums
 	}
 
 	[Fact]
-	// [Enums(
-	// 	Content = " - Passing in a non Enum type for T throws an ArgumentException.",
-	// 	Order = 3)]
+	[DocContent("- Passing in a non Enum type for T throws an ArgumentException.")]
 	public void Throws()
 	{
 		Assert.Throws<ArgumentException>(() => Fuzz.Enum<int>().Generate());

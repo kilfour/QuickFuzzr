@@ -35,11 +35,11 @@ public static class CheckIf
         params (string, Func<T, bool>)[] labeledChecks)
     {
         var signal = Signal.Tracing<T>();
-        InspectContext.Current = a => signal.Pulse((T)a);
         var run =
             from inspector in "inspector".Stashed(
                 () => signal.SetAndReturnArtery(new DistinctValueInspector<T>()))
-            from input in "Generator".Input(generator.Inspect())
+            from input in "Generator".Input(generator)
+            from inspect in "Inspect".Act(() => signal.Pulse(input))
             from _e in "early exit".TestifyProvenWhen(
                 () => inspector.SeenSatisfyEach([.. labeledChecks.Select(a => a.Item2)]))
             from _s in "Assayer".Assay(
@@ -61,7 +61,7 @@ public static class CheckIf
         params (string, Func<T, bool>)[] labeledChecks)
     {
         var run =
-            from input in "Generator".Input(generator.Inspect())
+            from input in "Generator".Input(generator)
             from _ in CombineSpecs(input, labeledChecks) // Move this to QuickAcid
             select Acid.Test;
         QState.Run(run).WithOneRun().And(numberOfExecutions.ExecutionsPerRun());
@@ -74,6 +74,6 @@ public static class CheckIf
             .Aggregate(Acc, (acc, next) => from _ in acc from __ in next select Acid.Test);
     }
 
-    public static readonly QAcidScript<Acid> Acc =
+    private static readonly QAcidScript<Acid> Acc =
         s => QAcidResult.AcidOnly(s);
 }

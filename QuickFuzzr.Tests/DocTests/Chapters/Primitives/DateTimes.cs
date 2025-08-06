@@ -1,14 +1,12 @@
-﻿namespace QuickFuzzr.Tests.DocTests.Chapters.Primitives;
+﻿using QuickPulse.Explains;
 
-// [DateTimes(Caption = "DateTimes",
-// 	Content = "Use `Fuzz.DateTime()`.",
-// 	Order = 0)]
+namespace QuickFuzzr.Tests.DocTests.Chapters.Primitives;
+
+[DocContent("Use `Fuzz.DateTime()`.")]
 public class DateTimes
 {
 	[Fact]
-	// [DateTimes(
-	// 	Content = "The overload `Fuzz.DateTimes(DateTime min, DateTime max)` generates a DateTime higher or equal than min and lower than max.",
-	// 	Order = 1)]
+	[DocContent("- The overload `Fuzz.DateTimes(DateTime min, DateTime max)` generates a DateTime higher or equal than min and lower than max.")]
 	public void Zero()
 	{
 		var generator = Fuzz.DateTime(new DateTime(2000, 1, 1), new DateTime(2000, 1, 5));
@@ -21,9 +19,7 @@ public class DateTimes
 	}
 
 	[Fact]
-	// [DateTimes(
-	// 	Content = "The default generator is (min = new DateTime(1970, 1, 1), max = new DateTime(2020, 12, 31)).",
-	// 	Order = 2)]
+	[DocContent("- The default generator is (min = new DateTime(1970, 1, 1), max = new DateTime(2020, 12, 31)).")]
 	public void DefaultGeneratorNeverGeneratesZero()
 	{
 		var generator = Fuzz.DateTime();
@@ -36,9 +32,7 @@ public class DateTimes
 	}
 
 	[Fact]
-	// [DateTimes(
-	// 	Content = "Can be made to return `DateTime?` using the `.Nullable()` combinator.",
-	// 	Order = 3)]
+	[DocContent("- Can be made to return `DateTime?` using the `.Nullable()` combinator.")]
 	public void Nullable()
 	{
 		var generator = Fuzz.DateTime().Nullable();
@@ -60,9 +54,7 @@ public class DateTimes
 	}
 
 	[Fact]
-	// [DateTimes(
-	// 	Content = " - `DateTime` is automatically detected and generated for object properties.",
-	// 	Order = 4)]
+	[DocContent("- `DateTime` is automatically detected and generated for object properties.")]
 	public void Property()
 	{
 		var generator = Fuzz.One<SomeThingToGenerate>();
@@ -73,9 +65,7 @@ public class DateTimes
 	}
 
 	[Fact]
-	// [DateTimes(
-	// 	Content = " - `DateTime?` is automatically detected and generated for object properties.",
-	// 	Order = 5)]
+	[DocContent("- `DateTime?` is automatically detected and generated for object properties.")]
 	public void NullableProperty()
 	{
 		var generator = Fuzz.One<SomeThingToGenerate>();

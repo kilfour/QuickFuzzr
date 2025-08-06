@@ -1,14 +1,12 @@
-﻿namespace QuickFuzzr.Tests.DocTests.Chapters.Primitives;
+﻿using QuickPulse.Explains;
 
-// [Guids(
-// 	Content = "Use `Fuzz.Guid()`.\n\nThere is no overload.",
-// 	Order = 0)]
+namespace QuickFuzzr.Tests.DocTests.Chapters.Primitives;
+
+[DocContent("Use `Fuzz.Guid()`. *There is no overload.*")]
 public class Guids
 {
 	[Fact]
-	// [Guids(
-	// 	Content = "The default generator never generates Guid.Empty.",
-	// 	Order = 2)]
+	[DocContent("- The default generator never generates Guid.Empty.")]
 	public void NeverGuidEmpty()
 	{
 		var generator = Fuzz.Guid();
@@ -20,9 +18,7 @@ public class Guids
 	}
 
 	[Fact]
-	// [Guids(
-	// 	Content = "Can be made to return `Guid?` using the `.Nullable()` combinator.",
-	// 	Order = 3)]
+	[DocContent("- Can be made to return `Guid?` using the `.Nullable()` combinator.")]
 	public void Nullable()
 	{
 		var generator = Fuzz.Guid().Nullable();
@@ -44,9 +40,7 @@ public class Guids
 	}
 
 	[Fact]
-	// [Guids(
-	// 	Content = " - `Guid` is automatically detected and generated for object properties.",
-	// 	Order = 4)]
+	[DocContent("- `Guid` is automatically detected and generated for object properties.")]
 	public void Property()
 	{
 		var generator = Fuzz.One<SomeThingToGenerate>();
@@ -57,9 +51,7 @@ public class Guids
 	}
 
 	[Fact]
-	// [Guids(
-	// 	Content = " - `Guid?` is automatically detected and generated for object properties.",
-	// 	Order = 5)]
+	[DocContent("- `Guid?` is automatically detected and generated for object properties.")]
 	public void NullableProperty()
 	{
 		var generator = Fuzz.One<SomeThingToGenerate>();

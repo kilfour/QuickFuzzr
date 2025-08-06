@@ -1,15 +1,12 @@
-﻿using QuickPulse.Explains.Deprecated;
+﻿using QuickPulse.Explains;
 
 namespace QuickFuzzr.Tests.DocTests.Chapters.Primitives;
 
-[Doc(Order = "1-6-3",
-	Content = "Use `Fuzz.String()`.")]
+[DocContent("Use `Fuzz.String()`.")]
 public class Strings
 {
 	[Fact]
-	[Doc(Order = "1-6-3", Caption = "Strings",
-		Content =
-"The generator always generates every char element of the string to be between lower case 'a' and lower case 'z'.")]
+	[DocContent("- The generator always generates every char element of the string to be between lower case 'a' and lower case 'z'.")]
 	public void DefaultGeneratorStringElementsAlwaysBetweenLowerCaseAAndLowerCaseZ()
 	{
 		var valid = "abcdefghijklmnopqrstuvwxyz".ToCharArray();
@@ -22,8 +19,7 @@ public class Strings
 	}
 
 	[Fact]
-	[Doc(Order = "1-6-3-1",
-		Content = "The overload `Fuzz.String(int min, int max)` generates an string of length higher or equal than min and lower than max.")]
+	[DocContent("- The overload `Fuzz.String(int min, int max)` generates an string of length higher or equal than min and lower than max.")]
 	public void Zero()
 	{
 		var generator = Fuzz.String(5, 7);
@@ -36,8 +32,7 @@ public class Strings
 	}
 
 	[Fact]
-	[Doc(Order = "1-6-3-2",
-		Content = "The Default generator generates a string of length higher than 0 and lower than 10.")]
+	[DocContent("- The Default generator generates a string of length higher than 0 and lower than 10.")]
 	public void DefaultGeneratorStringIsBetweenOneAndTen()
 	{
 		var generator = Fuzz.String();
@@ -50,8 +45,7 @@ public class Strings
 	}
 
 	[Fact]
-	[Doc(Order = "1-6-3-3",
-		Content = " - `string` is automatically detected and generated for object properties.")]
+	[DocContent("- `string` is automatically detected and generated for object properties.")]
 	public void Property()
 	{
 		var generator = Fuzz.One<SomeThingToGenerate>();
@@ -64,8 +58,7 @@ public class Strings
 	}
 
 	[Fact]
-	[Doc(Order = "1-6-3-4",
-		Content = "Can be made to return `string?` using the `.NullableRef()` combinator.")]
+	[DocContent("- Can be made to return `string?` using the `.NullableRef()` combinator.")]
 	public void Nullable()
 	{
 		var generator = Fuzz.String().NullableRef();

@@ -1,14 +1,12 @@
-﻿namespace QuickFuzzr.Tests.DocTests.Chapters.Primitives;
+﻿using QuickPulse.Explains;
 
-// [Shorts(
-// 	Content = "Use `Fuzz.Short()`.",
-// 	Order = 0)]
+namespace QuickFuzzr.Tests.DocTests.Chapters.Primitives;
+
+[DocContent("Use `Fuzz.Short()`.")]
 public class Shorts
 {
 	[Fact]
-	// [Shorts(
-	// 	Content = "The overload `Fuzz.Short(short min, short max)` generates a short higher or equal than min and lower than max.",
-	// 	Order = 1)]
+	[DocContent("- The overload `Fuzz.Short(short min, short max)` generates a short higher or equal than min and lower than max.")]
 	public void Zero()
 	{
 		var generator = Fuzz.Short(0, 0);
@@ -19,9 +17,7 @@ public class Shorts
 	}
 
 	[Fact]
-	// [Shorts(
-	// 	Content = "The default generator is (min = 1, max = 100).",
-	// 	Order = 2)]
+	[DocContent("- The default generator is (min = 1, max = 100).")]
 	public void DefaultGeneratorBetweenOneAndHundred()
 	{
 		var generator = Fuzz.Short();
@@ -34,9 +30,7 @@ public class Shorts
 	}
 
 	[Fact]
-	// [Shorts(
-	// 	Content = "Can be made to return `short?` using the `.Nullable()` combinator.",
-	// 	Order = 3)]
+	[DocContent("- Can be made to return `short?` using the `.Nullable()` combinator.")]
 	public void Nullable()
 	{
 		var generator = Fuzz.Short().Nullable();
@@ -58,9 +52,7 @@ public class Shorts
 	}
 
 	[Fact]
-	// [Shorts(
-	// 	Content = " - `short` is automatically detected and generated for object properties.",
-	// 	Order = 4)]
+	[DocContent("- `short` is automatically detected and generated for object properties.")]
 	public void Property()
 	{
 		var generator = Fuzz.One<SomeThingToGenerate>();
@@ -71,9 +63,7 @@ public class Shorts
 	}
 
 	[Fact]
-	// [Shorts(
-	// 	Content = " - `short?` is automatically detected and generated for object properties.",
-	// 	Order = 5)]
+	[DocContent("- `short?` is automatically detected and generated for object properties.")]
 	public void NullableProperty()
 	{
 		var generator = Fuzz.One<SomeThingToGenerate>();

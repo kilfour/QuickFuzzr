@@ -1,14 +1,12 @@
-﻿namespace QuickFuzzr.Tests.DocTests.Chapters.Primitives;
+﻿using QuickPulse.Explains;
 
-// [Doubles(Caption = "Doubles",
-// 	Content = "Use `Fuzz.Double()`.",
-// 	Order = 0)]
+namespace QuickFuzzr.Tests.DocTests.Chapters.Primitives;
+
+[DocContent("Use `Fuzz.Double()`.")]
 public class Doubles
 {
 	[Fact]
-	// [Doubles(
-	// 	Content = "The overload `Fuzz.Double(double min, double max)` generates a double higher or equal than min and lower than max.",
-	// 	Order = 1)]
+	[DocContent("- The overload `Fuzz.Double(double min, double max)` generates a double higher or equal than min and lower than max.")]
 	public void Zero()
 	{
 		var generator = Fuzz.Double(0, 0);
@@ -19,18 +17,14 @@ public class Doubles
 	}
 
 	[Fact]
-	// [Doubles(
-	// 	Content = "Throws an ArgumentException if min > max.",
-	// 	Order = 1.1)]
+	[DocContent("- Throws an ArgumentException if min > max.")]
 	public void Throws()
 	{
 		Assert.Throws<ArgumentException>(() => Fuzz.Double(1, 0).Generate());
 	}
 
 	[Fact]
-	// [Doubles(
-	// 	Content = "The default generator is (min = 1, max = 100).",
-	// 	Order = 2)]
+	[DocContent("- The default generator is (min = 1, max = 100).")]
 	public void DefaultGeneratorBetweenOneAndHundred()
 	{
 		var generator = Fuzz.Double();
@@ -43,9 +37,7 @@ public class Doubles
 	}
 
 	[Fact]
-	// [Doubles(
-	// 	Content = "Can be made to return `double?` using the `.Nullable()` combinator.",
-	// 	Order = 3)]
+	[DocContent("- Can be made to return `double?` using the `.Nullable()` combinator.")]
 	public void Nullable()
 	{
 		var generator = Fuzz.Double().Nullable();
@@ -67,9 +59,7 @@ public class Doubles
 	}
 
 	[Fact]
-	// [Doubles(
-	// 	Content = " - `double` is automatically detected and generated for object properties.",
-	// 	Order = 4)]
+	[DocContent("- `double` is automatically detected and generated for object properties.")]
 	public void Property()
 	{
 		var generator = Fuzz.One<SomeThingToGenerate>();
@@ -80,9 +70,7 @@ public class Doubles
 	}
 
 	[Fact]
-	// [Doubles(
-	// 	Content = " - `double?` is automatically detected and generated for object properties.",
-	// 	Order = 5)]
+	[DocContent("- `double?` is automatically detected and generated for object properties.")]
 	public void NullableProperty()
 	{
 		var generator = Fuzz.One<SomeThingToGenerate>();

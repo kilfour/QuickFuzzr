@@ -352,10 +352,96 @@ Use `Fuzz.Constant<T>(T value)`.
 This generator is most useful in combination with others and is used to inject constants into combined generators.
 ## The Primitive Generators
 ### Booleans
-Use `Fuzz.Bool()`. 
-
-No overload exists.
-The default generator generates True or False.
-Can be made to return `bool?` using the `.Nullable()` combinator.
- - `bool` is automatically detected and generated for object properties.
- - `bool?` is automatically detected and generated for object properties.
+Use `Fuzz.Bool()`. *No overload exists.*
+- The default generator generates True or False.
+- Can be made to return `bool?` using the `.Nullable()` combinator.
+- `bool` is automatically detected and generated for object properties.
+- `bool?` is automatically detected and generated for object properties.
+### Chars
+Use `Fuzz.Char()`. *No overload exists.*
+- The default generator always generates a char between lower case 'a' and lower case 'z'.
+- Can be made to return `char?` using the `.Nullable()` combinator.
+- `char` is automatically detected and generated for object properties.
+- `char?` is automatically detected and generated for object properties.
+### Date Times
+Use `Fuzz.DateTime()`.
+- The overload `Fuzz.DateTimes(DateTime min, DateTime max)` generates a DateTime higher or equal than min and lower than max.
+- The default generator is (min = new DateTime(1970, 1, 1), max = new DateTime(2020, 12, 31)).
+- Can be made to return `DateTime?` using the `.Nullable()` combinator.
+- `DateTime` is automatically detected and generated for object properties.
+- `DateTime?` is automatically detected and generated for object properties.
+### Decimals
+Use `Fuzz.Decimal()`.
+- The overload `Fuzz.Decimal(decimal min, decimal max)` generates a decimal higher or equal than min and lower than max.
+- Throws an ArgumentException if min > max.
+- The default generator is (min = 1, max = 100).
+- Can be made to return `decimal?` using the `.Nullable()` combinator.
+- `decimal` is automatically detected and generated for object properties.
+- `decimal?` is automatically detected and generated for object properties.
+### Doubles
+Use `Fuzz.Double()`.
+- The overload `Fuzz.Double(double min, double max)` generates a double higher or equal than min and lower than max.
+- Throws an ArgumentException if min > max.
+- The default generator is (min = 1, max = 100).
+- Can be made to return `double?` using the `.Nullable()` combinator.
+- `double` is automatically detected and generated for object properties.
+- `double?` is automatically detected and generated for object properties.
+### Enums
+Use `Fuzz.Enum<T>()`, where T is the type of Enum you want to generate. *No overload exists.*
+- The default generator just picks a random value from all enemeration values.
+- An Enumeration is automatically detected and generated for object properties.
+- A nullable Enumeration is automatically detected and generated for object properties.
+- Passing in a non Enum type for T throws an ArgumentException.
+### Floats
+Use `Fuzz.Float()`.
+- The overload `Fuzz.Float(float min, float max)` generates a float higher or equal than min and lower than max.
+- Throws an ArgumentException if min > max.
+- The default generator is (min = 1, max = 100).
+- Can be made to return `float?` using the `.Nullable()` combinator.
+- `float` is automatically detected and generated for object properties.
+- `float?` is automatically detected and generated for object properties.
+### Guids
+Use `Fuzz.Guid()`. *There is no overload.*
+- The default generator never generates Guid.Empty.
+- Can be made to return `Guid?` using the `.Nullable()` combinator.
+- `Guid` is automatically detected and generated for object properties.
+- `Guid?` is automatically detected and generated for object properties.
+### Ints
+Use `Fuzz.Int()`.
+- The overload `Fuzz.Int(int min, int max)` generates an int higher or equal than min and lower than max.
+- Throws an ArgumentException if min > max.
+- The default generator is (min = 1, max = 100).
+- Can be made to return `int?` using the `.Nullable()` combinator.
+- `int` is automatically detected and generated for object properties.
+- `Int32` is automatically detected and generated for object properties.
+- `int?` is automatically detected and generated for object properties.
+### Longs
+Use `Fuzz.Long()`.
+- The overload `Fuzz.Long(long min, long max)` generates a long higher or equal than min and lower than max.
+Throws an ArgumentException if min > max.
+- The default generator is (min = 1, max = 100).
+- Can be made to return `long?` using the `.Nullable()` combinator.
+- `long` is automatically detected and generated for object properties.
+- `Int64` is automatically detected and generated for object properties.
+- `long?` is automatically detected and generated for object properties.
+### Shorts
+Use `Fuzz.Short()`.
+- The overload `Fuzz.Short(short min, short max)` generates a short higher or equal than min and lower than max.
+- The default generator is (min = 1, max = 100).
+- Can be made to return `short?` using the `.Nullable()` combinator.
+- `short` is automatically detected and generated for object properties.
+- `short?` is automatically detected and generated for object properties.
+### Strings
+Use `Fuzz.String()`.
+- The generator always generates every char element of the string to be between lower case 'a' and lower case 'z'.
+- The overload `Fuzz.String(int min, int max)` generates an string of length higher or equal than min and lower than max.
+- The Default generator generates a string of length higher than 0 and lower than 10.
+- `string` is automatically detected and generated for object properties.
+- Can be made to return `string?` using the `.NullableRef()` combinator.
+### Time Spans
+Use `Fuzz.TimeSpan()`.
+- The overload `Fuzz.TimeSpan(int max)` generates a TimeSpan with Ticks higher or equal than 1 and lower than max.
+- The default generator is (max = 1000).
+- Can be made to return `TimeSpan?` using the `.Nullable()` combinator.
+- `TimeSpan` is automatically detected and generated for object properties.
+- `TimeSpan?` is automatically detected and generated for object properties.
