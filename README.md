@@ -65,6 +65,7 @@ Use `Fuzz.One<T>()`, where T is the type of object you want to generate.
 - The object properties will also be automatically filled in using the default (or replaced) generators, similar to calling Fuzz.One<TProperty>() and setting the value using `Apply` (see below) explicitly.
 - Also works for properties with private setters.
 - Can generate any object that has a parameterless constructor, be it public, protected, or private.
+- `record` generation is also possible.
 - The overload `Fuzz.One<T>(Func<T> constructor)` allows for specific constructor selection.
 ### Ignoring Properties
 Use the `Fuzz.For<T>().Ignore<TProperty>(Expression<Func<T, TProperty>> func)` method chain.

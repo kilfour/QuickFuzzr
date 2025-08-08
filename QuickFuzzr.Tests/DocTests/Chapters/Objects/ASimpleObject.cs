@@ -71,6 +71,30 @@ public class ASimpleObject
 	}
 
 	[Fact]
+	[DocContent("- `record` generation is also possible.")]
+	public void CanGenerateRecords()
+	{
+		var generator =
+			from _ in Fuzz.Constant(42).Replace()
+			from record in Fuzz.One<MyRecord>()
+			select record;
+		var result = generator.Generate();
+		Assert.Equal(42, result.Value);
+	}
+
+	public record MyRecord
+	{
+		public MyRecord() { }
+
+		public MyRecord(int Value)
+		{
+			this.Value = Value;
+		}
+
+		public int Value { get; init; }
+	}
+
+	[Fact]
 	[DocContent("- The overload `Fuzz.One<T>(Func<T> constructor)` allows for specific constructor selection.")]
 	public void CustomConstructor()
 	{

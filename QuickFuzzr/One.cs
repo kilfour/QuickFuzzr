@@ -256,6 +256,11 @@ namespace QuickFuzzr
 
 		private static bool IsObject(PropertyInfo propertyInfo)
 		{
+			if (propertyInfo.Name == "EqualityContract" &&
+				propertyInfo.PropertyType == typeof(Type) &&
+				propertyInfo.DeclaringType is { IsClass: true } &&
+				typeof(IEquatable<>).MakeGenericType(propertyInfo.DeclaringType).IsAssignableFrom(propertyInfo.DeclaringType))
+				return false;
 			return propertyInfo.PropertyType.IsClass && propertyInfo.PropertyType != typeof(string);
 		}
 
