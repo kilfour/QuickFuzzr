@@ -21,5 +21,10 @@
 		{
 			return random.NextDouble();
 		}
+
+		public long NextInt64(long min, long max)
+		{
+			return random.NextInt64(min, max);
+		}
 	}
 }

@@ -1,4 +1,5 @@
-﻿using QuickFuzzr.UnderTheHood;
+﻿using QuickFuzzr.Tests._Tools;
+using QuickFuzzr.UnderTheHood;
 using QuickPulse.Explains;
 
 namespace QuickFuzzr.Tests.DocTests.Chapters.Objects;
@@ -36,8 +37,10 @@ When executing above generator it will return a SomeThingToGenerate object where
 			from _ in Fuzz.Int(42, 42).Replace()
 			from result in Fuzz.One<SomeThingToGenerate>()
 			select result;
-		_Tools.CheckIf.GeneratedValuesShouldEventuallySatisfyAll(generator.Select(a => a.ANullableProperty),
-			("is null", a => a == null), ("is not null", a => a != null));
+		CheckIf.GeneratedValuesShouldEventuallySatisfyAll(
+			generator.Select(a => a.ANullableProperty),
+				("is null", a => a == null),
+				("is not null", a => a != null));
 	}
 
 	[Fact]

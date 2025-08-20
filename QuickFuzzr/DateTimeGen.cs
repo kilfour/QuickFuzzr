@@ -14,10 +14,9 @@ namespace QuickFuzzr
 			return
 				s =>
 					{
-						var ticks = (long)((s.Random.NextDouble() * (max.Ticks - min.Ticks)) + min.Ticks);
-						var value = new DateTime(ticks);
-						// why ???
-						value = new DateTime(value.Year, value.Month, value.Day, value.Hour, value.Minute, value.Second);
+						var ticks = s.Random.NextInt64(min.Ticks, max.Ticks + 1);
+						ticks -= ticks % System.TimeSpan.TicksPerSecond; // snap to whole seconds
+						var value = new DateTime(ticks, DateTimeKind.Utc);
 						return new Result<DateTime>(value, s);
 					};
 		}

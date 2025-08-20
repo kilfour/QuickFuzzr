@@ -7,6 +7,7 @@ namespace QuickFuzzr.Tests.DocTests.Chapters;
 [DocInclude(typeof(Booleans))]
 [DocInclude(typeof(Chars))]
 [DocInclude(typeof(DateTimes))]
+//[DocInclude(typeof(DateOnlys))]
 [DocInclude(typeof(Decimals))]
 [DocInclude(typeof(Doubles))]
 [DocInclude(typeof(Enums))]
