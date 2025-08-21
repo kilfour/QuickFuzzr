@@ -1,4 +1,5 @@
-﻿using QuickPulse.Explains;
+﻿using QuickFuzzr.Tests._Tools;
+using QuickPulse.Explains;
 
 namespace QuickFuzzr.Tests.DocTests.Chapters.Primitives;
 
@@ -11,12 +12,8 @@ public class Chars
 	[DocContent("- The default generator always generates a char between lower case 'a' and lower case 'z'.")]
 	public void DefaultGeneratorAlwaysBetweenLowerCaseAAndLowerCaseZ()
 	{
-		var generator = Fuzz.Char();
-		for (int i = 0; i < 100; i++)
-		{
-			var val = generator.Generate();
-			Assert.True(valid.Any(c => c == val), val.ToString());
-		}
+		CheckIf.GeneratedValuesShouldAllSatisfy(Fuzz.Char(),
+			("char between lower case 'a' and lower case 'z'", val => valid.Any(c => c == val)));
 	}
 
 	[Fact]
@@ -37,22 +34,7 @@ public class Chars
 	[DocContent("- Can be made to return `char?` using the `.Nullable()` combinator.")]
 	public void Nullable()
 	{
-		var generator = Fuzz.Char().Nullable();
-		var isSomeTimesNull = false;
-		var isSomeTimesNotNull = false;
-		for (int i = 0; i < 50; i++)
-		{
-			var value = generator.Generate();
-			if (value.HasValue)
-			{
-				isSomeTimesNotNull = true;
-				Assert.True(valid.Any(c => c == value.Value), value.Value.ToString());
-			}
-			else
-				isSomeTimesNull = true;
-		}
-		Assert.True(isSomeTimesNull);
-		Assert.True(isSomeTimesNotNull);
+		CheckIf.GeneratesNullAndNotNull(Fuzz.Char().Nullable());
 	}
 
 	[Fact]
@@ -71,22 +53,8 @@ public class Chars
 	[DocContent("- `char?` is automatically detected and generated for object properties.")]
 	public void NullableProperty()
 	{
-		var generator = Fuzz.One<SomeThingToGenerate>();
-		var isSomeTimesNull = false;
-		var isSomeTimesNotNull = false;
-		for (int i = 0; i < 50; i++)
-		{
-			var value = generator.Generate().ANullableProperty;
-			if (value.HasValue)
-			{
-				isSomeTimesNotNull = true;
-				Assert.True(valid.Any(c => c == value.Value), value.Value.ToString());
-			}
-			else
-				isSomeTimesNull = true;
-		}
-		Assert.True(isSomeTimesNull);
-		Assert.True(isSomeTimesNotNull);
+		CheckIf.GeneratesNullAndNotNull(
+			Fuzz.One<SomeThingToGenerate>().Select(x => x.ANullableProperty));
 	}
 
 	public class SomeThingToGenerate

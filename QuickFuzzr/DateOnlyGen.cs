@@ -17,7 +17,7 @@ namespace QuickFuzzr
 
 			return s =>
 			{
-				var offset = s.Random.Next(0, checked((int)span) + 1);
+				var offset = s.Random.Next(0, checked((int)span));
 				var value = System.DateOnly.FromDayNumber(minN + offset);
 				return new Result<DateOnly>(value, s);
 			};
