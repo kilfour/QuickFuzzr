@@ -388,6 +388,20 @@ Use `Fuzz.DateTime()`.
 - Can be made to return `DateTime?` using the `.Nullable()` combinator.
 - `DateTime` is automatically detected and generated for object properties.
 - `DateTime?` is automatically detected and generated for object properties.
+### Date Onlys
+Use `Fuzz.DateOnly()`.
+- The overload `Fuzz.DateOnly(DateOnly min, DateOnly max)` generates a DateOnly higher or equal than min and lower than max.
+- The default generator is (min = new DateOnly(1970, 1, 1), max = new DateOnly(2020, 12, 31)).
+- Can be made to return `DateOnly?` using the `.Nullable()` combinator.
+- `DateOnly` is automatically detected and generated for object properties.
+- `DateOnly?` is automatically detected and generated for object properties.
+### Time Onlys
+Use `Fuzz.TimeOnly()`.
+- The overload `Fuzz.TimeOnly(TimeOnly min, TimeOnly max)` generates a TimeOnly higher or equal than min and lower than max.
+- The default generator is (min = 00:00:00, max = 23:59:59.9999999.
+- Can be made to return `TimeOnly?` using the `.Nullable()` combinator.
+- `TimeOnly` is automatically detected and generated for object properties.
+- `TimeOnly?` is automatically detected and generated for object properties.
 ### Decimals
 Use `Fuzz.Decimal()`.
 - The overload `Fuzz.Decimal(decimal min, decimal max)` generates a decimal higher or equal than min and lower than max.

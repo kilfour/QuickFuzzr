@@ -2,40 +2,40 @@
 
 namespace QuickFuzzr.Tests.DocTests.Chapters.Primitives;
 
-[DocContent("Use `Fuzz.DateOnly()`.")]
-public class DateOnlys
+[DocContent("Use `Fuzz.TimeOnly()`.")]
+public class TimeOnlys
 {
 	[Fact]
-	[DocContent("- The overload `Fuzz.DateOnly(DateOnly min, DateOnly max)` generates a DateOnly higher or equal than min and lower than max.")]
+	[DocContent("- The overload `Fuzz.TimeOnly(TimeOnly min, TimeOnly max)` generates a TimeOnly higher or equal than min and lower than max.")]
 	public void Zero()
 	{
-		var generator = Fuzz.DateOnly(new DateOnly(2000, 1, 1), new DateOnly(2000, 1, 5));
+		var generator = Fuzz.TimeOnly(new TimeOnly(1, 0), new TimeOnly(1, 1));
 		for (int i = 0; i < 10; i++)
 		{
 			var value = generator.Generate();
-			Assert.True(value >= new DateOnly(2000, 1, 1));
-			Assert.True(value < new DateOnly(2000, 1, 5));
+			Assert.True(value >= new TimeOnly(1, 0));
+			Assert.True(value < new TimeOnly(1, 1));
 		}
 	}
 
 	[Fact]
-	[DocContent("- The default generator is (min = new DateOnly(1970, 1, 1), max = new DateOnly(2020, 12, 31)).")]
+	[DocContent("- The default generator is (min = 00:00:00, max = 23:59:59.9999999.")]
 	public void DefaultGeneratorNeverGeneratesZero()
 	{
-		var generator = Fuzz.DateOnly();
+		var generator = Fuzz.TimeOnly();
 		for (int i = 0; i < 50; i++)
 		{
 			var val = generator.Generate();
-			Assert.True(val >= new DateOnly(1970, 1, 1));
-			Assert.True(val < new DateOnly(2020, 12, 31));
+			Assert.True(val >= new TimeOnly(0));
+			Assert.True(val <= TimeOnly.MaxValue);
 		}
 	}
 
 	[Fact]
-	[DocContent("- Can be made to return `DateOnly?` using the `.Nullable()` combinator.")]
+	[DocContent("- Can be made to return `TimeOnly?` using the `.Nullable()` combinator.")]
 	public void Nullable()
 	{
-		var generator = Fuzz.DateOnly().Nullable();
+		var generator = Fuzz.TimeOnly().Nullable();
 		var isSomeTimesNull = false;
 		var isSomeTimesNotNull = false;
 		for (int i = 0; i < 50; i++)
@@ -44,7 +44,7 @@ public class DateOnlys
 			if (value.HasValue)
 			{
 				isSomeTimesNotNull = true;
-				Assert.NotEqual(new DateOnly(), value.Value);
+				Assert.NotEqual(new TimeOnly(), value.Value);
 			}
 			else
 				isSomeTimesNull = true;
@@ -54,18 +54,18 @@ public class DateOnlys
 	}
 
 	[Fact]
-	[DocContent("- `DateOnly` is automatically detected and generated for object properties.")]
+	[DocContent("- `TimeOnly` is automatically detected and generated for object properties.")]
 	public void Property()
 	{
 		var generator = Fuzz.One<SomeThingToGenerate>();
 		for (int i = 0; i < 10; i++)
 		{
-			Assert.NotEqual(new DateOnly(), generator.Generate().AProperty);
+			Assert.NotEqual(new TimeOnly(), generator.Generate().AProperty);
 		}
 	}
 
 	[Fact]
-	[DocContent("- `DateOnly?` is automatically detected and generated for object properties.")]
+	[DocContent("- `TimeOnly?` is automatically detected and generated for object properties.")]
 	public void NullableProperty()
 	{
 		var generator = Fuzz.One<SomeThingToGenerate>();
@@ -77,7 +77,7 @@ public class DateOnlys
 			if (value.HasValue)
 			{
 				isSomeTimesNotNull = true;
-				Assert.NotEqual(new DateOnly(), value.Value);
+				Assert.NotEqual(new TimeOnly(), value.Value);
 			}
 			else
 				isSomeTimesNull = true;
@@ -88,7 +88,7 @@ public class DateOnlys
 
 	public class SomeThingToGenerate
 	{
-		public DateOnly AProperty { get; set; }
-		public DateOnly? ANullableProperty { get; set; }
+		public TimeOnly AProperty { get; set; }
+		public TimeOnly? ANullableProperty { get; set; }
 	}
 }

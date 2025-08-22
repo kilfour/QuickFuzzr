@@ -106,7 +106,9 @@ namespace QuickFuzzr.UnderTheHood
 					{ typeof(TimeSpan), Fuzz.TimeSpan().AsObject() },
 					{ typeof(TimeSpan?), Fuzz.TimeSpan().Nullable().AsObject() },
 					{ typeof(DateOnly), Fuzz.DateOnly().AsObject() },
-					{ typeof(DateOnly?), Fuzz.DateOnly().Nullable().AsObject() }
+					{ typeof(DateOnly?), Fuzz.DateOnly().Nullable().AsObject() },
+					{ typeof(TimeOnly), Fuzz.TimeOnly().AsObject() },
+					{ typeof(TimeOnly?), Fuzz.TimeOnly().Nullable().AsObject() }
 				};
 	}
 }
