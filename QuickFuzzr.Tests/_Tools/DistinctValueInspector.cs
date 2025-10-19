@@ -26,7 +26,7 @@ public class DistinctValueInspector<T> : IArtery
         return predicates.All(predicate => Seen.Any(value => predicate(value)));
     }
 
-    public void Flow(params object[] data)
+    public void Absorb(params object[] data)
     {
         foreach (var item in data)
         {

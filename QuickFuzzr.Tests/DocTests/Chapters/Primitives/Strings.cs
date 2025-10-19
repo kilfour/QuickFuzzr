@@ -10,7 +10,7 @@ public class Strings
 	public void DefaultGeneratorStringElementsAlwaysBetweenLowerCaseAAndLowerCaseZ()
 	{
 		var valid = "abcdefghijklmnopqrstuvwxyz".ToCharArray();
-		var generator = Fuzz.String();
+		var generator = Fuzzr.String();
 		for (int i = 0; i < 10; i++)
 		{
 			var val = generator.Generate();
@@ -22,7 +22,7 @@ public class Strings
 	[DocContent("- The overload `Fuzz.String(int min, int max)` generates an string of length higher or equal than min and lower than max.")]
 	public void Zero()
 	{
-		var generator = Fuzz.String(5, 7);
+		var generator = Fuzzr.String(5, 7);
 		for (int i = 0; i < 10; i++)
 		{
 			var val = generator.Generate();
@@ -35,7 +35,7 @@ public class Strings
 	[DocContent("- The Default generator generates a string of length higher than 0 and lower than 10.")]
 	public void DefaultGeneratorStringIsBetweenOneAndTen()
 	{
-		var generator = Fuzz.String();
+		var generator = Fuzzr.String();
 		for (int i = 0; i < 10; i++)
 		{
 			var val = generator.Generate();
@@ -48,7 +48,7 @@ public class Strings
 	[DocContent("- `string` is automatically detected and generated for object properties.")]
 	public void Property()
 	{
-		var generator = Fuzz.One<SomeThingToGenerate>();
+		var generator = Fuzzr.One<SomeThingToGenerate>();
 		for (int i = 0; i < 10; i++)
 		{
 			var value = generator.Generate().AProperty;
@@ -61,7 +61,7 @@ public class Strings
 	[DocContent("- Can be made to return `string?` using the `.NullableRef()` combinator.")]
 	public void Nullable()
 	{
-		var generator = Fuzz.String().NullableRef();
+		var generator = Fuzzr.String().NullableRef();
 		var isSomeTimesNull = false;
 		var isSomeTimesNotNull = false;
 		for (int i = 0; i < 50; i++)

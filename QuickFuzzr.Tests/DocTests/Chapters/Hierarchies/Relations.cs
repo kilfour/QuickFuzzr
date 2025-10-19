@@ -22,9 +22,9 @@ var generator =
 	public void SetOneToOne()
 	{
 		var generator =
-			from product in Fuzz.One<ProductItem>()
-			from setProduct in Fuzz.For<OrderLine>().Customize(order => order.Product, product)
-			from orderline in Fuzz.One<OrderLine>()
+			from product in Fuzzr.One<ProductItem>()
+			from setProduct in Fuzzr.For<OrderLine>().Customize(order => order.Product, product)
+			from orderline in Fuzzr.One<OrderLine>()
 			select orderline;
 
 		var value = generator.Generate();
@@ -50,8 +50,8 @@ This forces enumeration and is necessary because the lines are not enumerated ov
 	public void OneToMany()
 	{
 		var generator =
-			from order in Fuzz.One<Order>()
-			from lines in Fuzz.One<OrderLine>()
+			from order in Fuzzr.One<Order>()
+			from lines in Fuzzr.One<OrderLine>()
 				.Apply(a => order.AddOrderLine(a)).Many(2).ToArray()
 			select order;
 
@@ -66,8 +66,8 @@ This forces enumeration and is necessary because the lines are not enumerated ov
 	public void OneToManyVerifying()
 	{
 		var generator =
-			from lines in Fuzz.One<OrderLine>().Many(2)
-			from order in Fuzz.One<Order>().Apply(a => lines.ForEach(b => a.AddOrderLine(b)))
+			from lines in Fuzzr.One<OrderLine>().Many(2)
+			from order in Fuzzr.One<Order>().Apply(a => lines.ToList().ForEach(b => a.AddOrderLine(b)))
 			select lines;
 
 		var value = generator.Generate().ToArray();
@@ -92,8 +92,8 @@ var generator =
 	public void ThroughConstructor()
 	{
 		var generator =
-			from category in Fuzz.One<Category>()
-			from subCategory in Fuzz.One(() => new SubCategory(category)).Many(2)
+			from category in Fuzzr.One<Category>()
+			from subCategory in Fuzzr.One(() => new SubCategory(category)).Many(2)
 			select category;
 
 		var value = generator.Generate();

@@ -4,7 +4,7 @@ using QuickFuzzr.UnderTheHood;
 
 namespace QuickFuzzr
 {
-	public static partial class Fuzz
+	public static partial class Fuzzr
 	{
 		public static Generator<T> One<T>()
 		{
@@ -174,6 +174,12 @@ namespace QuickFuzzr
 			if (NeedsToBeIgnored(state, propertyInfo))
 				return;
 
+			if (NeedsToBeGenerallyCustomized(state, propertyInfo))
+			{
+				GenerallyCustomizeProperty(instance, propertyInfo, state);
+				return;
+			}
+
 			if (NeedsToBeCustomized(state, propertyInfo))
 			{
 				CustomizeProperty(instance, propertyInfo, state);
@@ -219,16 +225,25 @@ namespace QuickFuzzr
 								&& info.Name == propertyInfo.Name);
 		}
 
-		private static bool NeedsToBeCustomized(State state, PropertyInfo propertyInfo)
+		private static bool NeedsToBeGenerallyCustomized(State state, PropertyInfo propertyInfo)
+			=> state.GeneralCustomizations.Keys
+				.Any(info => info(propertyInfo));
+
+		private static void GenerallyCustomizeProperty(object target, PropertyInfo propertyInfo, State state)
 		{
-			return
+			var key =
 				state
-					.Customizations
+					.GeneralCustomizations
 					.Keys
-					.Any(
-						info => info.ReflectedType!.IsAssignableFrom(propertyInfo.ReflectedType)
-								&& info.Name == propertyInfo.Name);
+					.First(info => info(propertyInfo));
+			var generator = state.GeneralCustomizations[key];
+			SetPropertyValue(propertyInfo, target, generator(state).Value);
 		}
+
+		private static bool NeedsToBeCustomized(State state, PropertyInfo propertyInfo)
+			=> state.Customizations.Keys
+				.Any(info => info.ReflectedType!.IsAssignableFrom(propertyInfo.ReflectedType)
+					&& info.Name == propertyInfo.Name);
 
 		private static void CustomizeProperty(object target, PropertyInfo propertyInfo, State state)
 		{

@@ -9,7 +9,7 @@ public class Shorts
 	[DocContent("- The overload `Fuzz.Short(short min, short max)` generates a short higher or equal than min and lower than max.")]
 	public void Zero()
 	{
-		var generator = Fuzz.Short(0, 0);
+		var generator = Fuzzr.Short(0, 0);
 		for (int i = 0; i < 10; i++)
 		{
 			Assert.Equal(0, generator.Generate());
@@ -20,7 +20,7 @@ public class Shorts
 	[DocContent("- The default generator is (min = 1, max = 100).")]
 	public void DefaultGeneratorBetweenOneAndHundred()
 	{
-		var generator = Fuzz.Short();
+		var generator = Fuzzr.Short();
 		for (int i = 0; i < 10; i++)
 		{
 			var val = generator.Generate();
@@ -33,7 +33,7 @@ public class Shorts
 	[DocContent("- Can be made to return `short?` using the `.Nullable()` combinator.")]
 	public void Nullable()
 	{
-		var generator = Fuzz.Short().Nullable();
+		var generator = Fuzzr.Short().Nullable();
 		var isSomeTimesNull = false;
 		var isSomeTimesNotNull = false;
 		for (int i = 0; i < 50; i++)
@@ -55,7 +55,7 @@ public class Shorts
 	[DocContent("- `short` is automatically detected and generated for object properties.")]
 	public void Property()
 	{
-		var generator = Fuzz.One<SomeThingToGenerate>();
+		var generator = Fuzzr.One<SomeThingToGenerate>();
 		for (int i = 0; i < 10; i++)
 		{
 			Assert.NotEqual(0, generator.Generate().AProperty);
@@ -66,7 +66,7 @@ public class Shorts
 	[DocContent("- `short?` is automatically detected and generated for object properties.")]
 	public void NullableProperty()
 	{
-		var generator = Fuzz.One<SomeThingToGenerate>();
+		var generator = Fuzzr.One<SomeThingToGenerate>();
 		var isSomeTimesNull = false;
 		var isSomeTimesNotNull = false;
 		for (int i = 0; i < 50; i++)

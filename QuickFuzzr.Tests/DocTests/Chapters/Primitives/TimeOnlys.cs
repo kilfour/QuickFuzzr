@@ -9,7 +9,7 @@ public class TimeOnlys
 	[DocContent("- The overload `Fuzz.TimeOnly(TimeOnly min, TimeOnly max)` generates a TimeOnly higher or equal than min and lower than max.")]
 	public void Zero()
 	{
-		var generator = Fuzz.TimeOnly(new TimeOnly(1, 0), new TimeOnly(1, 1));
+		var generator = Fuzzr.TimeOnly(new TimeOnly(1, 0), new TimeOnly(1, 1));
 		for (int i = 0; i < 10; i++)
 		{
 			var value = generator.Generate();
@@ -22,7 +22,7 @@ public class TimeOnlys
 	[DocContent("- The default generator is (min = 00:00:00, max = 23:59:59.9999999.")]
 	public void DefaultGeneratorNeverGeneratesZero()
 	{
-		var generator = Fuzz.TimeOnly();
+		var generator = Fuzzr.TimeOnly();
 		for (int i = 0; i < 50; i++)
 		{
 			var val = generator.Generate();
@@ -35,7 +35,7 @@ public class TimeOnlys
 	[DocContent("- Can be made to return `TimeOnly?` using the `.Nullable()` combinator.")]
 	public void Nullable()
 	{
-		var generator = Fuzz.TimeOnly().Nullable();
+		var generator = Fuzzr.TimeOnly().Nullable();
 		var isSomeTimesNull = false;
 		var isSomeTimesNotNull = false;
 		for (int i = 0; i < 50; i++)
@@ -57,7 +57,7 @@ public class TimeOnlys
 	[DocContent("- `TimeOnly` is automatically detected and generated for object properties.")]
 	public void Property()
 	{
-		var generator = Fuzz.One<SomeThingToGenerate>();
+		var generator = Fuzzr.One<SomeThingToGenerate>();
 		for (int i = 0; i < 10; i++)
 		{
 			Assert.NotEqual(new TimeOnly(), generator.Generate().AProperty);
@@ -68,7 +68,7 @@ public class TimeOnlys
 	[DocContent("- `TimeOnly?` is automatically detected and generated for object properties.")]
 	public void NullableProperty()
 	{
-		var generator = Fuzz.One<SomeThingToGenerate>();
+		var generator = Fuzzr.One<SomeThingToGenerate>();
 		var isSomeTimesNull = false;
 		var isSomeTimesNotNull = false;
 		for (int i = 0; i < 50; i++)

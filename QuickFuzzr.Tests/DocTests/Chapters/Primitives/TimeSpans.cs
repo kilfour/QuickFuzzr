@@ -10,7 +10,7 @@ public class TimeSpans
 	[DocContent("- The overload `Fuzz.TimeSpan(int max)` generates a TimeSpan with Ticks higher or equal than 1 and lower than max.")]
 	public void OverloadRange()
 	{
-		CheckIf.GeneratedValuesShouldAllSatisfy(Fuzz.TimeSpan(5),
+		CheckIf.GeneratedValuesShouldAllSatisfy(Fuzzr.TimeSpan(5),
 			("Ticks >= 1", a => a.Ticks >= 1), ("Ticks < 5", a => a.Ticks < 5));
 	}
 
@@ -18,7 +18,7 @@ public class TimeSpans
 	[DocContent("- The default generator is (max = 1000).")]
 	public void GeneratesValuesBetweenOneIncludedAndThousandExcluded()
 	{
-		CheckIf.GeneratedValuesShouldAllSatisfy(Fuzz.TimeSpan(),
+		CheckIf.GeneratedValuesShouldAllSatisfy(Fuzzr.TimeSpan(),
 			("Ticks >= 1", a => a.Ticks >= 1), ("Ticks < 1000", a => a.Ticks < 1000));
 	}
 
@@ -26,7 +26,7 @@ public class TimeSpans
 	[DocContent("- Can be made to return `TimeSpan?` using the `.Nullable()` combinator.")]
 	public void Nullable()
 	{
-		CheckIf.GeneratesNullAndNotNull(Fuzz.TimeSpan().Nullable());
+		CheckIf.GeneratesNullAndNotNull(Fuzzr.TimeSpan().Nullable());
 	}
 
 	[Fact]
@@ -34,7 +34,7 @@ public class TimeSpans
 	public void Property()
 	{
 		CheckIf.GeneratedValuesShouldAllSatisfy(
-			Fuzz.One<SomeThingToGenerate>().Select(a => a.AProperty),
+			Fuzzr.One<SomeThingToGenerate>().Select(a => a.AProperty),
 			("not zero", a => a.Ticks != 0));
 	}
 
@@ -43,7 +43,7 @@ public class TimeSpans
 	public void NullableProperty()
 	{
 		CheckIf.GeneratesNullAndNotNull(
-			Fuzz.One<SomeThingToGenerate>().Select(a => a.ANullableProperty));
+			Fuzzr.One<SomeThingToGenerate>().Select(a => a.ANullableProperty));
 	}
 
 	public class SomeThingToGenerate

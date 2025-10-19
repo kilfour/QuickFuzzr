@@ -2,7 +2,7 @@
 
 namespace QuickFuzzr
 {
-	public static partial class Fuzz
+	public static partial class Fuzzr
 	{
 		public static Generator<DateOnly> DateOnly()
 		=> DateOnly(new DateOnly(1970, 1, 1), new DateOnly(2020, 12, 31));

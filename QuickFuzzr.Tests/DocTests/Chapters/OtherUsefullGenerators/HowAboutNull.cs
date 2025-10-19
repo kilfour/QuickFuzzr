@@ -12,7 +12,7 @@ public class HowAboutNull
 > Used for value types.")]
 	public void Nullable()
 	{
-		var generator = Fuzz.Int().Nullable();
+		var generator = Fuzzr.Int().Nullable();
 		var seenNull = false;
 		var seenValue = false;
 		var tries = 0;
@@ -42,7 +42,7 @@ public class HowAboutNull
 > Used for reference types, including `string`.")]
 	public void NullableRef()
 	{
-		var generator = Fuzz.String().NullableRef();
+		var generator = Fuzzr.String().NullableRef();
 		var seenNull = false;
 		var seenValue = false;
 		var tries = 0;
@@ -73,7 +73,7 @@ public class HowAboutNull
 	{
 		for (int i = 0; i < 10; i++)
 		{
-			Assert.Equal(42, Fuzz.Constant(42).Nullable().NeverReturnNull().Generate());
+			Assert.Equal(42, Fuzzr.Constant(42).Nullable().NeverReturnNull().Generate());
 		}
 	}
 }

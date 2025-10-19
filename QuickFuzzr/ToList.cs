@@ -2,7 +2,7 @@
 
 namespace QuickFuzzr
 {
-	public static partial class Fuzz
+	public static partial class Fuzzr
 	{
 		public static Generator<List<T>> ToList<T>(this Generator<IEnumerable<T>> generator)
 		{

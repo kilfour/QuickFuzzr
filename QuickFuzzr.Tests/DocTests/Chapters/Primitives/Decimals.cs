@@ -9,7 +9,7 @@ public class Decimals
 	[DocContent("- The overload `Fuzz.Decimal(decimal min, decimal max)` generates a decimal higher or equal than min and lower than max.")]
 	public void Zero()
 	{
-		var generator = Fuzz.Decimal(0, 0);
+		var generator = Fuzzr.Decimal(0, 0);
 		for (int i = 0; i < 10; i++)
 		{
 			Assert.Equal(0, generator.Generate());
@@ -19,14 +19,14 @@ public class Decimals
 	[DocContent("- Throws an ArgumentException if min > max.")]
 	public void Throws()
 	{
-		Assert.Throws<ArgumentException>(() => Fuzz.Decimal(1, 0).Generate());
+		Assert.Throws<ArgumentException>(() => Fuzzr.Decimal(1, 0).Generate());
 	}
 
 	[Fact]
 	[DocContent("- The default generator is (min = 1, max = 100).")]
 	public void DefaultGeneratorBetweenOneAndHundred()
 	{
-		var generator = Fuzz.Decimal();
+		var generator = Fuzzr.Decimal();
 		for (int i = 0; i < 10; i++)
 		{
 			var val = generator.Generate();
@@ -39,7 +39,7 @@ public class Decimals
 	[DocContent("- Can be made to return `decimal?` using the `.Nullable()` combinator.")]
 	public void Nullable()
 	{
-		var generator = Fuzz.Decimal().Nullable();
+		var generator = Fuzzr.Decimal().Nullable();
 		var isSomeTimesNull = false;
 		var isSomeTimesNotNull = false;
 		for (int i = 0; i < 50; i++)
@@ -61,7 +61,7 @@ public class Decimals
 	[DocContent("- `decimal` is automatically detected and generated for object properties.")]
 	public void Property()
 	{
-		var generator = Fuzz.One<SomeThingToGenerate>();
+		var generator = Fuzzr.One<SomeThingToGenerate>();
 		for (int i = 0; i < 10; i++)
 		{
 			Assert.NotEqual(0, generator.Generate().AProperty);
@@ -72,7 +72,7 @@ public class Decimals
 	[DocContent("- `decimal?` is automatically detected and generated for object properties.")]
 	public void NullableProperty()
 	{
-		var generator = Fuzz.One<SomeThingToGenerate>();
+		var generator = Fuzzr.One<SomeThingToGenerate>();
 		var isSomeTimesNull = false;
 		var isSomeTimesNotNull = false;
 		for (int i = 0; i < 50; i++)

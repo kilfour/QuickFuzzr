@@ -10,7 +10,7 @@ public class UniqueValues
 	[DocContent("Makes sure that every generated value is unique.")]
 	public void IsUnique()
 	{
-		var generator = Fuzz.ChooseFromThese(1, 2).Unique("TheKey").Many(2);
+		var generator = Fuzzr.OneOf(1, 2).Unique("TheKey").Many(2);
 		for (int i = 0; i < 100; i++)
 		{
 			var value = generator.Generate().ToArray();
@@ -22,7 +22,7 @@ public class UniqueValues
 	[DocContent("When asking for more unique values than the generator can supply, an exception is thrown.")]
 	public void Throws()
 	{
-		var generator = Fuzz.Constant(1).Unique("TheKey").Many(2);
+		var generator = Fuzzr.Constant(1).Unique("TheKey").Many(2);
 		var ex = Assert.Throws<HeyITriedFiftyTimesButCouldNotGetADifferentValue>(() => generator.Generate().ToArray());
 		Assert.Contains("TheKey", ex.Message);
 	}
@@ -34,8 +34,8 @@ public class UniqueValues
 		for (int i = 0; i < 100; i++)
 		{
 			var generator =
-				from one in Fuzz.ChooseFromThese(1, 2).Unique(1)
-				from two in Fuzz.ChooseFromThese(1, 2).Unique(2)
+				from one in Fuzzr.OneOf(1, 2).Unique(1)
+				from two in Fuzzr.OneOf(1, 2).Unique(2)
 				select new[] { one, two };
 			var value = generator.Many(2).Generate().ToArray();
 			var valueOne = value[0];
@@ -53,8 +53,8 @@ public class UniqueValues
 		for (int i = 0; i < 100; i++)
 		{
 			var generator =
-				from one in Fuzz.ChooseFromThese(1, 2).Unique(1)
-				from two in Fuzz.ChooseFromThese(1, 2).Unique(1)
+				from one in Fuzzr.OneOf(1, 2).Unique(1)
+				from two in Fuzzr.OneOf(1, 2).Unique(1)
 				select new[] { one, two };
 
 			var valueOne = generator.Generate();
@@ -69,8 +69,8 @@ public class UniqueValues
 		for (int i = 0; i < 100; i++)
 		{
 			var generator =
-				from one in Fuzz.ChooseFromThese(1, 2).Unique(() => 1)
-				from two in Fuzz.ChooseFromThese(1, 2).Unique(() => 1)
+				from one in Fuzzr.OneOf(1, 2).Unique(() => 1)
+				from two in Fuzzr.OneOf(1, 2).Unique(() => 1)
 				select new[] { one, two };
 
 			var valueOne = generator.Generate();

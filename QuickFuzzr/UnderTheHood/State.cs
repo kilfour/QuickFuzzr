@@ -66,6 +66,8 @@ namespace QuickFuzzr.UnderTheHood
 
 		public readonly Dictionary<Type, List<Type>> InheritanceInfo = [];
 		public Dictionary<Type, Type> TreeLeaves = [];
+
+		public readonly Dictionary<Func<PropertyInfo, bool>, Generator<object>> GeneralCustomizations = [];
 		public readonly Dictionary<PropertyInfo, Generator<object>> Customizations = [];
 		public readonly Dictionary<Type, List<Func<State, object>>> Constructors = [];
 		public readonly Dictionary<Type, List<Action<State, object>>> ActionsToApply = [];
@@ -82,33 +84,33 @@ namespace QuickFuzzr.UnderTheHood
 		public readonly Dictionary<Type, Generator<object>> PrimitiveGenerators
 			= new()
 				{
-					{ typeof(string), Fuzz.String().AsObject() },
-			  		{ typeof(int), Fuzz.Int().AsObject() },
-					{ typeof(int?), Fuzz.Int().Nullable().AsObject() },
-					{ typeof(char), Fuzz.Char().AsObject() },
-					{ typeof(char?), Fuzz.Char().Nullable().AsObject() },
-					{ typeof(bool), Fuzz.Bool().AsObject() },
-					{ typeof(bool?), Fuzz.Bool().Nullable().AsObject() },
-					{ typeof(decimal), Fuzz.Decimal().AsObject() },
-					{ typeof(decimal?), Fuzz.Decimal().Nullable().AsObject() },
-					{ typeof(DateTime), Fuzz.DateTime().AsObject() },
-					{ typeof(DateTime?), Fuzz.DateTime().Nullable().AsObject() },
-					{ typeof(long), Fuzz.Long().AsObject() },
-					{ typeof(long?), Fuzz.Long().Nullable().AsObject() },
-					{ typeof(double), Fuzz.Double().AsObject() },
-					{ typeof(double?), Fuzz.Double().Nullable().AsObject() },
-					{ typeof(float), Fuzz.Float().AsObject() },
-					{ typeof(float?), Fuzz.Float().Nullable().AsObject() },
-					{ typeof(Guid), Fuzz.Guid().AsObject() },
-					{ typeof(Guid?), Fuzz.Guid().Nullable().AsObject() },
-					{ typeof(short), Fuzz.Short().AsObject() },
-					{ typeof(short?), Fuzz.Short().Nullable().AsObject() },
-					{ typeof(TimeSpan), Fuzz.TimeSpan().AsObject() },
-					{ typeof(TimeSpan?), Fuzz.TimeSpan().Nullable().AsObject() },
-					{ typeof(DateOnly), Fuzz.DateOnly().AsObject() },
-					{ typeof(DateOnly?), Fuzz.DateOnly().Nullable().AsObject() },
-					{ typeof(TimeOnly), Fuzz.TimeOnly().AsObject() },
-					{ typeof(TimeOnly?), Fuzz.TimeOnly().Nullable().AsObject() }
+					{ typeof(string), Fuzzr.String().AsObject() },
+			  		{ typeof(int), Fuzzr.Int().AsObject() },
+					{ typeof(int?), Fuzzr.Int().Nullable().AsObject() },
+					{ typeof(char), Fuzzr.Char().AsObject() },
+					{ typeof(char?), Fuzzr.Char().Nullable().AsObject() },
+					{ typeof(bool), Fuzzr.Bool().AsObject() },
+					{ typeof(bool?), Fuzzr.Bool().Nullable().AsObject() },
+					{ typeof(decimal), Fuzzr.Decimal().AsObject() },
+					{ typeof(decimal?), Fuzzr.Decimal().Nullable().AsObject() },
+					{ typeof(DateTime), Fuzzr.DateTime().AsObject() },
+					{ typeof(DateTime?), Fuzzr.DateTime().Nullable().AsObject() },
+					{ typeof(long), Fuzzr.Long().AsObject() },
+					{ typeof(long?), Fuzzr.Long().Nullable().AsObject() },
+					{ typeof(double), Fuzzr.Double().AsObject() },
+					{ typeof(double?), Fuzzr.Double().Nullable().AsObject() },
+					{ typeof(float), Fuzzr.Float().AsObject() },
+					{ typeof(float?), Fuzzr.Float().Nullable().AsObject() },
+					{ typeof(Guid), Fuzzr.Guid().AsObject() },
+					{ typeof(Guid?), Fuzzr.Guid().Nullable().AsObject() },
+					{ typeof(short), Fuzzr.Short().AsObject() },
+					{ typeof(short?), Fuzzr.Short().Nullable().AsObject() },
+					{ typeof(TimeSpan), Fuzzr.TimeSpan().AsObject() },
+					{ typeof(TimeSpan?), Fuzzr.TimeSpan().Nullable().AsObject() },
+					{ typeof(DateOnly), Fuzzr.DateOnly().AsObject() },
+					{ typeof(DateOnly?), Fuzzr.DateOnly().Nullable().AsObject() },
+					{ typeof(TimeOnly), Fuzzr.TimeOnly().AsObject() },
+					{ typeof(TimeOnly?), Fuzzr.TimeOnly().Nullable().AsObject() }
 				};
 	}
 }

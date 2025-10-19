@@ -10,14 +10,14 @@ public class Booleans
 	[DocContent("- The default generator generates True or False.")]
 	public void DefaultGeneratorGeneratesTrueOrFalse()
 	{
-		CheckIf.TheseValuesAreGenerated(Fuzz.Bool(), true, false);
+		CheckIf.TheseValuesAreGenerated(Fuzzr.Bool(), true, false);
 	}
 
 	[Fact]
 	[DocContent("- Can be made to return `bool?` using the `.Nullable()` combinator.")]
 	public void Nullable()
 	{
-		CheckIf.GeneratesNullAndNotNull(Fuzz.Bool().Nullable());
+		CheckIf.GeneratesNullAndNotNull(Fuzzr.Bool().Nullable());
 	}
 
 	[Fact]
@@ -25,7 +25,7 @@ public class Booleans
 	public void Property()
 	{
 		CheckIf.TheseValuesAreGenerated(
-			Fuzz.One<SomeThingToGenerate>().Select(x => x.AProperty), true, false);
+			Fuzzr.One<SomeThingToGenerate>().Select(x => x.AProperty), true, false);
 	}
 
 	[Fact]
@@ -33,7 +33,7 @@ public class Booleans
 	public void NullableProperty()
 	{
 		CheckIf.GeneratesNullAndNotNull(
-			Fuzz.One<SomeThingToGenerate>().Select(x => x.ANullableProperty));
+			Fuzzr.One<SomeThingToGenerate>().Select(x => x.ANullableProperty));
 	}
 
 	public class SomeThingToGenerate

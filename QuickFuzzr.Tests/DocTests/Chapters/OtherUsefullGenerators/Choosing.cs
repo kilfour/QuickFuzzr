@@ -12,7 +12,7 @@ public class Choosing
 F.i. `Fuzz.ChooseFrom(new []{ 1, 2 })` will return either 1 or 2.")]
 	public void Enumerable()
 	{
-		var generator = Fuzz.ChooseFrom(new[] { 1, 2 });
+		var generator = Fuzzr.OneOf((IEnumerable<int>)(new[] { 1, 2 }));
 		var one = false;
 		var two = false;
 		for (int i = 0; i < 20; i++)
@@ -32,7 +32,7 @@ F.i. `Fuzz.ChooseFrom(new []{ 1, 2 })` will return either 1 or 2.")]
 I.e. : `Fuzz.ChooseFromThese(1, 2)`")]
 	public void Params()
 	{
-		var generator = Fuzz.ChooseFromThese(1, 2);
+		var generator = Fuzzr.OneOf(1, 2);
 		var one = false;
 		var two = false;
 		for (int i = 0; i < 20; i++)
@@ -52,7 +52,7 @@ I.e. : `Fuzz.ChooseFromThese(1, 2)`")]
 I.e. : `Fuzz.ChooseFromWithDefaultWhenEmpty(new List<int>())`, which returns the default, in this case zero.")]
 	public void ParamsEmpty_int_list_returns_zero()
 	{
-		var generator = Fuzz.ChooseFromWithDefaultWhenEmpty(new List<int>());
+		var generator = Fuzzr.OneOfOrDefault(new List<int>());
 		Assert.Equal(0, generator.Generate());
 	}
 
@@ -63,7 +63,7 @@ I.e. : `Fuzz.ChooseFromWithDefaultWhenEmpty(new List<int>())`, which returns the
 I.e. : `Fuzz.ChooseGenerator(Fuzz.Constant(1), Fuzz.Constant(2))`")]
 	public void Gens()
 	{
-		var generator = Fuzz.ChooseGenerator(Fuzz.Constant(1), Fuzz.Constant(2));
+		var generator = Fuzzr.OneOf(Fuzzr.Constant(1), Fuzzr.Constant(2));
 		var one = false;
 		var two = false;
 		for (int i = 0; i < 20; i++)

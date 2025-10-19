@@ -18,7 +18,7 @@ Fuzz.ChooseFrom(someValues).Unique(""key"").Many(2)
 		public void SimpleCombination()
 		{
 			var generator =
-				from a in Fuzz.ChooseFromThese(1, 2).Unique("key").Many(2)
+				from a in Fuzzr.OneOf(1, 2).Unique("key").Many(2)
 				select a;
 			for (int i = 0; i < 10; i++)
 			{

@@ -13,7 +13,7 @@ casts the generator from `Generator<T>` to `Generator<string>`.
 Useful f.i. to generate numeric strings.")]
 	public void AsString()
 	{
-		Assert.IsType<string>(Fuzz.Int().AsString().Generate());
+		Assert.IsType<string>(Fuzzr.Int().AsString().Generate());
 	}
 
 	[Fact]
@@ -21,7 +21,7 @@ Useful f.i. to generate numeric strings.")]
 @" - `.AsObject()` : Simply casts the generator itself from `Generator<T>` to `Generator<object>`. Mostly used internally.")]
 	public void AsObject()
 	{
-		Assert.IsType<Generator<object>>(Fuzz.Int().AsObject());
+		Assert.IsType<Generator<object>>(Fuzzr.Int().AsObject());
 	}
 
 	[Fact]
@@ -29,7 +29,7 @@ Useful f.i. to generate numeric strings.")]
 @" - `.Nullable()` : Casts a `Generator<T>` to `Generator<T?>`. In addition generates null 1 out of 5 times.")]
 	public void Nullable()
 	{
-		var generator = Fuzz.Int().Nullable();
+		var generator = Fuzzr.Int().Nullable();
 		var seenNull = false;
 		var seenValue = false;
 		var tries = 0;

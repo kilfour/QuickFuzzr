@@ -12,14 +12,14 @@ public class Chars
 	[DocContent("- The default generator always generates a char between lower case 'a' and lower case 'z'.")]
 	public void DefaultGeneratorAlwaysBetweenLowerCaseAAndLowerCaseZ()
 	{
-		CheckIf.GeneratedValuesShouldAllSatisfy(Fuzz.Char(),
+		CheckIf.GeneratedValuesShouldAllSatisfy(Fuzzr.Char(),
 			("char between lower case 'a' and lower case 'z'", val => valid.Any(c => c == val)));
 	}
 
 	[Fact]
 	public void IsRandom()
 	{
-		var generator = Fuzz.Char();
+		var generator = Fuzzr.Char();
 		var val = generator.Generate();
 		var differs = false;
 		for (int i = 0; i < 10; i++)
@@ -34,14 +34,14 @@ public class Chars
 	[DocContent("- Can be made to return `char?` using the `.Nullable()` combinator.")]
 	public void Nullable()
 	{
-		CheckIf.GeneratesNullAndNotNull(Fuzz.Char().Nullable());
+		CheckIf.GeneratesNullAndNotNull(Fuzzr.Char().Nullable());
 	}
 
 	[Fact]
 	[DocContent("- `char` is automatically detected and generated for object properties.")]
 	public void Property()
 	{
-		var generator = Fuzz.One<SomeThingToGenerate>();
+		var generator = Fuzzr.One<SomeThingToGenerate>();
 		for (int i = 0; i < 10; i++)
 		{
 			var value = generator.Generate().AProperty;
@@ -54,7 +54,7 @@ public class Chars
 	public void NullableProperty()
 	{
 		CheckIf.GeneratesNullAndNotNull(
-			Fuzz.One<SomeThingToGenerate>().Select(x => x.ANullableProperty));
+			Fuzzr.One<SomeThingToGenerate>().Select(x => x.ANullableProperty));
 	}
 
 	public class SomeThingToGenerate

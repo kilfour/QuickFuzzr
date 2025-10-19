@@ -3,7 +3,7 @@ using QuickFuzzr.UnderTheHood;
 
 namespace QuickFuzzr
 {
-	public partial class Fuzz
+	public partial class Fuzzr
 	{
 		public static GeneratorOptions<T> For<T>() where T : class
 		{

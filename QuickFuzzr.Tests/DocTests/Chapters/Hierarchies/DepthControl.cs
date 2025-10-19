@@ -58,7 +58,7 @@ The default values are `new(1, 1)`.
 Revisiting our example we can see that both types have indeed been generated with these default values.")]
 	public void DefaultDepth()
 	{
-		var generator = Fuzz.One<Recurse>();
+		var generator = Fuzzr.One<Recurse>();
 
 		var value = generator.Generate();
 
@@ -88,8 +88,8 @@ Outputs:
 	public void WithDepth2()
 	{
 		var generator =
-			from _ in Fuzz.For<Recurse>().Depth(2, 2)
-			from recurse in Fuzz.One<Recurse>()
+			from _ in Fuzzr.For<Recurse>().Depth(2, 2)
+			from recurse in Fuzzr.One<Recurse>()
 			select recurse;
 
 		var value = generator.Generate();
@@ -127,8 +127,8 @@ Depth(3, 3)
 	{
 
 		var generator =
-			from _ in Fuzz.For<Recurse>().Depth(3, 3)
-			from thing in Fuzz.One<Recurse>()
+			from _ in Fuzzr.For<Recurse>().Depth(3, 3)
+			from thing in Fuzzr.One<Recurse>()
 			select thing;
 
 		var value = generator.Generate();
@@ -149,8 +149,8 @@ This means some instances will be shallow, while others may be more deeply neste
 	public void WithDepth_1_3()
 	{
 		var generator =
-			from _ in Fuzz.For<Recurse>().Depth(1, 3)
-			from value in Fuzz.One<Recurse>()
+			from _ in Fuzzr.For<Recurse>().Depth(1, 3)
+			from value in Fuzzr.One<Recurse>()
 			select value;
 
 		_Tools.CheckIf.GeneratedValuesShouldEventuallySatisfyAll(
@@ -174,7 +174,7 @@ This means some instances will be shallow, while others may be more deeply neste
 	[DocContent("**Note :** The `Depth(...)` combinator does not actually generate anything, it only influences further generation.")]
 	public void ReturnsUnit()
 	{
-		var generator = Fuzz.For<SomeComponent>().Depth(1, 1);
+		var generator = Fuzzr.For<SomeComponent>().Depth(1, 1);
 		Assert.Equal(Unit.Instance, generator.Generate());
 	}
 

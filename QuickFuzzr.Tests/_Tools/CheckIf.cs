@@ -3,6 +3,7 @@ using QuickAcid.Bolts;
 using QuickFuzzr;
 using QuickFuzzr.UnderTheHood;
 using QuickPulse;
+using StringExtensionCombinators;
 
 namespace QuickFuzzr.Tests._Tools;
 
@@ -34,7 +35,7 @@ public static class CheckIf
         Generator<T> generator,
         params (string, Func<T, bool>)[] labeledChecks)
     {
-        var signal = Signal.Tracing<T>();
+        var signal = Signal.From<T>(a => Pulse.Trace(a));
         var run =
             from inspector in "inspector".Stashed(
                 () => signal.SetAndReturnArtery(new DistinctValueInspector<T>()))
@@ -75,5 +76,5 @@ public static class CheckIf
     }
 
     private static readonly QAcidScript<Acid> Acc =
-        s => QAcidResult.AcidOnly(s);
+        s => Vessel.AcidOnly(s);
 }

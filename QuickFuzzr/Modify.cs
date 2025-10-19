@@ -2,7 +2,7 @@
 
 namespace QuickFuzzr
 {
-	public static partial class Fuzz
+	public static partial class Fuzzr
 	{
 		public static Generator<T> Modify<T>(this Generator<T> generator, T instance)
 			where T : class

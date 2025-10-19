@@ -9,7 +9,7 @@ public class Doubles
 	[DocContent("- The overload `Fuzz.Double(double min, double max)` generates a double higher or equal than min and lower than max.")]
 	public void Zero()
 	{
-		var generator = Fuzz.Double(0, 0);
+		var generator = Fuzzr.Double(0, 0);
 		for (int i = 0; i < 10; i++)
 		{
 			Assert.Equal(0, generator.Generate());
@@ -20,14 +20,14 @@ public class Doubles
 	[DocContent("- Throws an ArgumentException if min > max.")]
 	public void Throws()
 	{
-		Assert.Throws<ArgumentException>(() => Fuzz.Double(1, 0).Generate());
+		Assert.Throws<ArgumentException>(() => Fuzzr.Double(1, 0).Generate());
 	}
 
 	[Fact]
 	[DocContent("- The default generator is (min = 1, max = 100).")]
 	public void DefaultGeneratorBetweenOneAndHundred()
 	{
-		var generator = Fuzz.Double();
+		var generator = Fuzzr.Double();
 		for (int i = 0; i < 10; i++)
 		{
 			var val = generator.Generate();
@@ -40,7 +40,7 @@ public class Doubles
 	[DocContent("- Can be made to return `double?` using the `.Nullable()` combinator.")]
 	public void Nullable()
 	{
-		var generator = Fuzz.Double().Nullable();
+		var generator = Fuzzr.Double().Nullable();
 		var isSomeTimesNull = false;
 		var isSomeTimesNotNull = false;
 		for (int i = 0; i < 50; i++)
@@ -62,7 +62,7 @@ public class Doubles
 	[DocContent("- `double` is automatically detected and generated for object properties.")]
 	public void Property()
 	{
-		var generator = Fuzz.One<SomeThingToGenerate>();
+		var generator = Fuzzr.One<SomeThingToGenerate>();
 		for (int i = 0; i < 10; i++)
 		{
 			Assert.NotEqual(0, generator.Generate().AProperty);
@@ -73,7 +73,7 @@ public class Doubles
 	[DocContent("- `double?` is automatically detected and generated for object properties.")]
 	public void NullableProperty()
 	{
-		var generator = Fuzz.One<SomeThingToGenerate>();
+		var generator = Fuzzr.One<SomeThingToGenerate>();
 		var isSomeTimesNull = false;
 		var isSomeTimesNotNull = false;
 		for (int i = 0; i < 50; i++)

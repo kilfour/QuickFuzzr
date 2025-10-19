@@ -16,8 +16,8 @@ public class CustomizingProperties
 	public void StaysDefaultValue()
 	{
 		var generator =
-			from c in Fuzz.For<SomeThingToGenerate>().Customize(s => s.AnInt, Fuzz.Constant(42))
-			from r in Fuzz.One<SomeThingToGenerate>()
+			from c in Fuzzr.For<SomeThingToGenerate>().Customize(s => s.AnInt, Fuzzr.Constant(42))
+			from r in Fuzzr.One<SomeThingToGenerate>()
 			select r;
 		Assert.Equal(42, generator.Generate().AnInt);
 	}
@@ -27,8 +27,8 @@ public class CustomizingProperties
 	public void UsingValue()
 	{
 		var generator =
-			from c in Fuzz.For<SomeThingToGenerate>().Customize(s => s.AnInt, 42)
-			from r in Fuzz.One<SomeThingToGenerate>()
+			from c in Fuzzr.For<SomeThingToGenerate>().Customize(s => s.AnInt, 42)
+			from r in Fuzzr.One<SomeThingToGenerate>()
 			select r;
 		Assert.Equal(42, generator.Generate().AnInt);
 	}
@@ -38,8 +38,8 @@ public class CustomizingProperties
 	public void WorksForDerived()
 	{
 		var generator =
-			from _ in Fuzz.For<SomeThingToGenerate>().Customize(s => s.AnInt, 42)
-			from result in Fuzz.One<SomeThingDerivedToGenerate>()
+			from _ in Fuzzr.For<SomeThingToGenerate>().Customize(s => s.AnInt, 42)
+			from result in Fuzzr.One<SomeThingDerivedToGenerate>()
 			select result;
 		Assert.Equal(42, generator.Generate().AnInt);
 	}
@@ -48,7 +48,7 @@ public class CustomizingProperties
 	[DocContent("*Note :* The Customize combinator does not actually generate anything, it only influences further generation.")]
 	public void ReturnsUnit()
 	{
-		var generator = Fuzz.For<SomeThingToGenerate>().Customize(s => s.AnInt, 42);
+		var generator = Fuzzr.For<SomeThingToGenerate>().Customize(s => s.AnInt, 42);
 		Assert.Equal(Unit.Instance, generator.Generate());
 	}
 

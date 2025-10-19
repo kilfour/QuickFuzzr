@@ -13,6 +13,6 @@ public class A_GeneratingPrimitives
 Full details below in the chapter 'The Primitive Generators'.")]
 	public void ForAnInt()
 	{
-		Assert.NotEqual(0, Fuzz.Int().Generate());
+		Assert.NotEqual(0, Fuzzr.Int().Generate());
 	}
 }

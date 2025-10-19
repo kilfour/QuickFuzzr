@@ -30,10 +30,10 @@ Node(Leaf(31), Node(Leaf(71), Leaf(10)))
 	public void TreesTest()
 	{
 		var generator =
-			from _ in Fuzz.For<Tree>().Depth(1, 3)
-			from __ in Fuzz.For<Tree>().GenerateAsOneOf(typeof(Branch), typeof(Leaf))
-			from ___ in Fuzz.For<Tree>().TreeLeaf<Leaf>()
-			from tree in Fuzz.One<Tree>()
+			from _ in Fuzzr.For<Tree>().Depth(1, 3)
+			from __ in Fuzzr.For<Tree>().GenerateAsOneOf(typeof(Branch), typeof(Leaf))
+			from ___ in Fuzzr.For<Tree>().TreeLeaf<Leaf>()
+			from tree in Fuzzr.One<Tree>()
 			select tree.ToLabel();
 
 		var validLabels = new[] { "E", "LE", "RE", "LLE", "LRE", "RLE", "RRE" };
@@ -55,7 +55,7 @@ Node(Leaf(31), Node(Leaf(71), Leaf(10)))
 	[DocContent("**Note :** The `TreeLeaf<T>()` combinator does not actually generate anything, it only influences further generation.")]
 	public void ReturnsUnit()
 	{
-		var generator = Fuzz.For<Tree>().Depth(1, 1);
+		var generator = Fuzzr.For<Tree>().Depth(1, 1);
 		Assert.Equal(Unit.Instance, generator.Generate());
 	}
 

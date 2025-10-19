@@ -10,14 +10,14 @@ public class ASimpleObject
 	[DocContent("- The primitive properties of the object will be automatically filled in using the default (or replaced) generators.")]
 	public void FillsPrimitives()
 	{
-		Assert.NotEqual(0, Fuzz.One<SomeThingToGenerate>().Generate().AProperty);
+		Assert.NotEqual(0, Fuzzr.One<SomeThingToGenerate>().Generate().AProperty);
 	}
 
 	[Fact]
 	[DocContent("- The enumeration properties of the object will be automatically filled in using the default (or replaced) Fuzz.Enum<T> generator.")]
 	public void FillsEnumerations()
 	{
-		var generator = Fuzz.One<SomeThingToGenerate>();
+		var generator = Fuzzr.One<SomeThingToGenerate>();
 		var one = false;
 		var two = false;
 		for (int i = 0; i < 20; i++)
@@ -34,7 +34,7 @@ public class ASimpleObject
 	[DocContent("- The object properties will also be automatically filled in using the default (or replaced) generators, similar to calling Fuzz.One<TProperty>() and setting the value using `Apply` (see below) explicitly.")]
 	public void FillsObjectProperties()
 	{
-		var generator = Fuzz.One<RootObject>();
+		var generator = Fuzzr.One<RootObject>();
 		var result = generator.Generate();
 		Assert.NotNull(result);
 		Assert.NotNull(result.Nest);
@@ -48,8 +48,8 @@ public class ASimpleObject
 	[DocContent("- Also works for properties with private setters.")]
 	public void FillsPrivateSetterProperties()
 	{
-		Assert.NotEqual(0, Fuzz.One<SomeThingToGenerate>().Generate().APropertyWithPrivateSetters);
-		var generator = Fuzz.One<SomeThingToGenerate>();
+		Assert.NotEqual(0, Fuzzr.One<SomeThingToGenerate>().Generate().APropertyWithPrivateSetters);
+		var generator = Fuzzr.One<SomeThingToGenerate>();
 		var one = false;
 		var two = false;
 		for (int i = 0; i < 20; i++)
@@ -66,8 +66,8 @@ public class ASimpleObject
 	[DocContent("- Can generate any object that has a parameterless constructor, be it public, protected, or private.")]
 	public void CanGenerateObjectsProtectedAndPrivate()
 	{
-		Fuzz.One<SomeThingProtectedToGenerate>().Generate();
-		Fuzz.One<SomeThingPrivateToGenerate>().Generate();
+		Fuzzr.One<SomeThingProtectedToGenerate>().Generate();
+		Fuzzr.One<SomeThingPrivateToGenerate>().Generate();
 	}
 
 	[Fact]
@@ -75,8 +75,8 @@ public class ASimpleObject
 	public void CanGenerateRecords()
 	{
 		var generator =
-			from _ in Fuzz.Constant(42).Replace()
-			from record in Fuzz.One<MyRecord>()
+			from _ in Fuzzr.Constant(42).Replace()
+			from record in Fuzzr.One<MyRecord>()
 			select record;
 		var result = generator.Generate();
 		Assert.Equal(42, result.Value);
@@ -99,8 +99,8 @@ public class ASimpleObject
 	public void CustomConstructor()
 	{
 		var generator =
-			from ignore in Fuzz.For<SomeThingWithAnAnswer>().Ignore(e => e.Answer)
-			from result in Fuzz.One(() => new SomeThingWithAnAnswer(42))
+			from ignore in Fuzzr.For<SomeThingWithAnAnswer>().Ignore(e => e.Answer)
+			from result in Fuzzr.One(() => new SomeThingWithAnAnswer(42))
 			select result;
 		Assert.Equal(42, generator.Generate().Answer);
 	}

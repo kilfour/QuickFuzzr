@@ -11,7 +11,7 @@ public class Apply
 F.i. `Fuzz.Constant(41).Apply(i =>  i + 1)` will return 42.")]
 	public void FunctionIsApplied()
 	{
-		var generator = Fuzz.Constant(41).Apply(i => i + 1);
+		var generator = Fuzzr.Constant(41).Apply(i => i + 1);
 		Assert.Equal(42, generator.Generate());
 	}
 
@@ -27,8 +27,8 @@ var generator =
 	public void RoundingExample()
 	{
 		var generator =
-			from _ in Fuzz.Decimal().Apply(d => Math.Round(d, 2)).Replace()
-			from result in Fuzz.One<SomeThingToGenerate>()
+			from _ in Fuzzr.Decimal().Apply(d => Math.Round(d, 2)).Replace()
+			from result in Fuzzr.One<SomeThingToGenerate>()
 			select result;
 		var value = generator.Generate().MyProperty;
 		//var count = BitConverter.GetBytes(decimal.GetBits(generator.Generate().MyProperty)[3])[2];
@@ -43,7 +43,7 @@ This is useful when dealing with objects and you just don't want to return said 
 E.g. `Fuzz.One<SomeThingToGenerate>().Apply(session.Save)`.")]
 	public void ActionIsApplied()
 	{
-		var generator = Fuzz.One<SomeThingToGenerate>().Apply(thing => thing.MyProperty = 42);
+		var generator = Fuzzr.One<SomeThingToGenerate>().Apply(thing => thing.MyProperty = 42);
 
 		Assert.Equal(42, generator.Generate().MyProperty);
 	}

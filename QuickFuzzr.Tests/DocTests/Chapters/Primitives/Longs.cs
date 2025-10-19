@@ -9,7 +9,7 @@ public class Longs
 	[DocContent("- The overload `Fuzz.Long(long min, long max)` generates a long higher or equal than min and lower than max.")]
 	public void Zero()
 	{
-		var generator = Fuzz.Long(0, 0);
+		var generator = Fuzzr.Long(0, 0);
 		for (long i = 0; i < 10; i++)
 		{
 			Assert.Equal(0, generator.Generate());
@@ -20,14 +20,14 @@ public class Longs
 	[DocContent("Throws an ArgumentException if min > max.")]
 	public void Throws()
 	{
-		Assert.Throws<ArgumentException>(() => Fuzz.Long(1, 0).Generate());
+		Assert.Throws<ArgumentException>(() => Fuzzr.Long(1, 0).Generate());
 	}
 
 	[Fact]
 	[DocContent("- The default generator is (min = 1, max = 100).")]
 	public void DefaultGeneratorNeverGeneratesZero()
 	{
-		var generator = Fuzz.Long();
+		var generator = Fuzzr.Long();
 		for (long i = 0; i < 10; i++)
 		{
 			Assert.NotEqual(0, generator.Generate());
@@ -38,7 +38,7 @@ public class Longs
 	[DocContent("- Can be made to return `long?` using the `.Nullable()` combinator.")]
 	public void Nullable()
 	{
-		var generator = Fuzz.Long().Nullable();
+		var generator = Fuzzr.Long().Nullable();
 		var isSomeTimesNull = false;
 		var isSomeTimesNotNull = false;
 		for (long i = 0; i < 50; i++)
@@ -60,7 +60,7 @@ public class Longs
 	[DocContent("- `long` is automatically detected and generated for object properties.")]
 	public void Property()
 	{
-		var generator = Fuzz.One<SomeThingToGenerate>();
+		var generator = Fuzzr.One<SomeThingToGenerate>();
 		for (long i = 0; i < 10; i++)
 		{
 			Assert.NotEqual(0, generator.Generate().AProperty);
@@ -71,7 +71,7 @@ public class Longs
 	[DocContent("- `Int64` is automatically detected and generated for object properties.")]
 	public void Long32Property()
 	{
-		var generator = Fuzz.One<SomeThingToGenerate>();
+		var generator = Fuzzr.One<SomeThingToGenerate>();
 		for (long i = 0; i < 10; i++)
 		{
 			Assert.NotEqual(0, generator.Generate().AnInt64Property);
@@ -82,7 +82,7 @@ public class Longs
 	[DocContent("- `long?` is automatically detected and generated for object properties.")]
 	public void NullableProperty()
 	{
-		var generator = Fuzz.One<SomeThingToGenerate>();
+		var generator = Fuzzr.One<SomeThingToGenerate>();
 		var isSomeTimesNull = false;
 		var isSomeTimesNotNull = false;
 		for (long i = 0; i < 50; i++)

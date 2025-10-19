@@ -1,5 +1,5 @@
 # QuickFuzzr
-> A type-walking cheetah with a hand full of random.
+> A type-walking cheetah with a hand full of random.  
 ## Installation
 QuickFuzzrQuickFuzzr is available on NuGet:
 ```bash
@@ -8,15 +8,15 @@ Install-Package QuickFuzzr
 Or via the .NET CLI:
 ```bash
 dotnet add package QuickFuzzr
-```
+```  
 ## Generating Primitives
-The Fuzz class has many methods which can be used to obtain a corresponding primitive.
+The Fuzz class has many methods which can be used to obtain a corresponding primitive.  
 F.i. `Fuzz.Int()`. 
 
-Full details below in the chapter 'The Primitive Generators'.
+Full details below in the chapter 'The Primitive Generators'.  
 ## Combining Generators
 ### Linq Syntax
-Each Fuzz Generator can be used as a building block and combined using query expressions.
+Each Fuzz Generator can be used as a building block and combined using query expressions.  
 F.i. the following :
 ```
 var stringGenerator =
@@ -26,7 +26,7 @@ var stringGenerator =
 	select a + b + c;
 Console.WriteLine(stringGenerator.Generate());
 ```
-Will output something like `28ziicuiq56`.
+Will output something like `28ziicuiq56`.  
 Generators are reusable building blocks. 
 
 In the following :
@@ -37,7 +37,7 @@ var generator =
 	select thing;
 ```
 We reuse the 'stringGenerator' defined above and replace the default string generator with our custom one. 
-All strings in the generated object will have the pattern defined by 'stringGenerator'.
+All strings in the generated object will have the pattern defined by 'stringGenerator'.  
 This approach removes the problem of combinatoral explosion. No need for a Transform<T, U>(...) combinator for example
 as this can be easily achieved using Linq. 
 
@@ -47,72 +47,72 @@ var generator =
 	let composed = chars.Aggregate(", (a, b) => a + b.ToString())
 	select composed;
 ```
-Generates: "-----".
+Generates: "-----".  
 ### Using Extensions
-When applying the various extension methods onto a generator, they get *combined* into a new generator.
+When applying the various extension methods onto a generator, they get *combined* into a new generator.  
 Jumping slightly ahead of ourselves as below example will use methods that are explained more thoroughly further below.
 
 E.g. :
 ```
 Fuzz.ChooseFrom(someValues).Unique("key").Many(2)
 ```
-
+  
 ## Generating Objects
 ### A Simple Object
-Use `Fuzz.One<T>()`, where T is the type of object you want to generate.
-- The primitive properties of the object will be automatically filled in using the default (or replaced) generators.
-- The enumeration properties of the object will be automatically filled in using the default (or replaced) Fuzz.Enum<T> generator.
-- The object properties will also be automatically filled in using the default (or replaced) generators, similar to calling Fuzz.One<TProperty>() and setting the value using `Apply` (see below) explicitly.
-- Also works for properties with private setters.
-- Can generate any object that has a parameterless constructor, be it public, protected, or private.
-- `record` generation is also possible.
-- The overload `Fuzz.One<T>(Func<T> constructor)` allows for specific constructor selection.
+Use `Fuzz.One<T>()`, where T is the type of object you want to generate.  
+- The primitive properties of the object will be automatically filled in using the default (or replaced) generators.  
+- The enumeration properties of the object will be automatically filled in using the default (or replaced) Fuzz.Enum<T> generator.  
+- The object properties will also be automatically filled in using the default (or replaced) generators, similar to calling Fuzz.One<TProperty>() and setting the value using `Apply` (see below) explicitly.  
+- Also works for properties with private setters.  
+- Can generate any object that has a parameterless constructor, be it public, protected, or private.  
+- `record` generation is also possible.  
+- The overload `Fuzz.One<T>(Func<T> constructor)` allows for specific constructor selection.  
 ### Ignoring Properties
 Use the `Fuzz.For<T>().Ignore<TProperty>(Expression<Func<T, TProperty>> func)` method chain.
 
 F.i. :
 ```
 Fuzz.For<SomeThingToGenerate>().Ignore(s => s.Id)
-```
-The property specified will be ignored during generation.
-Derived classes generated also ignore the base property.
+```  
+The property specified will be ignored during generation.  
+Derived classes generated also ignore the base property.  
 Sometimes it is useful to ignore all properties while generating an object.  
-For this use `Fuzz.For<SomeThingToGenerate>().IgnoreAll()`
-`IgnoreAll()` does not ignore properties on derived classes, even inherited properties.
-**Note :** `The Ignore(...)` combinator does not actually generate anything, it only influences further generation.
+For this use `Fuzz.For<SomeThingToGenerate>().IgnoreAll()`  
+`IgnoreAll()` does not ignore properties on derived classes, even inherited properties.  
+**Note :** `The Ignore(...)` combinator does not actually generate anything, it only influences further generation.  
 ### Customizing Properties
 Use the `Fuzz.For<T>().Customize<TProperty>(Expression<Func<T, TProperty>> func, Generator<TProperty>)` method chain.
 
 F.i. :
 ```
 Fuzz.For<SomeThingToGenerate>().Customize(s => s.MyProperty, Fuzz.Constant(42))
-```
-The property specified will be generated using the passed in generator.
-An overload exists which allows for passing a value instead of a generator.
-Derived classes generated also use the custom property.
-*Note :* The Customize combinator does not actually generate anything, it only influences further generation.
+```  
+The property specified will be generated using the passed in generator.  
+An overload exists which allows for passing a value instead of a generator.  
+Derived classes generated also use the custom property.  
+*Note :* The Customize combinator does not actually generate anything, it only influences further generation.  
 ### Customizing Constructors
 Use the `Fuzz.For<T>().Construct<TArg>(Expression<Func<T, TProperty>> func, Generator<TProperty>)` method chain.
 
 F.i. :
 ```csharp
 Fuzz.For<SomeThing>().Construct(Fuzz.Constant(42))
-```
-Subsequent calls to `Fuzz.One<T>()` will then use the registered constructor.
+```  
+Subsequent calls to `Fuzz.One<T>()` will then use the registered constructor.  
 Various overloads exist : 
- -  `Fuzz.For<T>().Construct<T1, T2>(Generator<T1> g1, Generator<T2> g2)`
- -  `Fuzz.For<T>().Construct<T1, T2>(Generator<T1> g1, Generator<T2> g2, Generator<T3> g3)`
- -  `Fuzz.For<T>().Construct<T1, T2>(Generator<T1> g1, Generator<T2> g2, Generator<T3> g3, Generator<T4> g4)`
+ -  `Fuzz.For<T>().Construct<T1, T2>(Generator<T1> g1, Generator<T2> g2)`  
+ -  `Fuzz.For<T>().Construct<T1, T2>(Generator<T1> g1, Generator<T2> g2, Generator<T3> g3)`  
+ -  `Fuzz.For<T>().Construct<T1, T2>(Generator<T1> g1, Generator<T2> g2, Generator<T3> g3, Generator<T4> g4)`  
  -  `Fuzz.For<T>().Construct<T1, T2>(Generator<T1> g1, Generator<T2> g2, Generator<T3> g3, Generator<T4> g4, Generator<T5> g5)`  
 
-After that, ... you're on your own.
+After that, ... you're on your own.  
 Or use the factory method overload:  
-`Fuzz.For<T>().Construct<T>(Func<T> ctor)`
-*Note :* The Construct combinator does not actually generate anything, it only influences further generation.
+`Fuzz.For<T>().Construct<T>(Func<T> ctor)`  
+*Note :* The Construct combinator does not actually generate anything, it only influences further generation.  
 ### Many Objects
-Use The `.Many(int number)` generator extension.
-The generator will generate an IEnumerable<T> of `int number` elements where T is the result type of the extended generator.
-An overload exists (`.Many(int min, int max`) where the number of elements is in between the specified arguments.
+Use The `.Many(int number)` generator extension.  
+The generator will generate an IEnumerable<T> of `int number` elements where T is the result type of the extended generator.  
+An overload exists (`.Many(int min, int max`) where the number of elements is in between the specified arguments.  
 ### Inheritance
 Use The `Fuzz.For<T>().GenerateAsOneOf(params Type[] types)` method chain.
 
@@ -120,22 +120,22 @@ F.i. :
 ```
 Fuzz.For<SomeThingAbstract>().GenerateAsOneOf(
 	typeof(SomethingDerived), typeof(SomethingElseDerived))
-```
-When generating an object of type T, an object of a random chosen type from the provided list will be generated instead.
-**Note :** The `GenerateAsOneOf(...)` combinator does not actually generate anything, it only influences further generation.
+```  
+When generating an object of type T, an object of a random chosen type from the provided list will be generated instead.  
+**Note :** The `GenerateAsOneOf(...)` combinator does not actually generate anything, it only influences further generation.  
 ### To Array
-Use The `.ToArray()` generator extension.
+Use The `.ToArray()` generator extension.  
 The `Many` generator above returns an IEnumerable.
 This means it's value would be regenerated if we were to iterate over it more than once.
 Use `ToArray` to *fix* the IEnumerable in place, so that it will return the same result with each iteration.
 It can also be used to force evaluation in case the IEnumerable is not enumerated over because there's nothing in your select clause
 referencing it. 
-
+  
 ### To List
-Use The `.ToList()` generator extension.
-Similar to the `ToArray` method. But instead of an Array, this one returns, you guessed it, a List.
+Use The `.ToList()` generator extension.  
+Similar to the `ToArray` method. But instead of an Array, this one returns, you guessed it, a List.  
 ### Replacing Primitive Generators
-Use the `.Replace()` extension method.
+Use the `.Replace()` extension method.  
 Example
 ```
 var generator =
@@ -144,9 +144,9 @@ var generator =
 	select result;
 ```
 When executing above generator it will return a SomeThingToGenerate object where all integers have the value 42.
-
-Replacing a primitive generator automatically impacts its nullable counterpart.
-Replacing a nullable primitive generator does not impacts it's non-nullable counterpart.
+  
+Replacing a primitive generator automatically impacts its nullable counterpart.  
+Replacing a nullable primitive generator does not impacts it's non-nullable counterpart.  
 Replacements can occur multiple times during one generation :
 ```
 var generator =
@@ -157,11 +157,11 @@ var generator =
 	select new[] { result1, result2
 };
 ```
-When executing above generator result1 will have all integers set to 42 and result2 to 666.
-*Note :* The Replace combinator does not actually generate anything, it only influences further generation.
+When executing above generator result1 will have all integers set to 42 and result2 to 666.  
+*Note :* The Replace combinator does not actually generate anything, it only influences further generation.  
 ## Generating Hierarchies
 ### Relations
-In the same way one can `Customize` primitives, this can also be done for references.
+In the same way one can `Customize` primitives, this can also be done for references.  
 E.g. :
 
 ```
@@ -171,7 +171,7 @@ var generator =
 	from orderline in Fuzz.One<OrderLine>()
 	select orderline;
 ```
-
+  
 In case of a one-to-many relation where the collection is inaccessible, but a method is provided for adding the many to the one,
 we can use the `Apply` method, which is explained in detail in the chapter 'Other Useful Generators'.
 E.g. :
@@ -185,8 +185,8 @@ var generator =
 ```
 Note the `ToArray` call on the orderlines. 
 This forces enumeration and is necessary because the lines are not enumerated over just by selecting the order.
-
-If we were to select the lines instead of the order, `ToArray` would not be necessary.
+  
+If we were to select the lines instead of the order, `ToArray` would not be necessary.  
 Relations defined by constructor injection can be generated using the `One<T>(Func<T> constructor)` overload.
 E.g. :
 
@@ -196,7 +196,7 @@ var generator =
 	from subCategory in Fuzz.One(() => new SubCategory(category)).Many(20)
 	select category;
 ```
-
+  
 ### Depth Control
 As mentioned in the *A simple object section*: “The object properties will also be automatically filled in.”
 However, this automatic population only applies to the first level of object properties.
@@ -217,7 +217,7 @@ public class Recurse
 		return $"{{ Recurse: Child = {childString}, OtherChild = {otherChildString} }}";
 	}
 }
-```
+```  
 If we then do :
 ```csharp
 Console.WriteLine(Fuzz.One<Recurse>().Generate().ToString());
@@ -229,7 +229,7 @@ It outputs :
 While this may seem counter-intuitive, it is an intentional default to prevent infinite recursion or overly deep object trees.
 Internally, a `DepthConstraint(int Min, int Max)` is registered per type.
 The default values are `new(1, 1)`.  
-Revisiting our example we can see that both types have indeed been generated with these default values.
+Revisiting our example we can see that both types have indeed been generated with these default values.  
 You can control generation depth per type using the `.Depth(min, max)` combinator.  
 For instance:
 ```csharp
@@ -245,7 +245,7 @@ Outputs:
 , OtherChild = { NoRecurse } 
 }
 ```
- 
+   
 Recap:
 ```
 Depth(1, 1)
@@ -265,10 +265,10 @@ Depth(3, 3)
   	OtherChild = { NoRecurse } 
 }
 ```
- 
+   
 Using for instance `.Depth(1, 3)` allows the generator to randomly choose a depth between 1 and 3 (inclusive) for that type.
-This means some instances will be shallow, while others may be more deeply nested, introducing variability within the defined bounds.
-**Note :** The `Depth(...)` combinator does not actually generate anything, it only influences further generation.
+This means some instances will be shallow, while others may be more deeply nested, introducing variability within the defined bounds.  
+**Note :** The `Depth(...)` combinator does not actually generate anything, it only influences further generation.  
 ### Trees
 Depth control together with the `.GenerateAsOneOf(...)` combinator mentioned above and the previously unmentioned `TreeLeaf<T>()` one allows you to build tree type hierarchies.  
 Given the canonical abstract Tree, concrete Branch and Leaf example model, we can generate this like so:
@@ -288,78 +288,78 @@ Would output something like:
 ```
 Node(Leaf(31), Node(Leaf(71), Leaf(10)))
 ```
-
-**Note :** The `TreeLeaf<T>()` combinator does not actually generate anything, it only influences further generation.
+  
+**Note :** The `TreeLeaf<T>()` combinator does not actually generate anything, it only influences further generation.  
 ## Other Usefull Generators
 ### Apply
-Use the `.Apply<T>(Func<T, T> func)` extension method.
+Use the `.Apply<T>(Func<T, T> func)` extension method.  
 Applies the specified Function to the generated value, returning the result.
-F.i. `Fuzz.Constant(41).Apply(i =>  i + 1)` will return 42.
+F.i. `Fuzz.Constant(41).Apply(i =>  i + 1)` will return 42.  
 Par example, when you want all decimals to be rounded to a certain precision : 
 ```
 var generator = 
 	from _ in Fuzz.Decimal().Apply(d => Math.Round(d, 2)).Replace()
 	from result in Fuzz.One<SomeThingToGenerate>()
 	select result;
-```
+```  
 An overload exists with signature `Apply<T>(Action<T> action)`.
 This is useful when dealing with objects and you just don't want to return said object.
-E.g. `Fuzz.One<SomeThingToGenerate>().Apply(session.Save)`.
+E.g. `Fuzz.One<SomeThingToGenerate>().Apply(session.Save)`.  
 ### Choosing
-Use `Fuzz.ChooseFrom<T>(IEnumerable<T> values)`.
+Use `Fuzz.ChooseFrom<T>(IEnumerable<T> values)`.  
 Picks a random value from a list of options.
 
-F.i. `Fuzz.ChooseFrom(new []{ 1, 2 })` will return either 1 or 2.
+F.i. `Fuzz.ChooseFrom(new []{ 1, 2 })` will return either 1 or 2.  
 A helper method exists for ease of use when you want to pass in constant values as in the example above. 
 
-I.e. : `Fuzz.ChooseFromThese(1, 2)`
+I.e. : `Fuzz.ChooseFromThese(1, 2)`  
 Another method provides a _semi-safe_ way to pick from what might be an empty list. 
 
-I.e. : `Fuzz.ChooseFromWithDefaultWhenEmpty(new List<int>())`, which returns the default, in this case zero.
+I.e. : `Fuzz.ChooseFromWithDefaultWhenEmpty(new List<int>())`, which returns the default, in this case zero.  
 You can also pick from a set of Generators. 
 
-I.e. : `Fuzz.ChooseGenerator(Fuzz.Constant(1), Fuzz.Constant(2))`
+I.e. : `Fuzz.ChooseGenerator(Fuzz.Constant(1), Fuzz.Constant(2))`  
 ### Unique Values
-Using the `.Unique(object key)` extension method.
-Makes sure that every generated value is unique.
-When asking for more unique values than the generator can supply, an exception is thrown.
-Multiple unique generators can be defined in one 'composed' generator, without interfering with eachother by using a different key.
-When using the same key for multiple unique generators all values across these generators are unique.
-An overload exist taking a function as an argument allowing for a dynamic key.
+Using the `.Unique(object key)` extension method.  
+Makes sure that every generated value is unique.  
+When asking for more unique values than the generator can supply, an exception is thrown.  
+Multiple unique generators can be defined in one 'composed' generator, without interfering with eachother by using a different key.  
+When using the same key for multiple unique generators all values across these generators are unique.  
+An overload exist taking a function as an argument allowing for a dynamic key.  
 ### Filtering Values
-Use the `.Where(Func<T, bool>)` extension method.
-Makes sure that every generated value passes the supplied predicate.
+Use the `.Where(Func<T, bool>)` extension method.  
+Makes sure that every generated value passes the supplied predicate.  
 ### Casting Generators
-Various extension methods allow for casting the generated value.
+Various extension methods allow for casting the generated value.  
  - `.AsString()` : Invokes `.ToString()` on the generated value and 
 casts the generator from `Generator<T>` to `Generator<string>`. 
-Useful f.i. to generate numeric strings.
- - `.AsObject()` : Simply casts the generator itself from `Generator<T>` to `Generator<object>`. Mostly used internally.
- - `.Nullable()` : Casts a `Generator<T>` to `Generator<T?>`. In addition generates null 1 out of 5 times.
- - `.Nullable(int timesBeforeResultIsNullAproximation)` : overload of `Nullable()`, generates null 1 out of `timesBeforeResultIsNullAproximation` times .
+Useful f.i. to generate numeric strings.  
+ - `.AsObject()` : Simply casts the generator itself from `Generator<T>` to `Generator<object>`. Mostly used internally.  
+ - `.Nullable()` : Casts a `Generator<T>` to `Generator<T?>`. In addition generates null 1 out of 5 times.  
+ - `.Nullable(int timesBeforeResultIsNullAproximation)` : overload of `Nullable()`, generates null 1 out of `timesBeforeResultIsNullAproximation` times .  
 ### How About Null(s) ?
-Various extension methods allow for influencing null generation.
+Various extension methods allow for influencing null generation.  
 - `.Nullable()` : Casts a `Generator<T>` to `Generator<T?>`. In addition generates null 1 out of 5 times.  
-> Used for value types.
-- `.Nullable(int timesBeforeResultIsNullAproximation)` : overload of `Nullable()`, generates null 1 out of `timesBeforeResultIsNullAproximation` times .
+> Used for value types.  
+- `.Nullable(int timesBeforeResultIsNullAproximation)` : overload of `Nullable()`, generates null 1 out of `timesBeforeResultIsNullAproximation` times .  
 - `.NullableRef()` : Casts a `Generator<T>` to `Generator<T?>`. In addition generates null 1 out of 5 times.  
-> Used for reference types, including `string`.
-- `.NullableRef(int timesBeforeResultIsNullAproximation)` : overload of `NullableRef()`, generates null 1 out of `timesBeforeResultIsNullAproximation` times .
-- `.NeverReturnNull()` : Only available on generators that provide `Nullable<T>` values, this one makes sure that, you guessed it, the nullable generator never returns null.
+> Used for reference types, including `string`.  
+- `.NullableRef(int timesBeforeResultIsNullAproximation)` : overload of `NullableRef()`, generates null 1 out of `timesBeforeResultIsNullAproximation` times .  
+- `.NeverReturnNull()` : Only available on generators that provide `Nullable<T>` values, this one makes sure that, you guessed it, the nullable generator never returns null.  
 ### 'Generating' constants
-Use `Fuzz.Constant<T>(T value)`.
-This generator is most useful in combination with others and is used to inject constants into combined generators.
+Use `Fuzz.Constant<T>(T value)`.  
+This generator is most useful in combination with others and is used to inject constants into combined generators.  
 ## Creating Custom Generators
 Any function that returns a value of type `Generator<T>` can be used as a generator.
 
 `Generator<T>` is defined as a delegate like so :
 ```csharp
 public delegate IResult<TValue> Generator<out TValue>(State input)
-```
+```  
 So f.i. to define a generator that always returns the number forty-two we need a function that returns the following :
 ```csharp
 return s => new Result<State, int>(42, s);
-```
+```  
 As you can see from the signature a state object is passed to the generator.
 This is where the random seed lives.
 If you want any kind of random, it is advised to use that one, like so :
@@ -367,113 +367,113 @@ If you want any kind of random, it is advised to use that one, like so :
 return s => new Result<State, int>(s.Random.Next(42, 666), s);
 ```
 
-
+  
 ## The Primitive Generators
 ### Booleans
-Use `Fuzz.Bool()`. *No overload exists.*
-- The default generator generates True or False.
-- Can be made to return `bool?` using the `.Nullable()` combinator.
-- `bool` is automatically detected and generated for object properties.
-- `bool?` is automatically detected and generated for object properties.
+Use `Fuzz.Bool()`. *No overload exists.*  
+- The default generator generates True or False.  
+- Can be made to return `bool?` using the `.Nullable()` combinator.  
+- `bool` is automatically detected and generated for object properties.  
+- `bool?` is automatically detected and generated for object properties.  
 ### Chars
-Use `Fuzz.Char()`. *No overload exists.*
-- The default generator always generates a char between lower case 'a' and lower case 'z'.
-- Can be made to return `char?` using the `.Nullable()` combinator.
-- `char` is automatically detected and generated for object properties.
-- `char?` is automatically detected and generated for object properties.
+Use `Fuzz.Char()`. *No overload exists.*  
+- The default generator always generates a char between lower case 'a' and lower case 'z'.  
+- Can be made to return `char?` using the `.Nullable()` combinator.  
+- `char` is automatically detected and generated for object properties.  
+- `char?` is automatically detected and generated for object properties.  
 ### Date Times
-Use `Fuzz.DateTime()`.
-- The overload `Fuzz.DateTimes(DateTime min, DateTime max)` generates a DateTime higher or equal than min and lower than max.
-- The default generator is (min = new DateTime(1970, 1, 1), max = new DateTime(2020, 12, 31)).
-- Can be made to return `DateTime?` using the `.Nullable()` combinator.
-- `DateTime` is automatically detected and generated for object properties.
-- `DateTime?` is automatically detected and generated for object properties.
+Use `Fuzz.DateTime()`.  
+- The overload `Fuzz.DateTimes(DateTime min, DateTime max)` generates a DateTime higher or equal than min and lower than max.  
+- The default generator is (min = new DateTime(1970, 1, 1), max = new DateTime(2020, 12, 31)).  
+- Can be made to return `DateTime?` using the `.Nullable()` combinator.  
+- `DateTime` is automatically detected and generated for object properties.  
+- `DateTime?` is automatically detected and generated for object properties.  
 ### Date Onlys
-Use `Fuzz.DateOnly()`.
-- The overload `Fuzz.DateOnly(DateOnly min, DateOnly max)` generates a DateOnly higher or equal than min and lower than max.
-- The default generator is (min = new DateOnly(1970, 1, 1), max = new DateOnly(2020, 12, 31)).
-- Can be made to return `DateOnly?` using the `.Nullable()` combinator.
-- `DateOnly` is automatically detected and generated for object properties.
-- `DateOnly?` is automatically detected and generated for object properties.
+Use `Fuzz.DateOnly()`.  
+- The overload `Fuzz.DateOnly(DateOnly min, DateOnly max)` generates a DateOnly higher or equal than min and lower than max.  
+- The default generator is (min = new DateOnly(1970, 1, 1), max = new DateOnly(2020, 12, 31)).  
+- Can be made to return `DateOnly?` using the `.Nullable()` combinator.  
+- `DateOnly` is automatically detected and generated for object properties.  
+- `DateOnly?` is automatically detected and generated for object properties.  
 ### Time Onlys
-Use `Fuzz.TimeOnly()`.
-- The overload `Fuzz.TimeOnly(TimeOnly min, TimeOnly max)` generates a TimeOnly higher or equal than min and lower than max.
-- The default generator is (min = 00:00:00, max = 23:59:59.9999999.
-- Can be made to return `TimeOnly?` using the `.Nullable()` combinator.
-- `TimeOnly` is automatically detected and generated for object properties.
-- `TimeOnly?` is automatically detected and generated for object properties.
+Use `Fuzz.TimeOnly()`.  
+- The overload `Fuzz.TimeOnly(TimeOnly min, TimeOnly max)` generates a TimeOnly higher or equal than min and lower than max.  
+- The default generator is (min = 00:00:00, max = 23:59:59.9999999.  
+- Can be made to return `TimeOnly?` using the `.Nullable()` combinator.  
+- `TimeOnly` is automatically detected and generated for object properties.  
+- `TimeOnly?` is automatically detected and generated for object properties.  
 ### Decimals
-Use `Fuzz.Decimal()`.
-- The overload `Fuzz.Decimal(decimal min, decimal max)` generates a decimal higher or equal than min and lower than max.
-- Throws an ArgumentException if min > max.
-- The default generator is (min = 1, max = 100).
-- Can be made to return `decimal?` using the `.Nullable()` combinator.
-- `decimal` is automatically detected and generated for object properties.
-- `decimal?` is automatically detected and generated for object properties.
+Use `Fuzz.Decimal()`.  
+- The overload `Fuzz.Decimal(decimal min, decimal max)` generates a decimal higher or equal than min and lower than max.  
+- Throws an ArgumentException if min > max.  
+- The default generator is (min = 1, max = 100).  
+- Can be made to return `decimal?` using the `.Nullable()` combinator.  
+- `decimal` is automatically detected and generated for object properties.  
+- `decimal?` is automatically detected and generated for object properties.  
 ### Doubles
-Use `Fuzz.Double()`.
-- The overload `Fuzz.Double(double min, double max)` generates a double higher or equal than min and lower than max.
-- Throws an ArgumentException if min > max.
-- The default generator is (min = 1, max = 100).
-- Can be made to return `double?` using the `.Nullable()` combinator.
-- `double` is automatically detected and generated for object properties.
-- `double?` is automatically detected and generated for object properties.
+Use `Fuzz.Double()`.  
+- The overload `Fuzz.Double(double min, double max)` generates a double higher or equal than min and lower than max.  
+- Throws an ArgumentException if min > max.  
+- The default generator is (min = 1, max = 100).  
+- Can be made to return `double?` using the `.Nullable()` combinator.  
+- `double` is automatically detected and generated for object properties.  
+- `double?` is automatically detected and generated for object properties.  
 ### Enums
-Use `Fuzz.Enum<T>()`, where T is the type of Enum you want to generate. *No overload exists.*
-- The default generator just picks a random value from all enemeration values.
-- An Enumeration is automatically detected and generated for object properties.
-- A nullable Enumeration is automatically detected and generated for object properties.
-- Passing in a non Enum type for T throws an ArgumentException.
+Use `Fuzz.Enum<T>()`, where T is the type of Enum you want to generate. *No overload exists.*  
+- The default generator just picks a random value from all enemeration values.  
+- An Enumeration is automatically detected and generated for object properties.  
+- A nullable Enumeration is automatically detected and generated for object properties.  
+- Passing in a non Enum type for T throws an ArgumentException.  
 ### Floats
-Use `Fuzz.Float()`.
-- The overload `Fuzz.Float(float min, float max)` generates a float higher or equal than min and lower than max.
-- Throws an ArgumentException if min > max.
-- The default generator is (min = 1, max = 100).
-- Can be made to return `float?` using the `.Nullable()` combinator.
-- `float` is automatically detected and generated for object properties.
-- `float?` is automatically detected and generated for object properties.
+Use `Fuzz.Float()`.  
+- The overload `Fuzz.Float(float min, float max)` generates a float higher or equal than min and lower than max.  
+- Throws an ArgumentException if min > max.  
+- The default generator is (min = 1, max = 100).  
+- Can be made to return `float?` using the `.Nullable()` combinator.  
+- `float` is automatically detected and generated for object properties.  
+- `float?` is automatically detected and generated for object properties.  
 ### Guids
-Use `Fuzz.Guid()`. *There is no overload.*
-- The default generator never generates Guid.Empty.
-- Can be made to return `Guid?` using the `.Nullable()` combinator.
-- `Guid` is automatically detected and generated for object properties.
-- `Guid?` is automatically detected and generated for object properties.
+Use `Fuzz.Guid()`. *There is no overload.*  
+- The default generator never generates Guid.Empty.  
+- Can be made to return `Guid?` using the `.Nullable()` combinator.  
+- `Guid` is automatically detected and generated for object properties.  
+- `Guid?` is automatically detected and generated for object properties.  
 ### Ints
-Use `Fuzz.Int()`.
-- The overload `Fuzz.Int(int min, int max)` generates an int higher or equal than min and lower than max.
-- Throws an ArgumentException if min > max.
-- The default generator is (min = 1, max = 100).
-- Can be made to return `int?` using the `.Nullable()` combinator.
-- `int` is automatically detected and generated for object properties.
-- `Int32` is automatically detected and generated for object properties.
-- `int?` is automatically detected and generated for object properties.
+Use `Fuzz.Int()`.  
+- The overload `Fuzz.Int(int min, int max)` generates an int higher or equal than min and lower than max.  
+- Throws an ArgumentException if min > max.  
+- The default generator is (min = 1, max = 100).  
+- Can be made to return `int?` using the `.Nullable()` combinator.  
+- `int` is automatically detected and generated for object properties.  
+- `Int32` is automatically detected and generated for object properties.  
+- `int?` is automatically detected and generated for object properties.  
 ### Longs
-Use `Fuzz.Long()`.
-- The overload `Fuzz.Long(long min, long max)` generates a long higher or equal than min and lower than max.
-Throws an ArgumentException if min > max.
-- The default generator is (min = 1, max = 100).
-- Can be made to return `long?` using the `.Nullable()` combinator.
-- `long` is automatically detected and generated for object properties.
-- `Int64` is automatically detected and generated for object properties.
-- `long?` is automatically detected and generated for object properties.
+Use `Fuzz.Long()`.  
+- The overload `Fuzz.Long(long min, long max)` generates a long higher or equal than min and lower than max.  
+Throws an ArgumentException if min > max.  
+- The default generator is (min = 1, max = 100).  
+- Can be made to return `long?` using the `.Nullable()` combinator.  
+- `long` is automatically detected and generated for object properties.  
+- `Int64` is automatically detected and generated for object properties.  
+- `long?` is automatically detected and generated for object properties.  
 ### Shorts
-Use `Fuzz.Short()`.
-- The overload `Fuzz.Short(short min, short max)` generates a short higher or equal than min and lower than max.
-- The default generator is (min = 1, max = 100).
-- Can be made to return `short?` using the `.Nullable()` combinator.
-- `short` is automatically detected and generated for object properties.
-- `short?` is automatically detected and generated for object properties.
+Use `Fuzz.Short()`.  
+- The overload `Fuzz.Short(short min, short max)` generates a short higher or equal than min and lower than max.  
+- The default generator is (min = 1, max = 100).  
+- Can be made to return `short?` using the `.Nullable()` combinator.  
+- `short` is automatically detected and generated for object properties.  
+- `short?` is automatically detected and generated for object properties.  
 ### Strings
-Use `Fuzz.String()`.
-- The generator always generates every char element of the string to be between lower case 'a' and lower case 'z'.
-- The overload `Fuzz.String(int min, int max)` generates an string of length higher or equal than min and lower than max.
-- The Default generator generates a string of length higher than 0 and lower than 10.
-- `string` is automatically detected and generated for object properties.
-- Can be made to return `string?` using the `.NullableRef()` combinator.
+Use `Fuzz.String()`.  
+- The generator always generates every char element of the string to be between lower case 'a' and lower case 'z'.  
+- The overload `Fuzz.String(int min, int max)` generates an string of length higher or equal than min and lower than max.  
+- The Default generator generates a string of length higher than 0 and lower than 10.  
+- `string` is automatically detected and generated for object properties.  
+- Can be made to return `string?` using the `.NullableRef()` combinator.  
 ### Time Spans
-Use `Fuzz.TimeSpan()`.
-- The overload `Fuzz.TimeSpan(int max)` generates a TimeSpan with Ticks higher or equal than 1 and lower than max.
-- The default generator is (max = 1000).
-- Can be made to return `TimeSpan?` using the `.Nullable()` combinator.
-- `TimeSpan` is automatically detected and generated for object properties.
-- `TimeSpan?` is automatically detected and generated for object properties.
+Use `Fuzz.TimeSpan()`.  
+- The overload `Fuzz.TimeSpan(int max)` generates a TimeSpan with Ticks higher or equal than 1 and lower than max.  
+- The default generator is (max = 1000).  
+- Can be made to return `TimeSpan?` using the `.Nullable()` combinator.  
+- `TimeSpan` is automatically detected and generated for object properties.  
+- `TimeSpan?` is automatically detected and generated for object properties.  

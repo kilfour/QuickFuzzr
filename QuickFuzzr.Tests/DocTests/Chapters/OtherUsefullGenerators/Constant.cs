@@ -11,6 +11,6 @@ public class Constant
 @"This generator is most useful in combination with others and is used to inject constants into combined generators.")]
 	public void JustReturnsValue()
 	{
-		Assert.Equal(42, Fuzz.Constant(42).Generate());
+		Assert.Equal(42, Fuzzr.Constant(42).Generate());
 	}
 }

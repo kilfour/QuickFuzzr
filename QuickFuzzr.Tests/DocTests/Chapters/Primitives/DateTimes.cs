@@ -9,7 +9,7 @@ public class DateTimes
 	[DocContent("- The overload `Fuzz.DateTimes(DateTime min, DateTime max)` generates a DateTime higher or equal than min and lower than max.")]
 	public void Zero()
 	{
-		var generator = Fuzz.DateTime(new DateTime(2000, 1, 1), new DateTime(2000, 1, 5));
+		var generator = Fuzzr.DateTime(new DateTime(2000, 1, 1), new DateTime(2000, 1, 5));
 		for (int i = 0; i < 10; i++)
 		{
 			var value = generator.Generate();
@@ -22,7 +22,7 @@ public class DateTimes
 	[DocContent("- The default generator is (min = new DateTime(1970, 1, 1), max = new DateTime(2020, 12, 31)).")]
 	public void DefaultGeneratorNeverGeneratesZero()
 	{
-		var generator = Fuzz.DateTime();
+		var generator = Fuzzr.DateTime();
 		for (int i = 0; i < 50; i++)
 		{
 			var val = generator.Generate();
@@ -35,7 +35,7 @@ public class DateTimes
 	[DocContent("- Can be made to return `DateTime?` using the `.Nullable()` combinator.")]
 	public void Nullable()
 	{
-		var generator = Fuzz.DateTime().Nullable();
+		var generator = Fuzzr.DateTime().Nullable();
 		var isSomeTimesNull = false;
 		var isSomeTimesNotNull = false;
 		for (int i = 0; i < 50; i++)
@@ -57,7 +57,7 @@ public class DateTimes
 	[DocContent("- `DateTime` is automatically detected and generated for object properties.")]
 	public void Property()
 	{
-		var generator = Fuzz.One<SomeThingToGenerate>();
+		var generator = Fuzzr.One<SomeThingToGenerate>();
 		for (int i = 0; i < 10; i++)
 		{
 			Assert.NotEqual(new DateTime(), generator.Generate().AProperty);
@@ -68,7 +68,7 @@ public class DateTimes
 	[DocContent("- `DateTime?` is automatically detected and generated for object properties.")]
 	public void NullableProperty()
 	{
-		var generator = Fuzz.One<SomeThingToGenerate>();
+		var generator = Fuzzr.One<SomeThingToGenerate>();
 		var isSomeTimesNull = false;
 		var isSomeTimesNotNull = false;
 		for (int i = 0; i < 50; i++)

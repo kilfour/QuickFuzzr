@@ -6,10 +6,10 @@ namespace QuickFuzzr.Tests.DocTests.Chapters.Primitives;
 public class Ints
 {
 	[Fact]
-	[DocContent( "- The overload `Fuzz.Int(int min, int max)` generates an int higher or equal than min and lower than max.")]
+	[DocContent("- The overload `Fuzz.Int(int min, int max)` generates an int higher or equal than min and lower than max.")]
 	public void Zero()
 	{
-		var generator = Fuzz.Int(0, 0);
+		var generator = Fuzzr.Int(0, 0);
 		for (int i = 0; i < 10; i++)
 		{
 			Assert.Equal(0, generator.Generate());
@@ -20,14 +20,14 @@ public class Ints
 	[DocContent("- Throws an ArgumentException if min > max.")]
 	public void Throws()
 	{
-		Assert.Throws<ArgumentException>(() => Fuzz.Int(1, 0).Generate());
+		Assert.Throws<ArgumentException>(() => Fuzzr.Int(1, 0).Generate());
 	}
 
 	[Fact]
 	[DocContent("- The default generator is (min = 1, max = 100).")]
 	public void DefaultGeneratorNeverGeneratesZero()
 	{
-		var generator = Fuzz.Int();
+		var generator = Fuzzr.Int();
 		for (int i = 0; i < 10; i++)
 		{
 			var val = generator.Generate();
@@ -40,7 +40,7 @@ public class Ints
 	[DocContent("- Can be made to return `int?` using the `.Nullable()` combinator.")]
 	public void Nullable()
 	{
-		var generator = Fuzz.Int().Nullable();
+		var generator = Fuzzr.Int().Nullable();
 		var isSomeTimesNull = false;
 		var isSomeTimesNotNull = false;
 		for (int i = 0; i < 100; i++)
@@ -62,7 +62,7 @@ public class Ints
 	[DocContent("- `int` is automatically detected and generated for object properties.")]
 	public void Property()
 	{
-		var generator = Fuzz.One<SomeThingToGenerate>();
+		var generator = Fuzzr.One<SomeThingToGenerate>();
 		for (int i = 0; i < 10; i++)
 		{
 			Assert.NotEqual(0, generator.Generate().AProperty);
@@ -73,7 +73,7 @@ public class Ints
 	[DocContent("- `Int32` is automatically detected and generated for object properties.")]
 	public void Int32Property()
 	{
-		var generator = Fuzz.One<SomeThingToGenerate>();
+		var generator = Fuzzr.One<SomeThingToGenerate>();
 		for (int i = 0; i < 10; i++)
 		{
 			Assert.NotEqual(0, generator.Generate().AnInt32Property);
@@ -84,7 +84,7 @@ public class Ints
 	[DocContent("- `int?` is automatically detected and generated for object properties.")]
 	public void NullableProperty()
 	{
-		var generator = Fuzz.One<SomeThingToGenerate>();
+		var generator = Fuzzr.One<SomeThingToGenerate>();
 		var isSomeTimesNull = false;
 		var isSomeTimesNotNull = false;
 		for (int i = 0; i < 50; i++)
