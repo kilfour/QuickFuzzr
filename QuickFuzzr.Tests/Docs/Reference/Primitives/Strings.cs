@@ -1,8 +1,9 @@
 ﻿using QuickPulse.Explains;
 
-namespace QuickFuzzr.Tests.DocTests.Chapters.Primitives;
+namespace QuickFuzzr.Tests.Docs.Reference.Primitives;
 
-[DocContent("Use `Fuzz.String()`.")]
+[DocFile]
+[DocContent("Use `Fuzzr.String()`.")]
 public class Strings
 {
 	[Fact]
@@ -19,7 +20,7 @@ public class Strings
 	}
 
 	[Fact]
-	[DocContent("- The overload `Fuzz.String(int min, int max)` generates an string of length higher or equal than min and lower than max.")]
+	[DocContent("- The overload `Fuzzr.String(int min, int max)` generates an string of length higher or equal than min and lower than max.")]
 	public void Zero()
 	{
 		var generator = Fuzzr.String(5, 7);

@@ -1,4 +1,4 @@
-﻿using QuickFuzzr.Tests.DocTests.Chapters.Primitives;
+﻿using QuickFuzzr.Tests.Docs.Reference.Primitives;
 using QuickPulse.Explains;
 
 namespace QuickFuzzr.Tests.DocTests.Chapters;

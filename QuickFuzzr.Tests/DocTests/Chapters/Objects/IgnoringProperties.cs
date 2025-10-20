@@ -3,11 +3,11 @@ using QuickPulse.Explains;
 
 namespace QuickFuzzr.Tests.DocTests.Chapters.Objects;
 
-[DocContent(@"Use the `Fuzz.For<T>().Ignore<TProperty>(Expression<Func<T, TProperty>> func)` method chain.
+[DocContent(@"Use the `Fuzzr.For<T>().Ignore<TProperty>(Expression<Func<T, TProperty>> func)` method chain.
 
 F.i. :
 ```
-Fuzz.For<SomeThingToGenerate>().Ignore(s => s.Id)
+Fuzzr.For<SomeThingToGenerate>().Ignore(s => s.Id)
 ```")]
 public class IgnoringProperties
 {
@@ -35,7 +35,7 @@ public class IgnoringProperties
 
 	[Fact]
 	[DocContent(@"Sometimes it is useful to ignore all properties while generating an object.  
-For this use `Fuzz.For<SomeThingToGenerate>().IgnoreAll()`")]
+For this use `Fuzzr.For<SomeThingToGenerate>().IgnoreAll()`")]
 	public void IgnoreAll()
 	{
 		var generator =

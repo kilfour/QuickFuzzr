@@ -3,11 +3,11 @@ using QuickPulse.Explains;
 
 namespace QuickFuzzr.Tests.DocTests.Chapters.Objects;
 
-[DocContent(@"Use The `Fuzz.For<T>().GenerateAsOneOf(params Type[] types)` method chain.
+[DocContent(@"Use The `Fuzzr.For<T>().GenerateAsOneOf(params Type[] types)` method chain.
 
 F.i. :
 ```
-Fuzz.For<SomeThingAbstract>().GenerateAsOneOf(
+Fuzzr.For<SomeThingAbstract>().GenerateAsOneOf(
 	typeof(SomethingDerived), typeof(SomethingElseDerived))
 ```")]
 public class Inheritance

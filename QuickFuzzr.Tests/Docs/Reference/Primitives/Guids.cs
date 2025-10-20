@@ -1,8 +1,9 @@
 ﻿using QuickPulse.Explains;
 
-namespace QuickFuzzr.Tests.DocTests.Chapters.Primitives;
+namespace QuickFuzzr.Tests.Docs.Reference.Primitives;
 
-[DocContent("Use `Fuzz.Guid()`. *There is no overload.*")]
+[DocFile]
+[DocContent("Use `Fuzzr.Guid()`. *There is no overload.*")]
 public class Guids
 {
 	[Fact]

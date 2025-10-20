@@ -1,9 +1,10 @@
 ﻿using QuickFuzzr.Tests._Tools;
 using QuickPulse.Explains;
 
-namespace QuickFuzzr.Tests.DocTests.Chapters.Primitives;
+namespace QuickFuzzr.Tests.Docs.Reference.Primitives;
 
-[DocContent("Use `Fuzz.Char()`. *No overload exists.*")]
+[DocFile]
+[DocContent("Use `Fuzzr.Char()`. *No overload exists.*")]
 public class Chars
 {
 	private readonly char[] valid = "abcdefghijklmnopqrstuvwxyz".ToCharArray();

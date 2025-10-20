@@ -1,0 +1,43 @@
+using QuickFuzzr.Tests.Docs.Reference.Primitives;
+using QuickPulse.Explains;
+
+namespace QuickFuzzr.Tests.Docs.Reference;
+
+[DocFile]
+[DocLink(typeof(Booleans))]
+[DocLink(typeof(Chars))]
+[DocLink(typeof(DateOnlys))]
+[DocLink(typeof(DateTimes))]
+[DocLink(typeof(Decimals))]
+[DocLink(typeof(Doubles))]
+[DocLink(typeof(Enums))]
+[DocLink(typeof(Floats))]
+[DocLink(typeof(Ints))]
+[DocLink(typeof(Longs))]
+[DocLink(typeof(Shorts))]
+[DocLink(typeof(Strings))]
+[DocLink(typeof(TimeOnlys))]
+[DocLink(typeof(TimeSpans))]
+public class PrimitiveFuzzrs
+{
+    [DocContent(@"
+| Fuzzr |
+| ----- |
+| [`Fuzzr.Bool()`][Booleans] | 
+| [`Fuzzr.Char()`][Chars] | 
+| [`Fuzzr.DateOnly()`][DateOnlys] | 
+| [`Fuzzr.DateTime()`][DateTimes] | 
+| [`Fuzzr.Decimal()`][Decimals] | 
+| [`Fuzzr.Double()`][Doubles] | 
+| [`Fuzzr.Enum<T>()`][Enums] | 
+| [`Fuzzr.Float()`][Floats] | 
+| [`Fuzzr.Int()`][Ints] | 
+| [`Fuzzr.Long()`][Longs] | 
+| [`Fuzzr.Short()`][Shorts] | 
+| [`Fuzzr.String()`][Strings] | 
+| [`Fuzzr.TimeOnly()`][TimeOnlys] | 
+| [`Fuzzr.TimeSpan()`][TimeSpans] |
+"
+    )]
+    private static void CheatSheet() {/* Placeholder */}
+}

@@ -8,7 +8,7 @@ public class A_GeneratingPrimitives
 {
 	[Fact]
 	[DocContent(
-@"F.i. `Fuzz.Int()`. 
+@"F.i. `Fuzzr.Int()`. 
 
 Full details below in the chapter 'The Primitive Generators'.")]
 	public void ForAnInt()

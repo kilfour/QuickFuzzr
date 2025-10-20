@@ -1,9 +1,10 @@
 ﻿using QuickFuzzr.Tests._Tools;
 using QuickPulse.Explains;
 
-namespace QuickFuzzr.Tests.DocTests.Chapters.Primitives;
+namespace QuickFuzzr.Tests.Docs.Reference.Primitives;
 
-[DocContent("Use `Fuzz.Enum<T>()`, where T is the type of Enum you want to generate. *No overload exists.*")]
+[DocFile]
+[DocContent("Use `Fuzzr.Enum<T>()`, where T is the type of Enum you want to generate. *No overload exists.*")]
 public class Enums
 {
 	[Fact]

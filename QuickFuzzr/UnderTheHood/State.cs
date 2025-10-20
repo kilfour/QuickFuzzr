@@ -3,10 +3,6 @@ using System.Security.Cryptography;
 
 namespace QuickFuzzr.UnderTheHood;
 
-public record DepthConstraint(int Min, int Max);
-
-public record DepthFrame(Type Type, int Depth);
-
 public class State
 {
 	public int Seed { get; }
@@ -104,6 +100,8 @@ public class State
 					{ typeof(float?), Fuzzr.Float().Nullable().AsObject() },
 					{ typeof(Guid), Fuzzr.Guid().AsObject() },
 					{ typeof(Guid?), Fuzzr.Guid().Nullable().AsObject() },
+					{ typeof(Half), Fuzzr.Half().AsObject() },
+					{ typeof(Half?), Fuzzr.Half().Nullable().AsObject() },
 					{ typeof(short), Fuzzr.Short().AsObject() },
 					{ typeof(short?), Fuzzr.Short().Nullable().AsObject() },
 					{ typeof(TimeSpan), Fuzzr.TimeSpan().AsObject() },

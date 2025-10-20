@@ -12,7 +12,7 @@ public class UsingExtensions
 
 E.g. :
 ```
-Fuzz.ChooseFrom(someValues).Unique(""key"").Many(2)
+Fuzzr.ChooseFrom(someValues).Unique(""key"").Many(2)
 ```
 ")]
 	public void SimpleCombination()

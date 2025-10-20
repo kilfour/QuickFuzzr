@@ -1,13 +1,14 @@
 ﻿using QuickFuzzr.Tests._Tools;
 using QuickPulse.Explains;
 
-namespace QuickFuzzr.Tests.DocTests.Chapters.Primitives;
+namespace QuickFuzzr.Tests.Docs.Reference.Primitives;
 
-[DocContent("Use `Fuzz.TimeSpan()`.")]
+[DocFile]
+[DocContent("Use `Fuzzr.TimeSpan()`.")]
 public class TimeSpans
 {
 	[Fact]
-	[DocContent("- The overload `Fuzz.TimeSpan(int max)` generates a TimeSpan with Ticks higher or equal than 1 and lower than max.")]
+	[DocContent("- The overload `Fuzzr.TimeSpan(int max)` generates a TimeSpan with Ticks higher or equal than 1 and lower than max.")]
 	public void OverloadRange()
 	{
 		CheckIf.GeneratedValuesShouldAllSatisfy(Fuzzr.TimeSpan(5),

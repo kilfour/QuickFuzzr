@@ -10,9 +10,9 @@ public class LinqSyntax
 @"F.i. the following :
 ```
 var stringGenerator =
-	from a in Fuzz.Int()
-	from b in Fuzz.String()
-	from c in Fuzz.Int()
+	from a in Fuzzr.Int()
+	from b in Fuzzr.String()
+	from c in Fuzzr.Int()
 	select a + b + c;
 Console.WriteLine(stringGenerator.Generate());
 ```
@@ -36,7 +36,7 @@ In the following :
 ```
 var generator =
 	from str in stringGenerator.Replace()
-	from thing in Fuzz.One<SomeThingToGenerate>()
+	from thing in Fuzzr.One<SomeThingToGenerate>()
 	select thing;
 ```
 We reuse the 'stringGenerator' defined above and replace the default string generator with our custom one. 
@@ -59,7 +59,7 @@ as this can be easily achieved using Linq.
 
 ```
 var generator =
-	from chars in Fuzz.Constant('-').Many(5)
+	from chars in Fuzzr.Constant('-').Many(5)
 	let composed = chars.Aggregate("", (a, b) => a + b.ToString())
 	select composed;
 ```

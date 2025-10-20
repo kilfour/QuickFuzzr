@@ -1,12 +1,13 @@
 ﻿using QuickPulse.Explains;
 
-namespace QuickFuzzr.Tests.DocTests.Chapters.Primitives;
+namespace QuickFuzzr.Tests.Docs.Reference.Primitives;
 
-[DocContent("Use `Fuzz.DateTime()`.")]
+[DocFile]
+[DocContent("Use `Fuzzr.DateTime()`.")]
 public class DateTimes
 {
 	[Fact]
-	[DocContent("- The overload `Fuzz.DateTimes(DateTime min, DateTime max)` generates a DateTime higher or equal than min and lower than max.")]
+	[DocContent("- The overload `Fuzzr.DateTimes(DateTime min, DateTime max)` generates a DateTime higher or equal than min and lower than max.")]
 	public void Zero()
 	{
 		var generator = Fuzzr.DateTime(new DateTime(2000, 1, 1), new DateTime(2000, 1, 5));

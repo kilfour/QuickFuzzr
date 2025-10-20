@@ -13,9 +13,9 @@ public class Relations
 
 ```
 var generator =
-	from product in Fuzz.One<ProductItem>()
-	from setProduct in Fuzz.For<OrderLine>().Customize(orderline => orderline.Product, product)
-	from orderline in Fuzz.One<OrderLine>()
+	from product in Fuzzr.One<ProductItem>()
+	from setProduct in Fuzzr.For<OrderLine>().Customize(orderline => orderline.Product, product)
+	from orderline in Fuzzr.One<OrderLine>()
 	select orderline;
 ```
 ")]
@@ -39,8 +39,8 @@ E.g. :
 
 ```
 var generator =
-	from order in Fuzz.One<Order>()
-	from lines in Fuzz.One<OrderLine>()
+	from order in Fuzzr.One<Order>()
+	from lines in Fuzzr.One<OrderLine>()
 		.Apply(a => order.AddOrderLine(a)).Many(20).ToArray()
 	select order;
 ```
@@ -84,8 +84,8 @@ E.g. :
 
 ```csharp
 var generator =
-	from category in Fuzz.One<Category>()
-	from subCategory in Fuzz.One(() => new SubCategory(category)).Many(20)
+	from category in Fuzzr.One<Category>()
+	from subCategory in Fuzzr.One(() => new SubCategory(category)).Many(20)
 	select category;
 ```
 ")]

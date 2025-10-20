@@ -2,14 +2,14 @@
 
 namespace QuickFuzzr.Tests.DocTests.Chapters.OtherUsefullGenerators;
 
-[DocContent("Use `Fuzz.ChooseFrom<T>(IEnumerable<T> values)`.")]
+[DocContent("Use `Fuzzr.ChooseFrom<T>(IEnumerable<T> values)`.")]
 public class Choosing
 {
 	[Fact]
 	[DocContent(
 @"Picks a random value from a list of options.
 
-F.i. `Fuzz.ChooseFrom(new []{ 1, 2 })` will return either 1 or 2.")]
+F.i. `Fuzzr.ChooseFrom(new []{ 1, 2 })` will return either 1 or 2.")]
 	public void Enumerable()
 	{
 		var generator = Fuzzr.OneOf((IEnumerable<int>)(new[] { 1, 2 }));
@@ -29,7 +29,7 @@ F.i. `Fuzz.ChooseFrom(new []{ 1, 2 })` will return either 1 or 2.")]
 	[DocContent(
 @"A helper method exists for ease of use when you want to pass in constant values as in the example above. 
 
-I.e. : `Fuzz.ChooseFromThese(1, 2)`")]
+I.e. : `Fuzzr.ChooseFromThese(1, 2)`")]
 	public void Params()
 	{
 		var generator = Fuzzr.OneOf(1, 2);
@@ -49,7 +49,7 @@ I.e. : `Fuzz.ChooseFromThese(1, 2)`")]
 	[DocContent(
 @"Another method provides a _semi-safe_ way to pick from what might be an empty list. 
 
-I.e. : `Fuzz.ChooseFromWithDefaultWhenEmpty(new List<int>())`, which returns the default, in this case zero.")]
+I.e. : `Fuzzr.ChooseFromWithDefaultWhenEmpty(new List<int>())`, which returns the default, in this case zero.")]
 	public void ParamsEmpty_int_list_returns_zero()
 	{
 		var generator = Fuzzr.OneOfOrDefault(new List<int>());
@@ -60,7 +60,7 @@ I.e. : `Fuzz.ChooseFromWithDefaultWhenEmpty(new List<int>())`, which returns the
 	[DocContent(
 @"You can also pick from a set of Generators. 
 
-I.e. : `Fuzz.ChooseGenerator(Fuzz.Constant(1), Fuzz.Constant(2))`")]
+I.e. : `Fuzzr.ChooseGenerator(Fuzzr.Constant(1), Fuzzr.Constant(2))`")]
 	public void Gens()
 	{
 		var generator = Fuzzr.OneOf(Fuzzr.Constant(1), Fuzzr.Constant(2));

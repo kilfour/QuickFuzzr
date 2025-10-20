@@ -11,8 +11,8 @@ public class ReplacingPrimitiveGenerators
 	[DocContent(@"Example
 ```
 var generator =
-	from _ in Fuzz.Constant(42).Replace()
-	from result in Fuzz.One<SomeThingToGenerate>()
+	from _ in Fuzzr.Constant(42).Replace()
+	from result in Fuzzr.One<SomeThingToGenerate>()
 	select result;
 ```
 When executing above generator it will return a SomeThingToGenerate object where all integers have the value 42.
@@ -60,10 +60,10 @@ When executing above generator it will return a SomeThingToGenerate object where
 	[DocContent(@"Replacements can occur multiple times during one generation :
 ```
 var generator =
-	from _ in Fuzz.Constant(42).Replace()
-	from result1 in Fuzz.One<SomeThingToGenerate>()
-	from __ in Fuzz.Constant(666).Replace()
-	from result2 in Fuzz.One<SomeThingToGenerate>()
+	from _ in Fuzzr.Constant(42).Replace()
+	from result1 in Fuzzr.One<SomeThingToGenerate>()
+	from __ in Fuzzr.Constant(666).Replace()
+	from result2 in Fuzzr.One<SomeThingToGenerate>()
 	select new[] { result1, result2
 };
 ```

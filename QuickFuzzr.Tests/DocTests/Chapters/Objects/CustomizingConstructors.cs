@@ -3,16 +3,16 @@ using QuickPulse.Explains;
 
 namespace QuickFuzzr.Tests.DocTests.Chapters.Objects;
 
-[DocContent(@"Use the `Fuzz.For<T>().Construct<TArg>(Expression<Func<T, TProperty>> func, Generator<TProperty>)` method chain.
+[DocContent(@"Use the `Fuzzr.For<T>().Construct<TArg>(Expression<Func<T, TProperty>> func, Generator<TProperty>)` method chain.
 
 F.i. :
 ```csharp
-Fuzz.For<SomeThing>().Construct(Fuzz.Constant(42))
+Fuzzr.For<SomeThing>().Construct(Fuzzr.Constant(42))
 ```")]
 public class CustomizingConstructors
 {
 	[Fact]
-	[DocContent("Subsequent calls to `Fuzz.One<T>()` will then use the registered constructor.")]
+	[DocContent("Subsequent calls to `Fuzzr.One<T>()` will then use the registered constructor.")]
 	public void Works()
 	{
 		var generator =
@@ -25,7 +25,7 @@ public class CustomizingConstructors
 
 	[Fact]
 	[DocContent(@"Various overloads exist : 
- -  `Fuzz.For<T>().Construct<T1, T2>(Generator<T1> g1, Generator<T2> g2)`")]
+ -  `Fuzzr.For<T>().Construct<T1, T2>(Generator<T1> g1, Generator<T2> g2)`")]
 	public void WorksTwoArgs()
 	{
 		var generator =
@@ -40,7 +40,7 @@ public class CustomizingConstructors
 	}
 
 	[Fact]
-	[DocContent(" -  `Fuzz.For<T>().Construct<T1, T2>(Generator<T1> g1, Generator<T2> g2, Generator<T3> g3)`")]
+	[DocContent(" -  `Fuzzr.For<T>().Construct<T1, T2>(Generator<T1> g1, Generator<T2> g2, Generator<T3> g3)`")]
 	public void WorksThreeArgs()
 	{
 		var generator =
@@ -57,7 +57,7 @@ public class CustomizingConstructors
 	}
 
 	[Fact]
-	[DocContent(" -  `Fuzz.For<T>().Construct<T1, T2>(Generator<T1> g1, Generator<T2> g2, Generator<T3> g3, Generator<T4> g4)`")]
+	[DocContent(" -  `Fuzzr.For<T>().Construct<T1, T2>(Generator<T1> g1, Generator<T2> g2, Generator<T3> g3, Generator<T4> g4)`")]
 	public void WorksFourArgs()
 	{
 		var generator =
@@ -76,7 +76,7 @@ public class CustomizingConstructors
 	}
 
 	[Fact]
-	[DocContent(@" -  `Fuzz.For<T>().Construct<T1, T2>(Generator<T1> g1, Generator<T2> g2, Generator<T3> g3, Generator<T4> g4, Generator<T5> g5)`  
+	[DocContent(@" -  `Fuzzr.For<T>().Construct<T1, T2>(Generator<T1> g1, Generator<T2> g2, Generator<T3> g3, Generator<T4> g4, Generator<T5> g5)`  
 
 After that, ... you're on your own.")]
 	public void WorksFiveArgs()
@@ -100,7 +100,7 @@ After that, ... you're on your own.")]
 
 	[Fact]
 	[DocContent(@"Or use the factory method overload:  
-`Fuzz.For<T>().Construct<T>(Func<T> ctor)`")]
+`Fuzzr.For<T>().Construct<T>(Func<T> ctor)`")]
 	public void FactoryCtor()
 	{
 		var generator =

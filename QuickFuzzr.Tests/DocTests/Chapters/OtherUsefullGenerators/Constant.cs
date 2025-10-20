@@ -3,7 +3,7 @@
 namespace QuickFuzzr.Tests.DocTests.Chapters.OtherUsefullGenerators;
 
 [DocFileHeader("'Generating' constants")]
-[DocContent("Use `Fuzz.Constant<T>(T value)`.")]
+[DocContent("Use `Fuzzr.Constant<T>(T value)`.")]
 public class Constant
 {
 	[Fact]

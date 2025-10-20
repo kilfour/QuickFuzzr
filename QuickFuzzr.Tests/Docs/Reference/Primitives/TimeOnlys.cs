@@ -1,12 +1,13 @@
 ﻿using QuickPulse.Explains;
 
-namespace QuickFuzzr.Tests.DocTests.Chapters.Primitives;
+namespace QuickFuzzr.Tests.Docs.Reference.Primitives;
 
-[DocContent("Use `Fuzz.TimeOnly()`.")]
+[DocFile]
+[DocContent("Use `Fuzzr.TimeOnly()`.")]
 public class TimeOnlys
 {
 	[Fact]
-	[DocContent("- The overload `Fuzz.TimeOnly(TimeOnly min, TimeOnly max)` generates a TimeOnly higher or equal than min and lower than max.")]
+	[DocContent("- The overload `Fuzzr.TimeOnly(TimeOnly min, TimeOnly max)` generates a TimeOnly higher or equal than min and lower than max.")]
 	public void Zero()
 	{
 		var generator = Fuzzr.TimeOnly(new TimeOnly(1, 0), new TimeOnly(1, 1));

@@ -1,9 +1,10 @@
 ﻿using QuickFuzzr.Tests._Tools;
 using QuickPulse.Explains;
 
-namespace QuickFuzzr.Tests.DocTests.Chapters.Primitives;
+namespace QuickFuzzr.Tests.Docs.Reference.Primitives;
 
-[DocContent("Use `Fuzz.Bool()`. *No overload exists.*")]
+[DocFile]
+[DocContent("Use `Fuzzr.Bool()`. *No overload exists.*")]
 public class Booleans
 {
 	[Fact]

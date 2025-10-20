@@ -3,7 +3,7 @@
 namespace QuickFuzzr.Tests.DocTests.Chapters.Objects;
 
 
-[DocContent("Use `Fuzz.One<T>()`, where T is the type of object you want to generate.")]
+[DocContent("Use `Fuzzr.One<T>()`, where T is the type of object you want to generate.")]
 public class ASimpleObject
 {
 	[Fact]
@@ -14,7 +14,7 @@ public class ASimpleObject
 	}
 
 	[Fact]
-	[DocContent("- The enumeration properties of the object will be automatically filled in using the default (or replaced) Fuzz.Enum<T> generator.")]
+	[DocContent("- The enumeration properties of the object will be automatically filled in using the default (or replaced) Fuzzr.Enum<T> generator.")]
 	public void FillsEnumerations()
 	{
 		var generator = Fuzzr.One<SomeThingToGenerate>();
@@ -31,7 +31,7 @@ public class ASimpleObject
 	}
 
 	[Fact]
-	[DocContent("- The object properties will also be automatically filled in using the default (or replaced) generators, similar to calling Fuzz.One<TProperty>() and setting the value using `Apply` (see below) explicitly.")]
+	[DocContent("- The object properties will also be automatically filled in using the default (or replaced) generators, similar to calling Fuzzr.One<TProperty>() and setting the value using `Apply` (see below) explicitly.")]
 	public void FillsObjectProperties()
 	{
 		var generator = Fuzzr.One<RootObject>();
@@ -95,7 +95,7 @@ public class ASimpleObject
 	}
 
 	[Fact]
-	[DocContent("- The overload `Fuzz.One<T>(Func<T> constructor)` allows for specific constructor selection.")]
+	[DocContent("- The overload `Fuzzr.One<T>(Func<T> constructor)` allows for specific constructor selection.")]
 	public void CustomConstructor()
 	{
 		var generator =

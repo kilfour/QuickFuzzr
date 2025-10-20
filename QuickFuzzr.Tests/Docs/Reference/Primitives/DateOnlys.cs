@@ -1,12 +1,13 @@
 ﻿using QuickPulse.Explains;
 
-namespace QuickFuzzr.Tests.DocTests.Chapters.Primitives;
+namespace QuickFuzzr.Tests.Docs.Reference.Primitives;
 
-[DocContent("Use `Fuzz.DateOnly()`.")]
+[DocFile]
+[DocContent("Use `Fuzzr.DateOnly()`.")]
 public class DateOnlys
 {
 	[Fact]
-	[DocContent("- The overload `Fuzz.DateOnly(DateOnly min, DateOnly max)` generates a DateOnly higher or equal than min and lower than max.")]
+	[DocContent("- The overload `Fuzzr.DateOnly(DateOnly min, DateOnly max)` generates a DateOnly higher or equal than min and lower than max.")]
 	public void Zero()
 	{
 		var generator = Fuzzr.DateOnly(new DateOnly(2000, 1, 1), new DateOnly(2000, 1, 5));

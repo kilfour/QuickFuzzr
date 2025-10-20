@@ -1,15 +1,16 @@
 ﻿using QuickPulse.Explains;
 
-namespace QuickFuzzr.Tests.DocTests.Chapters.Primitives;
+namespace QuickFuzzr.Tests.Docs.Reference.Primitives;
 
-[DocContent("Use `Fuzz.Short()`.")]
-public class Shorts
+[DocFile]
+[DocContent("Use `Fuzzr.Double()`.")]
+public class Doubles
 {
 	[Fact]
-	[DocContent("- The overload `Fuzz.Short(short min, short max)` generates a short higher or equal than min and lower than max.")]
+	[DocContent("- The overload `Fuzzr.Double(double min, double max)` generates a double higher or equal than min and lower than max.")]
 	public void Zero()
 	{
-		var generator = Fuzzr.Short(0, 0);
+		var generator = Fuzzr.Double(0, 0);
 		for (int i = 0; i < 10; i++)
 		{
 			Assert.Equal(0, generator.Generate());
@@ -17,10 +18,17 @@ public class Shorts
 	}
 
 	[Fact]
+	[DocContent("- Throws an ArgumentException if min > max.")]
+	public void Throws()
+	{
+		Assert.Throws<ArgumentException>(() => Fuzzr.Double(1, 0).Generate());
+	}
+
+	[Fact]
 	[DocContent("- The default generator is (min = 1, max = 100).")]
 	public void DefaultGeneratorBetweenOneAndHundred()
 	{
-		var generator = Fuzzr.Short();
+		var generator = Fuzzr.Double();
 		for (int i = 0; i < 10; i++)
 		{
 			var val = generator.Generate();
@@ -30,10 +38,10 @@ public class Shorts
 	}
 
 	[Fact]
-	[DocContent("- Can be made to return `short?` using the `.Nullable()` combinator.")]
+	[DocContent("- Can be made to return `double?` using the `.Nullable()` combinator.")]
 	public void Nullable()
 	{
-		var generator = Fuzzr.Short().Nullable();
+		var generator = Fuzzr.Double().Nullable();
 		var isSomeTimesNull = false;
 		var isSomeTimesNotNull = false;
 		for (int i = 0; i < 50; i++)
@@ -52,7 +60,7 @@ public class Shorts
 	}
 
 	[Fact]
-	[DocContent("- `short` is automatically detected and generated for object properties.")]
+	[DocContent("- `double` is automatically detected and generated for object properties.")]
 	public void Property()
 	{
 		var generator = Fuzzr.One<SomeThingToGenerate>();
@@ -63,7 +71,7 @@ public class Shorts
 	}
 
 	[Fact]
-	[DocContent("- `short?` is automatically detected and generated for object properties.")]
+	[DocContent("- `double?` is automatically detected and generated for object properties.")]
 	public void NullableProperty()
 	{
 		var generator = Fuzzr.One<SomeThingToGenerate>();
@@ -86,7 +94,7 @@ public class Shorts
 
 	public class SomeThingToGenerate
 	{
-		public short AProperty { get; set; }
-		public short? ANullableProperty { get; set; }
+		public double AProperty { get; set; }
+		public double? ANullableProperty { get; set; }
 	}
 }

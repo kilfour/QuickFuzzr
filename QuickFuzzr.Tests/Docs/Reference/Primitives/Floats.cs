@@ -1,32 +1,34 @@
 ﻿using QuickPulse.Explains;
 
-namespace QuickFuzzr.Tests.DocTests.Chapters.Primitives;
+namespace QuickFuzzr.Tests.Docs.Reference.Primitives;
 
-[DocContent("Use `Fuzz.Decimal()`.")]
-public class Decimals
+[DocFile]
+[DocContent("Use `Fuzzr.Float()`.")]
+public class Floats
 {
 	[Fact]
-	[DocContent("- The overload `Fuzz.Decimal(decimal min, decimal max)` generates a decimal higher or equal than min and lower than max.")]
+	[DocContent("- The overload `Fuzzr.Float(float min, float max)` generates a float higher or equal than min and lower than max.")]
 	public void Zero()
 	{
-		var generator = Fuzzr.Decimal(0, 0);
+		var generator = Fuzzr.Float(0, 0);
 		for (int i = 0; i < 10; i++)
 		{
 			Assert.Equal(0, generator.Generate());
 		}
 	}
+
 	[Fact]
 	[DocContent("- Throws an ArgumentException if min > max.")]
 	public void Throws()
 	{
-		Assert.Throws<ArgumentException>(() => Fuzzr.Decimal(1, 0).Generate());
+		Assert.Throws<ArgumentException>(() => Fuzzr.Float(1, 0).Generate());
 	}
 
 	[Fact]
 	[DocContent("- The default generator is (min = 1, max = 100).")]
 	public void DefaultGeneratorBetweenOneAndHundred()
 	{
-		var generator = Fuzzr.Decimal();
+		var generator = Fuzzr.Float();
 		for (int i = 0; i < 10; i++)
 		{
 			var val = generator.Generate();
@@ -36,10 +38,10 @@ public class Decimals
 	}
 
 	[Fact]
-	[DocContent("- Can be made to return `decimal?` using the `.Nullable()` combinator.")]
+	[DocContent("- Can be made to return `float?` using the `.Nullable()` combinator.")]
 	public void Nullable()
 	{
-		var generator = Fuzzr.Decimal().Nullable();
+		var generator = Fuzzr.Float().Nullable();
 		var isSomeTimesNull = false;
 		var isSomeTimesNotNull = false;
 		for (int i = 0; i < 50; i++)
@@ -58,7 +60,7 @@ public class Decimals
 	}
 
 	[Fact]
-	[DocContent("- `decimal` is automatically detected and generated for object properties.")]
+	[DocContent("- `float` is automatically detected and generated for object properties.")]
 	public void Property()
 	{
 		var generator = Fuzzr.One<SomeThingToGenerate>();
@@ -69,7 +71,7 @@ public class Decimals
 	}
 
 	[Fact]
-	[DocContent("- `decimal?` is automatically detected and generated for object properties.")]
+	[DocContent("- `float?` is automatically detected and generated for object properties.")]
 	public void NullableProperty()
 	{
 		var generator = Fuzzr.One<SomeThingToGenerate>();
@@ -92,7 +94,7 @@ public class Decimals
 
 	public class SomeThingToGenerate
 	{
-		public decimal AProperty { get; set; }
-		public decimal? ANullableProperty { get; set; }
+		public float AProperty { get; set; }
+		public float? ANullableProperty { get; set; }
 	}
 }
