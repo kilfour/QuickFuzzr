@@ -5,7 +5,7 @@ namespace QuickFuzzr;
 
 public static partial class Configr<T>
 {
-    public static Generator<Unit> GenerateAsOneOf(params Type[] types)
+    public static Generator<Unit> AsOneOf(params Type[] types)
     {
         return
             s =>

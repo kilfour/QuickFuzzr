@@ -4,13 +4,11 @@ namespace QuickFuzzr;
 
 public static partial class Fuzzr
 {
-	public static Generator<short> Short()
-	{
-		return Short(1, 100);
-	}
-
+	public static Generator<short> Short() => Short(1, 100);
 	public static Generator<short> Short(short min, short max)
 	{
-		return s => new Result<short>((short)((s.Random.NextDouble() * (max - min)) + min), s);
+		if (min > max)
+			throw new ArgumentException($"Invalid range: min ({min}) > max ({max})");
+		return state => new Result<short>((short)((state.Random.NextDouble() * (max - min)) + min), state);
 	}
 }

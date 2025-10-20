@@ -17,7 +17,7 @@ public class Inheritance
 	public void UsingDerived()
 	{
 		var generator =
-			from _ in Configr<SomeThingAbstract>.GenerateAsOneOf(typeof(SomeThingDerivedToGenerate))
+			from _ in Configr<SomeThingAbstract>.AsOneOf(typeof(SomeThingDerivedToGenerate))
 			from thing in Fuzzr.One<SomeThingAbstract>()
 			select thing;
 		var result = generator.Generate();
@@ -28,7 +28,7 @@ public class Inheritance
 	[DocContent("**Note :** The `GenerateAsOneOf(...)` combinator does not actually generate anything, it only influences further generation.")]
 	public void ReturnsUnit()
 	{
-		var generator = Configr<SomeThingAbstract>.GenerateAsOneOf(typeof(SomeThingDerivedToGenerate));
+		var generator = Configr<SomeThingAbstract>.AsOneOf(typeof(SomeThingDerivedToGenerate));
 		Assert.Equal(Unit.Instance, generator.Generate());
 	}
 

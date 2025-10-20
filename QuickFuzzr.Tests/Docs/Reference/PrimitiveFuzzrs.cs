@@ -12,12 +12,15 @@ namespace QuickFuzzr.Tests.Docs.Reference;
 [DocLink(typeof(Doubles))]
 [DocLink(typeof(Enums))]
 [DocLink(typeof(Floats))]
+[DocLink(typeof(Guids))]
+[DocLink(typeof(Halfs))]
 [DocLink(typeof(Ints))]
 [DocLink(typeof(Longs))]
 [DocLink(typeof(Shorts))]
 [DocLink(typeof(Strings))]
 [DocLink(typeof(TimeOnlys))]
 [DocLink(typeof(TimeSpans))]
+[DocLink(typeof(UShorts))]
 public class PrimitiveFuzzrs
 {
     [DocContent(@"
@@ -31,12 +34,15 @@ public class PrimitiveFuzzrs
 | [`Fuzzr.Double()`][Doubles] | 
 | [`Fuzzr.Enum<T>()`][Enums] | 
 | [`Fuzzr.Float()`][Floats] | 
+| [`Fuzzr.Guid()`][Guids] | 
+| [`Fuzzr.Half()`][Halfs] | 
 | [`Fuzzr.Int()`][Ints] | 
 | [`Fuzzr.Long()`][Longs] | 
 | [`Fuzzr.Short()`][Shorts] | 
 | [`Fuzzr.String()`][Strings] | 
 | [`Fuzzr.TimeOnly()`][TimeOnlys] | 
 | [`Fuzzr.TimeSpan()`][TimeSpans] |
+| [`Fuzzr.UShort()`][UShorts] |
 "
     )]
     private static void CheatSheet() {/* Placeholder */}

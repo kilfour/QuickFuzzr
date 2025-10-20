@@ -14,7 +14,7 @@ Given the canonical abstract Tree, concrete Branch and Leaf example model, we ca
 var generator =
 	from _d in Fuzzr.For<Tree>().Depth(1, 3)
 	from _i in Fuzzr.For<Tree>().GenerateAsOneOf(typeof(Branch), typeof(Leaf))
-	from _l in Fuzzr.For<Tree>().TreeLeaf<Leaf>()
+	from _l in Fuzzr.For<Tree>().AsLeaf<Leaf>()
 	from tree in Fuzzr.One<Tree>()
 	select tree;
 ```
@@ -31,8 +31,8 @@ Node(Leaf(31), Node(Leaf(71), Leaf(10)))
 	{
 		var generator =
 			from _1 in Configr<Tree>.Depth(1, 3)
-			from _2 in Configr<Tree>.GenerateAsOneOf(typeof(Branch), typeof(Leaf))
-			from _3 in Configr<Tree>.TreeLeaf<Leaf>()
+			from _2 in Configr<Tree>.AsOneOf(typeof(Branch), typeof(Leaf))
+			from _3 in Configr<Tree>.EndOn<Leaf>()
 			from tree in Fuzzr.One<Tree>()
 			select tree.ToLabel();
 

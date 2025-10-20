@@ -3,6 +3,7 @@
 namespace QuickFuzzr.Tests.Docs.Reference.Primitives;
 
 [DocFile]
+[DocFileHeader("TimeOnlys")]
 [DocContent("Use `Fuzzr.TimeOnly()`.")]
 public class TimeOnlys
 {

@@ -3,6 +3,7 @@
 namespace QuickFuzzr.Tests.Docs.Reference.Primitives;
 
 [DocFile]
+[DocFileHeader("DateOnlys")]
 [DocContent("Use `Fuzzr.DateOnly()`.")]
 public class DateOnlys
 {

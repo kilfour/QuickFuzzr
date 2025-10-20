@@ -5,7 +5,7 @@ namespace QuickFuzzr;
 
 public static partial class Configr<T>
 {
-    public static Generator<Unit> TreeLeaf<TLeaf>()
+    public static Generator<Unit> EndOn<TLeaf>()
     {
         return
             s =>

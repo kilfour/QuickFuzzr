@@ -4,6 +4,7 @@ using QuickPulse.Explains;
 namespace QuickFuzzr.Tests.Docs.Reference.Primitives;
 
 [DocFile]
+[DocFileHeader("TimeSpans")]
 [DocContent("Use `Fuzzr.TimeSpan()`.")]
 public class TimeSpans
 {

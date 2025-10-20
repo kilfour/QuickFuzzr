@@ -3,6 +3,7 @@
 namespace QuickFuzzr.Tests.Docs.Reference.Primitives;
 
 [DocFile]
+[DocFileHeader("DateTimes")]
 [DocContent("Use `Fuzzr.DateTime()`.")]
 public class DateTimes
 {
