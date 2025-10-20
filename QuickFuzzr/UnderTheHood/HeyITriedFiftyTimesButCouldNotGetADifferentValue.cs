@@ -1,4 +1,4 @@
-﻿namespace QuickFuzzr;
+﻿namespace QuickFuzzr.UnderTheHood;
 
 public class HeyITriedFiftyTimesButCouldNotGetADifferentValue
 	: Exception
