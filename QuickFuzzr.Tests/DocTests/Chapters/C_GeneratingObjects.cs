@@ -10,7 +10,5 @@ namespace QuickFuzzr.Tests.DocTests.Chapters;
 [DocInclude(typeof(CustomizingConstructors))]
 [DocInclude(typeof(ManyObjects))]
 [DocInclude(typeof(Inheritance))]
-[DocInclude(typeof(ToArray))]
-[DocInclude(typeof(ToList))]
 [DocInclude(typeof(ReplacingPrimitiveGenerators))]
 public class C_GeneratingObjects { }

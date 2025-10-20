@@ -41,18 +41,15 @@ E.g. :
 var generator =
 	from order in Fuzzr.One<Order>()
 	from lines in Fuzzr.One<OrderLine>()
-		.Apply(a => order.AddOrderLine(a)).Many(20).ToArray()
+		.Apply(a => order.AddOrderLine(a)).Many(20)
 	select order;
 ```
-Note the `ToArray` call on the orderlines. 
-This forces enumeration and is necessary because the lines are not enumerated over just by selecting the order.
 ")]
 	public void OneToMany()
 	{
 		var generator =
 			from order in Fuzzr.One<Order>()
-			from lines in Fuzzr.One<OrderLine>()
-				.Apply(a => order.AddOrderLine(a)).Many(2).ToArray()
+			from lines in Fuzzr.One<OrderLine>().Apply(order.AddOrderLine).Many(2)
 			select order;
 
 		var value = generator.Generate();
@@ -62,7 +59,7 @@ This forces enumeration and is necessary because the lines are not enumerated ov
 
 	[Fact]
 	[DocContent(
-@"If we were to select the lines instead of the order, `ToArray` would not be necessary.")]
+@"Or select the lines instead of the order.")]
 	public void OneToManyVerifying()
 	{
 		var generator =
