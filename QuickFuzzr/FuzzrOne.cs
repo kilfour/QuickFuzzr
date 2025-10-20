@@ -18,7 +18,6 @@ public static partial class Fuzzr
 		=> state =>
 			new Result<object>(DepthControlledCreation(state, type, a => CreateInstance(state, type, a)), state);
 
-
 	private static object DepthControlledCreation(State state, Type type, Func<Type?, object> ctor)
 	{
 		using (state.WithDepthFrame(type))

@@ -1,5 +1,6 @@
 ﻿using System.Reflection;
 using System.Security.Cryptography;
+using QuickFuzzr.Instruments;
 
 namespace QuickFuzzr.UnderTheHood;
 
@@ -56,12 +57,11 @@ public class State
 		return (T)generatorMemory[key];
 	}
 
-	public void Set<T>(object key, T value)
-	{
-		generatorMemory[key] = value!;
-	}
+	public T Set<T>(object key, T value)
+		=> Chain.It(() => generatorMemory[key] = value!, value);
 
 	public readonly Dictionary<Type, List<Type>> InheritanceInfo = [];
+
 	public Dictionary<Type, Type> TreeLeaves = [];
 
 	public readonly Dictionary<Func<PropertyInfo, bool>, Generator<object>> GeneralCustomizations = [];
