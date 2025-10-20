@@ -7,36 +7,19 @@ namespace QuickFuzzr;
 public static partial class Fuzzr
 {
 	public static Generator<T> One<T>()
-	{
-		return
-			s =>
-				{
-					var instance = (T)DepthControlledCreation(s, typeof(T), a => (T)CreateInstance(s, typeof(T), a));
-					return new Result<T>(instance, s);
-				};
-	}
+		=> state =>
+			new Result<T>((T)DepthControlledCreation(state, typeof(T), a => (T)CreateInstance(state, typeof(T), a)), state);
 
 	public static Generator<T> One<T>(Func<T> constructor)
-	{
-		return
-			s =>
-			{
-				var instance = (T)DepthControlledCreation(s, typeof(T), _ => constructor()!);
-				return new Result<T>(instance, s);
-			};
-	}
+		=> state =>
+			new Result<T>((T)DepthControlledCreation(state, typeof(T), _ => constructor()!), state);
 
 	private static Generator<object> One(Type type)
-	{
-		return
-			s =>
-			{
-				var instance = DepthControlledCreation(s, type, a => CreateInstance(s, type, a));
-				return new Result<object>(instance, s);
-			};
-	}
+		=> state =>
+			new Result<object>(DepthControlledCreation(state, type, a => CreateInstance(state, type, a)), state);
 
-	public static object DepthControlledCreation(State state, Type type, Func<Type?, object> ctor)
+
+	private static object DepthControlledCreation(State state, Type type, Func<Type?, object> ctor)
 	{
 		using (state.WithDepthFrame(type))
 		{
@@ -71,18 +54,11 @@ public static partial class Fuzzr
 	}
 
 	private static object BuildLeaf(State state, Type leafType)
-	{
-		// DANGER, DANGER, DANGER
-		var instance = CreateInstanceOfExactlyThisType(state, leafType);
-		BuildInstance(instance, state, leafType);
-		return instance;
-	}
+		=> BuildInstance(CreateInstanceOfExactlyThisType(state, leafType), state, leafType);
 
 	private static object CreateInstance(State state, Type type, Type? typeToExlude)
-	{
-		var typeToGenerate = GetTypeToGenerate(state, type, typeToExlude);
-		return CreateInstanceOfExactlyThisType(state, typeToGenerate);
-	}
+		=> CreateInstanceOfExactlyThisType(state, GetTypeToGenerate(state, type, typeToExlude));
+
 
 	private static object CreateInstanceOfExactlyThisType(State state, Type typeToGenerate)
 	{
@@ -92,7 +68,6 @@ public static partial class Fuzzr
 			var index = state.Random.Next(0, constructors.Count);
 			var chosen = constructors[index];
 			var instance = chosen(state);
-
 			ValidateInstanceType(instance, typeToGenerate);
 			return instance;
 		}
@@ -109,7 +84,6 @@ public static partial class Fuzzr
 		//ValidateInstanceType(defaultInstance, typeToGenerate);
 		return defaultInstance;
 	}
-
 
 	private static void ValidateInstanceType(object instance, Type declaredType)
 	{
@@ -231,11 +205,7 @@ public static partial class Fuzzr
 
 	private static void GenerallyCustomizeProperty(object target, PropertyInfo propertyInfo, State state)
 	{
-		var key =
-			state
-				.GeneralCustomizations
-				.Keys
-				.First(info => info(propertyInfo));
+		var key = state.GeneralCustomizations.Keys.First(info => info(propertyInfo));
 		var generator = state.GeneralCustomizations[key];
 		SetPropertyValue(propertyInfo, target, generator(state).Value);
 	}
@@ -248,12 +218,9 @@ public static partial class Fuzzr
 	private static void CustomizeProperty(object target, PropertyInfo propertyInfo, State state)
 	{
 		var key =
-			state
-				.Customizations
-				.Keys
-				.First(
-					info => info.ReflectedType!.IsAssignableFrom(propertyInfo.ReflectedType)
-							&& info.Name == propertyInfo.Name);
+			state.Customizations.Keys.First(info =>
+				info.ReflectedType!.IsAssignableFrom(propertyInfo.ReflectedType)
+				&& info.Name == propertyInfo.Name);
 		var generator = state.Customizations[key];
 		SetPropertyValue(propertyInfo, target, generator(state).Value);
 	}
