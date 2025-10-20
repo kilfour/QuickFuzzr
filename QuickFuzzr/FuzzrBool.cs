@@ -1,12 +1,11 @@
 ﻿using QuickFuzzr.UnderTheHood;
 
-namespace QuickFuzzr
+namespace QuickFuzzr;
+
+public static partial class Fuzzr
 {
-	public static partial class Fuzzr
+	public static Generator<bool> Bool()
 	{
-		public static Generator<bool> Bool()
-		{
-			return s => new Result<bool>(s.Random.Next(0, 2) > 0, s);
-		}
+		return s => new Result<bool>(s.Random.Next(0, 2) > 0, s);
 	}
 }

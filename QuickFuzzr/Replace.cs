@@ -1,37 +1,36 @@
 ﻿using QuickFuzzr.UnderTheHood;
 
-namespace QuickFuzzr
+namespace QuickFuzzr;
+
+public static partial class Fuzzr
 {
-	public static partial class Fuzzr
+	public static Generator<Unit> Replace<T>(this Generator<T> generator)
+		where T : struct
 	{
-		public static Generator<Unit> Replace<T>(this Generator<T> generator)
-			where T : struct
+		return s =>
 		{
-			return s =>
-			{
-				s.PrimitiveGenerators[typeof(T)] = generator.AsObject();
-				s.PrimitiveGenerators[typeof(T?)] = generator.Nullable().AsObject();
-				return new Result<Unit>(Unit.Instance, s);
-			};
-		}
+			s.PrimitiveGenerators[typeof(T)] = generator.AsObject();
+			s.PrimitiveGenerators[typeof(T?)] = generator.Nullable().AsObject();
+			return new Result<Unit>(Unit.Instance, s);
+		};
+	}
 
-		public static Generator<Unit> Replace<T>(this Generator<T?> generator)
-			where T : struct
+	public static Generator<Unit> Replace<T>(this Generator<T?> generator)
+		where T : struct
+	{
+		return s =>
 		{
-			return s =>
-			{
-				s.PrimitiveGenerators[typeof(T?)] = generator.AsObject();
-				return new Result<Unit>(Unit.Instance, s);
-			};
-		}
+			s.PrimitiveGenerators[typeof(T?)] = generator.AsObject();
+			return new Result<Unit>(Unit.Instance, s);
+		};
+	}
 
-		public static Generator<Unit> Replace(this Generator<string> generator)
+	public static Generator<Unit> Replace(this Generator<string> generator)
+	{
+		return s =>
 		{
-			return s =>
-			{
-				s.PrimitiveGenerators[typeof(string)] = generator.AsObject();
-				return new Result<Unit>(Unit.Instance, s);
-			};
-		}
+			s.PrimitiveGenerators[typeof(string)] = generator.AsObject();
+			return new Result<Unit>(Unit.Instance, s);
+		};
 	}
 }

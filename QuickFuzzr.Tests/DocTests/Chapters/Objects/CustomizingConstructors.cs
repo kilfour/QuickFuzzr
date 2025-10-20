@@ -16,7 +16,7 @@ public class CustomizingConstructors
 	public void Works()
 	{
 		var generator =
-			from i in Fuzzr.For<SomeThing>().Ignore(a => a.AnInt1)
+			from i in Configr<SomeThing>.Ignore(a => a.AnInt1)
 			from c in Fuzzr.For<SomeThing>().Construct(Fuzzr.Constant(42))
 			from r in Fuzzr.One<SomeThing>()
 			select r;
@@ -29,8 +29,8 @@ public class CustomizingConstructors
 	public void WorksTwoArgs()
 	{
 		var generator =
-			from i1 in Fuzzr.For<SomeThing>().Ignore(a => a.AnInt1)
-			from i2 in Fuzzr.For<SomeThing>().Ignore(a => a.AnInt2)
+			from i1 in Configr<SomeThing>.Ignore(a => a.AnInt1)
+			from i2 in Configr<SomeThing>.Ignore(a => a.AnInt2)
 			from c in Fuzzr.For<SomeThing>().Construct(Fuzzr.Constant(42), Fuzzr.Constant(43))
 			from r in Fuzzr.One<SomeThing>()
 			select r;
@@ -44,9 +44,9 @@ public class CustomizingConstructors
 	public void WorksThreeArgs()
 	{
 		var generator =
-			from i1 in Fuzzr.For<SomeThing>().Ignore(a => a.AnInt1)
-			from i2 in Fuzzr.For<SomeThing>().Ignore(a => a.AnInt2)
-			from i3 in Fuzzr.For<SomeThing>().Ignore(a => a.AnInt3)
+			from i1 in Configr<SomeThing>.Ignore(a => a.AnInt1)
+			from i2 in Configr<SomeThing>.Ignore(a => a.AnInt2)
+			from i3 in Configr<SomeThing>.Ignore(a => a.AnInt3)
 			from c in Fuzzr.For<SomeThing>().Construct(Fuzzr.Constant(42), Fuzzr.Constant(43), Fuzzr.Constant(44))
 			from r in Fuzzr.One<SomeThing>()
 			select r;
@@ -61,10 +61,10 @@ public class CustomizingConstructors
 	public void WorksFourArgs()
 	{
 		var generator =
-			from i1 in Fuzzr.For<SomeThing>().Ignore(a => a.AnInt1)
-			from i2 in Fuzzr.For<SomeThing>().Ignore(a => a.AnInt2)
-			from i3 in Fuzzr.For<SomeThing>().Ignore(a => a.AnInt3)
-			from i4 in Fuzzr.For<SomeThing>().Ignore(a => a.AnInt4)
+			from i1 in Configr<SomeThing>.Ignore(a => a.AnInt1)
+			from i2 in Configr<SomeThing>.Ignore(a => a.AnInt2)
+			from i3 in Configr<SomeThing>.Ignore(a => a.AnInt3)
+			from i4 in Configr<SomeThing>.Ignore(a => a.AnInt4)
 			from c in Fuzzr.For<SomeThing>().Construct(Fuzzr.Constant(42), Fuzzr.Constant(43), Fuzzr.Constant(44), Fuzzr.Constant(45))
 			from r in Fuzzr.One<SomeThing>()
 			select r;
@@ -82,11 +82,11 @@ After that, ... you're on your own.")]
 	public void WorksFiveArgs()
 	{
 		var generator =
-			from i1 in Fuzzr.For<SomeThing>().Ignore(a => a.AnInt1)
-			from i2 in Fuzzr.For<SomeThing>().Ignore(a => a.AnInt2)
-			from i3 in Fuzzr.For<SomeThing>().Ignore(a => a.AnInt3)
-			from i4 in Fuzzr.For<SomeThing>().Ignore(a => a.AnInt4)
-			from i5 in Fuzzr.For<SomeThing>().Ignore(a => a.AString)
+			from i1 in Configr<SomeThing>.Ignore(a => a.AnInt1)
+			from i2 in Configr<SomeThing>.Ignore(a => a.AnInt2)
+			from i3 in Configr<SomeThing>.Ignore(a => a.AnInt3)
+			from i4 in Configr<SomeThing>.Ignore(a => a.AnInt4)
+			from i5 in Configr<SomeThing>.Ignore(a => a.AString)
 			from c in Fuzzr.For<SomeThing>().Construct(Fuzzr.Constant(42), Fuzzr.Constant(43), Fuzzr.Constant(44), Fuzzr.Constant(45), Fuzzr.Constant("answer"))
 			from r in Fuzzr.One<SomeThing>()
 			select r;
@@ -104,11 +104,11 @@ After that, ... you're on your own.")]
 	public void FactoryCtor()
 	{
 		var generator =
-			from i1 in Fuzzr.For<SomeThing>().Ignore(a => a.AnInt1)
-			from i2 in Fuzzr.For<SomeThing>().Ignore(a => a.AnInt2)
-			from i3 in Fuzzr.For<SomeThing>().Ignore(a => a.AnInt3)
-			from i4 in Fuzzr.For<SomeThing>().Ignore(a => a.AnInt4)
-			from i5 in Fuzzr.For<SomeThing>().Ignore(a => a.AString)
+			from i1 in Configr<SomeThing>.Ignore(a => a.AnInt1)
+			from i2 in Configr<SomeThing>.Ignore(a => a.AnInt2)
+			from i3 in Configr<SomeThing>.Ignore(a => a.AnInt3)
+			from i4 in Configr<SomeThing>.Ignore(a => a.AnInt4)
+			from i5 in Configr<SomeThing>.Ignore(a => a.AString)
 			from c in Fuzzr.For<SomeThing>().Construct(() => new SomeThing(1, 2, 3, 4, "5"))
 			from r in Fuzzr.One<SomeThing>()
 			select r;
@@ -118,14 +118,6 @@ After that, ... you're on your own.")]
 		Assert.Equal(3, result.AnInt3);
 		Assert.Equal(4, result.AnInt4);
 		Assert.Equal("5", result.AString);
-	}
-
-	[Fact]
-	[DocContent("*Note :* The Construct combinator does not actually generate anything, it only influences further generation.")]
-	public void ReturnsUnit()
-	{
-		var generator = Fuzzr.For<SomeThing>().Customize(s => s.AnInt1, 42);
-		Assert.Equal(Unit.Instance, generator.Generate());
 	}
 
 	public class SomeThing

@@ -108,7 +108,6 @@ Various overloads exist :
 After that, ... you're on your own.  
 Or use the factory method overload:  
 `Fuzz.For<T>().Construct<T>(Func<T> ctor)`  
-*Note :* The Construct combinator does not actually generate anything, it only influences further generation.  
 ### Many Objects
 Use The `.Many(int number)` generator extension.  
 The generator will generate an IEnumerable<T> of `int number` elements where T is the result type of the extended generator.  

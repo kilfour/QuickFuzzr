@@ -1,20 +1,19 @@
 ﻿using QuickFuzzr.UnderTheHood;
 
-namespace QuickFuzzr
+namespace QuickFuzzr;
+
+public static partial class Fuzzr
 {
-	public static partial class Fuzzr
+	public static Generator<double> Double()
 	{
-		public static Generator<double> Double()
-		{
-			return Double(1, 100);
-		}
+		return Double(1, 100);
+	}
 
-		public static Generator<double> Double(double min, double max)
-		{
-			if (min > max)
-				throw new ArgumentException($"Invalid range: min ({min}) > max ({max})");
+	public static Generator<double> Double(double min, double max)
+	{
+		if (min > max)
+			throw new ArgumentException($"Invalid range: min ({min}) > max ({max})");
 
-			return s => new Result<double>((s.Random.NextDouble() * (max - min)) + min, s);
-		}
+		return s => new Result<double>((s.Random.NextDouble() * (max - min)) + min, s);
 	}
 }

@@ -1,12 +1,11 @@
 ﻿using QuickFuzzr.UnderTheHood;
 
-namespace QuickFuzzr
+namespace QuickFuzzr;
+
+public static class GenerateIt
 {
-	public static class GenerateIt
+	public static T Generate<T>(this Generator<T> generator)
 	{
-		public static T Generate<T>(this Generator<T> generator)
-		{
-			return generator(new State()).Value;
-		}
+		return generator(new State()).Value;
 	}
 }

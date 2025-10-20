@@ -88,7 +88,7 @@ Outputs:
 	public void WithDepth2()
 	{
 		var generator =
-			from _ in Fuzzr.For<Recurse>().Depth(2, 2)
+			from _ in Configr<Recurse>.Depth(2, 2)
 			from recurse in Fuzzr.One<Recurse>()
 			select recurse;
 
@@ -127,7 +127,7 @@ Depth(3, 3)
 	{
 
 		var generator =
-			from _ in Fuzzr.For<Recurse>().Depth(3, 3)
+			from _ in Configr<Recurse>.Depth(3, 3)
 			from thing in Fuzzr.One<Recurse>()
 			select thing;
 
@@ -149,7 +149,7 @@ This means some instances will be shallow, while others may be more deeply neste
 	public void WithDepth_1_3()
 	{
 		var generator =
-			from _ in Fuzzr.For<Recurse>().Depth(1, 3)
+			from _ in Configr<Recurse>.Depth(1, 3)
 			from value in Fuzzr.One<Recurse>()
 			select value;
 
@@ -174,7 +174,7 @@ This means some instances will be shallow, while others may be more deeply neste
 	[DocContent("**Note :** The `Depth(...)` combinator does not actually generate anything, it only influences further generation.")]
 	public void ReturnsUnit()
 	{
-		var generator = Fuzzr.For<SomeComponent>().Depth(1, 1);
+		var generator = Configr<SomeComponent>.Depth(1, 1);
 		Assert.Equal(Unit.Instance, generator.Generate());
 	}
 

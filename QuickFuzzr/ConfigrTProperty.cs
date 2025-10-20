@@ -3,7 +3,7 @@ using QuickFuzzr.UnderTheHood;
 
 namespace QuickFuzzr;
 
-public static partial class Config<T>
+public static partial class Configr<T>
 {
     public static Generator<Unit> Property<TProperty>(Expression<Func<T, TProperty>> func, Generator<TProperty> propertyGenerator)
         => state =>

@@ -1,10 +1,9 @@
 ﻿using System.Reflection;
 
-namespace QuickFuzzr.UnderTheHood
+namespace QuickFuzzr.UnderTheHood;
+
+public static class MyBinding
 {
-	public static class MyBinding
-	{
-		public const BindingFlags Flags =
-			BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.FlattenHierarchy;
-	}
+	public const BindingFlags Flags =
+		BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.FlattenHierarchy;
 }

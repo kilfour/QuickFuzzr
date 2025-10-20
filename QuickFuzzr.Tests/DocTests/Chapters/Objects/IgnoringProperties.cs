@@ -16,7 +16,7 @@ public class IgnoringProperties
 	public void StaysDefaultValue()
 	{
 		var generator =
-			from _ in Fuzzr.For<SomeThingToGenerate>().Ignore(s => s.AnInt)
+			from _ in Configr<SomeThingToGenerate>.Ignore(s => s.AnInt)
 			from result in Fuzzr.One<SomeThingToGenerate>()
 			select result;
 		Assert.Equal(0, generator.Generate().AnInt);
@@ -27,7 +27,7 @@ public class IgnoringProperties
 	public void WorksForDerived()
 	{
 		var generator =
-			from _ in Fuzzr.For<SomeThingToGenerate>().Ignore(s => s.AnInt)
+			from _ in Configr<SomeThingToGenerate>.Ignore(s => s.AnInt)
 			from result in Fuzzr.One<SomeThingDerivedToGenerate>()
 			select result;
 		Assert.Equal(0, generator.Generate().AnInt);
@@ -39,7 +39,7 @@ For this use `Fuzz.For<SomeThingToGenerate>().IgnoreAll()`")]
 	public void IgnoreAll()
 	{
 		var generator =
-			from _ in Fuzzr.For<SomeThingToGenerate>().IgnoreAll()
+			from _ in Configr<SomeThingToGenerate>.IgnoreAll()
 			from result in Fuzzr.One<SomeThingToGenerate>()
 			select result;
 		Assert.Equal(0, generator.Generate().AnInt);
@@ -51,7 +51,7 @@ For this use `Fuzz.For<SomeThingToGenerate>().IgnoreAll()`")]
 	{
 		var generator =
 			from r in Fuzzr.Constant(13).Replace()
-			from _ in Fuzzr.For<SomeThingToGenerate>().IgnoreAll()
+			from _ in Configr<SomeThingToGenerate>.IgnoreAll()
 			from result in Fuzzr.One<SomeThingDerivedToGenerate>()
 			select result;
 		var thing = generator.Generate();
@@ -63,7 +63,7 @@ For this use `Fuzz.For<SomeThingToGenerate>().IgnoreAll()`")]
 	[DocContent("**Note :** `The Ignore(...)` combinator does not actually generate anything, it only influences further generation.")]
 	public void ReturnsUnit()
 	{
-		var generator = Fuzzr.For<SomeThingToGenerate>().Ignore(s => s.AnInt);
+		var generator = Configr<SomeThingToGenerate>.Ignore(s => s.AnInt);
 		Assert.Equal(Unit.Instance, generator.Generate());
 	}
 

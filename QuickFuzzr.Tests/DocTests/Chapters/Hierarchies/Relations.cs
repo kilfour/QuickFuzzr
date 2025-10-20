@@ -23,7 +23,7 @@ var generator =
 	{
 		var generator =
 			from product in Fuzzr.One<ProductItem>()
-			from setProduct in Fuzzr.For<OrderLine>().Customize(order => order.Product, product)
+			from setProduct in Configr<OrderLine>.Property(order => order.Product, product)
 			from orderline in Fuzzr.One<OrderLine>()
 			select orderline;
 

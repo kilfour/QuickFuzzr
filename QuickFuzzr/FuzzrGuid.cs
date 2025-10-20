@@ -1,12 +1,11 @@
 ﻿using QuickFuzzr.UnderTheHood;
 
-namespace QuickFuzzr
+namespace QuickFuzzr;
+
+public static partial class Fuzzr
 {
-	public static partial class Fuzzr
+	public static Generator<Guid> Guid()
 	{
-		public static Generator<Guid> Guid()
-		{
-			return s => new Result<Guid>(System.Guid.NewGuid(), s);
-		}
+		return s => new Result<Guid>(System.Guid.NewGuid(), s);
 	}
 }

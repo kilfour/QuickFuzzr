@@ -99,7 +99,7 @@ public class ASimpleObject
 	public void CustomConstructor()
 	{
 		var generator =
-			from ignore in Fuzzr.For<SomeThingWithAnAnswer>().Ignore(e => e.Answer)
+			from ignore in Configr<SomeThingWithAnAnswer>.Ignore(e => e.Answer)
 			from result in Fuzzr.One(() => new SomeThingWithAnAnswer(42))
 			select result;
 		Assert.Equal(42, generator.Generate().Answer);

@@ -35,7 +35,7 @@ public static class CheckIf
         Generator<T> generator,
         params (string, Func<T, bool>)[] labeledChecks)
     {
-        var signal = Signal.From<T>(a => Pulse.Trace(a));
+        var signal = Signal.From<T>(a => Pulse.Trace(a!));
         var run =
             from inspector in "inspector".Stashed(
                 () => signal.SetAndReturnArtery(new DistinctValueInspector<T>()))

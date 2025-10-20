@@ -1,12 +1,11 @@
 ﻿using QuickFuzzr.UnderTheHood;
 
-namespace QuickFuzzr
+namespace QuickFuzzr;
+
+public static partial class Fuzzr
 {
-	public static partial class Fuzzr
+	public static Generator<List<T>> ToList<T>(this Generator<IEnumerable<T>> generator)
 	{
-		public static Generator<List<T>> ToList<T>(this Generator<IEnumerable<T>> generator)
-		{
-			return s => new Result<List<T>>(generator(s).Value.ToList(), s);
-		}
+		return s => new Result<List<T>>(generator(s).Value.ToList(), s);
 	}
 }

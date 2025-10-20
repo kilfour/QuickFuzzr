@@ -4,7 +4,7 @@ using QuickFuzzr.UnderTheHood;
 
 namespace QuickFuzzr;
 
-public static class Config
+public static partial class Configr
 {
     public static Generator<Unit> Property<TProperty>(Func<PropertyInfo, bool> predicate, Generator<TProperty> propertyGenerator)
         => state =>

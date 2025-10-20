@@ -1,13 +1,12 @@
-﻿namespace QuickFuzzr.Data
+﻿namespace QuickFuzzr.Data;
+
+public static partial class DataLists
 {
-    public static partial class DataLists
+    public static string[] FirstNames
     {
-        public static string[] FirstNames
+        get
         {
-            get
-            {
-                return MaleFirstNames.Union(FemaleFirstNames).ToArray();
-            }
+            return MaleFirstNames.Union(FemaleFirstNames).ToArray();
         }
     }
 }
