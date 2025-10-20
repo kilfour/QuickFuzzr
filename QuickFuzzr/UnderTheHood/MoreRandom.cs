@@ -1,13 +1,8 @@
 ﻿namespace QuickFuzzr.UnderTheHood;
 
-public class MoreRandom
+public class MoreRandom(int seed)
 {
-	private readonly Random random;
-
-	public MoreRandom(int seed)
-	{
-		random = new Random(seed);
-	}
+	private readonly Random random = new(seed);
 
 	public int Next(int minimumValue, int maximumValue)
 	{
@@ -17,13 +12,7 @@ public class MoreRandom
 		return random.Next(minimumValue, maximumValue);
 	}
 
-	public double NextDouble()
-	{
-		return random.NextDouble();
-	}
+	public double NextDouble() => random.NextDouble();
 
-	public long NextInt64(long min, long max)
-	{
-		return random.NextInt64(min, max);
-	}
+	public long NextInt64(long min, long max) => random.NextInt64(min, max);
 }
