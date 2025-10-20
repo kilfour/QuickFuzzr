@@ -1,4 +1,6 @@
-﻿using QuickPulse.Explains;
+﻿using QuickFuzzr.Tests._Tools;
+using QuickFuzzr.Tests._Tools.Models;
+using QuickPulse.Explains;
 
 namespace QuickFuzzr.Tests.Docs.Reference.Primitives;
 
@@ -8,103 +10,34 @@ public class Longs
 {
 	[Fact]
 	[DocContent("- The overload `Fuzzr.Long(long min, long max)` generates a long higher or equal than min and lower than max.")]
-	public void Zero()
-	{
-		var generator = Fuzzr.Long(0, 0);
-		for (long i = 0; i < 10; i++)
-		{
-			Assert.Equal(0, generator.Generate());
-		}
-	}
+	public void MinMax()
+		=> CheckIf.GeneratedValuesShouldAllSatisfy(Fuzzr.Long(1, 5),
+			("value >= 1", a => a >= 1), ("value < 5", a => a < 5));
 
 	[Fact]
 	[DocContent("Throws an ArgumentException if min > max.")]
-	public void Throws()
-	{
-		Assert.Throws<ArgumentException>(() => Fuzzr.Long(1, 0).Generate());
-	}
+	public void Throws() => Assert.Throws<ArgumentException>(() => Fuzzr.Long(1, 0).Generate());
 
 	[Fact]
 	[DocContent("- The default generator is (min = 1, max = 100).")]
-	public void DefaultGeneratorNeverGeneratesZero()
-	{
-		var generator = Fuzzr.Long();
-		for (long i = 0; i < 10; i++)
-		{
-			Assert.NotEqual(0, generator.Generate());
-		}
-	}
+	public void DefaultGenerator()
+		=> CheckIf.GeneratedValuesShouldAllSatisfy(Fuzzr.Long(),
+			("value >= 1", a => a >= 1), ("value < 100", a => a < 100));
 
 	[Fact]
 	[DocContent("- Can be made to return `long?` using the `.Nullable()` combinator.")]
 	public void Nullable()
-	{
-		var generator = Fuzzr.Long().Nullable();
-		var isSomeTimesNull = false;
-		var isSomeTimesNotNull = false;
-		for (long i = 0; i < 50; i++)
-		{
-			var value = generator.Generate();
-			if (value.HasValue)
-			{
-				isSomeTimesNotNull = true;
-				Assert.NotEqual(0, value.Value);
-			}
-			else
-				isSomeTimesNull = true;
-		}
-		Assert.True(isSomeTimesNull);
-		Assert.True(isSomeTimesNotNull);
-	}
+		=> CheckIf.GeneratesNullAndNotNull(Fuzzr.Long().Nullable());
 
 	[Fact]
 	[DocContent("- `long` is automatically detected and generated for object properties.")]
 	public void Property()
-	{
-		var generator = Fuzzr.One<SomeThingToGenerate>();
-		for (long i = 0; i < 10; i++)
-		{
-			Assert.NotEqual(0, generator.Generate().AProperty);
-		}
-	}
-
-	[Fact]
-	[DocContent("- `Int64` is automatically detected and generated for object properties.")]
-	public void Long32Property()
-	{
-		var generator = Fuzzr.One<SomeThingToGenerate>();
-		for (long i = 0; i < 10; i++)
-		{
-			Assert.NotEqual(0, generator.Generate().AnInt64Property);
-		}
-	}
+		=> CheckIf.GeneratedValuesShouldAllSatisfy(Fuzzr.One<PrimitivesBag<long>>(),
+			("value != 0", a => a.Value != 0));
 
 	[Fact]
 	[DocContent("- `long?` is automatically detected and generated for object properties.")]
 	public void NullableProperty()
-	{
-		var generator = Fuzzr.One<SomeThingToGenerate>();
-		var isSomeTimesNull = false;
-		var isSomeTimesNotNull = false;
-		for (long i = 0; i < 50; i++)
-		{
-			var value = generator.Generate().ANullableProperty;
-			if (value.HasValue)
-			{
-				isSomeTimesNotNull = true;
-				Assert.NotEqual(0, value.Value);
-			}
-			else
-				isSomeTimesNull = true;
-		}
-		Assert.True(isSomeTimesNull);
-		Assert.True(isSomeTimesNotNull);
-	}
-
-	public class SomeThingToGenerate
-	{
-		public long AProperty { get; set; }
-		public Int64 AnInt64Property { get; set; }
-		public long? ANullableProperty { get; set; }
-	}
+		=> CheckIf.GeneratesNullAndNotNull(
+			Fuzzr.One<PrimitivesBag<long>>().Select(a => a.NullableValue));
 }

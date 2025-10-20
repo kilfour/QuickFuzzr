@@ -106,11 +106,15 @@ public class State
 					{ typeof(short?), Fuzzr.Short().Nullable().AsObject() },
 					{ typeof(TimeSpan), Fuzzr.TimeSpan().AsObject() },
 					{ typeof(TimeSpan?), Fuzzr.TimeSpan().Nullable().AsObject() },
-					{ typeof(ushort), Fuzzr.UShort().AsObject() },
-					{ typeof(ushort?), Fuzzr.UShort().Nullable().AsObject() },
 					{ typeof(DateOnly), Fuzzr.DateOnly().AsObject() },
 					{ typeof(DateOnly?), Fuzzr.DateOnly().Nullable().AsObject() },
 					{ typeof(TimeOnly), Fuzzr.TimeOnly().AsObject() },
-					{ typeof(TimeOnly?), Fuzzr.TimeOnly().Nullable().AsObject() }
+					{ typeof(TimeOnly?), Fuzzr.TimeOnly().Nullable().AsObject() },
+					{ typeof(ushort), Fuzzr.UShort().AsObject() },
+					{ typeof(ushort?), Fuzzr.UShort().Nullable().AsObject() },
+					{ typeof(ulong), Fuzzr.ULong().AsObject() },
+					{ typeof(ulong?), Fuzzr.ULong().Nullable().AsObject() },
+					{ typeof(uint), Fuzzr.UInt().AsObject() },
+					{ typeof(uint?), Fuzzr.UInt().Nullable().AsObject() }
 			};
 }

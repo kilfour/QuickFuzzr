@@ -20,6 +20,8 @@ namespace QuickFuzzr.Tests.Docs.Reference;
 [DocLink(typeof(Strings))]
 [DocLink(typeof(TimeOnlys))]
 [DocLink(typeof(TimeSpans))]
+[DocLink(typeof(UInts))]
+[DocLink(typeof(ULongs))]
 [DocLink(typeof(UShorts))]
 public class PrimitiveFuzzrs
 {
@@ -42,6 +44,8 @@ public class PrimitiveFuzzrs
 | [`Fuzzr.String()`][Strings] | 
 | [`Fuzzr.TimeOnly()`][TimeOnlys] | 
 | [`Fuzzr.TimeSpan()`][TimeSpans] |
+| [`Fuzzr.UInt()`][UInts] |
+| [`Fuzzr.ULong()`][ULongs] |
 | [`Fuzzr.UShort()`][UShorts] |
 "
     )]

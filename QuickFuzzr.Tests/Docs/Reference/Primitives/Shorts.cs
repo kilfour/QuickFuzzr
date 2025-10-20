@@ -38,7 +38,7 @@ public class Shorts
 
 	[Fact]
 	[DocContent("- `short?` is automatically detected and generated for object properties.")]
-	public void NullableGenericProperty()
+	public void NullableProperty()
 		=> CheckIf.GeneratesNullAndNotNull(
 			Fuzzr.One<PrimitivesBag<short>>().Select(a => a.NullableValue));
 }

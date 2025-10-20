@@ -1,21 +1,16 @@
 Shuffle
 
-
-
 WEIGHTS
 
 Built-in counters
-
 
 Fuzzr.Byte()
 
 Fuzzr.SByte()
 
-Fuzzr.UInt16()
+Fuzzr.uint()
 
-Fuzzr.UInt32()
-
-Fuzzr.UInt64()
+Fuzzr.ulong()
 
 Fuzzr.DateTimeOffset()
 
