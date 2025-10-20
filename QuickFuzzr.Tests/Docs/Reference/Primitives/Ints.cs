@@ -17,9 +17,7 @@ public class Ints
 	[Fact]
 	[DocContent("- Throws an ArgumentException if min > max.")]
 	public void Throws()
-	{
-		Assert.Throws<ArgumentException>(() => Fuzzr.Int(1, 0).Generate());
-	}
+		=> Assert.Throws<ArgumentException>(() => Fuzzr.Int(1, 0).Generate());
 
 	[Fact]
 	[DocContent("- The default generator is (min = 1, max = 100).")]
