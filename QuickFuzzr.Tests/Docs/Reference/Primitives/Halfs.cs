@@ -9,13 +9,13 @@ namespace QuickFuzzr.Tests.Docs.Reference.Primitives;
 public class Halfs
 {
     [Fact]
-    [DocContent("- The overload Fuzzr.Half(Half min, Half max) generates a half-precision floating-point number higher or equal than min and lower than max.")]
+    [DocContent("- The overload Fuzzr.Half(Half min, Half max) generates a half-precision floating-point number greater than or equal to `min` and less than `max`.")]
     public void MinMax()
         => CheckIf.GeneratedValuesShouldAllSatisfy(Fuzzr.Half((Half)1, (Half)5),
             ("value >= 1", a => a >= (Half)1), ("value < 5", a => a < (Half)5));
 
     [Fact]
-    [DocContent("- Throws an ArgumentException if min > max.")]
+    [DocContent("- Throws an `ArgumentException` when `min` > `max`.")]
     public void Throws()
         => Assert.Throws<ArgumentException>(() => Fuzzr.Half((Half)1, (Half)0).Generate());
 
@@ -26,7 +26,7 @@ public class Halfs
             ("value >= 1", a => a >= (Half)1), ("value < 100", a => a < (Half)100));
 
     [Fact]
-    [DocContent("- Can be made to return Half? using the .Nullable() combinator.")]
+    [DocContent("- Can be made to return `Half?` using the `.Nullable()` combinator.")]
     public void Nullable()
         => CheckIf.GeneratesNullAndNotNull(Fuzzr.Half().Nullable());
 

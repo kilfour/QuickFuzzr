@@ -7,7 +7,7 @@ namespace QuickFuzzr.Tests.Docs.Reference.Primitives;
 public class Floats
 {
 	[Fact]
-	[DocContent("- The overload `Fuzzr.Float(float min, float max)` generates a float higher or equal than min and lower than max.")]
+	[DocContent("- The overload `Fuzzr.Float(float min, float max)` generates a float greater than or equal to `min` and less than `max`.")]
 	public void Zero()
 	{
 		var generator = Fuzzr.Float(0, 0);
@@ -18,7 +18,7 @@ public class Floats
 	}
 
 	[Fact]
-	[DocContent("- Throws an ArgumentException if min > max.")]
+	[DocContent("- Throws an `ArgumentException` when `min` > `max`.")]
 	public void Throws()
 	{
 		Assert.Throws<ArgumentException>(() => Fuzzr.Float(1, 0).Generate());

@@ -8,7 +8,7 @@ namespace QuickFuzzr.Tests.Docs.Reference.Primitives;
 public class Enums
 {
 	[Fact]
-	[DocContent("- The default generator just picks a random value from all enemeration values.")]
+	[DocContent("- The default generator just picks a random value from all enumeration values.")]
 	public void DefaultGenerator()
 	{
 		CheckIf.TheseValuesAreGenerated(Fuzzr.Enum<MyEnumeration>(),
@@ -25,7 +25,7 @@ public class Enums
 	}
 
 	[Fact]
-	[DocContent("- A nullable Enumeration is automatically detected and generated for object properties.")]
+	[DocContent("- A nullable enumeration is automatically detected and generated for object properties.")]
 	public void NullableProperty()
 	{
 		CheckIf.GeneratesNullAndNotNull(

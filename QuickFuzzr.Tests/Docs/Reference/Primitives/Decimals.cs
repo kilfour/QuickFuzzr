@@ -7,7 +7,7 @@ namespace QuickFuzzr.Tests.Docs.Reference.Primitives;
 public class Decimals
 {
 	[Fact]
-	[DocContent("- The overload `Fuzzr.Decimal(decimal min, decimal max)` generates a decimal higher or equal than min and lower than max.")]
+	[DocContent("- The overload `Fuzzr.Decimal(decimal min, decimal max)` generates a decimal greater than or equal to `min` and less than `max`.")]
 	public void Zero()
 	{
 		var generator = Fuzzr.Decimal(0, 0);
@@ -17,7 +17,7 @@ public class Decimals
 		}
 	}
 	[Fact]
-	[DocContent("- Throws an ArgumentException if min > max.")]
+	[DocContent("- Throws an `ArgumentException` when `min` > `max`.")]
 	public void Throws()
 	{
 		Assert.Throws<ArgumentException>(() => Fuzzr.Decimal(1, 0).Generate());

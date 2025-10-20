@@ -8,7 +8,7 @@ namespace QuickFuzzr.Tests.Docs.Reference.Primitives;
 public class DateTimes
 {
 	[Fact]
-	[DocContent("- The overload `Fuzzr.DateTimes(DateTime min, DateTime max)` generates a DateTime higher or equal than min and lower than max.")]
+	[DocContent("- The overload `Fuzzr.DateTime(DateTime min, DateTime max)` generates a DateTime greater than or equal to `min` and less than `max`.")]
 	public void Zero()
 	{
 		var generator = Fuzzr.DateTime(new DateTime(2000, 1, 1), new DateTime(2000, 1, 5));

@@ -8,7 +8,7 @@ namespace QuickFuzzr.Tests.Docs.Reference.Primitives;
 public class TimeOnlys
 {
 	[Fact]
-	[DocContent("- The overload `Fuzzr.TimeOnly(TimeOnly min, TimeOnly max)` generates a TimeOnly higher or equal than min and lower than max.")]
+	[DocContent("- The overload `Fuzzr.TimeOnly(TimeOnly min, TimeOnly max)` generates a TimeOnly greater than or equal to `min` and less than `max`.")]
 	public void Zero()
 	{
 		var generator = Fuzzr.TimeOnly(new TimeOnly(1, 0), new TimeOnly(1, 1));
@@ -21,7 +21,7 @@ public class TimeOnlys
 	}
 
 	[Fact]
-	[DocContent("- The default generator is (min = 00:00:00, max = 23:59:59.9999999.")]
+	[DocContent("- The default generator is (min = 00:00:00, max = 23:59:59.9999999).")]
 	public void DefaultGeneratorNeverGeneratesZero()
 	{
 		var generator = Fuzzr.TimeOnly();

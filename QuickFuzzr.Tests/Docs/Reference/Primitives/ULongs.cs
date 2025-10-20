@@ -5,17 +5,18 @@ using QuickPulse.Explains;
 namespace QuickFuzzr.Tests.Docs.Reference.Primitives;
 
 [DocFile]
+[DocFileHeader("ULongs")]
 [DocContent("Use `Fuzzr.ULong()`.")]
 public class ULongs
 {
 	[Fact]
-	[DocContent("- The overload `Fuzzr.ULong(ulong min, ulong max)` generates a ulong higher or equal than min and lower than max.")]
+	[DocContent("- The overload `Fuzzr.ULong(ulong min, ulong max)` generates a ulong greater than or equal to `min` and less than `max`.")]
 	public void MinMax()
 		=> CheckIf.GeneratedValuesShouldAllSatisfy(Fuzzr.ULong(1, 5),
 			("value >= 1", a => a >= 1), ("value < 5", a => a < 5));
 
 	[Fact]
-	[DocContent("Throws an ArgumentException if min > max.")]
+	[DocContent("- Throws an `ArgumentException` when `min` > `max`.")]
 	public void Throws() => Assert.Throws<ArgumentException>(() => Fuzzr.ULong(1, 0).Generate());
 
 	[Fact]

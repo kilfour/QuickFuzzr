@@ -20,7 +20,7 @@ public class Strings
 	}
 
 	[Fact]
-	[DocContent("- The overload `Fuzzr.String(int min, int max)` generates an string of length higher or equal than min and lower than max.")]
+	[DocContent("- The overload `Fuzzr.String(int min, int max)` generates a string of length greater than or equal to `min` and less than `max`.")]
 	public void Zero()
 	{
 		var generator = Fuzzr.String(5, 7);

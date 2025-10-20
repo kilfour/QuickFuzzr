@@ -8,7 +8,7 @@ namespace QuickFuzzr.Tests.Docs.Reference.Primitives;
 public class DateOnlys
 {
 	[Fact]
-	[DocContent("- The overload `Fuzzr.DateOnly(DateOnly min, DateOnly max)` generates a DateOnly higher or equal than min and lower than max.")]
+	[DocContent("- The overload `Fuzzr.DateOnly(DateOnly min, DateOnly max)` generates a DateOnly greater than or equal to `min` and less than `max`.")]
 	public void Zero()
 	{
 		var generator = Fuzzr.DateOnly(new DateOnly(2000, 1, 1), new DateOnly(2000, 1, 5));

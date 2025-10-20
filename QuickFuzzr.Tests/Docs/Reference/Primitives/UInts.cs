@@ -10,13 +10,13 @@ namespace QuickFuzzr.Tests.Docs.Reference.Primitives;
 public class UInts
 {
 	[Fact]
-	[DocContent("- The overload `Fuzzr.UInt(uint min, uint max)` generates an uint higher or equal than min and lower than max.")]
+	[DocContent("- The overload `Fuzzr.UInt(uint min, uint max)` generates an uint greater than or equal to `min` and less than `max`.")]
 	public void MinMax()
 		=> CheckIf.GeneratedValuesShouldAllSatisfy(Fuzzr.UInt(1, 5),
 			("value >= 1", a => a >= 1), ("value < 5", a => a < 5));
 
 	[Fact]
-	[DocContent("- Throws an ArgumentException if min > max.")]
+	[DocContent("- Throws an `ArgumentException` when `min` > `max`.")]
 	public void Throws()
 		=> Assert.Throws<ArgumentException>(() => Fuzzr.UInt(1, 0).Generate());
 
