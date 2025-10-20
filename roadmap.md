@@ -2,8 +2,6 @@ Shuffle
 
 WEIGHTS
 
-Built-in counters
-
 Fuzzr.Byte()
 
 Fuzzr.SByte()
@@ -15,6 +13,5 @@ Fuzzr.BigInteger()
 Fuzzr.Rune()
 
 Fuzzr.Bytes()
-
 
 byte, sbyte, nint, nuint
