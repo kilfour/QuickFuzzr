@@ -17,7 +17,7 @@ public class CustomizingConstructors
 	{
 		var generator =
 			from i in Configr<SomeThing>.Ignore(a => a.AnInt1)
-			from c in Fuzzr.For<SomeThing>().Construct(Fuzzr.Constant(42))
+			from c in Configr<SomeThing>.Construct(Fuzzr.Constant(42))
 			from r in Fuzzr.One<SomeThing>()
 			select r;
 		Assert.Equal(42, generator.Generate().AnInt1);
@@ -31,7 +31,7 @@ public class CustomizingConstructors
 		var generator =
 			from i1 in Configr<SomeThing>.Ignore(a => a.AnInt1)
 			from i2 in Configr<SomeThing>.Ignore(a => a.AnInt2)
-			from c in Fuzzr.For<SomeThing>().Construct(Fuzzr.Constant(42), Fuzzr.Constant(43))
+			from c in Configr<SomeThing>.Construct(Fuzzr.Constant(42), Fuzzr.Constant(43))
 			from r in Fuzzr.One<SomeThing>()
 			select r;
 		var result = generator.Generate();
@@ -47,7 +47,7 @@ public class CustomizingConstructors
 			from i1 in Configr<SomeThing>.Ignore(a => a.AnInt1)
 			from i2 in Configr<SomeThing>.Ignore(a => a.AnInt2)
 			from i3 in Configr<SomeThing>.Ignore(a => a.AnInt3)
-			from c in Fuzzr.For<SomeThing>().Construct(Fuzzr.Constant(42), Fuzzr.Constant(43), Fuzzr.Constant(44))
+			from c in Configr<SomeThing>.Construct(Fuzzr.Constant(42), Fuzzr.Constant(43), Fuzzr.Constant(44))
 			from r in Fuzzr.One<SomeThing>()
 			select r;
 		var result = generator.Generate();
@@ -65,7 +65,7 @@ public class CustomizingConstructors
 			from i2 in Configr<SomeThing>.Ignore(a => a.AnInt2)
 			from i3 in Configr<SomeThing>.Ignore(a => a.AnInt3)
 			from i4 in Configr<SomeThing>.Ignore(a => a.AnInt4)
-			from c in Fuzzr.For<SomeThing>().Construct(Fuzzr.Constant(42), Fuzzr.Constant(43), Fuzzr.Constant(44), Fuzzr.Constant(45))
+			from c in Configr<SomeThing>.Construct(Fuzzr.Constant(42), Fuzzr.Constant(43), Fuzzr.Constant(44), Fuzzr.Constant(45))
 			from r in Fuzzr.One<SomeThing>()
 			select r;
 		var result = generator.Generate();
@@ -87,7 +87,7 @@ After that, ... you're on your own.")]
 			from i3 in Configr<SomeThing>.Ignore(a => a.AnInt3)
 			from i4 in Configr<SomeThing>.Ignore(a => a.AnInt4)
 			from i5 in Configr<SomeThing>.Ignore(a => a.AString)
-			from c in Fuzzr.For<SomeThing>().Construct(Fuzzr.Constant(42), Fuzzr.Constant(43), Fuzzr.Constant(44), Fuzzr.Constant(45), Fuzzr.Constant("answer"))
+			from c in Configr<SomeThing>.Construct(Fuzzr.Constant(42), Fuzzr.Constant(43), Fuzzr.Constant(44), Fuzzr.Constant(45), Fuzzr.Constant("answer"))
 			from r in Fuzzr.One<SomeThing>()
 			select r;
 		var result = generator.Generate();
@@ -109,7 +109,7 @@ After that, ... you're on your own.")]
 			from i3 in Configr<SomeThing>.Ignore(a => a.AnInt3)
 			from i4 in Configr<SomeThing>.Ignore(a => a.AnInt4)
 			from i5 in Configr<SomeThing>.Ignore(a => a.AString)
-			from c in Fuzzr.For<SomeThing>().Construct(() => new SomeThing(1, 2, 3, 4, "5"))
+			from c in Configr<SomeThing>.Construct(() => new SomeThing(1, 2, 3, 4, "5"))
 			from r in Fuzzr.One<SomeThing>()
 			select r;
 		var result = generator.Generate();

@@ -2,7 +2,7 @@
 
 namespace QuickFuzzr;
 
-public static partial class Fuzzr
+public static partial class ExtFuzzr
 {
 	public static Generator<object> AsObject<T>(this Generator<T> generator)
 	{

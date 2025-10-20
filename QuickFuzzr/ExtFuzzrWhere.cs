@@ -2,7 +2,7 @@
 
 namespace QuickFuzzr;
 
-public static partial class Fuzzr
+public static partial class ExtFuzzr
 {
 	public static Generator<T> Where<T>(this Generator<T> generator, Func<T, bool> predicate)
 	{
