@@ -4,7 +4,7 @@ using QuickPulse.Explains;
 namespace QuickFuzzr.Tests.Docs.Reference.Primitives;
 
 [DocFile]
-[DocContent("Use `Fuzzr.Char()`. *No overload exists.*")]
+[DocContent("Use `Fuzzr.Char()`.")]
 public class Chars
 {
 	private readonly char[] valid = "abcdefghijklmnopqrstuvwxyz".ToCharArray();

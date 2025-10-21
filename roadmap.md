@@ -15,3 +15,6 @@ Fuzzr.Rune()
 Fuzzr.Bytes()
 
 byte, sbyte, nint, nuint
+
+
+Revisit .Char
