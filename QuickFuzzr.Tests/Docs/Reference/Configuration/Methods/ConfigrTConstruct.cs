@@ -1,6 +1,6 @@
 ﻿using QuickPulse.Explains;
 
-namespace QuickFuzzr.Tests.Docs.Reference.Configuration;
+namespace QuickFuzzr.Tests.Docs.Reference.Configuration.Methods;
 
 [DocFile]
 [DocFileHeader("Configr<T>.Construct(...)")]
@@ -77,7 +77,7 @@ public class ConfigrTConstruct
 	}
 
 	[Fact]
-	[DocContent(@"\nAfter that, ... you're on your own.")]
+	[DocContent("\nAfter that, ... you're on your own.")]
 	public void WorksFiveArgs()
 	{
 		var generator =

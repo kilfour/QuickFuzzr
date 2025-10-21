@@ -1,7 +1,6 @@
-using QuickFuzzr.Tests.Docs.Reference.Primitives;
 using QuickPulse.Explains;
 
-namespace QuickFuzzr.Tests.Docs.Reference;
+namespace QuickFuzzr.Tests.Docs.Reference.Primitives;
 
 [DocFile]
 // [DocLink(typeof(Booleans))]

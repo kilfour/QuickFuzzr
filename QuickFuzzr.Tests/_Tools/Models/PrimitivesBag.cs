@@ -9,6 +9,7 @@ public class PrimitivesBag<T> where T : struct
 public class Thing
 {
     public int Id { get; set; }
+    public int Prop { get; set; }
 }
 
-public class DerivedThing : Thing { }
+public class DerivedThing : Thing { public int PropOnDerived { get; set; } }

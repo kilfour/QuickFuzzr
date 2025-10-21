@@ -1,7 +1,7 @@
 using QuickFuzzr.Tests._Tools.Models;
 using QuickPulse.Explains;
 
-namespace QuickFuzzr.Tests.Docs.Reference.Configuration;
+namespace QuickFuzzr.Tests.Docs.Reference.Configuration.Methods;
 
 
 [DocFile]
@@ -9,7 +9,7 @@ namespace QuickFuzzr.Tests.Docs.Reference.Configuration;
 public class ConfigrTIgnoreAll
 {
     [DocContent("**Usage:**")]
-    [DocExample(typeof(ConfigrTIgnore), nameof(GetConfig))]
+    [DocExample(typeof(ConfigrTIgnoreAll), nameof(GetConfig))]
     [CodeSnippet]
     [CodeRemove("return")]
     private static FuzzrOf<Intent> GetConfig()
@@ -25,7 +25,9 @@ public class ConfigrTIgnoreAll
            from _ in GetConfig()
            from result in Fuzzr.One<Thing>()
            select result;
-        Assert.Equal(0, generator.Generate().Id);
+        var thing = generator.Generate();
+        Assert.Equal(0, thing.Id);
+        Assert.Equal(0, thing.Prop);
     }
 
 
@@ -37,6 +39,9 @@ public class ConfigrTIgnoreAll
             from _ in GetConfig()
             from result in Fuzzr.One<DerivedThing>()
             select result;
-        Assert.NotEqual(0, generator.Generate().Id);
+        var thing = generator.Generate();
+        Assert.NotEqual(0, thing.Id);
+        Assert.NotEqual(0, thing.Prop);
+        Assert.NotEqual(0, thing.PropOnDerived);
     }
 }

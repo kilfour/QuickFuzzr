@@ -1,7 +1,7 @@
 using QuickFuzzr.Tests._Tools.Models;
 using QuickPulse.Explains;
 
-namespace QuickFuzzr.Tests.Docs.Reference.Configuration;
+namespace QuickFuzzr.Tests.Docs.Reference.Configuration.Methods;
 
 [DocFile]
 [DocFileHeader("Configr.Property(...)")]

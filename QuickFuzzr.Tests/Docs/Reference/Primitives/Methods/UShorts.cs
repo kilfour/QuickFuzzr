@@ -2,7 +2,7 @@
 using QuickFuzzr.Tests._Tools.Models;
 using QuickPulse.Explains;
 
-namespace QuickFuzzr.Tests.Docs.Reference.Primitives;
+namespace QuickFuzzr.Tests.Docs.Reference.Primitives.Methods;
 
 [DocFile]
 [DocFileHeader("UShorts")]
