@@ -5,18 +5,18 @@ namespace QuickFuzzr;
 
 public static partial class Configr<T>
 {
-    public static Generator<Unit> Property<TProperty>(Expression<Func<T, TProperty>> func, Generator<TProperty> propertyGenerator)
+    public static FuzzrOf<Intent> Property<TProperty>(Expression<Func<T, TProperty>> func, FuzzrOf<TProperty> propertyGenerator)
         => state =>
             {
                 state.Customizations[func.AsPropertyInfo()] = propertyGenerator.AsObject();
-                return new Result<Unit>(Unit.Instance, state);
+                return new Result<Intent>(Intent.Fixed, state);
             };
 
-    public static Generator<Unit> Property<TProperty>(Expression<Func<T, TProperty>> func, TProperty value)
+    public static FuzzrOf<Intent> Property<TProperty>(Expression<Func<T, TProperty>> func, TProperty value)
         => state =>
             {
                 state.Customizations[func.AsPropertyInfo()] = Fuzzr.Constant(value).AsObject();
-                return new Result<Unit>(Unit.Instance, state);
+                return new Result<Intent>(Intent.Fixed, state);
             };
 
 }

@@ -21,7 +21,7 @@ Useful f.i. to generate numeric strings.")]
 @" - `.AsObject()` : Simply casts the generator itself from `Generator<T>` to `Generator<object>`. Mostly used internally.")]
 	public void AsObject()
 	{
-		Assert.IsType<Generator<object>>(Fuzzr.Int().AsObject());
+		Assert.IsType<FuzzrOf<object>>(Fuzzr.Int().AsObject());
 	}
 
 	[Fact]

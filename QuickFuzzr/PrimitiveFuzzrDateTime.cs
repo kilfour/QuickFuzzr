@@ -4,12 +4,12 @@ namespace QuickFuzzr;
 
 public static partial class Fuzzr
 {
-	public static Generator<DateTime> DateTime()
+	public static FuzzrOf<DateTime> DateTime()
 	{
 		return DateTime(new DateTime(1970, 1, 1), new DateTime(2020, 12, 31));
 	}
 
-	public static Generator<DateTime> DateTime(DateTime min, DateTime max)
+	public static FuzzrOf<DateTime> DateTime(DateTime min, DateTime max)
 	{
 		return
 			s =>

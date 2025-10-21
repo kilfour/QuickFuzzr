@@ -4,12 +4,12 @@ namespace QuickFuzzr;
 
 public static partial class Fuzzr
 {
-	public static Generator<T> OneOf<T>(params T[] values)
+	public static FuzzrOf<T> OneOf<T>(params T[] values)
 	{
 		return OneOf((IEnumerable<T>)values);
 	}
 
-	public static Generator<T> OneOf<T>(IEnumerable<T> values)
+	public static FuzzrOf<T> OneOf<T>(IEnumerable<T> values)
 	{
 		return
 			s =>
@@ -19,7 +19,7 @@ public static partial class Fuzzr
 			};
 	}
 
-	public static Generator<T> OneOfOrDefault<T>(IEnumerable<T> items)
+	public static FuzzrOf<T> OneOfOrDefault<T>(IEnumerable<T> items)
 	{
 		var list = items;
 		if (!list.Any())
@@ -27,7 +27,7 @@ public static partial class Fuzzr
 		return OneOf(list);
 	}
 
-	public static Generator<T> OneOf<T>(params Generator<T>[] values)
+	public static FuzzrOf<T> OneOf<T>(params FuzzrOf<T>[] values)
 	{
 		return
 			s =>

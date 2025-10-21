@@ -6,9 +6,9 @@ namespace QuickFuzzr;
 
 public static partial class Configr<T>
 {
-	public static Generator<Unit> Ignore<TProperty>(Expression<Func<T, TProperty>> func)
+	public static FuzzrOf<Intent> Ignore<TProperty>(Expression<Func<T, TProperty>> func)
 		=> state => Chain.It(() => state.StuffToIgnore.Add(func.AsPropertyInfo()), Result.Unit(state));
 
-	public static Generator<Unit> IgnoreAll()
+	public static FuzzrOf<Intent> IgnoreAll()
 		=> state => Chain.It(() => state.StuffToIgnoreAll.Add(typeof(T)), Result.Unit(state));
 }

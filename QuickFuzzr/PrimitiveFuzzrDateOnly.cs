@@ -4,10 +4,10 @@ namespace QuickFuzzr;
 
 public static partial class Fuzzr
 {
-	public static Generator<DateOnly> DateOnly()
+	public static FuzzrOf<DateOnly> DateOnly()
 	=> DateOnly(new DateOnly(1970, 1, 1), new DateOnly(2020, 12, 31));
 
-	public static Generator<DateOnly> DateOnly(DateOnly min, DateOnly max)
+	public static FuzzrOf<DateOnly> DateOnly(DateOnly min, DateOnly max)
 	{
 		if (max < min) throw new ArgumentOutOfRangeException(nameof(max), "max < min");
 

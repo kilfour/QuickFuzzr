@@ -1,5 +1,4 @@
 ﻿using QuickFuzzr.Tests._Tools;
-using QuickFuzzr.UnderTheHood;
 using QuickPulse.Explains;
 
 namespace QuickFuzzr.Tests.DocTests.Chapters.Objects;
@@ -88,7 +87,7 @@ When executing above generator result1 will have all integers set to 42 and resu
 	public void ReturnsUnit()
 	{
 		var generator = Fuzzr.Int(42, 42).Replace();
-		Assert.Equal(Unit.Instance, generator.Generate());
+		Assert.Equal(Intent.Fixed, generator.Generate());
 	}
 
 	public class SomeThingToGenerate

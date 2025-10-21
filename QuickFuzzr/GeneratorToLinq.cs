@@ -4,8 +4,8 @@ namespace QuickFuzzr;
 
 public static class GeneratorToLinq
 {
-	public static Generator<TValueTwo> Select<TValueOne, TValueTwo>(
-		this Generator<TValueOne> generator,
+	public static FuzzrOf<TValueTwo> Select<TValueOne, TValueTwo>(
+		this FuzzrOf<TValueOne> generator,
 		Func<TValueOne, TValueTwo> selector)
 	{
 		if (generator == null)
@@ -17,9 +17,9 @@ public static class GeneratorToLinq
 	}
 
 	// This is the Bind function
-	public static Generator<TValueTwo> SelectMany<TValueOne, TValueTwo>(
-		this Generator<TValueOne> generator,
-		Func<TValueOne, Generator<TValueTwo>> selector)
+	public static FuzzrOf<TValueTwo> SelectMany<TValueOne, TValueTwo>(
+		this FuzzrOf<TValueOne> generator,
+		Func<TValueOne, FuzzrOf<TValueTwo>> selector)
 	{
 		if (generator == null)
 			throw new ArgumentNullException("generator");
@@ -29,9 +29,9 @@ public static class GeneratorToLinq
 		return s => selector(generator(s).Value)(s);
 	}
 
-	public static Generator<TValueThree> SelectMany<TValueOne, TValueTwo, TValueThree>(
-		this Generator<TValueOne> generator,
-		Func<TValueOne, Generator<TValueTwo>> selector,
+	public static FuzzrOf<TValueThree> SelectMany<TValueOne, TValueTwo, TValueThree>(
+		this FuzzrOf<TValueOne> generator,
+		Func<TValueOne, FuzzrOf<TValueTwo>> selector,
 		Func<TValueOne, TValueTwo, TValueThree> projector)
 	{
 		if (generator == null)

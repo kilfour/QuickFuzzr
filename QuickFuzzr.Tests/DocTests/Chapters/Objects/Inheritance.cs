@@ -1,5 +1,4 @@
-﻿using QuickFuzzr.UnderTheHood;
-using QuickPulse.Explains;
+﻿using QuickPulse.Explains;
 
 namespace QuickFuzzr.Tests.DocTests.Chapters.Objects;
 
@@ -29,7 +28,7 @@ public class Inheritance
 	public void ReturnsUnit()
 	{
 		var generator = Configr<SomeThingAbstract>.AsOneOf(typeof(SomeThingDerivedToGenerate));
-		Assert.Equal(Unit.Instance, generator.Generate());
+		Assert.Equal(Intent.Fixed, generator.Generate());
 	}
 
 	public abstract class SomeThingAbstract

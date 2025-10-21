@@ -4,5 +4,5 @@ namespace QuickFuzzr;
 
 public static class GenerateIt
 {
-	public static T Generate<T>(this Generator<T> generator) => generator(new State()).Value;
+	public static T Generate<T>(this FuzzrOf<T> generator) => generator(new State()).Value;
 }

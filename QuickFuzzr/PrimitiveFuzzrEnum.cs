@@ -5,7 +5,7 @@ namespace QuickFuzzr;
 
 public static partial class Fuzzr
 {
-	public static Generator<T> Enum<T>()
+	public static FuzzrOf<T> Enum<T>()
 		where T : struct, IConvertible
 	{
 		if (!typeof(T).IsEnum)

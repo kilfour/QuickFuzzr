@@ -14,5 +14,5 @@ public class Result<TValue> : IResult<TValue>
 
 public static class Result
 {
-	public static Result<Unit> Unit(State state) => new(UnderTheHood.Unit.Instance, state);
+	public static Result<Intent> Unit(State state) => new(Intent.Fixed, state);
 }

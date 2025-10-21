@@ -4,7 +4,7 @@ namespace QuickFuzzr;
 
 public static partial class Fuzzr
 {
-	public static Generator<T> Constant<T>(T value)
+	public static FuzzrOf<T> Constant<T>(T value)
 	{
 		return s => new Result<T>(value, s);
 	}

@@ -6,7 +6,7 @@ namespace QuickFuzzr.Tests;
 
 public class ConfigurationSpike
 {
-    private static Generator<int> Counter()
+    private static FuzzrOf<int> Counter()
     {
         var counter = 1;
         return state => Chain.It(() => counter++, new Result<int>(counter, state));
@@ -19,7 +19,7 @@ public class ConfigurationSpike
             from _1 in Configr<Order>.Property(a => a.OrderId, Counter())
             from _2 in Configr.Property(a => a.Name == "Quantity", Fuzzr.Int(100, 200))
             from _3 in Configr<Order>.Property(a => a.Item, Fuzzr.OneOf("toy", "phone", "apple"))
-            select Unit.Instance;
+            select Intent.Fixed;
         var ordersGen =
             from _ in cfg
             from order1 in Fuzzr.One<Order>()

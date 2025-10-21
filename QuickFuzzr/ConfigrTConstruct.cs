@@ -4,7 +4,7 @@ namespace QuickFuzzr;
 
 public static partial class Configr<T>
 {
-    public static Generator<Unit> Construct(Func<T> ctor)
+    public static FuzzrOf<Intent> Construct(Func<T> ctor)
     {
         return state =>
         {
@@ -16,11 +16,11 @@ public static partial class Configr<T>
             }
 
             list.Add(s => ctor()!);
-            return new Result<Unit>(Unit.Instance, state);
+            return new Result<Intent>(Intent.Fixed, state);
         };
     }
 
-    public static Generator<Unit> Construct<TArg>(Generator<TArg> generator)
+    public static FuzzrOf<Intent> Construct<TArg>(FuzzrOf<TArg> generator)
     {
         return state =>
         {
@@ -42,11 +42,11 @@ public static partial class Configr<T>
             }
 
             list.Add(ctorFunc);
-            return new Result<Unit>(Unit.Instance, state);
+            return new Result<Intent>(Intent.Fixed, state);
         };
     }
 
-    public static Generator<Unit> Construct<T1, T2>(Generator<T1> g1, Generator<T2> g2)
+    public static FuzzrOf<Intent> Construct<T1, T2>(FuzzrOf<T1> g1, FuzzrOf<T2> g2)
     {
         return state =>
         {
@@ -65,11 +65,11 @@ public static partial class Configr<T>
                 state.Constructors[typeof(T)] = list = new List<Func<State, object>>();
 
             list.Add(fn);
-            return new Result<Unit>(Unit.Instance, state);
+            return new Result<Intent>(Intent.Fixed, state);
         };
     }
 
-    public static Generator<Unit> Construct<T1, T2, T3>(Generator<T1> g1, Generator<T2> g2, Generator<T3> g3)
+    public static FuzzrOf<Intent> Construct<T1, T2, T3>(FuzzrOf<T1> g1, FuzzrOf<T2> g2, FuzzrOf<T3> g3)
     {
         return state =>
         {
@@ -89,11 +89,11 @@ public static partial class Configr<T>
                 state.Constructors[typeof(T)] = list = new List<Func<State, object>>();
 
             list.Add(fn);
-            return new Result<Unit>(Unit.Instance, state);
+            return new Result<Intent>(Intent.Fixed, state);
         };
     }
 
-    public static Generator<Unit> Construct<T1, T2, T3, T4>(Generator<T1> g1, Generator<T2> g2, Generator<T3> g3, Generator<T4> g4)
+    public static FuzzrOf<Intent> Construct<T1, T2, T3, T4>(FuzzrOf<T1> g1, FuzzrOf<T2> g2, FuzzrOf<T3> g3, FuzzrOf<T4> g4)
     {
         return state =>
         {
@@ -114,11 +114,11 @@ public static partial class Configr<T>
                 state.Constructors[typeof(T)] = list = new List<Func<State, object>>();
 
             list.Add(fn);
-            return new Result<Unit>(Unit.Instance, state);
+            return new Result<Intent>(Intent.Fixed, state);
         };
     }
 
-    public static Generator<Unit> Construct<T1, T2, T3, T4, T5>(Generator<T1> g1, Generator<T2> g2, Generator<T3> g3, Generator<T4> g4, Generator<T5> g5)
+    public static FuzzrOf<Intent> Construct<T1, T2, T3, T4, T5>(FuzzrOf<T1> g1, FuzzrOf<T2> g2, FuzzrOf<T3> g3, FuzzrOf<T4> g4, FuzzrOf<T5> g5)
     {
         return state =>
         {
@@ -140,7 +140,7 @@ public static partial class Configr<T>
                 state.Constructors[typeof(T)] = list = new List<Func<State, object>>();
 
             list.Add(fn);
-            return new Result<Unit>(Unit.Instance, state);
+            return new Result<Intent>(Intent.Fixed, state);
         };
     }
 }

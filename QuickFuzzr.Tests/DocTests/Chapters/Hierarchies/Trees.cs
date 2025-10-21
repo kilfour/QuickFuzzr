@@ -1,6 +1,5 @@
 ﻿
 using QuickFuzzr;
-using QuickFuzzr.UnderTheHood;
 using QuickPulse.Explains;
 
 namespace QuickFuzzr.Tests.DocTests.Chapters.Hierarchies;
@@ -56,7 +55,7 @@ Node(Leaf(31), Node(Leaf(71), Leaf(10)))
 	public void ReturnsUnit()
 	{
 		var generator = Configr<Tree>.Depth(1, 1);
-		Assert.Equal(Unit.Instance, generator.Generate());
+		Assert.Equal(Intent.Fixed, generator.Generate());
 	}
 
 	private abstract class Tree

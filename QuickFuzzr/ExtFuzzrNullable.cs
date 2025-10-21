@@ -4,13 +4,13 @@ namespace QuickFuzzr;
 
 public static partial class ExtFuzzr
 {
-	public static Generator<T?> Nullable<T>(this Generator<T> generator)
+	public static FuzzrOf<T?> Nullable<T>(this FuzzrOf<T> generator)
 		where T : struct
 	{
 		return Nullable(generator, 5);
 	}
 
-	public static Generator<T?> Nullable<T>(this Generator<T> generator, int timesBeforeResultIsNullAproximation)
+	public static FuzzrOf<T?> Nullable<T>(this FuzzrOf<T> generator, int timesBeforeResultIsNullAproximation)
 		where T : struct
 	{
 		return
@@ -23,13 +23,13 @@ public static partial class ExtFuzzr
 			};
 	}
 
-	public static Generator<T?> NullableRef<T>(this Generator<T> generator)
+	public static FuzzrOf<T?> NullableRef<T>(this FuzzrOf<T> generator)
 		where T : class
 	{
 		return NullableRef(generator, 5);
 	}
 
-	public static Generator<T?> NullableRef<T>(this Generator<T> generator, int timesBeforeResultIsNullAproximation)
+	public static FuzzrOf<T?> NullableRef<T>(this FuzzrOf<T> generator, int timesBeforeResultIsNullAproximation)
 		where T : class
 	{
 		return
@@ -42,7 +42,7 @@ public static partial class ExtFuzzr
 			};
 	}
 
-	public static Generator<T?> NeverReturnNull<T>(this Generator<T?> generator)
+	public static FuzzrOf<T?> NeverReturnNull<T>(this FuzzrOf<T?> generator)
 		where T : struct
 	{
 		return

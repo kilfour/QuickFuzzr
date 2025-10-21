@@ -4,12 +4,12 @@ namespace QuickFuzzr;
 
 public static partial class Fuzzr
 {
-	public static Generator<long> Long()
+	public static FuzzrOf<long> Long()
 	{
 		return Long(1, 100);
 	}
 
-	public static Generator<long> Long(long min, long max)
+	public static FuzzrOf<long> Long(long min, long max)
 	{
 		if (min > max)
 			throw new ArgumentException($"Invalid range: min ({min}) > max ({max})");

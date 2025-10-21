@@ -4,7 +4,7 @@ namespace QuickFuzzr;
 
 public static partial class ExtFuzzr
 {
-	public static Generator<T> Apply<T>(this Generator<T> generator, Action<T> action)
+	public static FuzzrOf<T> Apply<T>(this FuzzrOf<T> generator, Action<T> action)
 	{
 		return
 			s =>
@@ -15,7 +15,7 @@ public static partial class ExtFuzzr
 				};
 	}
 
-	public static Generator<T> Apply<T>(this Generator<T> generator, Func<T, T> func)
+	public static FuzzrOf<T> Apply<T>(this FuzzrOf<T> generator, Func<T, T> func)
 	{
 		return
 			s =>

@@ -4,10 +4,10 @@ namespace QuickFuzzr;
 
 public static partial class Fuzzr
 {
-	public static Generator<TimeOnly> TimeOnly()
+	public static FuzzrOf<TimeOnly> TimeOnly()
 		=> TimeOnly(System.TimeOnly.MinValue, System.TimeOnly.MaxValue);
 
-	public static Generator<TimeOnly> TimeOnly(TimeOnly min, TimeOnly max)
+	public static FuzzrOf<TimeOnly> TimeOnly(TimeOnly min, TimeOnly max)
 	{
 		if (max < min) throw new ArgumentOutOfRangeException(nameof(max), "max < min");
 

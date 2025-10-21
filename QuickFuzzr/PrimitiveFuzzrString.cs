@@ -5,12 +5,12 @@ namespace QuickFuzzr;
 
 public static partial class Fuzzr
 {
-	public static Generator<string> String()
+	public static FuzzrOf<string> String()
 	{
 		return String(1, 10);
 	}
 
-	public static Generator<string> String(int min, int max)
+	public static FuzzrOf<string> String(int min, int max)
 	{
 		return s =>
 				   {

@@ -12,19 +12,19 @@ public static class CheckIf
     public static (string, Func<T, bool>) Is<T>(T expected) =>
         (expected?.ToString() ?? "null", x => EqualityComparer<T>.Default.Equals(x, expected));
 
-    public static void TheseValuesAreGenerated<T>(Generator<T> generator, params T[] needsToBeSeen)
+    public static void TheseValuesAreGenerated<T>(FuzzrOf<T> generator, params T[] needsToBeSeen)
     {
         GeneratedValuesShouldEventuallySatisfyAll(generator, [.. needsToBeSeen.Select(Is)]);
     }
 
-    public static void GeneratesNullAndNotNull<T>(Generator<T> generator)
+    public static void GeneratesNullAndNotNull<T>(FuzzrOf<T> generator)
     {
         GeneratedValuesShouldEventuallySatisfyAll(generator,
             ("is null", a => a == null), ("is not null", a => a != null));
     }
 
     public static void GeneratedValuesShouldEventuallySatisfyAll<T>(
-        Generator<T> generator,
+        FuzzrOf<T> generator,
         params (string, Func<T, bool>)[] labeledChecks)
     {
         GeneratedValuesShouldEventuallySatisfyAll(100, generator, labeledChecks);
@@ -32,7 +32,7 @@ public static class CheckIf
 
     public static void GeneratedValuesShouldEventuallySatisfyAll<T>(
         int numberOfExecutions,
-        Generator<T> generator,
+        FuzzrOf<T> generator,
         params (string, Func<T, bool>)[] labeledChecks)
     {
         var signal = Signal.From<T>(a => Pulse.Trace(a!));
@@ -50,7 +50,7 @@ public static class CheckIf
     }
 
     public static void GeneratedValuesShouldAllSatisfy<T>(
-        Generator<T> generator,
+        FuzzrOf<T> generator,
         params (string, Func<T, bool>)[] labeledChecks)
     {
         GeneratedValuesShouldAllSatisfy(20, generator, labeledChecks);
@@ -58,7 +58,7 @@ public static class CheckIf
 
     public static void GeneratedValuesShouldAllSatisfy<T>(
         int numberOfExecutions,
-        Generator<T> generator,
+        FuzzrOf<T> generator,
         params (string, Func<T, bool>)[] labeledChecks)
     {
         var run =

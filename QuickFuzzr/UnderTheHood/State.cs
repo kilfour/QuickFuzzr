@@ -64,8 +64,8 @@ public class State
 
 	public Dictionary<Type, Type> TreeLeaves = [];
 
-	public readonly Dictionary<Func<PropertyInfo, bool>, Generator<object>> GeneralCustomizations = [];
-	public readonly Dictionary<PropertyInfo, Generator<object>> Customizations = [];
+	public readonly Dictionary<Func<PropertyInfo, bool>, FuzzrOf<object>> GeneralCustomizations = [];
+	public readonly Dictionary<PropertyInfo, FuzzrOf<object>> Customizations = [];
 	public readonly Dictionary<Type, List<Func<State, object>>> Constructors = [];
 	public readonly Dictionary<Type, List<Action<State, object>>> ActionsToApply = [];
 
@@ -78,7 +78,7 @@ public class State
 			actions.Add(action);
 	}
 
-	public readonly Dictionary<Type, Generator<object>> PrimitiveGenerators
+	public readonly Dictionary<Type, FuzzrOf<object>> PrimitiveGenerators
 		= new()
 			{
 				{ typeof(string), Fuzzr.String().AsObject() },

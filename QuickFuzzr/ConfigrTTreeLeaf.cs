@@ -5,13 +5,13 @@ namespace QuickFuzzr;
 
 public static partial class Configr<T>
 {
-    public static Generator<Unit> EndOn<TLeaf>()
+    public static FuzzrOf<Intent> EndOn<TLeaf>()
     {
         return
             s =>
                 {
                     s.TreeLeaves[typeof(T)] = typeof(TLeaf);
-                    return new Result<Unit>(Unit.Instance, s);
+                    return new Result<Intent>(Intent.Fixed, s);
                 };
     }
 }

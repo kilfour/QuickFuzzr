@@ -4,7 +4,7 @@ namespace QuickFuzzr;
 
 public static partial class Fuzzr
 {
-	public static Generator<char> Char()
+	public static FuzzrOf<char> Char()
 	{
 		const int lowerCaseLetterACode = 97;
 		const int lowerCaseLetterZCode = 122;

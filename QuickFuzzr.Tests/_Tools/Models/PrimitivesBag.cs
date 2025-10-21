@@ -5,3 +5,10 @@ public class PrimitivesBag<T> where T : struct
     public T Value { get; set; } = default!;
     public T? NullableValue { get; set; } = default!;
 }
+
+public class Thing
+{
+    public int Id { get; set; }
+}
+
+public class DerivedThing : Thing { }

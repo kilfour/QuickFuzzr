@@ -4,7 +4,7 @@ namespace QuickFuzzr;
 
 public static partial class ExtFuzzr
 {
-	public static Generator<T> Where<T>(this Generator<T> generator, Func<T, bool> predicate)
+	public static FuzzrOf<T> Where<T>(this FuzzrOf<T> generator, Func<T, bool> predicate)
 	{
 		return
 			s =>

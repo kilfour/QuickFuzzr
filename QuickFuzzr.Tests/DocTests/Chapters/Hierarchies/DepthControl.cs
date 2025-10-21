@@ -1,5 +1,4 @@
-﻿using QuickFuzzr.UnderTheHood;
-using QuickPulse.Explains;
+﻿using QuickPulse.Explains;
 
 
 namespace QuickFuzzr.Tests.DocTests.Chapters.Hierarchies;
@@ -175,7 +174,7 @@ This means some instances will be shallow, while others may be more deeply neste
 	public void ReturnsUnit()
 	{
 		var generator = Configr<SomeComponent>.Depth(1, 1);
-		Assert.Equal(Unit.Instance, generator.Generate());
+		Assert.Equal(Intent.Fixed, generator.Generate());
 	}
 
 	public class SomeThingToGenerate

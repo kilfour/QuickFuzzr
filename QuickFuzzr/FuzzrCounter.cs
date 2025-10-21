@@ -4,7 +4,7 @@ namespace QuickFuzzr;
 
 public static partial class Fuzzr
 {
-	public static Generator<int> Counter(object key)
+	public static FuzzrOf<int> Counter(object key)
 	{
 		return state =>
 		{

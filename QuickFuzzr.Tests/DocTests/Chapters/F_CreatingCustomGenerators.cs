@@ -22,7 +22,7 @@ return s => new Result<State, int>(42, s);
         Assert.Equal(42, Generate42().Generate());
     }
 
-    private Generator<int> Generate42()
+    private FuzzrOf<int> Generate42()
     {
         return s => new Result<int>(42, s);
     }
@@ -41,7 +41,7 @@ return s => new Result<State, int>(s.Random.Next(42, 666), s);
         Assert.Equal(42, Generate42OtherWay().Generate());
     }
 
-    public Generator<int> Generate42OtherWay()
+    public FuzzrOf<int> Generate42OtherWay()
     {
         return s => new Result<int>(s.Random.Next(42, 42), s);
     }
@@ -71,7 +71,7 @@ return s => new Result<State, int>(s.Random.Next(42, 666), s);
         public string? MyProperty { get; set; }
     }
 
-    public Generator<int> Counter()
+    public FuzzrOf<int> Counter()
     {
         return
             state =>

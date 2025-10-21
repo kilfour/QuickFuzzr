@@ -4,8 +4,8 @@ namespace QuickFuzzr;
 
 public static partial class Fuzzr
 {
-	public static Generator<ushort> UShort() => UShort(1, 100);
-	public static Generator<ushort> UShort(ushort min, ushort max)
+	public static FuzzrOf<ushort> UShort() => UShort(1, 100);
+	public static FuzzrOf<ushort> UShort(ushort min, ushort max)
 	{
 		if (min > max)
 			throw new ArgumentException($"Invalid range: min ({min}) > max ({max})");

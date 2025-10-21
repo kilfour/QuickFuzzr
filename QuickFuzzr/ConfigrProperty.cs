@@ -6,11 +6,11 @@ namespace QuickFuzzr;
 
 public static partial class Configr
 {
-    public static Generator<Unit> Property<TProperty>(Func<PropertyInfo, bool> predicate, Generator<TProperty> propertyGenerator)
+    public static FuzzrOf<Intent> Property<TProperty>(Func<PropertyInfo, bool> predicate, FuzzrOf<TProperty> propertyGenerator)
         => state =>
             {
                 state.GeneralCustomizations[predicate] = propertyGenerator.AsObject();
-                return new Result<Unit>(Unit.Instance, state);
+                return new Result<Intent>(Intent.Fixed, state);
             };
 
 }

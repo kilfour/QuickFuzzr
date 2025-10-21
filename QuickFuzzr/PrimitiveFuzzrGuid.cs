@@ -4,7 +4,7 @@ namespace QuickFuzzr;
 
 public static partial class Fuzzr
 {
-	public static Generator<Guid> Guid()
+	public static FuzzrOf<Guid> Guid()
 	{
 		return s => new Result<Guid>(System.Guid.NewGuid(), s);
 	}

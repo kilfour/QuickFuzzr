@@ -4,7 +4,7 @@ namespace QuickFuzzr;
 
 public static partial class ExtFuzzr
 {
-	public static Generator<T> Unique<T>(this Generator<T> generator, Func<object> key)
+	public static FuzzrOf<T> Unique<T>(this FuzzrOf<T> generator, Func<object> key)
 	{
 		return
 			s =>
@@ -23,7 +23,7 @@ public static partial class ExtFuzzr
 				};
 	}
 
-	public static Generator<T> Unique<T>(this Generator<T> generator, object key)
+	public static FuzzrOf<T> Unique<T>(this FuzzrOf<T> generator, object key)
 	{
 		return
 			s =>

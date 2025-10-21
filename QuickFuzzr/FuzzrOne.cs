@@ -6,15 +6,22 @@ namespace QuickFuzzr;
 
 public static partial class Fuzzr
 {
-	public static Generator<T> One<T>()
+	// public static Generator<T> One<T>(Generator<Unit> config)
+	// 	=> state =>
+	// 		{
+	// 			config(state);
+	// 			return new Result<T>((T)DepthControlledCreation(state, typeof(T), a => (T)CreateInstance(state, typeof(T), a)), state);
+	// 		};
+
+	public static FuzzrOf<T> One<T>()
 		=> state =>
 			new Result<T>((T)DepthControlledCreation(state, typeof(T), a => (T)CreateInstance(state, typeof(T), a)), state);
 
-	public static Generator<T> One<T>(Func<T> constructor)
+	public static FuzzrOf<T> One<T>(Func<T> constructor)
 		=> state =>
 			new Result<T>((T)DepthControlledCreation(state, typeof(T), _ => constructor()!), state);
 
-	private static Generator<object> One(Type type)
+	private static FuzzrOf<object> One(Type type)
 		=> state =>
 			new Result<object>(DepthControlledCreation(state, type, a => CreateInstance(state, type, a)), state);
 

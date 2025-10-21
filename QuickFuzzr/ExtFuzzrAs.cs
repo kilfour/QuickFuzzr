@@ -4,12 +4,12 @@ namespace QuickFuzzr;
 
 public static partial class ExtFuzzr
 {
-	public static Generator<object> AsObject<T>(this Generator<T> generator)
+	public static FuzzrOf<object> AsObject<T>(this FuzzrOf<T> generator)
 	{
 		return s => new Result<object>(generator(s).Value!, s);
 	}
 
-	public static Generator<string> AsString<T>(this Generator<T> generator)
+	public static FuzzrOf<string> AsString<T>(this FuzzrOf<T> generator)
 	{
 		return s => new Result<string>(generator(s).Value!.ToString()!, s);
 	}
