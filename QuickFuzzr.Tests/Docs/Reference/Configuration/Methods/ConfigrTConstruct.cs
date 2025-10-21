@@ -1,31 +1,34 @@
-﻿using QuickFuzzr.UnderTheHood;
-using QuickPulse.Explains;
+﻿using QuickPulse.Explains;
 
-namespace QuickFuzzr.Tests.DocTests.Chapters.Objects;
+namespace QuickFuzzr.Tests.Docs.Reference.Configuration;
 
-[DocContent(@"Use the `Fuzzr.For<T>().Construct<TArg>(Expression<Func<T, TProperty>> func, Generator<TProperty>)` method chain.
-
-F.i. :
-```csharp
-Fuzzr.For<SomeThing>().Construct(Fuzzr.Constant(42))
-```")]
-public class CustomizingConstructors
+[DocFile]
+[DocFileHeader("Configr<T>.Construct(...)")]
+public class ConfigrTConstruct
 {
+	[DocContent("**Usage:**")]
+	[DocExample(typeof(ConfigrTConstruct), nameof(GetConfig))]
+	[CodeSnippet]
+	[CodeRemove("return")]
+	private static FuzzrOf<Intent> GetConfig()
+	{
+		return Configr<SomeThing>.Construct(Fuzzr.Constant(42));
+	}
+
 	[Fact]
 	[DocContent("Subsequent calls to `Fuzzr.One<T>()` will then use the registered constructor.")]
 	public void Works()
 	{
 		var generator =
 			from i in Configr<SomeThing>.Ignore(a => a.AnInt1)
-			from c in Configr<SomeThing>.Construct(Fuzzr.Constant(42))
+			from c in GetConfig()
 			from r in Fuzzr.One<SomeThing>()
 			select r;
 		Assert.Equal(42, generator.Generate().AnInt1);
 	}
 
 	[Fact]
-	[DocContent(@"Various overloads exist : 
- -  `Fuzzr.For<T>().Construct<T1, T2>(Generator<T1> g1, Generator<T2> g2)`")]
+	[DocContent("Various overloads exist that allow for up to five constructor arguments.")]
 	public void WorksTwoArgs()
 	{
 		var generator =
@@ -40,7 +43,6 @@ public class CustomizingConstructors
 	}
 
 	[Fact]
-	[DocContent(" -  `Fuzzr.For<T>().Construct<T1, T2>(Generator<T1> g1, Generator<T2> g2, Generator<T3> g3)`")]
 	public void WorksThreeArgs()
 	{
 		var generator =
@@ -57,7 +59,6 @@ public class CustomizingConstructors
 	}
 
 	[Fact]
-	[DocContent(" -  `Fuzzr.For<T>().Construct<T1, T2>(Generator<T1> g1, Generator<T2> g2, Generator<T3> g3, Generator<T4> g4)`")]
 	public void WorksFourArgs()
 	{
 		var generator =
@@ -76,9 +77,7 @@ public class CustomizingConstructors
 	}
 
 	[Fact]
-	[DocContent(@" -  `Fuzzr.For<T>().Construct<T1, T2>(Generator<T1> g1, Generator<T2> g2, Generator<T3> g3, Generator<T4> g4, Generator<T5> g5)`  
-
-After that, ... you're on your own.")]
+	[DocContent(@"\nAfter that, ... you're on your own.")]
 	public void WorksFiveArgs()
 	{
 		var generator =
@@ -98,9 +97,16 @@ After that, ... you're on your own.")]
 		Assert.Equal("answer", result.AString);
 	}
 
+	[CodeSnippet]
+	[CodeRemove("return")]
+	private static FuzzrOf<Intent> GetFactoryConfig()
+	{
+		return Configr<SomeThing>.Construct(() => new SomeThing(1, 2, 3, 4, "5"));
+	}
+
 	[Fact]
-	[DocContent(@"Or use the factory method overload:  
-`Fuzzr.For<T>().Construct<T>(Func<T> ctor)`")]
+	[DocContent("Or use the factory method overload: ")]
+	[DocExample(typeof(ConfigrTConstruct), nameof(GetFactoryConfig))]
 	public void FactoryCtor()
 	{
 		var generator =
@@ -109,7 +115,7 @@ After that, ... you're on your own.")]
 			from i3 in Configr<SomeThing>.Ignore(a => a.AnInt3)
 			from i4 in Configr<SomeThing>.Ignore(a => a.AnInt4)
 			from i5 in Configr<SomeThing>.Ignore(a => a.AString)
-			from c in Configr<SomeThing>.Construct(() => new SomeThing(1, 2, 3, 4, "5"))
+			from c in GetFactoryConfig()
 			from r in Fuzzr.One<SomeThing>()
 			select r;
 		var result = generator.Generate();

@@ -1,146 +1,81 @@
+using System.Collections.Concurrent;
+using System.Reflection;
 using QuickFuzzr.UnderTheHood;
 
 namespace QuickFuzzr;
 
 public static partial class Configr<T>
 {
-    public static FuzzrOf<Intent> Construct(Func<T> ctor)
-    {
-        return state =>
-        {
-            var targetType = typeof(T);
-            if (!state.Constructors.TryGetValue(targetType, out var list))
-            {
-                list = new List<Func<State, object>>();
-                state.Constructors[targetType] = list;
-            }
+    private static readonly ConcurrentDictionary<(Type Target, Type[] Args), ConstructorInfo> CtorCache = new();
 
-            list.Add(s => ctor()!);
-            return new Result<Intent>(Intent.Fixed, state);
+    public static FuzzrOf<Intent> Construct(Func<T> ctor) => state => Add(state, _ => ctor()!);
+
+    public static FuzzrOf<Intent> Construct<TArg>(FuzzrOf<TArg> fuzzr) =>
+        state => Add(state, MakeCtorFunc(typeof(T), [typeof(TArg)], s => fuzzr(s).Value!));
+
+    public static FuzzrOf<Intent> Construct<T1, T2>(FuzzrOf<T1> fuzzr1, FuzzrOf<T2> fuzzr2) =>
+        state => Add(state, MakeCtorFunc(typeof(T), [typeof(T1), typeof(T2)],
+            s => fuzzr1(s).Value!, s => fuzzr2(s).Value!));
+
+    public static FuzzrOf<Intent> Construct<T1, T2, T3>(
+        FuzzrOf<T1> fuzzr1, FuzzrOf<T2> fuzzr2, FuzzrOf<T3> fuzzr3) =>
+        state => Add(state, MakeCtorFunc(typeof(T), [typeof(T1), typeof(T2), typeof(T3)],
+            s => fuzzr1(s).Value!, s => fuzzr2(s).Value!, s => fuzzr3(s).Value!));
+
+    public static FuzzrOf<Intent> Construct<T1, T2, T3, T4>(
+        FuzzrOf<T1> fuzzr1, FuzzrOf<T2> fuzzr2, FuzzrOf<T3> fuzzr3, FuzzrOf<T4> fuzzr4) =>
+        state => Add(state, MakeCtorFunc(typeof(T), [typeof(T1), typeof(T2), typeof(T3), typeof(T4)],
+            s => fuzzr1(s).Value!, s => fuzzr2(s).Value!, s => fuzzr3(s).Value!, s => fuzzr4(s).Value!));
+
+    public static FuzzrOf<Intent> Construct<T1, T2, T3, T4, T5>(
+        FuzzrOf<T1> fuzzr1, FuzzrOf<T2> fuzzr2, FuzzrOf<T3> fuzzr3, FuzzrOf<T4> fuzzr4, FuzzrOf<T5> fuzzr5) =>
+        state => Add(state, MakeCtorFunc(typeof(T), [typeof(T1), typeof(T2), typeof(T3), typeof(T4), typeof(T5)],
+            s => fuzzr1(s).Value!, s => fuzzr2(s).Value!, s => fuzzr3(s).Value!, s => fuzzr4(s).Value!, s => fuzzr5(s).Value!));
+
+    // -------------------------------------------------------------
+    // helpers 
+    // --
+    private static Result<Intent> Add(State state, Func<State, object> ctorFunc)
+    {
+        var list = GetOrAddList(state, typeof(T));
+        list.Add(ctorFunc);
+        return new Result<Intent>(Intent.Fixed, state);
+    }
+
+    private static List<Func<State, object>> GetOrAddList(State state, Type targetType)
+    {
+        if (!state.Constructors.TryGetValue(targetType, out var list))
+        {
+            list = [];
+            state.Constructors[targetType] = list;
+        }
+        return list;
+    }
+
+    private static Func<State, object> MakeCtorFunc(
+        Type targetType, Type[] argTypes, params Func<State, object?>[] argFetchers)
+    {
+        var ci = GetCtor(targetType, argTypes);
+        return s =>
+        {
+            var args = new object?[argFetchers.Length];
+            for (int i = 0; i < argFetchers.Length; i++)
+                args[i] = argFetchers[i](s);
+            return ci.Invoke(args);
         };
     }
 
-    public static FuzzrOf<Intent> Construct<TArg>(FuzzrOf<TArg> generator)
+    private static ConstructorInfo GetCtor(Type targetType, Type[] argTypes)
     {
-        return state =>
-        {
-            var targetType = typeof(T);
-            var ctor = targetType.GetConstructor([typeof(TArg)]);
-            if (ctor == null)
-                throw new InvalidOperationException($"No constructor found on {targetType} with argument of type {typeof(TArg)}");
-
-            Func<State, object> ctorFunc = s =>
+        return CtorCache.GetOrAdd((targetType, argTypes),
+            key =>
             {
-                var arg = generator(s).Value!;
-                return ctor.Invoke([arg]);
-            };
-
-            if (!state.Constructors.TryGetValue(targetType, out var list))
-            {
-                list = new List<Func<State, object>>();
-                state.Constructors[targetType] = list;
-            }
-
-            list.Add(ctorFunc);
-            return new Result<Intent>(Intent.Fixed, state);
-        };
-    }
-
-    public static FuzzrOf<Intent> Construct<T1, T2>(FuzzrOf<T1> g1, FuzzrOf<T2> g2)
-    {
-        return state =>
-        {
-            var ctor = typeof(T).GetConstructor([typeof(T1), typeof(T2)]);
-            if (ctor == null)
-                throw new InvalidOperationException($"No constructor found on {typeof(T)} with args ({typeof(T1)}, {typeof(T2)})");
-
-            Func<State, object> fn = s =>
-            {
-                var arg1 = g1(s).Value!;
-                var arg2 = g2(s).Value!;
-                return ctor.Invoke([arg1, arg2]);
-            };
-
-            if (!state.Constructors.TryGetValue(typeof(T), out var list))
-                state.Constructors[typeof(T)] = list = new List<Func<State, object>>();
-
-            list.Add(fn);
-            return new Result<Intent>(Intent.Fixed, state);
-        };
-    }
-
-    public static FuzzrOf<Intent> Construct<T1, T2, T3>(FuzzrOf<T1> g1, FuzzrOf<T2> g2, FuzzrOf<T3> g3)
-    {
-        return state =>
-        {
-            var ctor = typeof(T).GetConstructor([typeof(T1), typeof(T2), typeof(T3)]);
-            if (ctor == null)
-                throw new InvalidOperationException($"No constructor found on {typeof(T)} with args ({typeof(T1)}, {typeof(T2)}, {typeof(T3)})");
-
-            Func<State, object> fn = s =>
-            {
-                var arg1 = g1(s).Value!;
-                var arg2 = g2(s).Value!;
-                var arg3 = g3(s).Value!;
-                return ctor.Invoke([arg1, arg2, arg3]);
-            };
-
-            if (!state.Constructors.TryGetValue(typeof(T), out var list))
-                state.Constructors[typeof(T)] = list = new List<Func<State, object>>();
-
-            list.Add(fn);
-            return new Result<Intent>(Intent.Fixed, state);
-        };
-    }
-
-    public static FuzzrOf<Intent> Construct<T1, T2, T3, T4>(FuzzrOf<T1> g1, FuzzrOf<T2> g2, FuzzrOf<T3> g3, FuzzrOf<T4> g4)
-    {
-        return state =>
-        {
-            var ctor = typeof(T).GetConstructor([typeof(T1), typeof(T2), typeof(T3), typeof(T4)]);
-            if (ctor == null)
-                throw new InvalidOperationException($"No constructor found on {typeof(T)} with args ({typeof(T1)}, {typeof(T2)}, {typeof(T3)}, {typeof(T4)})");
-
-            Func<State, object> fn = s =>
-            {
-                var arg1 = g1(s).Value!;
-                var arg2 = g2(s).Value!;
-                var arg3 = g3(s).Value!;
-                var arg4 = g4(s).Value!;
-                return ctor.Invoke([arg1, arg2, arg3, arg4]);
-            };
-
-            if (!state.Constructors.TryGetValue(typeof(T), out var list))
-                state.Constructors[typeof(T)] = list = new List<Func<State, object>>();
-
-            list.Add(fn);
-            return new Result<Intent>(Intent.Fixed, state);
-        };
-    }
-
-    public static FuzzrOf<Intent> Construct<T1, T2, T3, T4, T5>(FuzzrOf<T1> g1, FuzzrOf<T2> g2, FuzzrOf<T3> g3, FuzzrOf<T4> g4, FuzzrOf<T5> g5)
-    {
-        return state =>
-        {
-            var ctor = typeof(T).GetConstructor([typeof(T1), typeof(T2), typeof(T3), typeof(T4), typeof(T5)]);
-            if (ctor == null)
-                throw new InvalidOperationException($"No constructor found on {typeof(T)} with args ({typeof(T1)}, {typeof(T2)}, {typeof(T3)}, {typeof(T4)}, {typeof(T5)})");
-
-            Func<State, object> fn = s =>
-            {
-                var arg1 = g1(s).Value!;
-                var arg2 = g2(s).Value!;
-                var arg3 = g3(s).Value!;
-                var arg4 = g4(s).Value!;
-                var arg5 = g5(s).Value!;
-                return ctor.Invoke([arg1, arg2, arg3, arg4, arg5]);
-            };
-
-            if (!state.Constructors.TryGetValue(typeof(T), out var list))
-                state.Constructors[typeof(T)] = list = new List<Func<State, object>>();
-
-            list.Add(fn);
-            return new Result<Intent>(Intent.Fixed, state);
-        };
+                var (t, args) = key;
+                var ci = t.GetConstructor(args);
+                if (ci is null)
+                    throw new InvalidOperationException(
+                        $"No constructor found on {t} with args ({string.Join(", ", args.Select(a => a.Name))}).");
+                return ci;
+            });
     }
 }
