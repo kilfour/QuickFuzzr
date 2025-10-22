@@ -9,9 +9,9 @@ public class State
 	public int Seed { get; }
 	public MoreRandom Random { get; }
 
-	public State()
+	public State(int? seed = null)
 	{
-		Seed = RandomNumberGenerator.GetInt32(0, int.MaxValue);
+		Seed = seed ?? RandomNumberGenerator.GetInt32(0, int.MaxValue);
 		Random = new MoreRandom(Seed);
 	}
 
