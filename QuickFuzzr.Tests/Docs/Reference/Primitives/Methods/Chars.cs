@@ -10,6 +10,17 @@ public class Chars
 	private readonly char[] valid = "abcdefghijklmnopqrstuvwxyz".ToCharArray();
 
 	[Fact]
+	[DocContent("- The overload `Fuzzr.Char(char min, char max)` generates a char greater than or equal to `min` and less than or equal to `maxs`.")]
+	public void MinMax()
+		=> CheckIf.GeneratedValuesShouldAllSatisfy(Fuzzr.Char('0', '9'),
+			("value >= '0", a => a >= '0'), ("value < '9'", a => a < '9'));
+
+	[Fact]
+	[DocContent("- Throws an `ArgumentException` when `min` > `max`.")]
+	public void Throws()
+		=> Assert.Throws<ArgumentException>(() => Fuzzr.Char('2', '1').Generate());
+
+	[Fact]
 	[DocContent("- The default generator always generates a char between lower case 'a' and lower case 'z'.")]
 	public void DefaultGeneratorAlwaysBetweenLowerCaseAAndLowerCaseZ()
 	{

@@ -21,6 +21,12 @@ public class DateOnlys
 	}
 
 	[Fact]
+	[DocContent("- Throws an `ArgumentException` when `min` > `max`.")]
+	public void Throws()
+		=> Assert.Throws<ArgumentException>(() => Fuzzr.DateOnly(new DateOnly(2000, 1, 5), new DateOnly(2000, 1, 1)).Generate());
+
+
+	[Fact]
 	[DocContent("- The default generator is (min = new DateOnly(1970, 1, 1), max = new DateOnly(2020, 12, 31)).")]
 	public void DefaultGeneratorNeverGeneratesZero()
 	{

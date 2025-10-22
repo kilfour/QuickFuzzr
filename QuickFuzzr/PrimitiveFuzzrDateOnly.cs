@@ -5,21 +5,19 @@ namespace QuickFuzzr;
 public static partial class Fuzzr
 {
 	public static FuzzrOf<DateOnly> DateOnly()
-	=> DateOnly(new DateOnly(1970, 1, 1), new DateOnly(2020, 12, 31));
+		=> DateOnly(new DateOnly(1970, 1, 1), new DateOnly(2020, 12, 31));
 
 	public static FuzzrOf<DateOnly> DateOnly(DateOnly min, DateOnly max)
-	{
-		if (max < min) throw new ArgumentOutOfRangeException(nameof(max), "max < min");
+		=> MinMax.Check(min, max, DateOnlyInternal(min, max));
 
-		var minN = min.DayNumber;
-		var maxN = max.DayNumber;
-		var span = (long)maxN - minN;
-
-		return s =>
-		{
-			var offset = s.Random.Next(0, checked((int)span));
-			var value = System.DateOnly.FromDayNumber(minN + offset);
-			return new Result<DateOnly>(value, s);
-		};
-	}
+	private static FuzzrOf<DateOnly> DateOnlyInternal(DateOnly min, DateOnly max) =>
+		state =>
+			{
+				var minN = min.DayNumber;
+				var maxN = max.DayNumber;
+				var span = (long)maxN - minN;
+				var offset = state.Random.Next(0, checked((int)span));
+				var value = System.DateOnly.FromDayNumber(minN + offset);
+				return new Result<DateOnly>(value, state);
+			};
 }

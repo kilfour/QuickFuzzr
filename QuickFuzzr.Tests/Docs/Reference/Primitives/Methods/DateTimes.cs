@@ -1,4 +1,5 @@
 ﻿using QuickPulse.Explains;
+using QuickPulse.Show;
 
 namespace QuickFuzzr.Tests.Docs.Reference.Primitives.Methods;
 
@@ -14,11 +15,15 @@ public class DateTimes
 		var generator = Fuzzr.DateTime(new DateTime(2000, 1, 1), new DateTime(2000, 1, 5));
 		for (int i = 0; i < 10; i++)
 		{
-			var value = generator.Generate();
+			var value = generator.Generate().PulseToLog();
 			Assert.True(value >= new DateTime(2000, 1, 1));
 			Assert.True(value < new DateTime(2000, 1, 5));
 		}
 	}
+	[Fact]
+	[DocContent("- Throws an `ArgumentException` when `min` > `max`.")]
+	public void Throws()
+		=> Assert.Throws<ArgumentException>(() => Fuzzr.DateTime(new DateTime(2000, 1, 5), new DateTime(2000, 1, 1)).Generate());
 
 	[Fact]
 	[DocContent("- The default generator is (min = new DateTime(1970, 1, 1), max = new DateTime(2020, 12, 31)).")]

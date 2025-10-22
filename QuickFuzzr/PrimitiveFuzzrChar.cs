@@ -4,10 +4,7 @@ namespace QuickFuzzr;
 
 public static partial class Fuzzr
 {
-	public static FuzzrOf<char> Char()
-	{
-		const int lowerCaseLetterACode = 97;
-		const int lowerCaseLetterZCode = 122;
-		return s => new Result<char>((char)s.Random.Next(lowerCaseLetterACode, lowerCaseLetterZCode + 1), s);
-	}
+	public static FuzzrOf<char> Char() => Char('a', 'z');
+	public static FuzzrOf<char> Char(char min, char max)
+		=> MinMax.Check(min, max, state => new Result<char>((char)state.Random.Next(min, max), state));
 }

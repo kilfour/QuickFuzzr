@@ -18,3 +18,13 @@ byte, sbyte, nint, nuint
 
 
 Revisit .Char
+
+“All discrete ranges are inclusive. Continuous ranges are half-open.”
+
+Test :
+* DateTime : Snap to whole seconds
+
+Test Cleanup:
+* DateTime
+
+use MinMax check everywhere
