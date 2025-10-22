@@ -6,6 +6,12 @@ public class PrimitivesBag<T> where T : struct
     public T? NullableValue { get; set; } = default!;
 }
 
+public class StringBag
+{
+    public string Value { get; set; } = string.Empty;
+    public string? NullableValue { get; set; }
+}
+
 public class Thing
 {
     public int Id { get; set; }

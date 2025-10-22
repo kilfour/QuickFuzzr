@@ -239,6 +239,15 @@ public static partial class Fuzzr
 	private static void SetPrimitive(object target, PropertyInfo propertyInfo, State state)
 	{
 		var generator = state.PrimitiveGenerators[propertyInfo.PropertyType];
+		// if (t.IsValueType) unify ???
+		if (propertyInfo.PropertyType == typeof(string))
+		{
+			var ctx = new NullabilityInfoContext();
+			var nullabilityInfo = ctx.Create(propertyInfo);
+			bool allowsNull = nullabilityInfo.ReadState == NullabilityState.Nullable;
+			if (allowsNull)
+				generator = generator.NullableRef()!;
+		}
 		SetPropertyValue(propertyInfo, target, generator(state).Value);
 	}
 

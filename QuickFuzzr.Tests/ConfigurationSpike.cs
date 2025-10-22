@@ -26,7 +26,7 @@ public class ConfigurationSpike
             from __ in Configr<Order>.Property(a => a.Item, "OVERRIDE")
             from order2 in Fuzzr.One<Order>()
             select new Order[] { order1, order2 };
-        ordersGen.Generate().PulseToLog("orders.log");
+        //ordersGen.Generate().PulseToLog("orders.log");
     }
 
     public class Order

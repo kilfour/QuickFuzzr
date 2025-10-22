@@ -1,4 +1,6 @@
-﻿using QuickPulse.Explains;
+﻿using QuickFuzzr.Tests._Tools;
+using QuickFuzzr.Tests._Tools.Models;
+using QuickPulse.Explains;
 
 namespace QuickFuzzr.Tests.Docs.Reference.Primitives.Methods;
 
@@ -6,81 +8,87 @@ namespace QuickFuzzr.Tests.Docs.Reference.Primitives.Methods;
 [DocContent("Use `Fuzzr.String()`.")]
 public class Strings
 {
+	private static readonly HashSet<char> Valid = [.. "abcdefghijklmnopqrstuvwxyz"];
+
 	[Fact]
-	[DocContent("- The generator always generates every char element of the string to be between lower case 'a' and lower case 'z'.")]
+	[DocContent("- The Default generator generates a string of length greater than or equal to 1 and less than or equal to 10.")]
+	public void DefaultMinMax()
+		=> CheckIf.GeneratedValuesShouldAllSatisfy(Fuzzr.String(),
+			("length >= 1", a => a?.Length >= 1), ("length <= 10", a => a?.Length <= 10));
+
+	[Fact]
+	[DocContent("- The overload `Fuzzr.String(int min, int max)` generates a string of length greater than or equal to `min` and less than or equal to `max`.")]
+	public void MinMax()
+		=> CheckIf.GeneratedValuesShouldAllSatisfy(Fuzzr.String(5, 7),
+			("length >= 5", a => a?.Length >= 5), ("length <= 7", a => a?.Length <= 7));
+
+	[Fact]
+	[DocContent("- Throws an `ArgumentException` when `min` > `max`.")]
+	public void MinGreaterThanMax_Throws()
+		=> Assert.Throws<ArgumentException>(() => Fuzzr.String(5, 4).Generate());
+
+	[Fact]
+	[DocContent("- The overload `Fuzzr.String(int length)` generates a string of exactly `length` ... erm ... length.")]
+	public void Length()
+		=> CheckIf.GeneratedValuesShouldAllSatisfy(Fuzzr.String(5),
+			("length == 5", a => a?.Length == 5));
+
+	[Fact]
+	[DocContent("- Throws an `ArgumentOutOfRangeException` when `length` < 0.")]
+	public void LengthNegative_Throws()
+		=> Assert.Throws<ArgumentOutOfRangeException>(() => Fuzzr.String(-1).Generate());
+
+	[Fact]
+	public void LengthZero()
+		=> CheckIf.GeneratedValuesShouldAllSatisfy(Fuzzr.String(0),
+			("is string.Empty", a => a == string.Empty));
+
+	[Fact]
+	public void MinMaxZero()
+		=> CheckIf.GeneratedValuesShouldAllSatisfy(Fuzzr.String(0, 0),
+			("is string.Empty", a => a == string.Empty));
+
+	[Fact]
+	public void Boundaries()
+		=> CheckIf.GeneratedValuesShouldEventuallySatisfyAll(Fuzzr.String(1, 2),
+			("length == 1", a => a.Length == 1), ("length == 2", a => a.Length == 2));
+
+	[Fact]
+	[DocContent("- The default generator always generates every char element of the string to be between lower case 'a' and lower case 'z'.")]
 	public void DefaultGeneratorStringElementsAlwaysBetweenLowerCaseAAndLowerCaseZ()
-	{
-		var valid = "abcdefghijklmnopqrstuvwxyz".ToCharArray();
-		var generator = Fuzzr.String();
-		for (int i = 0; i < 10; i++)
-		{
-			var val = generator.Generate();
-			Assert.True(val.All(s => valid.Any(c => c == s)), val);
-		}
-	}
+		=> CheckIf.GeneratedValuesShouldAllSatisfy(Fuzzr.String(),
+			("is letter", a => a.All(Valid.Contains)));
 
 	[Fact]
-	[DocContent("- The overload `Fuzzr.String(int min, int max)` generates a string of length greater than or equal to `min` and less than `max`.")]
-	public void Zero()
-	{
-		var generator = Fuzzr.String(5, 7);
-		for (int i = 0; i < 10; i++)
-		{
-			var val = generator.Generate();
-			Assert.True(val.Length >= 5, string.Format("Length : {0}", val.Length));
-			Assert.True(val.Length < 7, string.Format("Length : {0}", val.Length));
-		}
-	}
+	[DocContent("- A version exists for all methods mentioned above that takes a `FuzzrOf<char>` as parameter and then this one will be used to build up the resulting string.")]
+	public void CustomCharFuzzr()
+		=> CheckIf.GeneratedValuesShouldAllSatisfy(Fuzzr.String(Fuzzr.Char('a', 'a')),
+			("is 'a", a => a.All(b => b == 'a')));
 
 	[Fact]
-	[DocContent("- The Default generator generates a string of length higher than 0 and lower than 10.")]
-	public void DefaultGeneratorStringIsBetweenOneAndTen()
-	{
-		var generator = Fuzzr.String();
-		for (int i = 0; i < 10; i++)
-		{
-			var val = generator.Generate();
-			Assert.True(val.Length > 0);
-			Assert.True(val.Length < 10);
-		}
-	}
+	public void CustomCharFuzzrLength()
+		=> CheckIf.GeneratedValuesShouldAllSatisfy(Fuzzr.String(Fuzzr.Char('a', 'a'), 5),
+			("is 'a", a => a.All(b => b == 'a')));
 
 	[Fact]
-	[DocContent("- `string` is automatically detected and generated for object properties.")]
-	public void Property()
-	{
-		var generator = Fuzzr.One<SomeThingToGenerate>();
-		for (int i = 0; i < 10; i++)
-		{
-			var value = generator.Generate().AProperty;
-			Assert.NotNull(value);
-			Assert.NotEqual("", value);
-		}
-	}
+	public void CustomCharFuzzrMinMax()
+		=> CheckIf.GeneratedValuesShouldAllSatisfy(Fuzzr.String(Fuzzr.Char('a', 'a'), 1, 3),
+			("is 'a", a => a.All(b => b == 'a')));
 
 	[Fact]
 	[DocContent("- Can be made to return `string?` using the `.NullableRef()` combinator.")]
 	public void Nullable()
-	{
-		var generator = Fuzzr.String().NullableRef();
-		var isSomeTimesNull = false;
-		var isSomeTimesNotNull = false;
-		for (int i = 0; i < 50; i++)
-		{
-			var value = generator.Generate();
-			if (value == null)
-			{
-				isSomeTimesNull = true;
-			}
-			else
-				isSomeTimesNotNull = true;
-		}
-		Assert.True(isSomeTimesNull);
-		Assert.True(isSomeTimesNotNull);
-	}
+		=> CheckIf.GeneratesNullAndNotNull(Fuzzr.String().NullableRef());
 
-	public class SomeThingToGenerate
-	{
-		public string? AProperty { get; set; }
-	}
+	[Fact]
+	[DocContent("- `string` is automatically detected and generated for object properties.")]
+	public void Property()
+		=> CheckIf.GeneratedValuesShouldAllSatisfy(Fuzzr.One<StringBag>(),
+			("value.Length >= 1", a => a.Value.Length >= 1));
+
+	[Fact]
+	[DocContent("- `string?` is automatically detected and generated for object properties.")]
+	public void NullableProperty()
+		=> CheckIf.GeneratesNullAndNotNull(
+			Fuzzr.One<StringBag>().Select(a => a.NullableValue));
 }

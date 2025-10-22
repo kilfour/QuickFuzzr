@@ -15,7 +15,7 @@ public class DateTimes
 		var generator = Fuzzr.DateTime(new DateTime(2000, 1, 1), new DateTime(2000, 1, 5));
 		for (int i = 0; i < 10; i++)
 		{
-			var value = generator.Generate().PulseToLog();
+			var value = generator.Generate();
 			Assert.True(value >= new DateTime(2000, 1, 1));
 			Assert.True(value < new DateTime(2000, 1, 5));
 		}

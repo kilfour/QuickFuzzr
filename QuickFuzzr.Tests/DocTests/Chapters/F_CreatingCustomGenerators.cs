@@ -68,7 +68,7 @@ return s => new Result<State, int>(s.Random.Next(42, 666), s);
 
     public class SomethingToGenerate
     {
-        public string? MyProperty { get; set; }
+        public string MyProperty { get; set; } = string.Empty;
     }
 
     public FuzzrOf<int> Counter()

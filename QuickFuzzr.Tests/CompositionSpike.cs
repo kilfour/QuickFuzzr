@@ -9,24 +9,20 @@ public class CompositionSpike
     public void FirstShot()
     {
         var digit = Fuzzr.Char('0', '9');
-        Func<IEnumerable<char>, string> charsToString =
-            a => new string([.. a]);
-        var ssn =
-            from d1 in digit.Many(3)
-            from d2 in digit.Many(2)
-            from d3 in digit.Many(4)
-            select d1 + "-" + d2 + "-" + d3;
+
+        var ssn1 =
+            from a in Fuzzr.String(digit, 3)
+            from b in Fuzzr.String(digit, 2)
+            from c in Fuzzr.String(digit, 4)
+            select $"{a}-{b}-{c}";
+
         var ssn2 =
             from a in Fuzzr.Int(100, 999)
             from b in Fuzzr.Int(10, 99)
-            from c in Fuzzr.String(1000, 9999)
+            from c in Fuzzr.Int(1000, 9999)
             select $"{a}-{b}-{c}";
-        //select $"{d1}-{d2}-{d3}";
-        //ssn2.Generate().PulseToLog("result.log");
+
+        // ssn1.Generate().PulseToLog("result.log");
+        // ssn2.Generate().PulseToLog("result.log");
     }
 }
-
-// public static class Ext
-// {
-//     public static string CharsAsString
-// } 

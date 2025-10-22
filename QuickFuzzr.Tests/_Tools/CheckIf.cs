@@ -1,7 +1,6 @@
 using QuickAcid;
 using QuickAcid.Bolts;
 using QuickFuzzr;
-using QuickFuzzr.UnderTheHood;
 using QuickPulse;
 using StringExtensionCombinators;
 
@@ -18,17 +17,14 @@ public static class CheckIf
     }
 
     public static void GeneratesNullAndNotNull<T>(FuzzrOf<T> generator)
-    {
-        GeneratedValuesShouldEventuallySatisfyAll(generator,
-            ("is null", a => a == null), ("is not null", a => a != null));
-    }
+        => GeneratedValuesShouldEventuallySatisfyAll(generator,
+            ("is null", a => a is null),
+            ("is not null", a => a is not null));
 
     public static void GeneratedValuesShouldEventuallySatisfyAll<T>(
         FuzzrOf<T> generator,
         params (string, Func<T, bool>)[] labeledChecks)
-    {
-        GeneratedValuesShouldEventuallySatisfyAll(100, generator, labeledChecks);
-    }
+            => GeneratedValuesShouldEventuallySatisfyAll(100, generator, labeledChecks);
 
     public static void GeneratedValuesShouldEventuallySatisfyAll<T>(
         int numberOfExecutions,
