@@ -13,4 +13,11 @@ public static partial class Configr
                 return new Result<Intent>(Intent.Fixed, state);
             };
 
+    public static FuzzrOf<Intent> Property<TProperty>(Func<PropertyInfo, bool> predicate, TProperty value)
+        => state =>
+            {
+                state.GeneralCustomizations[predicate] = Fuzzr.Constant(value).AsObject();
+                return new Result<Intent>(Intent.Fixed, state);
+            };
+
 }
