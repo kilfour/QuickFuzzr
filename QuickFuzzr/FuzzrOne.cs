@@ -137,15 +137,15 @@ public static partial class Fuzzr
 		if (NeedsToBeGenerallyIgnored(state, propertyInfo))
 			return;
 
-		if (NeedsToBeGenerallyCustomized(state, propertyInfo))
-		{
-			GenerallyCustomizeProperty(instance, propertyInfo, state);
-			return;
-		}
-
 		if (NeedsToBeCustomized(state, propertyInfo))
 		{
 			CustomizeProperty(instance, propertyInfo, state);
+			return;
+		}
+
+		if (NeedsToBeGenerallyCustomized(state, propertyInfo))
+		{
+			GenerallyCustomizeProperty(instance, propertyInfo, state);
 			return;
 		}
 
@@ -219,7 +219,6 @@ public static partial class Fuzzr
 	private static void SetPrimitive(object target, PropertyInfo propertyInfo, State state)
 	{
 		var generator = state.PrimitiveGenerators[propertyInfo.PropertyType];
-		// if (t.IsValueType) unify ???
 		if (propertyInfo.PropertyType == typeof(string))
 		{
 			var ctx = new NullabilityInfoContext();
@@ -249,9 +248,7 @@ public static partial class Fuzzr
 	}
 
 	public static bool IsGenericTypeOf(this Type type, Type openGeneric)
-	{
-		return type.IsGenericType && type.GetGenericTypeDefinition() == openGeneric;
-	}
+		=> type.IsGenericType && type.GetGenericTypeDefinition() == openGeneric;
 
 	private static void SetEnum(State state, PropertyInfo propertyInfo, object instance)
 	{
@@ -297,7 +294,6 @@ public static partial class Fuzzr
 			}
 			prop = propertyInfo.DeclaringType!.GetProperty(propertyInfo.Name);
 		}
-
 
 		if (prop != null && prop.CanWrite) // todo check this
 			prop.SetValue(target, value, null);
