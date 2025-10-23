@@ -46,4 +46,43 @@ public class ConfigrProperty
            select result;
         Assert.Equal(42, generator.Generate().Id);
     }
+
+    [CodeSnippet]
+    [CodeRemove("return")]
+    private static FuzzrOf<Intent> GetConfigFactory()
+    {
+        return Configr.Property(a => a.Name == "Id", a => Fuzzr.Constant(42));
+    }
+
+    [Fact]
+    [DocContent("Another overload allows you to create a fuzzr dynamically using a `Func<PropertyInfo, FuzzrOf<T>>` factory method.")]
+    [DocExample(typeof(ConfigrProperty), nameof(GetConfigFactory))]
+    [CodeSnippet]
+    public void IsApplied_Factory()
+    {
+        var generator =
+           from _ in GetConfigFactory()
+           from result in Fuzzr.One<Thing>()
+           select result;
+        Assert.Equal(42, generator.Generate().Id);
+    }
+
+    [CodeRemove("return")]
+    private static FuzzrOf<Intent> GetConfigFactory_Constant()
+    {
+        return Configr.Property(a => a.Name == "Id", a => 42);
+    }
+
+    [Fact]
+    [DocContent("With the same *pass in a value* conveniance helper.")]
+    [DocExample(typeof(ConfigrProperty), nameof(GetConfigFactory_Constant))]
+    [CodeSnippet]
+    public void IsApplied_Factory_Constant()
+    {
+        var generator =
+           from _ in GetConfigFactory_Constant()
+           from result in Fuzzr.One<Thing>()
+           select result;
+        Assert.Equal(42, generator.Generate().Id);
+    }
 }

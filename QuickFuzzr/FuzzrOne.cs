@@ -212,7 +212,7 @@ public static partial class Fuzzr
 	private static void GenerallyCustomizeProperty(object target, PropertyInfo propertyInfo, State state)
 	{
 		var key = state.GeneralCustomizations.Keys.First(info => info(propertyInfo));
-		var generator = state.GeneralCustomizations[key];
+		var generator = state.GeneralCustomizations[key](propertyInfo);
 		SetPropertyValue(propertyInfo, target, generator(state).Value);
 	}
 

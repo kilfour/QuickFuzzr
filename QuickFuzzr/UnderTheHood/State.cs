@@ -64,7 +64,7 @@ public class State
 
 	public Dictionary<Type, Type> TreeLeaves = [];
 
-	public readonly Dictionary<Func<PropertyInfo, bool>, FuzzrOf<object>> GeneralCustomizations = [];
+	public readonly Dictionary<Func<PropertyInfo, bool>, Func<PropertyInfo, FuzzrOf<object>>> GeneralCustomizations = [];
 	public readonly Dictionary<PropertyInfo, FuzzrOf<object>> Customizations = [];
 	public readonly Dictionary<Type, List<Func<State, object>>> Constructors = [];
 	public readonly Dictionary<Type, List<Action<State, object>>> ActionsToApply = [];
