@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Reflection;
+using System.Runtime.CompilerServices;
 using QuickFuzzr.UnderTheHood;
 
 namespace QuickFuzzr;
@@ -265,8 +266,6 @@ public static partial class Fuzzr
 	{
 		var type = propertyInfo.PropertyType;
 		var result = One(type)(state);
-		// if (propertyInfo.Name is not null)
-		// 	Console.WriteLine($"SET {propertyInfo.Name} = {result.Value?.GetType().Name ?? "null"} on {target.GetType().Name}");
 		SetPropertyValue(propertyInfo, target, result.Value);
 	}
 
@@ -310,9 +309,36 @@ public static partial class Fuzzr
 	{
 		var prop = propertyInfo;
 		if (!prop.CanWrite)
+		{
+			var field = GetBackingField(propertyInfo);
+			if (field is not null)
+			{
+				field.SetValue(target, value);
+				return;
+			}
 			prop = propertyInfo.DeclaringType!.GetProperty(propertyInfo.Name);
+		}
+
 
 		if (prop != null && prop.CanWrite) // todo check this
 			prop.SetValue(target, value, null);
+	}
+
+	public static FieldInfo? GetBackingField(PropertyInfo property)
+	{
+		if (property == null)
+			throw new ArgumentNullException(nameof(property));
+
+		if (!property.CanRead
+			|| property.GetMethod is null
+			|| !property.GetMethod.IsDefined(typeof(CompilerGeneratedAttribute)))
+			return null;
+
+		var backingFieldName = $"<{property.Name}>k__BackingField";
+		var backingField = property.DeclaringType?.GetField(
+			backingFieldName,
+			BindingFlags.Instance | BindingFlags.NonPublic);
+
+		return backingField;
 	}
 }

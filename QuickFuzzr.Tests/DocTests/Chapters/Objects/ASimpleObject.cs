@@ -63,6 +63,13 @@ public class ASimpleObject
 	}
 
 	[Fact]
+	[DocContent("- Also works for get only properties.")]
+	public void FillsGetOnlyProperties()
+	{
+		Assert.NotEqual(0, Fuzzr.One<SomeThingToGenerate>().Generate().GetOnlyProperty);
+	}
+
+	[Fact]
 	[DocContent("- Can generate any object that has a parameterless constructor, be it public, protected, or private.")]
 	public void CanGenerateObjectsProtectedAndPrivate()
 	{
@@ -113,6 +120,8 @@ public class ASimpleObject
 		public MyEnumeration AnEnumerationWithPrivateSetter { get; private set; }
 
 		public int APublicField;
+
+		public int GetOnlyProperty { get; }
 	}
 
 	public enum MyEnumeration
