@@ -19,6 +19,13 @@ public class Guids
 	}
 
 	[Fact]
+	[DocContent("- `Fuzzr.Guid()` is deterministic when seeded.")]
+	public void DeterministicWithSeed()
+	{
+		Assert.Equal("96ba173e-04ae-3bcd-9986-9e56f0adbf3a", Fuzzr.Guid().Generate(42).ToString().ToLower());
+	}
+
+	[Fact]
 	[DocContent("- Can be made to return `Guid?` using the `.Nullable()` combinator.")]
 	public void Nullable()
 	{

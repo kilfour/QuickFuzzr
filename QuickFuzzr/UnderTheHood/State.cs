@@ -88,6 +88,8 @@ public class State
 				{ typeof(char?), Fuzzr.Char().Nullable().AsObject() },
 				{ typeof(bool), Fuzzr.Bool().AsObject() },
 				{ typeof(bool?), Fuzzr.Bool().Nullable().AsObject() },
+				{ typeof(byte), Fuzzr.Byte().AsObject() },
+				{ typeof(byte?), Fuzzr.Byte().Nullable().AsObject() },
 				{ typeof(decimal), Fuzzr.Decimal().AsObject() },
 				{ typeof(decimal?), Fuzzr.Decimal().Nullable().AsObject() },
 				{ typeof(DateTime), Fuzzr.DateTime().AsObject() },
