@@ -118,7 +118,6 @@ public static partial class Fuzzr
 	{
 		if (!state.StuffToIgnoreAll.Contains(declaringType))
 			FillProperties(instance, state);
-		ApplyRegisteredActions(instance, state);
 		return instance;
 	}
 
@@ -127,17 +126,6 @@ public static partial class Fuzzr
 		foreach (var propertyInfo in instance.GetType().GetProperties(MyBinding.Flags))
 		{
 			HandleProperty(instance, state, propertyInfo);
-		}
-	}
-
-	private static void ApplyRegisteredActions(object instance, State state)
-	{
-		foreach (var key in state.ActionsToApply.Keys.Where(t => t.IsAssignableFrom(instance.GetType())))
-		{
-			foreach (var action in state.ActionsToApply[key])
-			{
-				action(state, instance);
-			}
 		}
 	}
 

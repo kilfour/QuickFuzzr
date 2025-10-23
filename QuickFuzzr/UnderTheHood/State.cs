@@ -67,16 +67,6 @@ public class State
 	public readonly Dictionary<Func<PropertyInfo, bool>, Func<PropertyInfo, FuzzrOf<object>>> GeneralCustomizations = [];
 	public readonly Dictionary<PropertyInfo, FuzzrOf<object>> Customizations = [];
 	public readonly Dictionary<Type, Func<State, object>> Constructors = [];
-	public readonly Dictionary<Type, List<Action<State, object>>> ActionsToApply = [];
-
-	public void AddActionToApplyFor(Type type, Action<State, object> action)
-	{
-		if (!ActionsToApply.ContainsKey(type))
-			ActionsToApply[type] = new List<Action<State, object>>();
-		var actions = ActionsToApply[type];
-		if (actions.All(a => a.GetHashCode() != action.GetHashCode()))
-			actions.Add(action);
-	}
 
 	public readonly Dictionary<Type, FuzzrOf<object>> PrimitiveGenerators
 		= new()

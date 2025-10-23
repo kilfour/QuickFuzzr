@@ -10,7 +10,7 @@ public static partial class Configr<T>
         return
             s =>
                 {
-                    s.InheritanceInfo[typeof(T)] = types.ToList();
+                    s.InheritanceInfo[typeof(T)] = [.. types];
                     return new Result<Intent>(Intent.Fixed, s);
                 };
     }
