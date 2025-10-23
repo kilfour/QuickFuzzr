@@ -7,13 +7,6 @@ namespace QuickFuzzr;
 
 public static partial class Fuzzr
 {
-	// public static Generator<T> One<T>(Generator<Unit> config)
-	// 	=> state =>
-	// 		{
-	// 			config(state);
-	// 			return new Result<T>((T)DepthControlledCreation(state, typeof(T), a => (T)CreateInstance(state, typeof(T), a)), state);
-	// 		};
-
 	public static FuzzrOf<T> One<T>()
 		=> state =>
 			new Result<T>((T)DepthControlledCreation(state, typeof(T), a => (T)CreateInstance(state, typeof(T), a)), state);
@@ -70,11 +63,9 @@ public static partial class Fuzzr
 	private static object CreateInstanceOfExactlyThisType(State state, Type typeToGenerate)
 	{
 		// If we have a registered constructor generator, use it
-		if (state.Constructors.TryGetValue(typeToGenerate, out var constructors) && constructors.Count > 0)
+		if (state.Constructors.TryGetValue(typeToGenerate, out var constructor))
 		{
-			var index = state.Random.Next(0, constructors.Count);
-			var chosen = constructors[index];
-			var instance = chosen(state);
+			var instance = constructor(state);
 			ValidateInstanceType(instance, typeToGenerate);
 			return instance;
 		}
@@ -87,7 +78,7 @@ public static partial class Fuzzr
 		if (defaultCtor == null)
 			throw new InvalidOperationException($"No constructor or Construct(...) rule found for type {typeToGenerate}");
 
-		var defaultInstance = defaultCtor.Invoke(Array.Empty<object>());
+		var defaultInstance = defaultCtor.Invoke([]);
 		//ValidateInstanceType(defaultInstance, typeToGenerate);
 		return defaultInstance;
 	}

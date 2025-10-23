@@ -10,6 +10,23 @@ public static partial class Configr<T>
 
     public static FuzzrOf<Intent> Construct(Func<T> ctor) => state => Add(state, _ => ctor()!);
 
+    // public static FuzzrOf<Intent> Construct(Func<T> ctor)
+    //     => state =>
+    //         {
+    //             // Create a fingerprint of this configuration
+    //             var configKey = (typeof(T), ctor.Method.GetHashCode()); // or more sophisticated fingerprint
+
+    //             // Only add if not already configured
+    //             if (!state.AppliedConfigurations.Contains(configKey))
+    //             {
+    //                 var list = GetOrAddList(state, typeof(T));
+    //                 list.Add(_ => ctor()!);
+    //                 state.AppliedConfigurations.Add(configKey);
+    //             }
+
+    //             return new Result<Intent>(Intent.Fixed, state);
+    //         };
+
     public static FuzzrOf<Intent> Construct<TArg>(FuzzrOf<TArg> fuzzr) =>
         state => Add(state, MakeCtorFunc(typeof(T), [typeof(TArg)], s => fuzzr(s).Value!));
 
@@ -37,19 +54,8 @@ public static partial class Configr<T>
     // --
     private static Result<Intent> Add(State state, Func<State, object> ctorFunc)
     {
-        var list = GetOrAddList(state, typeof(T));
-        list.Add(ctorFunc);
+        state.Constructors[typeof(T)] = ctorFunc;
         return new Result<Intent>(Intent.Fixed, state);
-    }
-
-    private static List<Func<State, object>> GetOrAddList(State state, Type targetType)
-    {
-        if (!state.Constructors.TryGetValue(targetType, out var list))
-        {
-            list = [];
-            state.Constructors[targetType] = list;
-        }
-        return list;
     }
 
     private static Func<State, object> MakeCtorFunc(
