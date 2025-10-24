@@ -45,9 +45,9 @@ public class State
 	}
 	// ---------------------------------------------------------------------
 
-	public readonly List<Func<PropertyInfo, bool>> GeneralStuffToIgnore = [];
-	public readonly List<Type> StuffToIgnoreAll = new List<Type>();
-	public readonly List<PropertyInfo> StuffToIgnore = [];
+	public readonly HashSet<Func<PropertyInfo, bool>> GeneralStuffToIgnore = [];
+	public readonly HashSet<Type> StuffToIgnoreAll = [];
+	public readonly HashSet<PropertyInfo> StuffToIgnore = [];
 	private readonly Dictionary<object, object> generatorMemory = [];
 
 	public T Get<T>(object key, T newValue)

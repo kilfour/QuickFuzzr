@@ -131,12 +131,6 @@ public static partial class Fuzzr
 
 	private static void HandleProperty(object instance, State state, PropertyInfo propertyInfo)
 	{
-		if (NeedsToBeIgnored(state, propertyInfo))
-			return;
-
-		if (NeedsToBeGenerallyIgnored(state, propertyInfo))
-			return;
-
 		if (NeedsToBeCustomized(state, propertyInfo))
 		{
 			CustomizeProperty(instance, propertyInfo, state);
@@ -148,6 +142,12 @@ public static partial class Fuzzr
 			GenerallyCustomizeProperty(instance, propertyInfo, state);
 			return;
 		}
+
+		if (NeedsToBeIgnored(state, propertyInfo))
+			return;
+
+		if (NeedsToBeGenerallyIgnored(state, propertyInfo))
+			return;
 
 		if (IsAKnownPrimitive(state, propertyInfo))
 		{
