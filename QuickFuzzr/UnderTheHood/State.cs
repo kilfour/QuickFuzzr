@@ -6,6 +6,7 @@ namespace QuickFuzzr.UnderTheHood;
 
 public class State
 {
+	public ICreationEngine CreationEngine { get; set; } = new Genesis();
 	public int Seed { get; }
 	public MoreRandom Random { get; }
 

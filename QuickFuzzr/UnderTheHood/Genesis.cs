@@ -4,12 +4,12 @@ using System.Runtime.CompilerServices;
 
 namespace QuickFuzzr.UnderTheHood;
 
-public static class Genesis
+public class Genesis : ICreationEngine
 {
-    public static object Create(State state, Type type)
+    public object Create(State state, Type type)
         => Create(state, type, a => CreateInstance(state, type, a));
 
-    public static object Create(State state, Type type, Func<Type?, object> ctor)
+    public object Create(State state, Type type, Func<Type?, object> ctor)
     {
         using (state.WithDepthFrame(type))
         {
@@ -43,11 +43,11 @@ public static class Genesis
         }
     }
 
-    private static FuzzrOf<object> MakeOneOfThese(Type type)
+    private FuzzrOf<object> MakeOneOfThese(Type type)
         => state =>
             new Result<object>(Create(state, type, a => CreateInstance(state, type, a)), state);
 
-    private static object BuildLeaf(State state, Type leafType)
+    private object BuildLeaf(State state, Type leafType)
         => BuildInstance(CreateInstanceOfExactlyThisType(state, leafType), state, leafType);
 
     private static object CreateInstance(State state, Type type, Type? typeToExlude)
@@ -56,7 +56,6 @@ public static class Genesis
 
     private static object CreateInstanceOfExactlyThisType(State state, Type typeToGenerate)
     {
-        // If we have a registered constructor generator, use it
         if (state.Constructors.TryGetValue(typeToGenerate, out var constructor))
         {
             var instance = constructor(state);
@@ -64,7 +63,6 @@ public static class Genesis
             return instance;
         }
 
-        // Fallback to default constructor
         var defaultCtor = typeToGenerate
             .GetConstructors(MyBinding.Flags)
             .FirstOrDefault(c => c.GetParameters().Length == 0);
@@ -108,14 +106,14 @@ public static class Genesis
         return typeToGenerate;
     }
 
-    private static object BuildInstance(object instance, State state, Type declaringType)
+    private object BuildInstance(object instance, State state, Type declaringType)
     {
         if (!state.StuffToIgnoreAll.Contains(declaringType))
             FillProperties(instance, state);
         return instance;
     }
 
-    private static void FillProperties(object instance, State state)
+    private void FillProperties(object instance, State state)
     {
         foreach (var propertyInfo in instance.GetType().GetProperties(MyBinding.Flags))
         {
@@ -123,7 +121,7 @@ public static class Genesis
         }
     }
 
-    private static void HandleProperty(object instance, State state, PropertyInfo propertyInfo)
+    private void HandleProperty(object instance, State state, PropertyInfo propertyInfo)
     {
         if (NeedsToBeCustomized(state, propertyInfo))
         {
@@ -234,15 +232,12 @@ public static class Genesis
         return propertyInfo.PropertyType.IsClass && propertyInfo.PropertyType != typeof(string);
     }
 
-    private static void SetObject(object target, PropertyInfo propertyInfo, State state)
+    private void SetObject(object target, PropertyInfo propertyInfo, State state)
     {
         var type = propertyInfo.PropertyType;
         var result = MakeOneOfThese(type)(state);
         SetPropertyValue(propertyInfo, target, result.Value);
     }
-
-    public static bool IsGenericTypeOf(this Type type, Type openGeneric)
-        => type.IsGenericType && type.GetGenericTypeDefinition() == openGeneric;
 
     private static void SetEnum(State state, PropertyInfo propertyInfo, object instance)
     {
@@ -293,7 +288,7 @@ public static class Genesis
             prop.SetValue(target, value, null);
     }
 
-    public static FieldInfo? GetBackingField(PropertyInfo property)
+    private static FieldInfo? GetBackingField(PropertyInfo property)
     {
         if (property == null)
             throw new ArgumentNullException(nameof(property));
@@ -310,4 +305,10 @@ public static class Genesis
 
         return backingField;
     }
+}
+
+public static class TypeExtensions
+{
+    public static bool IsGenericTypeOf(this Type type, Type openGeneric)
+        => type.IsGenericType && type.GetGenericTypeDefinition() == openGeneric;
 }
