@@ -15,10 +15,6 @@ public static partial class Fuzzr
 		=> state =>
 			new Result<T>((T)DepthControlledCreation(state, typeof(T), _ => constructor()!), state);
 
-	private static FuzzrOf<object> One(Type type)
-		=> state =>
-			new Result<object>(DepthControlledCreation(state, type, a => CreateInstance(state, type, a)), state);
-
 	private static object DepthControlledCreation(State state, Type type, Func<Type?, object> ctor)
 	{
 		using (state.WithDepthFrame(type))
@@ -53,6 +49,10 @@ public static partial class Fuzzr
 		}
 	}
 
+	private static FuzzrOf<object> MakeOneOfThese(Type type)
+		=> state =>
+			new Result<object>(DepthControlledCreation(state, type, a => CreateInstance(state, type, a)), state);
+
 	private static object BuildLeaf(State state, Type leafType)
 		=> BuildInstance(CreateInstanceOfExactlyThisType(state, leafType), state, leafType);
 
@@ -79,7 +79,7 @@ public static partial class Fuzzr
 			throw new InvalidOperationException($"No constructor or Construct(...) rule found for type {typeToGenerate}");
 
 		var defaultInstance = defaultCtor.Invoke([]);
-		//ValidateInstanceType(defaultInstance, typeToGenerate);
+		// ValidateInstanceType(defaultInstance, typeToGenerate);
 		return defaultInstance;
 	}
 
@@ -243,7 +243,7 @@ public static partial class Fuzzr
 	private static void SetObject(object target, PropertyInfo propertyInfo, State state)
 	{
 		var type = propertyInfo.PropertyType;
-		var result = One(type)(state);
+		var result = MakeOneOfThese(type)(state);
 		SetPropertyValue(propertyInfo, target, result.Value);
 	}
 

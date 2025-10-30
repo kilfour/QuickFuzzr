@@ -1,4 +1,4 @@
-using QuickPulse;
+using QuickPulse.Arteries;
 
 namespace QuickFuzzr.Tests._Tools;
 
