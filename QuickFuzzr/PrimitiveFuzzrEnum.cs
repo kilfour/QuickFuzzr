@@ -16,7 +16,7 @@ public static partial class Fuzzr
 		return s => new Result<T>((T)GetEnumValue(typeof(T), s), s);
 	}
 
-	private static object GetEnumValue(Type type, State s)
+	internal static object GetEnumValue(Type type, State s)
 	{
 		var values = GetEnumValues(type);
 		var index = Int(0, values.Count())(s).Value;
