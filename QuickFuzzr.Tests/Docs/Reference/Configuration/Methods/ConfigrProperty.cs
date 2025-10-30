@@ -57,7 +57,6 @@ public class ConfigrProperty
     [Fact]
     [DocContent("Another overload allows you to create a fuzzr dynamically using a `Func<PropertyInfo, FuzzrOf<T>>` factory method.")]
     [DocExample(typeof(ConfigrProperty), nameof(GetConfigFactory))]
-    [CodeSnippet]
     public void IsApplied_Factory()
     {
         var generator =
@@ -67,6 +66,7 @@ public class ConfigrProperty
         Assert.Equal(42, generator.Generate().Id);
     }
 
+    [CodeSnippet]
     [CodeRemove("return")]
     private static FuzzrOf<Intent> GetConfigFactory_Constant()
     {
@@ -76,7 +76,6 @@ public class ConfigrProperty
     [Fact]
     [DocContent("With the same *pass in a value* conveniance helper.")]
     [DocExample(typeof(ConfigrProperty), nameof(GetConfigFactory_Constant))]
-    [CodeSnippet]
     public void IsApplied_Factory_Constant()
     {
         var generator =
