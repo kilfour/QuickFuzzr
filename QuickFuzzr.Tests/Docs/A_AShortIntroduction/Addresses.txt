@@ -1,0 +1,14 @@
+[
+    {
+        Street: "High Street",
+        City: "Bristol"
+    },
+    {
+        Street: "Victoria Street",
+        City: "London"
+    },
+    {
+        Street: "Kings Road",
+        City: "Liverpool"
+    }
+]

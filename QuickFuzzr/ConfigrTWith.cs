@@ -1,0 +1,15 @@
+using System.Linq.Expressions;
+using QuickFuzzr.UnderTheHood;
+
+namespace QuickFuzzr;
+
+public static partial class Configr<T>
+{
+    public static FuzzrOf<Intent> With<TValue>(FuzzrOf<TValue> fuzzr, Func<TValue, FuzzrOf<Intent>> configrFactory)
+        => state =>
+            {
+                state.WithCustomizations[(typeof(T), typeof(TValue))] = (fuzzr.AsObject(), a => configrFactory((TValue)a));
+                return new Result<Intent>(Intent.Fixed, state);
+            };
+
+}

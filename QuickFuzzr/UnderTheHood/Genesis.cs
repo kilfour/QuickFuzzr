@@ -115,6 +115,11 @@ public class Genesis : ICreationEngine
 
     private void FillProperties(object instance, State state)
     {
+        // .Any(info => info.ReflectedType!.IsAssignableFrom(propertyInfo.ReflectedType)
+        _ = state.WithCustomizations
+            .Where(a => a.Key.Item1.IsAssignableFrom(instance.GetType()))
+            .Select(a => a.Value.Item2(a.Value.Item1(state).Value)(state))//configrFactory(fuzzr(state).Value).AsObject();
+            .ToList();
         foreach (var propertyInfo in instance.GetType().GetProperties(MyBinding.Flags))
         {
             HandleProperty(instance, state, propertyInfo);

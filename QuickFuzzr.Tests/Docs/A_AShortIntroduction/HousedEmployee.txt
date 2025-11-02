@@ -1,0 +1,10 @@
+{
+    Address: {
+        Street: "Victoria Street",
+        City: "Manchester"
+    },
+    Email: "George.Lennon@company.com",
+    SocialSecurityNumber: "336-74-5615",
+    Name: "George Lennon",
+    Age: 28
+}

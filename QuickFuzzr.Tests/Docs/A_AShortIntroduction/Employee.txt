@@ -1,0 +1,6 @@
+{
+    Email: "John McCartney@company.com",
+    SocialSecurityNumber: "761-65-2228",
+    Name: "John McCartney",
+    Age: 69
+}

@@ -67,6 +67,7 @@ public class State
 
 	public readonly Dictionary<Func<PropertyInfo, bool>, Func<PropertyInfo, FuzzrOf<object>>> GeneralCustomizations = [];
 	public readonly Dictionary<PropertyInfo, FuzzrOf<object>> Customizations = [];
+	public readonly Dictionary<(Type, Type), (FuzzrOf<object>, Func<object, FuzzrOf<Intent>>)> WithCustomizations = [];
 	public readonly Dictionary<Type, Func<State, object>> Constructors = [];
 
 	public readonly Dictionary<Type, FuzzrOf<object>> PrimitiveGenerators

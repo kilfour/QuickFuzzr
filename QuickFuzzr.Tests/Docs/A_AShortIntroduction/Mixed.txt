@@ -1,0 +1,32 @@
+(
+    {
+        Address: {
+            Street: "Station Road",
+            City: "Bristol"
+        },
+        Email: "Paul.McCartney@mailings.org",
+        SocialSecurityNumber: "621-54-5020",
+        Name: "Paul McCartney",
+        Age: 27
+    },
+    {
+        Address: {
+            Street: "Victoria Street",
+            City: "London"
+        },
+        Email: "George.Harrison@freemail.net",
+        SocialSecurityNumber: "535-80-4278",
+        Name: "George Harrison",
+        Age: 34
+    },
+    {
+        Address: {
+            Street: "Kings Road",
+            City: "Manchester"
+        },
+        Email: "Paul.Star@company.com",
+        SocialSecurityNumber: "428-67-7239",
+        Name: "Paul Star",
+        Age: 11
+    }
+)
