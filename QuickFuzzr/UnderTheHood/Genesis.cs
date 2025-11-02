@@ -120,10 +120,39 @@ public class Genesis : ICreationEngine
             .Where(a => a.Key.Item1.IsAssignableFrom(instance.GetType()))
             .Select(a => a.Value.Item2(a.Value.Item1(state).Value)(state))//configrFactory(fuzzr(state).Value).AsObject();
             .ToList();
-        foreach (var propertyInfo in instance.GetType().GetProperties(MyBinding.Flags))
+        foreach (var propertyInfo in GetPropertiesToGenerate(instance))
         {
             HandleProperty(instance, state, propertyInfo);
         }
+    }
+
+    private IEnumerable<PropertyInfo> GetPropertiesToGenerate(object instance)
+    {
+        return instance.GetType()
+            .GetProperties(MyBinding.Flags).Where(HasPublicSetter);
+    }
+    private bool HasPublicSetter(PropertyInfo prop)
+    {
+        var setter = prop.SetMethod;
+        if (setter == null) return true;
+        if (setter.IsPrivate || setter.IsFamily || setter.IsAssembly)
+            return false;
+        if (setter.ReturnParameter.GetRequiredCustomModifiers()
+            .Any(m => m == typeof(IsExternalInit)))
+            return false;
+        return true;
+    }
+
+    private bool DoesNotHavePublicSetter(PropertyInfo prop)
+    {
+        var setter = prop.SetMethod;
+        if (setter == null) return false;
+        if (setter.IsPrivate || setter.IsFamily || setter.IsAssembly)
+            return true;
+        if (setter.ReturnParameter.GetRequiredCustomModifiers()
+            .Any(m => m == typeof(IsExternalInit)))
+            return true;
+        return false;
     }
 
     private void HandleProperty(object instance, State state, PropertyInfo propertyInfo)
@@ -278,16 +307,16 @@ public class Genesis : ICreationEngine
     private static void SetPropertyValue(PropertyInfo propertyInfo, object target, object value)
     {
         var prop = propertyInfo;
-        if (!prop.CanWrite)
-        {
-            var field = GetBackingField(propertyInfo);
-            if (field is not null)
-            {
-                field.SetValue(target, value);
-                return;
-            }
-            prop = propertyInfo.DeclaringType!.GetProperty(propertyInfo.Name);
-        }
+        // if (!prop.CanWrite)
+        // {
+        //     var field = GetBackingField(propertyInfo);
+        //     if (field is not null)
+        //     {
+        //         field.SetValue(target, value);
+        //         return;
+        //     }
+        //     prop = propertyInfo.DeclaringType!.GetProperty(propertyInfo.Name);
+        // }
 
         if (prop != null && prop.CanWrite) // todo check this
             prop.SetValue(target, value, null);
@@ -310,4 +339,6 @@ public class Genesis : ICreationEngine
 
         return backingField;
     }
+
+
 }

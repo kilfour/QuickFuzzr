@@ -2,7 +2,7 @@ using QuickFuzzr.Tests._Tools.Models;
 using QuickPulse.Explains;
 using QuickPulse.Show;
 
-namespace QuickFuzzr.Tests.Docs.A_AShortIntroduction;
+namespace QuickFuzzr.Tests.Docs.A_YourFirstFuzzr;
 
 
 [DocFile]
@@ -11,7 +11,7 @@ public class YourFirstFuzzr
     [Fact]
     public void DocIt()
     {
-        Explain.OnlyThis<YourFirstFuzzr>("YourFirstFuzzr.md");
+        Explain.OnlyThis<YourFirstFuzzr>("temp.md");
     }
 
     [Fact]
