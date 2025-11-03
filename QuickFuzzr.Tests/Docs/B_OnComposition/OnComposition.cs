@@ -6,10 +6,10 @@ namespace QuickFuzzr.Tests.Docs.B_OnComposition;
 
 
 [DocFile]
+[DocContent("In the previous chapter, the examples kind of went from zero to sixty in under three, so let's step back a bit and have a look under the hood.")]
 public class OnComposition
 {
     [Fact]
-    [DocContent("In the previous chapter, the examples kind of went from zero to sixty in under three, so let's step back a bit and have a look under the hood.")]
     [DocHeader("Fuzzr")]
     [DocContent(
 @"The basic building block of QuickFuzzr is a `FuzzrOf<T>`. This is in essence a function that returns a random value of type `T`.  
@@ -107,5 +107,4 @@ Example:")]
         return Fuzzr.Int().Many(3);
         // Results in => [ 67, 14, 13 ]
     }
-
 }

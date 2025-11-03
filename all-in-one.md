@@ -332,4 +332,37 @@ Fuzzr.Int().Many(3);
 // Results in => [ 67, 14, 13 ]
 ```
 ## Beautifully Carved Objects
-## Reference
+Now that we understand how composition works in QuickFuzzr, let's examine how this concept is applied to object generation.  
+### From Fragments to Forms
+At its heart, object generation in QuickFuzzr is still composition.
+The main tool for this is `Fuzzr.One<T>()`, which tells QuickFuzzr to create a complete instance of type `T`.
+
+When QuickFuzzr does this, it adheres to the following (adjustable) conventions:  
+- Primitive properties are generated using their default `Fuzzr` equivalents.  
+- Enumerations are filled using `Fuzzr.Enum<T>()`.  
+- Object properties are recursively generated where possible.  
+
+Example:  
+```csharp
+public class Appointment
+{
+    public TimeSlot TimeSlot { get; set; } = default!;
+}
+```
+```csharp
+public class TimeSlot
+{
+    public DayOfWeek Day { get; set; }
+    public int Time { get; set; }
+}
+```
+```csharp
+Fuzzr.One<Appointment>().Generate();
+// Results in => { TimeSlot: { Day: Thursday, Time: 14 } }
+```
+### Where QuickFuzzr Draws the Line
+- By default, only properties with public setters are auto-generated.  
+- Collections remain empty. Lists, arrays, dictionaries, etc. aren't auto-populated.  
+- Recursive object creation is off by default.  
+
+**Note:** All of QuickFuzzrs defaults can be overridden using `Configr`.  

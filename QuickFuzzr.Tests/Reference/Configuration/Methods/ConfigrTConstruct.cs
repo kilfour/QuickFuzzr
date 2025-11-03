@@ -97,34 +97,34 @@ public class ConfigrTConstruct
 		Assert.Equal("answer", result.AString);
 	}
 
-	[CodeSnippet]
-	[CodeRemove("return")]
-	private static FuzzrOf<Intent> GetFactoryConfig()
-	{
-		return Configr<SomeThing>.Construct(() => new SomeThing(1, 2, 3, 4, "5"));
-	}
+	// [CodeSnippet]
+	// [CodeRemove("return")]
+	// private static FuzzrOf<Intent> GetFactoryConfig()
+	// {
+	// 	return Configr<SomeThing>.Construct(() => new SomeThing(1, 2, 3, 4, "5"));
+	// }
 
-	[Fact]
-	[DocContent("Or use the factory method overload: ")]
-	[DocExample(typeof(ConfigrTConstruct), nameof(GetFactoryConfig))]
-	public void FactoryCtor()
-	{
-		var generator =
-			from i1 in Configr<SomeThing>.Ignore(a => a.AnInt1)
-			from i2 in Configr<SomeThing>.Ignore(a => a.AnInt2)
-			from i3 in Configr<SomeThing>.Ignore(a => a.AnInt3)
-			from i4 in Configr<SomeThing>.Ignore(a => a.AnInt4)
-			from i5 in Configr<SomeThing>.Ignore(a => a.AString)
-			from c in GetFactoryConfig()
-			from r in Fuzzr.One<SomeThing>()
-			select r;
-		var result = generator.Generate();
-		Assert.Equal(1, result.AnInt1);
-		Assert.Equal(2, result.AnInt2);
-		Assert.Equal(3, result.AnInt3);
-		Assert.Equal(4, result.AnInt4);
-		Assert.Equal("5", result.AString);
-	}
+	// [Fact]
+	// [DocContent("Or use the factory method overload: ")]
+	// [DocExample(typeof(ConfigrTConstruct), nameof(GetFactoryConfig))]
+	// public void FactoryCtor()
+	// {
+	// 	var generator =
+	// 		from i1 in Configr<SomeThing>.Ignore(a => a.AnInt1)
+	// 		from i2 in Configr<SomeThing>.Ignore(a => a.AnInt2)
+	// 		from i3 in Configr<SomeThing>.Ignore(a => a.AnInt3)
+	// 		from i4 in Configr<SomeThing>.Ignore(a => a.AnInt4)
+	// 		from i5 in Configr<SomeThing>.Ignore(a => a.AString)
+	// 		from c in GetFactoryConfig()
+	// 		from r in Fuzzr.One<SomeThing>()
+	// 		select r;
+	// 	var result = generator.Generate();
+	// 	Assert.Equal(1, result.AnInt1);
+	// 	Assert.Equal(2, result.AnInt2);
+	// 	Assert.Equal(3, result.AnInt3);
+	// 	Assert.Equal(4, result.AnInt4);
+	// 	Assert.Equal("5", result.AString);
+	// }
 
 	public class SomeThing
 	{

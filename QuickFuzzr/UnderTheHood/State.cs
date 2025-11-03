@@ -22,6 +22,8 @@ public class State
 		Random = new MoreRandom(seed);
 	}
 
+	public PropertyAccess PropertyAccess { get; set; } = PropertyAccess.PublicSetters;
+
 	// ---------------------------------------------------------------------
 	// Depth Control
 	public readonly Dictionary<Type, DepthConstraint> DepthConstraints = [];

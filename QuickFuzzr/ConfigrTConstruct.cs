@@ -8,7 +8,7 @@ public static partial class Configr<T>
 {
     private static readonly ConcurrentDictionary<(Type Target, Type[] Args), ConstructorInfo> CtorCache = new();
 
-    public static FuzzrOf<Intent> Construct(Func<T> ctor) => state => Add(state, _ => ctor()!);
+    //public static FuzzrOf<Intent> Construct(Func<T> ctor) => state => Add(state, _ => ctor()!);
 
     // public static FuzzrOf<Intent> Construct(Func<T> ctor)
     //     => state =>

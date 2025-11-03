@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Reflection;
 using System.Runtime.CompilerServices;
+using QuickFuzzr.UnderTheHood.WhenThingsGoWrong;
 
 namespace QuickFuzzr.UnderTheHood;
 
@@ -68,7 +69,7 @@ public class Genesis : ICreationEngine
             .FirstOrDefault(c => c.GetParameters().Length == 0);
 
         if (defaultCtor == null)
-            throw new InvalidOperationException($"No constructor or Construct(...) rule found for type {typeToGenerate}");
+            throw new ConstructionException(typeToGenerate.Name);
 
         var defaultInstance = defaultCtor.Invoke([]);
         // ValidateInstanceType(defaultInstance, typeToGenerate);
@@ -120,40 +121,82 @@ public class Genesis : ICreationEngine
             .Where(a => a.Key.Item1.IsAssignableFrom(instance.GetType()))
             .Select(a => a.Value.Item2(a.Value.Item1(state).Value)(state))//configrFactory(fuzzr(state).Value).AsObject();
             .ToList();
-        foreach (var propertyInfo in GetPropertiesToGenerate(instance))
+        foreach (var propertyInfo in GetPropertiesToGenerate(instance, state))
         {
             HandleProperty(instance, state, propertyInfo);
         }
     }
 
-    private IEnumerable<PropertyInfo> GetPropertiesToGenerate(object instance)
+    private IEnumerable<PropertyInfo> GetPropertiesToGenerate(object instance, State state)
     {
-        return instance.GetType()
-            .GetProperties(MyBinding.Flags).Where(HasPublicSetter);
-    }
-    private bool HasPublicSetter(PropertyInfo prop)
-    {
-        var setter = prop.SetMethod;
-        if (setter == null) return true;
-        if (setter.IsPrivate || setter.IsFamily || setter.IsAssembly)
-            return false;
-        if (setter.ReturnParameter.GetRequiredCustomModifiers()
-            .Any(m => m == typeof(IsExternalInit)))
-            return false;
-        return true;
+        var properties = instance.GetType().GetProperties(MyBinding.Flags);
+        return properties.Where(prop => ShouldGenerateProperty(prop, state));
     }
 
-    private bool DoesNotHavePublicSetter(PropertyInfo prop)
+    private bool ShouldGenerateProperty(PropertyInfo prop, State state)
     {
         var setter = prop.SetMethod;
-        if (setter == null) return false;
-        if (setter.IsPrivate || setter.IsFamily || setter.IsAssembly)
-            return true;
-        if (setter.ReturnParameter.GetRequiredCustomModifiers()
-            .Any(m => m == typeof(IsExternalInit)))
-            return true;
+        var isInitOnly = setter?.ReturnParameter.GetRequiredCustomModifiers()
+                        .Any(m => m == typeof(IsExternalInit)) == true;
+
+        // Handle properties with setters
+        if (setter != null)
+        {
+            if (setter.IsPublic)
+            {
+                // Public setter - check if it's init-only or regular public
+                if (isInitOnly)
+                    return state.PropertyAccess.HasFlag(PropertyAccess.InitOnly);
+                else
+                    return state.PropertyAccess.HasFlag(PropertyAccess.PublicSetters);
+            }
+
+            if (setter.IsPrivate && state.PropertyAccess.HasFlag(PropertyAccess.PrivateSetters))
+                return true;
+            if (setter.IsFamily && state.PropertyAccess.HasFlag(PropertyAccess.ProtectedSetters))
+                return true;
+            if (setter.IsAssembly && state.PropertyAccess.HasFlag(PropertyAccess.InternalSetters))
+                return true;
+        }
+
+        // Handle get-only properties (true read-only)
+        if (setter == null && prop.GetMethod != null)
+        {
+            return state.PropertyAccess.HasFlag(PropertyAccess.ReadOnly);
+        }
+
         return false;
     }
+
+    // private IEnumerable<PropertyInfo> GetPropertiesToGenerate(object instance)
+    // {
+    //     return instance.GetType()
+    //         .GetProperties(MyBinding.Flags).Where(HasPublicSetter);
+    // }
+
+    // private bool HasPublicSetter(PropertyInfo prop)
+    // {
+    //     var setter = prop.SetMethod;
+    //     if (setter == null) return true;
+    //     if (setter.IsPrivate || setter.IsFamily || setter.IsAssembly)
+    //         return false;
+    //     if (setter.ReturnParameter.GetRequiredCustomModifiers()
+    //         .Any(m => m == typeof(IsExternalInit)))
+    //         return false;
+    //     return true;
+    // }
+
+    // private bool DoesNotHavePublicSetter(PropertyInfo prop)
+    // {
+    //     var setter = prop.SetMethod;
+    //     if (setter == null) return false;
+    //     if (setter.IsPrivate || setter.IsFamily || setter.IsAssembly)
+    //         return true;
+    //     if (setter.ReturnParameter.GetRequiredCustomModifiers()
+    //         .Any(m => m == typeof(IsExternalInit)))
+    //         return true;
+    //     return false;
+    // }
 
     private void HandleProperty(object instance, State state, PropertyInfo propertyInfo)
     {

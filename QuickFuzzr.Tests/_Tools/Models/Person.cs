@@ -28,3 +28,14 @@ public class Address
     public string Street { get; set; } = string.Empty;
     public string City { get; set; } = string.Empty;
 }
+
+
+[CodeExample]
+public class PrivatePerson
+{
+    public string Name { get; init; } = string.Empty;
+    public int Age { get; init; }
+}
+
+[CodeExample]
+public record PersonRecord(string Name, int Age);
