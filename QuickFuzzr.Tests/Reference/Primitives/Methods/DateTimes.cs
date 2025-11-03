@@ -1,5 +1,4 @@
 ﻿using QuickPulse.Explains;
-using QuickPulse.Show;
 
 namespace QuickFuzzr.Tests.Docs.Reference.Primitives.Methods;
 

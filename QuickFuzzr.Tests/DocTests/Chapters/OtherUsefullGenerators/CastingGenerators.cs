@@ -1,5 +1,4 @@
-﻿using QuickFuzzr.UnderTheHood;
-using QuickPulse.Explains;
+﻿using QuickPulse.Explains;
 
 namespace QuickFuzzr.Tests.DocTests.Chapters.OtherUsefullGenerators;
 

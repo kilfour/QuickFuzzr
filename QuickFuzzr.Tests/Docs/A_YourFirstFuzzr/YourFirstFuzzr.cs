@@ -1,6 +1,5 @@
 using QuickFuzzr.Tests._Tools.Models;
 using QuickPulse.Explains;
-using QuickPulse.Show;
 
 namespace QuickFuzzr.Tests.Docs.A_YourFirstFuzzr;
 
@@ -8,12 +7,6 @@ namespace QuickFuzzr.Tests.Docs.A_YourFirstFuzzr;
 [DocFile]
 public class YourFirstFuzzr
 {
-    [Fact]
-    public void DocIt()
-    {
-        Explain.OnlyThis<YourFirstFuzzr>("temp.md");
-    }
-
     [Fact]
     [DocContent("Starting simple. Suppose you have this class:")]
     [DocExample(typeof(Person))]
@@ -73,7 +66,7 @@ and fills them in using the default generators.")]
     [Fact]
     [DocHeader("Composable Fuzzrs")]
     [DocContent(
-@"Above example already shows how QuickFuzzr leverages the composability of LINQ to good effect,
+@"Above example already shows how QuickFuzzr leverages the composability of `LINQ` to good effect,
 but let's drive that point home a bit more.  
 Consider this `Employee` class derived from `Person`:")]
     [DocExample(typeof(Employee))]
@@ -89,7 +82,7 @@ Consider this `Employee` class derived from `Person`:")]
 I just used `string[]`'s but the data could easily be loaded from a file for instance.")]
     public void Employee_Example_Customized()
     {
-        var result = EmployeeFuzzr(SsnFuzzr()).Generate(43).PulseToLog();
+        var result = EmployeeFuzzr(SsnFuzzr()).Generate(43);
         Assert.Equal("John McCartney", result.Name);
         Assert.Equal(69, result.Age);
         Assert.Equal("John.McCartney@company.com", result.Email);
@@ -102,7 +95,7 @@ I just used `string[]`'s but the data could easily be loaded from a file for ins
 
     [CodeSnippet]
     [CodeRemove("return ssnFuzzr;")]
-    private static FuzzrOf<string> SsnFuzzr()
+    public static FuzzrOf<string> SsnFuzzr()
     {
         var ssnFuzzr =
             from a in Fuzzr.Int(100, 999)
@@ -169,7 +162,7 @@ I just used `string[]`'s but the data could easily be loaded from a file for ins
     [DocContent("Another *derivation*:")]
     [DocExample(typeof(HousedEmployee))]
     [DocContent(
-@"Now we could use an `addressFuzzr` and add another line to the `select` clause of the LINQ expression,
+@"Now we could use an `addressFuzzr` and add another line to the `select` clause of the `LINQ` expression,
 but let's introduce the final piece of the QuickFuzzr puzzle: `Configr`,
 and rewrite it like so:
 
@@ -256,7 +249,7 @@ and rewrite it like so:
     [Fact]
     [DocContent(
 @"Ok, calling this chapter *""Your First Fuzzr""*, might have been a bit optimistic.
-Because that is some dense LINQing right there.  
+Because that is some dense `LINQ`-ing right there.  
 But here are some counter arguments.  
 
 **1. You can always just**: Use `Fuzzr.One<HousedEmployee>()`, resulting in, for instance:")]
@@ -285,7 +278,7 @@ But here are some counter arguments.
 
     [Fact]
     [DocContent(
-@"**2. Reusability**: Once you have defined a LINQ chain like the one above, you can do more than one thing with it.
+@"**2. Reusability**: Once you have defined a `LINQ` chain like the one above, you can do more than one thing with it.
 
 **Generate just addresses (or `Person`, `Employee`, etc.):**
 ")]
@@ -325,7 +318,7 @@ But here are some counter arguments.
 another one that is guaranteed to live in London, and finally an underaged one.")]
     public void Wild()
     {
-        var result = Wild_Fuzzr(CombinedFuzzr()).PulseToLog();
+        var result = Wild_Fuzzr(CombinedFuzzr());
 
         var normal = result.Item1;
         Assert.Equal("Paul.McCartney@mailings.org", normal.Email);
@@ -368,7 +361,7 @@ another one that is guaranteed to live in London, and finally an underaged one."
             from city in Configr<Address>.Property(a => a.City, Fuzzr.OneOf(cities))
             from age in Configr<Person>.Property(a => a.Age, Fuzzr.Int(8, 17))
             from underaged in Fuzzr.One<HousedEmployee>()
-                // Return a Tuple (or, ..., a Thruple ?) of HousedEmployee's
+                // Return a Tuple (or, ..., a Thruple ?) of HousedEmployees
             select (normal, londoner, underaged);
         return fuzzr.Generate(68);
     }
