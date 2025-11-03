@@ -1,6 +1,6 @@
 ﻿using QuickPulse.Explains;
 
-namespace QuickFuzzr.Tests.Docs.Reference.Configuration.Methods;
+namespace QuickFuzzr.Tests.Reference.Configuration.Methods;
 
 [DocFile]
 [DocFileHeader("Configr<T>.Construct(...)")]

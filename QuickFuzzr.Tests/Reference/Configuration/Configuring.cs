@@ -1,6 +1,6 @@
 using QuickPulse.Explains;
 
-namespace QuickFuzzr.Tests.Docs.Reference.Configuration;
+namespace QuickFuzzr.Tests.Reference.Configuration;
 
 [DocFile]
 public class Configuring

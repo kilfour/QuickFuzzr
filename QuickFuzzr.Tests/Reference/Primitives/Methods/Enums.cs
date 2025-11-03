@@ -1,7 +1,7 @@
 ﻿using QuickFuzzr.Tests._Tools;
 using QuickPulse.Explains;
 
-namespace QuickFuzzr.Tests.Docs.Reference.Primitives.Methods;
+namespace QuickFuzzr.Tests.Reference.Primitives.Methods;
 
 [DocFile]
 [DocContent("Use `Fuzzr.Enum<T>()`, where T is the type of Enum you want to generate.")]

@@ -1,6 +1,6 @@
 using QuickPulse.Explains;
 
-namespace QuickFuzzr.Tests.Docs.Reference;
+namespace QuickFuzzr.Tests.Reference;
 
 [DocFile]
 public class Reference

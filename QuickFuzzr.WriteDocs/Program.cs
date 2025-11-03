@@ -1,4 +1,4 @@
-﻿using QuickFuzzr.Tests.Docs.Reference;
+﻿using QuickFuzzr.Tests.Docs;
 using QuickPulse.Explains;
 
-Explain.This<Reference>("temp.md");
+Explain.This<Documentation>("all-in-one.md");
