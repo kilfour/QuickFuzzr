@@ -81,7 +81,6 @@ public class FuzzThe
 
     public static readonly FuzzrOf<(IEnumerable<Course> courses, IEnumerable<Coach> coaches)> Domain =
             from _ in Configr.IgnoreAll()
-            from __ in Configr.EnablePropertyAccessFor(PropertyAccess.InitOnly)
             from coaches in CoachFuzzr.Many(3)
             from courses in CourseFuzzr(coaches).Many(1)
             select (courses, coaches);
