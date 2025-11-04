@@ -74,7 +74,7 @@ var employeeFuzzr =
             SocialSecurityNumber = ssn
         };
 ```
-Calling `.Generate()` outputs:  
+**Output:**  
 ```
 {
     Email: "John McCartney@company.com",

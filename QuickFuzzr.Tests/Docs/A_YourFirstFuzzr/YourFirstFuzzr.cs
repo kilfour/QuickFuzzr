@@ -75,7 +75,7 @@ Consider this `Employee` class derived from `Person`:")]
     [DocExample(typeof(YourFirstFuzzr), nameof(SsnFuzzr))]
     [DocContent("**Employee**")]
     [DocExample(typeof(YourFirstFuzzr), nameof(EmployeeFuzzr))]
-    [DocContent("Calling `.Generate()` outputs:")]
+    [DocContent("**Output:**")]
     [DocCodeFile("Employee.txt")]
     [DocContent(
 @"In this example the lists used by `OneOf` are declared outside of the generator.
