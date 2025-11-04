@@ -3,7 +3,7 @@
 namespace QuickFuzzr.Tests.Docs.T_Reference.D_Configuration.Methods;
 
 [DocFile]
-[DocFileHeader("`Configr&lt;T&gt;.Construct(...)")]
+[DocFileHeader("Configr&lt;T&gt;.Construct(...)")]
 public class ConfigrTConstruct
 {
 	[DocContent("**Usage:**")]

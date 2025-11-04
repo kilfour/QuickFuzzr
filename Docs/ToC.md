@@ -43,7 +43,7 @@
       - [Configr.Ignore(...)](T_Reference/D_Configuration/Methods/ConfigrIgnore.md)
       - [Configr.IgnoreAll()](T_Reference/D_Configuration/Methods/ConfigrIgnoreAll.md)
       - [Configr.Property(...)](T_Reference/D_Configuration/Methods/ConfigrProperty.md)
-      - [`Configr&lt;T&gt;.Construct(...)](T_Reference/D_Configuration/Methods/ConfigrTConstruct.md)
+      - [Configr&lt;T&gt;.Construct(...)](T_Reference/D_Configuration/Methods/ConfigrTConstruct.md)
       - [Configr&lt;T&gt;.Ignore(...)](T_Reference/D_Configuration/Methods/ConfigrTIgnore.md)
       - [Configr&lt;T&gt;.IgnoreAll()](T_Reference/D_Configuration/Methods/ConfigrTIgnoreAll.md)
       - [Configr&lt;T&gt;.Property(...)](T_Reference/D_Configuration/Methods/ConfigrTProperty.md)

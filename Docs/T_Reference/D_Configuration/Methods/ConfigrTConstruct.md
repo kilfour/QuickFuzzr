@@ -1,4 +1,4 @@
-# `Configr&lt;T&gt;.Construct(...)
+# Configr&lt;T&gt;.Construct(...)
 **Usage:**  
 ```csharp
  Configr<SomeThing>.Construct(Fuzzr.Constant(42));

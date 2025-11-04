@@ -63,17 +63,17 @@ public class Strings
 	[DocContent("- A version exists for all methods mentioned above that takes a `FuzzrOf<char>` as parameter and then this one will be used to build up the resulting string.")]
 	public void CustomCharFuzzr()
 		=> CheckIf.GeneratedValuesShouldAllSatisfy(Fuzzr.String(Fuzzr.Char('a', 'a')),
-			("is 'a", a => a.All(b => b == 'a')));
+			("is 'a'", a => a.All(b => b == 'a')));
 
 	[Fact]
 	public void CustomCharFuzzrLength()
 		=> CheckIf.GeneratedValuesShouldAllSatisfy(Fuzzr.String(Fuzzr.Char('a', 'a'), 5),
-			("is 'a", a => a.All(b => b == 'a')));
+			("is 'a'", a => a.All(b => b == 'a')));
 
 	[Fact]
 	public void CustomCharFuzzrMinMax()
 		=> CheckIf.GeneratedValuesShouldAllSatisfy(Fuzzr.String(Fuzzr.Char('a', 'a'), 1, 3),
-			("is 'a", a => a.All(b => b == 'a')));
+			("is 'a'", a => a.All(b => b == 'a')));
 
 	[Fact]
 	[DocContent("- Can be made to return `string?` using the `.NullableRef()` combinator.")]
