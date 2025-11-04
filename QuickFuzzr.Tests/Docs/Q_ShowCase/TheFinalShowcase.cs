@@ -22,7 +22,7 @@ This example uses the [HorsesForCourses](https://github.com/kilfour/HorsesForCou
 
 **Fuzzrs:**")]
     [DocCodeFile("FuzzThe.cs", "csharp", 12)]
-    [DocContent("**Result:**")]
+    [DocContent("**Output:**")]
     [DocCodeFile("Result.txt", "text")]
     public void BuildDomain()
     {

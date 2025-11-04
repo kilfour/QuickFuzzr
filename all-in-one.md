@@ -12,7 +12,7 @@ You can generate a fully randomized instance like so:
 ```csharp
 Fuzzr.One<Person>().Generate();
 ```
-Output:  
+**Output:**  
 ```text
 Person { Name = "ddnegsm", Age = 18 }
 ```
@@ -164,7 +164,6 @@ var peopleFuzzr =
     from housedEmployee in Fuzzr.One<HousedEmployee>()
     select housedEmployee;
 ```
-The Output:  
 ```
 {
     Address: {
@@ -534,7 +533,7 @@ from folderDepth in Configr<Folder>.Depth(2, 5)
 from folder in Fuzzr.One<Folder>()
 select folder;
 ```
-Output:  
+**Output:**  
 ```text
 {
     Name: "Folder-1",
@@ -728,13 +727,12 @@ public class FuzzThe
         select (day, start, end);
 
     public static readonly FuzzrOf<(IEnumerable<Course> courses, IEnumerable<Coach> coaches)> Domain =
-            from _ in Configr.IgnoreAll()
-            from coaches in CoachFuzzr.Many(3)
-            from courses in CourseFuzzr(coaches).Many(1)
-            select (courses, coaches);
+        from coaches in CoachFuzzr.Many(3)
+        from courses in CourseFuzzr(coaches).Many(1)
+        select (courses, coaches);
 }
 ```
-**Result:**  
+**Output:**  
 ```text
 (
     [

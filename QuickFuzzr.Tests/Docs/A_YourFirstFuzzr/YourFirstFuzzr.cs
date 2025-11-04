@@ -12,7 +12,7 @@ public class YourFirstFuzzr
     [DocExample(typeof(Person))]
     [DocContent("You can generate a fully randomized instance like so:")]
     [DocExample(typeof(YourFirstFuzzr), nameof(Person_Example_GetResult))]
-    [DocContent("Output:")]
+    [DocContent("**Output:**")]
     [DocCode("Person { Name = \"ddnegsm\", Age = 18 }", "text")]
     [DocContent(
 @"And that's it, ... no configuration required.  
@@ -41,7 +41,7 @@ and fills them in using the default generators.")]
  It is relatively easy however to *customize* the generation.  
  Let's for instance generate a *real* name and ensure our `Person` is eligible to vote:")]
     [DocExample(typeof(YourFirstFuzzr), nameof(Person_Example_GetResult_Customized))]
-    [DocContent("Output:")]
+    [DocContent("**Output:**")]
     [DocCode("Person { Name = \"George Lennon\", Age = 25 }", "text")]
     public void Person_Example_Customized()
     {
@@ -175,7 +175,7 @@ and rewrite it like so:
     [DocExample(typeof(YourFirstFuzzr), nameof(PersonConfigr))]
     [DocContent("**All Together Now**")]
     [DocExample(typeof(YourFirstFuzzr), nameof(PeopleFuzzr))]
-    [DocContent("The Output:")]
+    [DocContent("**Output:**")]
     [DocCodeFile("HousedEmployee.txt")]
     public void HousedEmployee_Example()
     {

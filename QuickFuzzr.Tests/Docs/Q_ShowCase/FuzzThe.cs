@@ -80,8 +80,7 @@ public class FuzzThe
         select (day, start, end);
 
     public static readonly FuzzrOf<(IEnumerable<Course> courses, IEnumerable<Coach> coaches)> Domain =
-            from _ in Configr.IgnoreAll()
-            from coaches in CoachFuzzr.Many(3)
-            from courses in CourseFuzzr(coaches).Many(1)
-            select (courses, coaches);
+        from coaches in CoachFuzzr.Many(3)
+        from courses in CourseFuzzr(coaches).Many(1)
+        select (courses, coaches);
 }
