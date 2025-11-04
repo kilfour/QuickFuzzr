@@ -15,12 +15,6 @@ So, let's dive deeper.
 public class ThroughTheLookingGlass
 {
     [Fact]
-    public void Doc()
-    {
-        Explain.OnlyThis<ThroughTheLookingGlass>("temp.md");
-    }
-
-    [Fact]
     [DocContent("Imagine:")]
     [DocExample(typeof(Folder))]
     [DocContent("Calling `Fuzzr.One<Folder>().Generate()` results in:")]
