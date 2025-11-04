@@ -1,24 +1,23 @@
-using System.Diagnostics.Metrics;
 using QuickFuzzr.Tests._Tools.Models;
 using QuickPulse.Explains;
-using QuickPulse.Instruments;
 using QuickPulse.Show;
 
-namespace QuickFuzzr.Tests.Docs.D_ADeepForest;
+namespace QuickFuzzr.Tests.Docs.D_ThroughTheLookingGlass;
 
 [DocFile]
+[DocFileHeader("Through the Looking Glass")]
 [DocContent(
 @"In the previous chapter we hinted at recursion and depth-control.  
 
 So, let's dive deeper.  
 
 ")]
-public class ADeepForest
+public class ThroughTheLookingGlass
 {
     [Fact]
     public void Doc()
     {
-        Explain.OnlyThis<ADeepForest>("temp.md");
+        Explain.OnlyThis<ThroughTheLookingGlass>("temp.md");
     }
 
     [Fact]
@@ -35,9 +34,9 @@ public class ADeepForest
 
     [Fact]
     [DocContent(
-@"You can however influence how deep the rabbit hole goes
+@"You can however influence how deep the rabbit hole goes,
 by adding call to `Configr<Folder>.Depth(min, max)`:")]
-    [DocExample(typeof(ADeepForest), nameof(GoingDeeper_Example))]
+    [DocExample(typeof(ThroughTheLookingGlass), nameof(GoingDeeper_Example))]
     public void GoingDeeper()
     {
         var result = GoingDeeper_Example().Generate(102).PulseToLog("temp.log");
@@ -54,9 +53,8 @@ by adding call to `Configr<Folder>.Depth(min, max)`:")]
     private static FuzzrOf<Folder> GoingDeeper_Example()
     {
         return
-        from name in Configr<Folder>.With(
-            Fuzzr.Counter("folder"),
-            cnt => Configr<Folder>.Property(a => a.Name, $"Folder-{cnt}"))
+        from name in Configr<Folder>.Property(a => a.Name,
+            from cnt in Fuzzr.Counter("folder") select $"Folder-{cnt}")
         from folderDepth in Configr<Folder>.Depth(2, 5)
         from folder in Fuzzr.One<Folder>()
         select folder;
@@ -81,21 +79,45 @@ But we can still go *one step beyond*.
 Consider:
 ")]
     [DocExample(typeof(FileSystemEntry))]
-    [DocExample(typeof(FolderEntry))]
     [DocExample(typeof(FileEntry))]
+    [DocExample(typeof(FolderEntry))]
     [DocContent("A bit complicated, but let's have a go:")]
-    [DocExample(typeof(ADeepForest), nameof(OneStepBeyond_Example))]
+    [DocExample(typeof(ThroughTheLookingGlass), nameof(OneStepBeyond_Example))]
+    [DocContent("Output:")]
+    [DocCodeFile("OneStepBeyond.txt", "text")]
+    [DocContent(
+@"At this point QuickFuzzr has *type walked* an object graph that contains itself, stopped at a reasonable depth,
+and made sense of collections nested inside collections, with controlled recursion.
+
+Each type involved carries its own depth constraint, and every recursive property or list of child elements
+simply burns through that budget one level at a time.
+When the counter hits zero, the generator yields null (or an empty list), and the story ends right there.
+
+It also means you can mix these with inheritance and collection combinators.  
+And depth is local, not global: one deep branch does not force all others to go equally deep.")]
     public void OneStepBeyond()
     {
-        var result = OneStepBeyond_Example().Generate(1234);
-        var logFile = "temp.log";
-        File.Delete(Path.Combine(SolutionLocator.FindSolutionRoot()!, logFile));
-        Please.AllowMe()
-            .ToInline<List<FileEntry>>()
-            .IntroduceThis(result)
-            .PulseToLog(logFile);
-        // Assert.Equal("Folder-1", result.Name);
-        // Assert.NotNull(result.SubFolder);
+        var result = OneStepBeyond_Example().Generate(494);
+        // FileLog.Write("temp.log").Absorb(
+        //     Please.AllowMe()
+        //         .ToInline<List<FileEntry>>()
+        //         .IntroduceThis(result));
+        var root = Assert.IsType<FolderEntry>(result);
+        Assert.Equal(2, root.Files.Count);
+        Assert.Equal(2, root.Folders.Count);
+
+        Assert.Single(root.Folders[0].Files);
+        Assert.Equal(2, root.Folders[0].Folders.Count);
+        Assert.Single(root.Folders[0].Folders[0].Files);
+        Assert.Empty(root.Folders[0].Folders[0].Folders);
+        Assert.Single(root.Folders[0].Folders[1].Files);
+        Assert.Empty(root.Folders[0].Folders[1].Folders);
+
+        Assert.Single(root.Folders[1].Files);
+        Assert.Single(root.Folders[1].Folders);
+        Assert.Single(root.Folders[1].Folders[0].Files);
+        Assert.Empty(root.Folders[1].Folders[0].Folders);
+
     }
 
     [CodeSnippet]
@@ -113,13 +135,13 @@ Consider:
 
         var folderCfg =
             from name in GetName<FolderEntry>("Folder")
-            from folderDepth in Configr<FolderEntry>.Depth(2, 2)
+            from folderDepth in Configr<FolderEntry>.Depth(1, 3)
             from files in Configr<FolderEntry>.Property(
                 a => a.Files,
                 from fs in Fuzzr.One<FileEntry>().Many(1, 3) select fs.ToList())
             from folders in Configr<FolderEntry>.Property(
                 a => a.Folders,
-                from fs in Fuzzr.One<FolderEntry>().Many(1, 2) select fs.ToList())
+                from fs in Fuzzr.One<FolderEntry>().Many(1, 3) select fs.ToList())
             select Intent.Fixed;
 
         var fuzzr =
@@ -130,17 +152,6 @@ Consider:
             select entry;
 
         return fuzzr;
-        // Results in =>
-        // {
-        //     Name: "Folder-1",
-        //     SubFolder: {
-        //         Name: "Folder-2",
-        //         SubFolder: {
-        //             Name: "Folder-3",
-        //             SubFolder: null
-        //         }
-        //     }
-        // }
     }
 
     [CodeSnippet]

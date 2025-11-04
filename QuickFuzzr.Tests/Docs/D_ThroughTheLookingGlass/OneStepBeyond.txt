@@ -1,0 +1,33 @@
+{
+    Files: [ { Name: "File-1" }, { Name: "File-2" } ],
+    Folders: [
+        {
+            Files: [ { Name: "File-3" } ],
+            Folders: [
+                {
+                    Files: [ { Name: "File-4" } ],
+                    Folders: [ ],
+                    Name: "Folder-1"
+                },
+                {
+                    Files: [ { Name: "File-5" } ],
+                    Folders: [ ],
+                    Name: "Folder-2"
+                }
+            ],
+            Name: "Folder-3"
+        },
+        {
+            Files: [ { Name: "File-6" } ],
+            Folders: [
+                {
+                    Files: [ { Name: "File-7" } ],
+                    Folders: [ ],
+                    Name: "Folder-4"
+                }
+            ],
+            Name: "Folder-5"
+        }
+    ],
+    Name: "Folder-6"
+}

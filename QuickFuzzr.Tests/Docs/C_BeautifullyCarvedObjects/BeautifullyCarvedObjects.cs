@@ -123,11 +123,11 @@ Possible solutions:
 @"As you can see the error message hints at possible solutions,
 so here are the concrete ones (ignoring the parameterless constructor suggestion) for our current case:
 ")]
-    [DocContent("**Configr.Construct:** Best for reusable configurations;")]
+    [DocContent("**Configr.Construct:** Best for reusable configurations.")]
     [DocExample(typeof(BeautifullyCarvedObjects), nameof(FuzzrOne_No_Default_Ctor_Register_Custom_Constructor))]
-    [DocContent("**Explicit generation**: Most straightforward for one-off cases.")]
+    [DocContent("**Explicit generation**: Most useful for creating (reusable) Fuzzrs of the type to generate.")]
     [DocExample(typeof(BeautifullyCarvedObjects), nameof(FuzzrOne_No_Default_Ctor_Explicit_Generation))]
-    [DocContent("**Factory method:** Useful when you need the object wrapped in `FuzzrOf<T>`.")]
+    [DocContent("**Factory method:** Most straightforward for one-off cases.")]
     [DocExample(typeof(BeautifullyCarvedObjects), nameof(FuzzrOne_No_Default_Ctor_Factory_Method))]
     public void FuzzrOne_No_Default_Ctor_Construction_Options()
     {

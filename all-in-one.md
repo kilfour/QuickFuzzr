@@ -331,6 +331,32 @@ Example:
 Fuzzr.Int().Many(3);
 // Results in => [ 67, 14, 13 ]
 ```
+#### A Word of Caution
+When using the `FuzzrOf<T>` extension methods, scope is important.    
+
+For instance the following might produce an, at first glance, surprising result:  
+```csharp
+return
+from name in Fuzzr.OneOf("John", "Paul", "George", "Ringo")
+from age in Fuzzr.Int(18, 99)
+from people in Fuzzr.One(() => new PersonRecord(name, age)).Many(2)
+select people;
+// Results in => [ { Name: "George", Age: 69 }, { Name: "George", Age: 69 } ]
+```
+Looking closer however, it becomes clear this is correct behaviour according to the `LINQ` rules.  
+The `name` and  `age` range variables are *captured* from outside of the scope of the `FuzzrOf<PersonRecord>`,
+so calling `.Many(2)` does not cause them to be regenerated.  
+
+A corrected version of this Fuzzr would look like this:  
+```csharp
+return
+(from name in Fuzzr.OneOf("John", "Paul", "George", "Ringo")
+ from age in Fuzzr.Int(18, 99)
+ from person in Fuzzr.One(() => new PersonRecord(name, age))
+ select person)
+    .Many(2);
+// Results in => [ { Name: "Paul", Age: 88 }, { Name: "Ringo", Age: 73 } ]
+```
 ## Beautifully Carved Objects
 Now that we understand how composition works in QuickFuzzr, let's examine how this concept is applied to object generation.  
 ### From Fragments to Forms
@@ -385,7 +411,7 @@ Possible solutions:
 As you can see the error message hints at possible solutions,
 so here are the concrete ones (ignoring the parameterless constructor suggestion) for our current case:
   
-**Configr.Construct:** Best for reusable configurations;  
+**Configr.Construct:** Best for reusable configurations.  
 ```csharp
 var vowel = Fuzzr.OneOf('a', 'e', 'o', 'u', 'i');
 from cfg in Configr<PersonRecord>.Construct(Fuzzr.String(vowel, 2, 10), Fuzzr.Int())
@@ -393,14 +419,14 @@ from person in Fuzzr.One<PersonRecord>() // <= 'One' now works, thanks to Config
 select person;
 // Results in => { Name = "aaoaeuoa", Age = 76 }
 ```
-**Explicit generation**: Most straightforward for one-off cases.  
+**Explicit generation**: Most useful for creating (reusable) Fuzzrs of the type to generate.  
 ```csharp
 from name in Fuzzr.OneOf("John", "Paul", "George", "Ringo")
 from age in Fuzzr.Int(-100, 0)
 select new PersonRecord(name, age);
 // Results in => { Name = "George", Age = -86 }
 ```
-**Factory method:** Useful when you need the object wrapped in `FuzzrOf<T>`.  
+**Factory method:** Most straightforward for one-off cases.  
 ```csharp
 from name in Fuzzr.Constant("Who")
 from age in Fuzzr.OneOf(1, 2, 3)
@@ -480,6 +506,138 @@ select agenda;
 //         { TimeSlot: { Day: Saturday, Time: 8 } } ] 
 //     }
 ```
+## Through the Looking Glass
+In the previous chapter we hinted at recursion and depth-control.  
+
+So, let's dive deeper.  
+
+  
+Imagine:  
+```csharp
+public class Folder
+{
+    public string Name { get; set; } = default!;
+    public Folder? SubFolder { get; set; }
+}
+```
+Calling `Fuzzr.One<Folder>().Generate()` results in:  
+```text
+{  Name: "ljcuu", SubFolder: null }
+```
+You can however influence how deep the rabbit hole goes,
+by adding call to `Configr<Folder>.Depth(min, max)`:  
+```csharp
+return
+from name in Configr<Folder>.Property(a => a.Name,
+    from cnt in Fuzzr.Counter("folder") select $"Folder-{cnt}")
+from folderDepth in Configr<Folder>.Depth(2, 5)
+from folder in Fuzzr.One<Folder>()
+select folder;
+// Results in =>
+// {
+//     Name: "Folder-1",
+//     SubFolder: {
+//         Name: "Folder-2",
+//         SubFolder: {
+//             Name: "Folder-3",
+//             SubFolder: null
+//         }
+//     }
+// }
+```
+Neat.  
+But we can still go *one step beyond*.  
+
+Consider:
+  
+```csharp
+public abstract class FileSystemEntry
+{
+    public string Name { get; set; } = default!;
+}
+```
+```csharp
+public class FileEntry : FileSystemEntry { }
+```
+```csharp
+public class FolderEntry : FileSystemEntry
+{
+    public List<FileEntry> Files { get; set; } = [];
+    public List<FolderEntry> Folders { get; set; } = [];
+}
+```
+A bit complicated, but let's have a go:  
+```csharp
+FuzzrOf<Intent> GetName<T>(string prefix) where T : FileSystemEntry =>
+    from name in Configr<T>.Property(a => a.Name,
+        from cnt in Fuzzr.Counter(prefix) select $"{prefix}-{cnt}")
+    select Intent.Fixed;
+var fileCfg =
+    from name in GetName<FileEntry>("File")
+    select Intent.Fixed;
+var folderCfg =
+    from name in GetName<FolderEntry>("Folder")
+    from folderDepth in Configr<FolderEntry>.Depth(1, 3)
+    from files in Configr<FolderEntry>.Property(
+        a => a.Files,
+        from fs in Fuzzr.One<FileEntry>().Many(1, 3) select fs.ToList())
+    from folders in Configr<FolderEntry>.Property(
+        a => a.Folders,
+        from fs in Fuzzr.One<FolderEntry>().Many(1, 3) select fs.ToList())
+    select Intent.Fixed;
+var fuzzr =
+    from _1 in fileCfg
+    from _2 in folderCfg
+    from inheritance in Configr<FileSystemEntry>.AsOneOf(typeof(FolderEntry), typeof(FileEntry))
+    from entry in Fuzzr.One<FolderEntry>()
+    select entry;
+fuzzr;
+```
+Output:  
+```text
+{
+    Files: [ { Name: "File-1" }, { Name: "File-2" } ],
+    Folders: [
+        {
+            Files: [ { Name: "File-3" } ],
+            Folders: [
+                {
+                    Files: [ { Name: "File-4" } ],
+                    Folders: [ ],
+                    Name: "Folder-1"
+                },
+                {
+                    Files: [ { Name: "File-5" } ],
+                    Folders: [ ],
+                    Name: "Folder-2"
+                }
+            ],
+            Name: "Folder-3"
+        },
+        {
+            Files: [ { Name: "File-6" } ],
+            Folders: [
+                {
+                    Files: [ { Name: "File-7" } ],
+                    Folders: [ ],
+                    Name: "Folder-4"
+                }
+            ],
+            Name: "Folder-5"
+        }
+    ],
+    Name: "Folder-6"
+}
+```
+At this point QuickFuzzr has *type walked* an object graph that contains itself, stopped at a reasonable depth,
+and made sense of collections nested inside collections, with controlled recursion.
+
+Each type involved carries its own depth constraint, and every recursive property or list of child elements
+simply burns through that budget one level at a time.
+When the counter hits zero, the generator yields null (or an empty list), and the story ends right there.
+
+It also means you can mix these with inheritance and collection combinators.  
+And depth is local, not global: one deep branch does not force all others to go equally deep.  
 ## The Final Showcase
 So, ..., if we have a domain that contains GenericIdentities, ValueObjects, Aggregates, etc., 
 how *exactly* do we handle that ?  
@@ -559,7 +717,6 @@ public class FuzzThe
 
     public static readonly FuzzrOf<(IEnumerable<Course> courses, IEnumerable<Coach> coaches)> Domain =
             from _ in Configr.IgnoreAll()
-            from __ in Configr.EnablePropertyAccessFor(PropertyAccess.InitOnly)
             from coaches in CoachFuzzr.Many(3)
             from courses in CourseFuzzr(coaches).Many(1)
             select (courses, coaches);
