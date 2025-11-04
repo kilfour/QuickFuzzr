@@ -428,3 +428,55 @@ select (person1, person2);
 ```
 This demonstrates how QuickFuzzr gives you fine-grained control over which properties get generated, 
 allowing you to work with various access modifiers and C# patterns.  
+  
+Also if you `Configr` a property explicitly QuickFuzzr assumes you know what you're doing and generates a value:  
+```csharp
+from name in Configr<PrivatePerson>.Property(a => a.Name,
+    from cnt in Fuzzr.Counter("person") select $"Person number {cnt}.")
+from age in Configr<PrivatePerson>.Property(a => a.Age, Fuzzr.Int(18, 81))
+from person in Fuzzr.One<PrivatePerson>()
+select person;
+// Results in => { Name: "Person number 1.", Age: 35 }
+```
+#### Filling Collections
+There's a couple of ways we can go about accomplishing this.  
+
+*For this class*:  
+```csharp
+public class PublicAgenda
+{
+    public List<Appointment> Appointments { get; set; } = [];
+}
+```
+We can just `Configr` the property:  
+```csharp
+from appointments in Fuzzr.One<Appointment>().Many(1, 3)
+from cfg in Configr<PublicAgenda>.Property(a => a.Appointments, appointments)
+from agenda in Fuzzr.One<PublicAgenda>()
+select agenda;
+// Results in => 
+//     { Appointments: [ 
+//         { TimeSlot: { Day: Sunday, Time: 13 } }, 
+//         { TimeSlot: { Day: Wednesday, Time: 17 } } ] 
+//     }
+```
+And for this more realistic example:  
+```csharp
+public class Agenda
+{
+    private readonly List<Appointment> appointments = [];
+    public IReadOnlyList<Appointment> Appointments => appointments;
+    public void Add(Appointment appointment) => appointments.Add(appointment);
+}
+```
+We can use :  
+```csharp
+from agenda in Fuzzr.One<Agenda>()
+from appointments in Fuzzr.One<Appointment>().Apply(agenda.Add).Many(1, 3)
+select agenda;
+// Results in => 
+//     { Appointments: [ 
+//         { TimeSlot: { Day: Friday, Time: 52 } }, 
+//         { TimeSlot: { Day: Saturday, Time: 8 } } ] 
+//     }
+```

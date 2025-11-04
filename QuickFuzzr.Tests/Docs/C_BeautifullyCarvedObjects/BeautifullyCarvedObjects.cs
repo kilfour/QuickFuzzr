@@ -191,7 +191,8 @@ so here are the concrete ones (ignoring the parameterless constructor suggestion
     [DocExample(typeof(BeautifullyCarvedObjects), nameof(FuzzrOne_Property_Access_Fuzzr))]
     [DocContent(
 @"This demonstrates how QuickFuzzr gives you fine-grained control over which properties get generated, 
-allowing you to work with various access modifiers and C# patterns.")]
+allowing you to work with various access modifiers and C# patterns.  
+")]
     public void FuzzrOne_Property_Access()
     {
         var (person1, person2) = FuzzrOne_Property_Access_Fuzzr().Generate(1234);
@@ -215,9 +216,13 @@ allowing you to work with various access modifiers and C# patterns.")]
     }
 
     [Fact]
+    [DocContent("Also if you `Configr` a property explicitly QuickFuzzr assumes you know what you're doing and generates a value:")]
+    [DocExample(typeof(BeautifullyCarvedObjects), nameof(FuzzrOne_Property_Acces_Override_Fuzzr))]
     public void FuzzrOne_Property_Acces_Override()
     {
-        var result = FuzzrOne_Property_Acces_Override_Fuzzr().Generate(47).PulseToLog();
+        var result = FuzzrOne_Property_Acces_Override_Fuzzr().Generate(47);
+        Assert.Equal("Person number 1.", result.Name);
+        Assert.Equal(35, result.Age);
     }
 
     [CodeSnippet]
@@ -230,6 +235,7 @@ allowing you to work with various access modifiers and C# patterns.")]
         from age in Configr<PrivatePerson>.Property(a => a.Age, Fuzzr.Int(18, 81))
         from person in Fuzzr.One<PrivatePerson>()
         select person;
+        // Results in => { Name: "Person number 1.", Age: 35 }
     }
 
     [Fact]

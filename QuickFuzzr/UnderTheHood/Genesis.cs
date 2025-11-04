@@ -130,7 +130,7 @@ public class Genesis : ICreationEngine
     private IEnumerable<PropertyInfo> GetPropertiesToGenerate(object instance, State state)
     {
         var properties = instance.GetType().GetProperties(MyBinding.Flags);
-        return properties.Where(prop => ShouldGenerateProperty(prop, state));
+        return properties;//.Where(prop => ShouldGenerateProperty(prop, state));
     }
 
     private bool ShouldGenerateProperty(PropertyInfo prop, State state)
@@ -211,12 +211,15 @@ public class Genesis : ICreationEngine
             GenerallyCustomizeProperty(instance, propertyInfo, state);
             return;
         }
+        if (!ShouldGenerateProperty(propertyInfo, state))
+            return;
 
         if (NeedsToBeIgnored(state, propertyInfo))
             return;
 
         if (NeedsToBeGenerallyIgnored(state, propertyInfo))
             return;
+
 
         if (IsAKnownPrimitive(state, propertyInfo))
         {
