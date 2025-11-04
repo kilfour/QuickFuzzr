@@ -11,12 +11,6 @@ namespace QuickFuzzr.Tests.Docs.C_BeautifullyCarvedObjects;
 public class BeautifullyCarvedObjects
 {
     [Fact]
-    public void Doc()
-    {
-        Explain.OnlyThis<BeautifullyCarvedObjects>("temp.md");
-    }
-
-    [Fact]
     [DocHeader("From Fragments to Forms")]
     [DocContent(
 @"At its heart, object generation in QuickFuzzr is still composition.

@@ -1,6 +1,7 @@
 using QuickFuzzr.Tests._Tools.Models;
 using QuickFuzzr.Tests.Docs.A_YourFirstFuzzr;
 using QuickPulse.Explains;
+using QuickPulse.Show;
 
 namespace QuickFuzzr.Tests.Docs.B_OnComposition;
 
@@ -106,5 +107,63 @@ Example:")]
     {
         return Fuzzr.Int().Many(3);
         // Results in => [ 67, 14, 13 ]
+    }
+
+    [Fact]
+    [DocHeader("A Word of Caution", 1)]
+    [DocContent(
+@"When using the `FuzzrOf<T>` extension methods, scope is important.    
+
+For instance the following might produce an, at first glance, surprising result:")]
+    [DocExample(typeof(OnComposition), nameof(ExtensionMethods_Caution_Example))]
+    public void ExtensionMethods_Caution()
+    {
+        var result = ExtensionMethods_Caution_Example().Generate(88).ToList();
+        Assert.Equal("George", result[0].Name);
+        Assert.Equal(69, result[0].Age);
+        Assert.Equal("George", result[1].Name);
+        Assert.Equal(69, result[1].Age);
+    }
+
+    [CodeSnippet]
+    [CodeRemove("return ")]
+    private static FuzzrOf<IEnumerable<PersonRecord>> ExtensionMethods_Caution_Example()
+    {
+        return
+        from name in Fuzzr.OneOf("John", "Paul", "George", "Ringo")
+        from age in Fuzzr.Int(18, 99)
+        from people in Fuzzr.One(() => new PersonRecord(name, age)).Many(2)
+        select people;
+        // Results in => [ { Name: "George", Age: 69 }, { Name: "George", Age: 69 } ]
+    }
+
+    [Fact]
+    [DocContent(
+@"Looking closer however, it becomes clear this is correct behaviour according to the `LINQ` rules.  
+The `name` and  `age` range variables are *captured* from outside of the scope of the `FuzzrOf<PersonRecord>`,
+so calling `.Many(2)` does not cause them to be regenerated.  
+
+A corrected version of this Fuzzr would look like this:")]
+    [DocExample(typeof(OnComposition), nameof(ExtensionMethods_Caution_Example_Corrected))]
+    public void ExtensionMethods_Caution_Corrected()
+    {
+        var result = ExtensionMethods_Caution_Example_Corrected().Generate(99).ToList().PulseToLog("temp.log");
+        Assert.Equal("Paul", result[0].Name);
+        Assert.Equal(88, result[0].Age);
+        Assert.Equal("Ringo", result[1].Name);
+        Assert.Equal(73, result[1].Age);
+    }
+
+    [CodeSnippet]
+    [CodeRemove("return ")]
+    private static FuzzrOf<IEnumerable<PersonRecord>> ExtensionMethods_Caution_Example_Corrected()
+    {
+        return
+        (from name in Fuzzr.OneOf("John", "Paul", "George", "Ringo")
+         from age in Fuzzr.Int(18, 99)
+         from person in Fuzzr.One(() => new PersonRecord(name, age))
+         select person)
+            .Many(2);
+        // Results in => [ { Name: "Paul", Age: 88 }, { Name: "Ringo", Age: 73 } ]
     }
 }
