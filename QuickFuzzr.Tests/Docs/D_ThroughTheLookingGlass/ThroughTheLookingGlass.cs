@@ -76,12 +76,19 @@ by adding call to `Configr<Folder>.Depth(min, max)`:")]
 @"Neat.  
 But we can still go *one step beyond*.  
 
-Consider:
+Consider this small model:
 ")]
     [DocExample(typeof(FileSystemEntry))]
     [DocExample(typeof(FileEntry))]
     [DocExample(typeof(FolderEntry))]
-    [DocContent("A bit complicated, but let's have a go:")]
+    [DocContent("A bit complicated to fuzz, but let's have a go:\n")]
+    [DocContent("**Helper Function for Name Properties**")]
+    [DocExample(typeof(ThroughTheLookingGlass), nameof(GetName))]
+    [DocContent("**Name Properties Configuration**")]
+    [DocExample(typeof(ThroughTheLookingGlass), nameof(OneStepBeyond_Name_Cfg))]
+    [DocContent("**Folder List Properties Configuration**")]
+    [DocExample(typeof(ThroughTheLookingGlass), nameof(OneStepBeyond_Folder_Cfg))]
+    [DocContent("**Combined Fuzzr**")]
     [DocExample(typeof(ThroughTheLookingGlass), nameof(OneStepBeyond_Example))]
     [DocContent("Output:")]
     [DocCodeFile("OneStepBeyond.txt", "text")]
@@ -97,7 +104,7 @@ It also means you can mix these with inheritance and collection combinators.
 And depth is local, not global: one deep branch does not force all others to go equally deep.")]
     public void OneStepBeyond()
     {
-        var result = OneStepBeyond_Example().Generate(494);
+        var result = OneStepBeyond_Example(OneStepBeyond_Name_Cfg(), OneStepBeyond_Folder_Cfg()).Generate(494);
         // FileLog.Write("temp.log").Absorb(
         //     Please.AllowMe()
         //         .ToInline<List<FileEntry>>()
@@ -117,79 +124,53 @@ And depth is local, not global: one deep branch does not force all others to go 
         Assert.Single(root.Folders[1].Folders);
         Assert.Single(root.Folders[1].Folders[0].Files);
         Assert.Empty(root.Folders[1].Folders[0].Folders);
-
     }
 
-    [CodeSnippet]
-    [CodeRemove("return ")]
-    private static FuzzrOf<FileSystemEntry> OneStepBeyond_Example()
+    [CodeExample]
+    private static FuzzrOf<Intent> GetName<T>(string prefix) where T : FileSystemEntry
     {
-        FuzzrOf<Intent> GetName<T>(string prefix) where T : FileSystemEntry =>
+        return
             from name in Configr<T>.Property(a => a.Name,
                 from cnt in Fuzzr.Counter(prefix) select $"{prefix}-{cnt}")
             select Intent.Fixed;
-
-        var fileCfg =
-            from name in GetName<FileEntry>("File")
-            select Intent.Fixed;
-
-        var folderCfg =
-            from name in GetName<FolderEntry>("Folder")
-            from folderDepth in Configr<FolderEntry>.Depth(1, 3)
-            from files in Configr<FolderEntry>.Property(
-                a => a.Files,
-                from fs in Fuzzr.One<FileEntry>().Many(1, 3) select fs.ToList())
-            from folders in Configr<FolderEntry>.Property(
-                a => a.Folders,
-                from fs in Fuzzr.One<FolderEntry>().Many(1, 3) select fs.ToList())
-            select Intent.Fixed;
-
-        var fuzzr =
-            from _1 in fileCfg
-            from _2 in folderCfg
-            from inheritance in Configr<FileSystemEntry>.AsOneOf(typeof(FolderEntry), typeof(FileEntry))
-            from entry in Fuzzr.One<FolderEntry>()
-            select entry;
-
-        return fuzzr;
     }
 
     [CodeSnippet]
-    [CodeRemove("return ")]
-    private static FuzzrOf<FileSystemEntry> OneStepBeyond_Example_Old()
+    [CodeRemove("return nameCfg;")]
+    private static FuzzrOf<Intent> OneStepBeyond_Name_Cfg()
     {
-        return
-        // from foldername in Configr<FolderEntry>.With(
-        //     Fuzzr.Counter("folder"),
-        //     cnt => Configr<FolderEntry>.Property(a => a.Name, $"Folder-{cnt}"))
-        // from filename in Configr<FileEntry>.With(
-        //     Fuzzr.Counter("file"),
-        //     cnt => Configr<FileEntry>.Property(a => a.Name, $"File-{cnt}"))
-        from foldername in Configr<FileSystemEntry>.Property(a => a.Name, Fuzzr.Counter("folder").AsString())
-            //from filename in Configr<FileEntry>.Property(a => a.Name, Fuzzr.Counter("file").AsString())
-        from folderDepth in Configr<FolderEntry>.Depth(3, 3)
-        from entryInheritance in Configr<FileSystemEntry>.AsOneOf(typeof(FolderEntry), typeof(FileEntry))
-            // from files in Configr<FolderEntry>.With(
-            //     Fuzzr.One<FileEntry>().Many(0, 3),
-            //     f => Configr<FolderEntry>.Property(a => a.Files, [.. f]))
-        from _ in Configr<FolderEntry>.Property(a => a.Files, from fs in Fuzzr.One<FileEntry>().Many(0, 3) select fs.ToList())
-        from __ in Configr<FolderEntry>.Property(a => a.Folders, from fs in Fuzzr.One<FolderEntry>().Many(0, 3) select fs.ToList())
+        var nameCfg =
+            from filename in GetName<FileEntry>("File")
+            from foldername in GetName<FolderEntry>("Folder")
+            select Intent.Fixed;
+        return nameCfg;
+    }
 
-            // from folders in Configr<FolderEntry>.With(
-            //     Fuzzr.One<FolderEntry>().Many(1, 3),
-            //     f => Configr<FolderEntry>.Property(a => a.Folders, [.. f]))
-        from entry in Fuzzr.One<FolderEntry>()
-        select entry;
-        // Results in =>
-        // {
-        //     Name: "Folder-1",
-        //     SubFolder: {
-        //         Name: "Folder-2",
-        //         SubFolder: {
-        //             Name: "Folder-3",
-        //             SubFolder: null
-        //         }
-        //     }
-        // }
+    [CodeSnippet]
+    [CodeRemove("return folderCfg;")]
+    private static FuzzrOf<Intent> OneStepBeyond_Folder_Cfg()
+    {
+        var folderCfg =
+            from files in Configr<FolderEntry>.Property(a => a.Files,
+                from fs in Fuzzr.One<FileEntry>().Many(1, 3) select fs.ToList())
+            from folders in Configr<FolderEntry>.Property(a => a.Folders,
+                from fs in Fuzzr.One<FolderEntry>().Many(1, 3) select fs.ToList())
+            select Intent.Fixed;
+        return folderCfg;
+    }
+
+
+    [CodeSnippet]
+    [CodeRemove("return fuzzr;")]
+    private static FuzzrOf<FileSystemEntry> OneStepBeyond_Example(FuzzrOf<Intent> nameCfg, FuzzrOf<Intent> folderCfg)
+    {
+        var fuzzr =
+            from names in nameCfg
+            from lists in folderCfg
+            from folderDepth in Configr<FolderEntry>.Depth(1, 3)
+            from inheritance in Configr<FileSystemEntry>.AsOneOf(typeof(FolderEntry), typeof(FileEntry))
+            from entry in Fuzzr.One<FolderEntry>()
+            select entry;
+        return fuzzr;
     }
 }

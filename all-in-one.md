@@ -548,7 +548,7 @@ select folder;
 Neat.  
 But we can still go *one step beyond*.  
 
-Consider:
+Consider this small model:
   
 ```csharp
 public abstract class FileSystemEntry
@@ -566,32 +566,43 @@ public class FolderEntry : FileSystemEntry
     public List<FolderEntry> Folders { get; set; } = [];
 }
 ```
-A bit complicated, but let's have a go:  
+A bit complicated to fuzz, but let's have a go:
+  
+**Helper Function for Name Properties**  
 ```csharp
-FuzzrOf<Intent> GetName<T>(string prefix) where T : FileSystemEntry =>
-    from name in Configr<T>.Property(a => a.Name,
-        from cnt in Fuzzr.Counter(prefix) select $"{prefix}-{cnt}")
+private static FuzzrOf<Intent> GetName<T>(string prefix) where T : FileSystemEntry
+{
+    return
+        from name in Configr<T>.Property(a => a.Name,
+            from cnt in Fuzzr.Counter(prefix) select $"{prefix}-{cnt}")
+        select Intent.Fixed;
+}
+```
+**Name Properties Configuration**  
+```csharp
+var nameCfg =
+    from filename in GetName<FileEntry>("File")
+    from foldername in GetName<FolderEntry>("Folder")
     select Intent.Fixed;
-var fileCfg =
-    from name in GetName<FileEntry>("File")
-    select Intent.Fixed;
+```
+**Folder List Properties Configuration**  
+```csharp
 var folderCfg =
-    from name in GetName<FolderEntry>("Folder")
-    from folderDepth in Configr<FolderEntry>.Depth(1, 3)
-    from files in Configr<FolderEntry>.Property(
-        a => a.Files,
+    from files in Configr<FolderEntry>.Property(a => a.Files,
         from fs in Fuzzr.One<FileEntry>().Many(1, 3) select fs.ToList())
-    from folders in Configr<FolderEntry>.Property(
-        a => a.Folders,
+    from folders in Configr<FolderEntry>.Property(a => a.Folders,
         from fs in Fuzzr.One<FolderEntry>().Many(1, 3) select fs.ToList())
     select Intent.Fixed;
+```
+**Combined Fuzzr**  
+```csharp
 var fuzzr =
-    from _1 in fileCfg
-    from _2 in folderCfg
+    from names in nameCfg
+    from lists in folderCfg
+    from folderDepth in Configr<FolderEntry>.Depth(1, 3)
     from inheritance in Configr<FileSystemEntry>.AsOneOf(typeof(FolderEntry), typeof(FileEntry))
     from entry in Fuzzr.One<FolderEntry>()
     select entry;
-fuzzr;
 ```
 Output:  
 ```text
