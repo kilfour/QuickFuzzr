@@ -28,3 +28,9 @@ Test Cleanup:
 * DateTime
 
 use MinMax check everywhere use Chain.It
+
+ERROR MESSAGES:
+- generate abstract class => ploef
+- System.ArgumentException : Expression 'a => a.Files' does not refer to a property.
+
+test and fix depthcontrol many interaction

@@ -23,6 +23,7 @@ public class State
 	}
 
 	public PropertyAccess PropertyAccess { get; set; } = PropertyAccess.PublicSetters;
+	public Stack<bool> Collecting { get; set; } = new Stack<bool>([false]);
 
 	// ---------------------------------------------------------------------
 	// Depth Control
@@ -68,7 +69,7 @@ public class State
 	public Dictionary<Type, Type> TreeLeaves = [];
 
 	public readonly Dictionary<Func<PropertyInfo, bool>, Func<PropertyInfo, FuzzrOf<object>>> GeneralCustomizations = [];
-	public readonly Dictionary<PropertyInfo, FuzzrOf<object>> Customizations = [];
+	public readonly Dictionary<(PropertyInfo, Type), FuzzrOf<object>> Customizations = [];
 	public readonly Dictionary<(Type, Type), (FuzzrOf<object>, Func<object, FuzzrOf<Intent>>)> WithCustomizations = [];
 	public readonly Dictionary<Type, Func<State, object>> Constructors = [];
 

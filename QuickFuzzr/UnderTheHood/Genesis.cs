@@ -23,7 +23,7 @@ public class Genesis : ICreationEngine
                     return BuildInstance(ctor(null), state, type);
                 if (currentDepth > max)
                     return null!;
-                if (Fuzzr.Bool()(state).Value)
+                if (!state.Collecting.Peek() && Fuzzr.Bool()(state).Value)
                     return null!;
                 else
                     return BuildInstance(ctor(null), state, type);
@@ -92,16 +92,15 @@ public class Genesis : ICreationEngine
         }
     }
 
-    private static Type GetTypeToGenerate(State s, Type type, Type? typeToExlude)
+    private static Type GetTypeToGenerate(State state, Type type, Type? typeToExlude)
     {
         var typeToGenerate = type;
-        if (s.InheritanceInfo.ContainsKey(typeToGenerate))
+        if (state.InheritanceInfo.ContainsKey(typeToGenerate))
         {
-
-            var derivedTypes = s.InheritanceInfo[typeToGenerate];
+            var derivedTypes = state.InheritanceInfo[typeToGenerate];
             if (typeToExlude != null)
                 derivedTypes = derivedTypes.Where(a => a != typeToExlude).ToList();
-            var index = s.Random.Next(0, derivedTypes.Count);
+            var index = state.Random.Next(0, derivedTypes.Count);
             typeToGenerate = derivedTypes[index];
         }
         return typeToGenerate;
@@ -109,8 +108,10 @@ public class Genesis : ICreationEngine
 
     private object BuildInstance(object instance, State state, Type declaringType)
     {
+        state.Collecting.Push(false);
         if (!state.StuffToIgnoreAll.Contains(declaringType))
             FillProperties(instance, state);
+        state.Collecting.Pop();
         return instance;
     }
 
@@ -270,15 +271,15 @@ public class Genesis : ICreationEngine
 
     private static bool NeedsToBeCustomized(State state, PropertyInfo propertyInfo)
         => state.Customizations.Keys
-            .Any(info => info.ReflectedType!.IsAssignableFrom(propertyInfo.ReflectedType)
-                && info.Name == propertyInfo.Name);
+            .Any(info => info.Item2.IsAssignableFrom(propertyInfo.ReflectedType)
+                && info.Item1.Name == propertyInfo.Name);
 
     private static void CustomizeProperty(object target, PropertyInfo propertyInfo, State state)
     {
         var key =
             state.Customizations.Keys.First(info =>
-                info.ReflectedType!.IsAssignableFrom(propertyInfo.ReflectedType)
-                && info.Name == propertyInfo.Name);
+                info.Item2.IsAssignableFrom(propertyInfo.ReflectedType)
+                && info.Item1.Name == propertyInfo.Name);
         var generator = state.Customizations[key];
         SetPropertyValue(propertyInfo, target, generator(state).Value);
     }

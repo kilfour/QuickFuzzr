@@ -147,7 +147,7 @@ A corrected version of this Fuzzr would look like this:")]
     [DocExample(typeof(OnComposition), nameof(ExtensionMethods_Caution_Example_Corrected))]
     public void ExtensionMethods_Caution_Corrected()
     {
-        var result = ExtensionMethods_Caution_Example_Corrected().Generate(99).ToList().PulseToLog("temp.log");
+        var result = ExtensionMethods_Caution_Example_Corrected().Generate(99).ToList();
         Assert.Equal("Paul", result[0].Name);
         Assert.Equal(88, result[0].Age);
         Assert.Equal("Ringo", result[1].Name);
