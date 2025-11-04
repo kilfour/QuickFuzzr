@@ -4,7 +4,7 @@
 
 A tiny library for building stateful, inspectable, composable flows.
 
-[![Docs](https://img.shields.io/badge/docs-QuickFuzzr-blue?style=flat-square&logo=readthedocs)](https://github.com/kilfour/QuickFuzzr/blob/main/aal-in-one.md)
+[![Docs](https://img.shields.io/badge/docs-QuickFuzzr-blue?style=flat-square&logo=readthedocs)](https://github.com/kilfour/QuickFuzzr/blob/main/docs/toc.md)
 [![NuGet](https://img.shields.io/nuget/v/QuickFuzzr.svg?style=flat-square&logo=nuget)](https://www.nuget.org/packages/QuickFuzzr)
 [![License: MIT](https://img.shields.io/badge/license-MIT-success?style=flat-square)](https://github.com/kilfour/QuickFuzzr/blob/main/LICENSE)  
 ## Highlights
@@ -26,7 +26,9 @@ QuickFuzzr is fully documented, with real, executable examples for each combinat
 
 You can explore it here:
 
-* **[Table of Contents](https://github.com/kilfour/QuickFuzzr/blob/main/all-in-one.md)**
+* **[Table of Contents](https://github.com/kilfour/QuickFuzzr/blob/main/docs/toc.md)**
+* **[One File Doc](https://github.com/kilfour/QuickFuzzr/blob/main/Docs/all-in-one.md)**
+
   
 ## License
 
