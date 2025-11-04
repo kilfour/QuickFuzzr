@@ -13,7 +13,7 @@ public class YourFirstFuzzr
     [DocContent("You can generate a fully randomized instance like so:")]
     [DocExample(typeof(YourFirstFuzzr), nameof(Person_Example_GetResult))]
     [DocContent("Output:")]
-    [DocCode("Person { Name = \"ddnegsm\", Age = 18 }", " ")]
+    [DocCode("Person { Name = \"ddnegsm\", Age = 18 }", "text")]
     [DocContent(
 @"And that's it, ... no configuration required.  
 QuickFuzzr walks the `Person` type, detects its properties,
@@ -42,7 +42,7 @@ and fills them in using the default generators.")]
  Let's for instance generate a *real* name and ensure our `Person` is eligible to vote:")]
     [DocExample(typeof(YourFirstFuzzr), nameof(Person_Example_GetResult_Customized))]
     [DocContent("Output:")]
-    [DocCode("Person { Name = \"George Lennon\", Age = 25 }", " ")]
+    [DocCode("Person { Name = \"George Lennon\", Age = 25 }", "text")]
     public void Person_Example_Customized()
     {
         var result = Person_Example_GetResult_Customized();
@@ -264,7 +264,7 @@ But here are some counter arguments.
     Name: ""t"",
     Age: 30
 }
-", " ")]
+", "text")]
     public void BackToSquareOne()
     {
         var result = Fuzzr.One<HousedEmployee>().Generate(58);

@@ -1,3 +1,4 @@
+using QuickFuzzr.Instruments;
 using QuickFuzzr.Tests._Tools.Models;
 using QuickFuzzr.UnderTheHood.WhenThingsGoWrong;
 using QuickPulse.Explains;
@@ -78,7 +79,7 @@ When QuickFuzzr does this, it adheres to the following (adjustable) conventions:
     [DocContent("- Collections remain empty. Lists, arrays, dictionaries, etc. aren't auto-populated.")]
     public void FuzzrOne_No_Collections_Generated()
     {
-        var result = Fuzzr.One<Agenda>().Generate(42);
+        var result = Fuzzr.One<PublicAgenda>().Generate(42);
         Assert.Equal([], result.Appointments);
     }
 
@@ -96,8 +97,10 @@ When QuickFuzzr does this, it adheres to the following (adjustable) conventions:
     [DocHeader("Construction", 1)]
     [DocContent("Consider:")]
     [DocExample(typeof(PersonRecord))]
-    [DocContent("This record does not have a default constructor, so `Fuzzr.One<PersonRecord>()` will throw an exception if used as is:")]
-    [DocExample(typeof(BeautifullyCarvedObjects), nameof(FuzzrOne_No_Default_Ctor_Throws_Message))]
+    [DocContent(
+@"This record does not have a default constructor, so `Fuzzr.One<PersonRecord>()`
+will throw an exception with the following message if used as is:")]
+    [DocExample(typeof(BeautifullyCarvedObjects), nameof(FuzzrOne_No_Default_Ctor_Throws_Message), "text")]
     public void FuzzrOne_No_Default_Ctor_Throws()
     {
         var ex = Assert.Throws<ConstructionException>(() => Fuzzr.One<PersonRecord>().Generate());
@@ -182,13 +185,16 @@ so here are the concrete ones (ignoring the parameterless constructor suggestion
 
     [Fact]
     [DocHeader("Property Access", 1)]
-    [DocContent("This class uses init only properties, which are ignored by QuickFuzzr's default settings.")]
+    [DocContent("This class uses *init only* properties, which are ignored by QuickFuzzr's default settings.")]
     [DocExample(typeof(PrivatePerson))]
     [DocContent("We can change that using `Configr`:")]
-    [DocExample(typeof(BeautifullyCarvedObjects), nameof(FuzzrOne_Property_Fuzzr))]
-    public void FuzzrOne_Property()
+    [DocExample(typeof(BeautifullyCarvedObjects), nameof(FuzzrOne_Property_Access_Fuzzr))]
+    [DocContent(
+@"This demonstrates how QuickFuzzr gives you fine-grained control over which properties get generated, 
+allowing you to work with various access modifiers and C# patterns.")]
+    public void FuzzrOne_Property_Access()
     {
-        var (person1, person2) = FuzzrOne_Property_Fuzzr().Generate(1234).PulseToLog();
+        var (person1, person2) = FuzzrOne_Property_Access_Fuzzr().Generate(1234);
         Assert.Equal("whxi", person1.Name);
         Assert.Equal(94, person1.Age);
         Assert.Equal("", person2.Name);
@@ -197,14 +203,96 @@ so here are the concrete ones (ignoring the parameterless constructor suggestion
 
     [CodeSnippet]
     [CodeRemove("return")]
-    private static FuzzrOf<(PrivatePerson person1, PrivatePerson person2)> FuzzrOne_Property_Fuzzr()
+    private static FuzzrOf<(PrivatePerson person1, PrivatePerson person2)> FuzzrOne_Property_Access_Fuzzr()
     {
         return
-        from indecent in Configr.EnablePropertyAccessFor(PropertyAccess.InitOnly)
+        from enable in Configr.EnablePropertyAccessFor(PropertyAccess.InitOnly)
         from person1 in Fuzzr.One<PrivatePerson>()
-        from polite in Configr.DisablePropertyAccessFor(PropertyAccess.InitOnly)
+        from disable in Configr.DisablePropertyAccessFor(PropertyAccess.InitOnly)
         from person2 in Fuzzr.One<PrivatePerson>()
         select (person1, person2);
         // Results in => ( { Name: "whxi", Age: 94 }, { Name: "", Age: 0 } )
+    }
+
+    [Fact]
+    public void FuzzrOne_Property_Acces_Override()
+    {
+        var result = FuzzrOne_Property_Acces_Override_Fuzzr().Generate(47).PulseToLog();
+    }
+
+    [CodeSnippet]
+    [CodeRemove("return")]
+    private FuzzrOf<PrivatePerson> FuzzrOne_Property_Acces_Override_Fuzzr()
+    {
+        return
+        from name in Configr<PrivatePerson>.Property(a => a.Name,
+            from cnt in Fuzzr.Counter("person") select $"Person number {cnt}.")
+        from age in Configr<PrivatePerson>.Property(a => a.Age, Fuzzr.Int(18, 81))
+        from person in Fuzzr.One<PrivatePerson>()
+        select person;
+    }
+
+    [Fact]
+    [DocHeader("Filling Collections", 1)]
+    [DocContent(
+@"There's a couple of ways we can go about accomplishing this.  
+
+*For this class*:")]
+    [DocExample(typeof(PublicAgenda))]
+    [DocContent("We can just `Configr` the property:")]
+    [DocExample(typeof(BeautifullyCarvedObjects), nameof(FuzzrOne_Collections_Fuzzr))]
+    public void FuzzrOne_Collections()
+    {
+        var result = FuzzrOne_Collections_Fuzzr().Generate(42);
+        Assert.Equal(DayOfWeek.Sunday, result.Appointments[0].TimeSlot.Day);
+        Assert.Equal(13, result.Appointments[0].TimeSlot.Time);
+        Assert.Equal(DayOfWeek.Wednesday, result.Appointments[1].TimeSlot.Day);
+        Assert.Equal(17, result.Appointments[1].TimeSlot.Time);
+    }
+
+    [CodeSnippet]
+    [CodeRemove("return")]
+    private static FuzzrOf<PublicAgenda> FuzzrOne_Collections_Fuzzr()
+    {
+        return
+        from appointments in Fuzzr.One<Appointment>().Many(1, 3)
+        from cfg in Configr<PublicAgenda>.Property(a => a.Appointments, appointments)
+        from agenda in Fuzzr.One<PublicAgenda>()
+        select agenda;
+        // Results in => 
+        //     { Appointments: [ 
+        //         { TimeSlot: { Day: Sunday, Time: 13 } }, 
+        //         { TimeSlot: { Day: Wednesday, Time: 17 } } ] 
+        //     }
+    }
+
+    [Fact]
+    [DocContent("And for this more realistic example:")]
+    [DocExample(typeof(Agenda))]
+    [DocContent("We can use :")]
+    [DocExample(typeof(BeautifullyCarvedObjects), nameof(FuzzrOne_Collections_Method_Fuzzr))]
+    public void FuzzrOne_Collections_Method()
+    {
+        var result = FuzzrOne_Collections_Method_Fuzzr().Generate(44);
+        Assert.Equal(DayOfWeek.Friday, result.Appointments[0].TimeSlot.Day);
+        Assert.Equal(52, result.Appointments[0].TimeSlot.Time);
+        Assert.Equal(DayOfWeek.Saturday, result.Appointments[1].TimeSlot.Day);
+        Assert.Equal(8, result.Appointments[1].TimeSlot.Time);
+
+    }
+
+    [CodeSnippet]
+    [CodeRemove("return")]
+    private static FuzzrOf<Agenda> FuzzrOne_Collections_Method_Fuzzr()
+    {
+        return
+        from agenda in Fuzzr.One<Agenda>()
+        from appointments in Fuzzr.One<Appointment>().Apply(agenda.Add).Many(1, 3)
+        select agenda;
+        // Results in => 
+        //     { Appointments: [ 
+        //         { TimeSlot: { Day: Friday, Time: 52 } }, 
+        //         { TimeSlot: { Day: Saturday, Time: 8 } } ] 
+        //     }
     }
 }

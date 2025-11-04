@@ -1,0 +1,91 @@
+(
+    [
+        {
+            Name: "Advanced C# Patterns",
+            Period: {
+                Start: 26.November(2025),
+                End: 7.January(2026)
+            },
+            TimeSlots: [
+                { Day: Friday, Start: 11, End: 15 }
+            ],
+            RequiredSkills: [
+                "C#"
+            ],
+            IsConfirmed: true,
+            AssignedCoach: {
+                Name: "Earl Owens",
+                Email: "earl.owens@hotmail.org",
+                Skills: [
+                    "JavaScript",
+                    "UnitTesting",
+                    "C#"
+                ],
+                AssignedCourses: [
+                    <cycle => Course.Id: 1>
+                ],
+                Id: 1,
+                IsTransient: false
+            },
+            Id: 1,
+            IsTransient: false
+        }
+    ],
+    [
+        {
+            Name: "Earl Owens",
+            Email: "earl.owens@hotmail.org",
+            Skills: [
+                "JavaScript",
+                "UnitTesting",
+                "C#"
+            ],
+            AssignedCourses: [
+                {
+                    Name: "Advanced C# Patterns",
+                    Period: {
+                        Start: 26.November(2025),
+                        End: 7.January(2026)
+                    },
+                    TimeSlots: [
+                        { Day: Friday, Start: 11, End: 15 }
+                    ],
+                    RequiredSkills: [
+                        "C#"
+                    ],
+                    IsConfirmed: true,
+                    AssignedCoach: <cycle => Coach.Id: 1>,
+                    Id: 1,
+                    IsTransient: false
+                }
+            ],
+            Id: 1,
+            IsTransient: false
+        },
+        {
+            Name: "Leon Mccoy",
+            Email: "leon.mccoy@hotmail.io",
+            Skills: [
+                "ASP.NET",
+                "UnitTesting",
+                "TDD"
+            ],
+            AssignedCourses: [ ],
+            Id: 2,
+            IsTransient: false
+        },
+        {
+            Name: "Emily Figueroa",
+            Email: "emily.figueroa@outlook.com",
+            Skills: [
+                "React",
+                "UnitTesting",
+                "TDD",
+                "CI/CD"
+            ],
+            AssignedCourses: [ ],
+            Id: 3,
+            IsTransient: false
+        }
+    ]
+)

@@ -13,7 +13,7 @@ You can generate a fully randomized instance like so:
 Fuzzr.One<Person>().Generate();
 ```
 Output:  
-``` 
+```text
 Person { Name = "ddnegsm", Age = 18 }
 ```
 And that's it, ... no configuration required.  
@@ -32,7 +32,7 @@ var personFuzzr =
     select new Person { Name = $"{firstname} {lastname}", Age = age };
 personFuzzr.Generate();
 ```
-``` 
+```text
 Person { Name = "George Lennon", Age = 25 }
 ```
 ### Composable Fuzzrs
@@ -182,7 +182,7 @@ Because that is some dense `LINQ`-ing right there.
 But here are some counter arguments.  
 
 **1. You can always just**: Use `Fuzzr.One<HousedEmployee>()`, resulting in, for instance:  
-``` 
+```text
 {
     Address: {
         Street: "u",
@@ -366,3 +366,65 @@ Fuzzr.One<Appointment>().Generate();
 - Recursive object creation is off by default.  
 
 **Note:** All of QuickFuzzrs defaults can be overridden using `Configr`.  
+### Where `One` Is Not Enough
+#### Construction
+Consider:  
+```csharp
+public record PersonRecord(string Name, int Age);
+```
+This record does not have a default constructor, so `Fuzzr.One<PersonRecord>()`
+will throw an exception with the following message if used as is:  
+```text
+Cannot generate instance of PersonRecord.
+Possible solutions:
+• Add a parameterless constructor
+• Register a custom constructor: Configr<PersonRecord>.Construct(...)
+• Use explicit generation: from x in Fuzzr.Int() ... select new PersonRecord(x)
+• Use the factory method overload: Fuzzr.One<T>(Func<T> constructor)
+```
+As you can see the error message hints at possible solutions,
+so here are the concrete ones (ignoring the parameterless constructor suggestion) for our current case:
+  
+**Configr.Construct:** Best for reusable configurations;  
+```csharp
+var vowel = Fuzzr.OneOf('a', 'e', 'o', 'u', 'i');
+from cfg in Configr<PersonRecord>.Construct(Fuzzr.String(vowel, 2, 10), Fuzzr.Int())
+from person in Fuzzr.One<PersonRecord>() // <= 'One' now works, thanks to Configr
+select person;
+// Results in => { Name = "aaoaeuoa", Age = 76 }
+```
+**Explicit generation**: Most straightforward for one-off cases.  
+```csharp
+from name in Fuzzr.OneOf("John", "Paul", "George", "Ringo")
+from age in Fuzzr.Int(-100, 0)
+select new PersonRecord(name, age);
+// Results in => { Name = "George", Age = -86 }
+```
+**Factory method:** Useful when you need the object wrapped in `FuzzrOf<T>`.  
+```csharp
+from name in Fuzzr.Constant("Who")
+from age in Fuzzr.OneOf(1, 2, 3)
+from person in Fuzzr.One(() => new PersonRecord(name, age))
+select person;
+// Results in => { Name = "Who", Age = 3 }
+```
+#### Property Access
+This class uses *init only* properties, which are ignored by QuickFuzzr's default settings.  
+```csharp
+public class PrivatePerson
+{
+    public string Name { get; init; } = string.Empty;
+    public int Age { get; init; }
+}
+```
+We can change that using `Configr`:  
+```csharp
+from enable in Configr.EnablePropertyAccessFor(PropertyAccess.InitOnly)
+from person1 in Fuzzr.One<PrivatePerson>()
+from disable in Configr.DisablePropertyAccessFor(PropertyAccess.InitOnly)
+from person2 in Fuzzr.One<PrivatePerson>()
+select (person1, person2);
+// Results in => ( { Name: "whxi", Age: 94 }, { Name: "", Age: 0 } )
+```
+This demonstrates how QuickFuzzr gives you fine-grained control over which properties get generated, 
+allowing you to work with various access modifiers and C# patterns.  
