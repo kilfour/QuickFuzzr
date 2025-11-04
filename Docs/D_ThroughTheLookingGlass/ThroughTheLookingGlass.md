@@ -98,6 +98,7 @@ var fuzzr =
     from entry in Fuzzr.One<FolderEntry>()
     select entry;
 ```
+**Output:**  
 ```text
 {
     Files: [ { Name: "File-1" }, { Name: "File-2" } ],

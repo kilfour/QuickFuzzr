@@ -130,7 +130,7 @@ I just used `string[]`'s but the data could easily be loaded from a file for ins
     [DocHeader("Please, Sir, I Want Some More.")]
     [DocContent("For MORE!, ..., oh well then.  \nJust use:")]
     [DocCode("employeeFuzzr.Many(3).Generate()")]
-    [DocContent("Output:   ")] // QuickPulse.Explains bug <= can't use records for the fragments
+    [DocContent("**Output:**")]
     [DocCodeFile("EmployeeMany.txt")]
     public void Employee_Example_Customized_Many()
     {
@@ -284,7 +284,7 @@ But here are some counter arguments.
 **Generate just addresses (or `Person`, `Employee`, etc.):**
 ")]
     [DocExample(typeof(YourFirstFuzzr), nameof(Addresses_Fuzzr))]
-    [DocContent("Output:   ")] // QuickPulse.Explains bug <= can't use records for the fragments
+    [DocContent("**Output:**")] // QuickPulse.Explains bug <= can't use records for the fragments
     [DocCodeFile("Addresses.txt")]
     public void Addresses()
     {
@@ -312,7 +312,7 @@ But here are some counter arguments.
     [Fact]
     [DocContent("**3. Composability**: Or configure and reconfigure on the fly:")]
     [DocExample(typeof(YourFirstFuzzr), nameof(Wild_Fuzzr))]
-    [DocContent("Output:    ")] // QuickPulse.Explains bug <= can't use records for the fragments
+    [DocContent("**Output:**")] // QuickPulse.Explains bug <= can't use records for the fragments
     [DocCodeFile("Mixed.txt")]
     [DocContent(
 @"As you can see this reuses the previous Fuzzr, generates a *normal* `HousedEmployee`,

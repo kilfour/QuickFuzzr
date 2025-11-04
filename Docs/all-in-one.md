@@ -31,6 +31,7 @@ var personFuzzr =
     select new Person { Name = $"{firstname} {lastname}", Age = age };
 personFuzzr.Generate();
 ```
+**Output:**  
 ```text
 Person { Name = "George Lennon", Age = 25 }
 ```
@@ -90,7 +91,7 @@ Just use:
 ```csharp
 employeeFuzzr.Many(3).Generate()
 ```
-Output:     
+**Output:**  
 ```
 [
     {
@@ -163,6 +164,7 @@ var peopleFuzzr =
     from housedEmployee in Fuzzr.One<HousedEmployee>()
     select housedEmployee;
 ```
+**Output:**  
 ```
 {
     Address: {
@@ -203,6 +205,7 @@ var fuzzr =
     select address;
 fuzzr.Many(3).Generate();
 ```
+**Output:**  
 ```
 [
     {
@@ -236,7 +239,7 @@ var fuzzr =
     select (normal, londoner, underaged);
 fuzzr.Generate();
 ```
-Output:      
+**Output:**  
 ```
 (
     {
@@ -604,6 +607,7 @@ var fuzzr =
     from entry in Fuzzr.One<FolderEntry>()
     select entry;
 ```
+**Output:**  
 ```text
 {
     Files: [ { Name: "File-1" }, { Name: "File-2" } ],

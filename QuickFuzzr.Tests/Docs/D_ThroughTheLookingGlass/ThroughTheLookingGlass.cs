@@ -35,7 +35,7 @@ by adding call to `Configr<Folder>.Depth(min, max)`:")]
     [DocCodeFile("GoingDeeper.txt", "text")]
     public void GoingDeeper()
     {
-        var result = GoingDeeper_Example().Generate(102).PulseToLog("temp.log");
+        var result = GoingDeeper_Example().Generate(102);
         Assert.Equal("Folder-1", result.Name);
         Assert.NotNull(result.SubFolder);
         Assert.Equal("Folder-2", result.SubFolder.Name);
@@ -90,10 +90,7 @@ And depth is local, not global: one deep branch does not force all others to go 
     public void OneStepBeyond()
     {
         var result = OneStepBeyond_Example(OneStepBeyond_Name_Cfg(), OneStepBeyond_Folder_Cfg()).Generate(494);
-        // FileLog.Write("temp.log").Absorb(
-        //     Please.AllowMe()
-        //         .ToInline<List<FileEntry>>()
-        //         .IntroduceThis(result));
+
         var root = Assert.IsType<FolderEntry>(result);
         Assert.Equal(2, root.Files.Count);
         Assert.Equal(2, root.Folders.Count);
