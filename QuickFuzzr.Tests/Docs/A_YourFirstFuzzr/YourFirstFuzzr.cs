@@ -216,10 +216,10 @@ and rewrite it like so:
     }
 
     [CodeSnippet]
-    [CodeRemove("return personConfigr;")]
+    [CodeRemove("return employeeConfigr;")]
     private static FuzzrOf<Intent> PersonConfigr(FuzzrOf<Info> infoFuzzr, FuzzrOf<string> ssnFuzzr)
     {
-        var personConfigr =
+        var employeeConfigr =
             from _ in Configr<Person>.With(infoFuzzr, info =>
                 from name in Configr<Person>.Property(a => a.Name, info.Name)
                 from email in Configr<Employee>.Property(a => a.Email, info.Email)
@@ -227,15 +227,16 @@ and rewrite it like so:
             from age in Configr<Person>.Property(a => a.Age, Fuzzr.Int(18, 80))
             from ssn in Configr<Employee>.Property(a => a.SocialSecurityNumber, ssnFuzzr)
             select Intent.Fixed;
-        return personConfigr;
+        return employeeConfigr;
     }
+
     [CodeSnippet]
     [CodeRemove("return peopleFuzzr;")]
-    private static FuzzrOf<HousedEmployee> PeopleFuzzr(FuzzrOf<Intent> addressConfigr, FuzzrOf<Intent> personConfigr)
+    private static FuzzrOf<HousedEmployee> PeopleFuzzr(FuzzrOf<Intent> addressConfigr, FuzzrOf<Intent> employeeConfigr)
     {
         var peopleFuzzr =
             from addressCfg in addressConfigr
-            from employeeCfg in personConfigr
+            from employeeCfg in employeeConfigr
             from housedEmployee in Fuzzr.One<HousedEmployee>()
             select housedEmployee;
         return peopleFuzzr;

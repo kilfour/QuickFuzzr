@@ -1,0 +1,10 @@
+{
+    Name: "Folder-1",
+    SubFolder: {
+        Name: "Folder-2",
+        SubFolder: {
+            Name: "Folder-3",
+            SubFolder: null
+        }
+    }
+}

@@ -7,16 +7,6 @@ public class CastingGenerators
 {
 	[Fact]
 	[DocContent(
-@" - `.AsString()` : Invokes `.ToString()` on the generated value and 
-casts the generator from `Generator<T>` to `Generator<string>`. 
-Useful f.i. to generate numeric strings.")]
-	public void AsString()
-	{
-		Assert.IsType<string>(Fuzzr.Int().AsString().Generate());
-	}
-
-	[Fact]
-	[DocContent(
 @" - `.AsObject()` : Simply casts the generator itself from `Generator<T>` to `Generator<object>`. Mostly used internally.")]
 	public void AsObject()
 	{

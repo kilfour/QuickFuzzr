@@ -147,7 +147,7 @@ var infoFuzzr =
 ```
 **Person**  
 ```csharp
-var personConfigr =
+var employeeConfigr =
     from _ in Configr<Person>.With(infoFuzzr, info =>
         from name in Configr<Person>.Property(a => a.Name, info.Name)
         from email in Configr<Employee>.Property(a => a.Email, info.Email)
@@ -160,7 +160,7 @@ var personConfigr =
 ```csharp
 var peopleFuzzr =
     from addressCfg in addressConfigr
-    from employeeCfg in personConfigr
+    from employeeCfg in employeeConfigr
     from housedEmployee in Fuzzr.One<HousedEmployee>()
     select housedEmployee;
 ```
@@ -533,17 +533,19 @@ from name in Configr<Folder>.Property(a => a.Name,
 from folderDepth in Configr<Folder>.Depth(2, 5)
 from folder in Fuzzr.One<Folder>()
 select folder;
-// Results in =>
-// {
-//     Name: "Folder-1",
-//     SubFolder: {
-//         Name: "Folder-2",
-//         SubFolder: {
-//             Name: "Folder-3",
-//             SubFolder: null
-//         }
-//     }
-// }
+```
+Output:  
+```text
+{
+    Name: "Folder-1",
+    SubFolder: {
+        Name: "Folder-2",
+        SubFolder: {
+            Name: "Folder-3",
+            SubFolder: null
+        }
+    }
+}
 ```
 Neat.  
 But we can still go *one step beyond*.  
@@ -604,7 +606,6 @@ var fuzzr =
     from entry in Fuzzr.One<FolderEntry>()
     select entry;
 ```
-Output:  
 ```text
 {
     Files: [ { Name: "File-1" }, { Name: "File-2" } ],
@@ -991,6 +992,23 @@ Use `Fuzzr.UShort()`.
 - Can be made to return `ushort?` using the `.Nullable()` combinator.  
 - `ushort` is automatically detected and generated for object properties.  
 - `ushort?` is automatically detected and generated for object properties.  
+### Fuzzing
+#### Fuzzr.Constant&lt;T&gt;(T value)
+This generator wraps the value provided of type `T` in a `FuzzrOf<T>`.
+It is most useful in combination with others and is often used to inject constants into combined generators.  
+#### Fuzzr.Counter(object key)
+This generator returns an `int` starting at 1, and incrementing by 1 on each subsequent call.  
+#### Fuzzr One
+#### Fuzzr One Of
+### Fuzzr Extension Methods
+#### Ext Fuzzr Apply
+#### Ext Fuzzr As Object
+#### Ext Fuzzr Many
+#### Ext Fuzzr Never Return Null
+#### Ext Fuzzr Nullable
+#### Ext Fuzzr Nullable Ref
+#### Ext Fuzzr Unique
+#### Ext Fuzzr Where
 ### Configuring
 #### Configr.Ignore(...)
 **Usage:**  

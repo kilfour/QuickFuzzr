@@ -37,6 +37,8 @@ public class ThroughTheLookingGlass
 @"You can however influence how deep the rabbit hole goes,
 by adding call to `Configr<Folder>.Depth(min, max)`:")]
     [DocExample(typeof(ThroughTheLookingGlass), nameof(GoingDeeper_Example))]
+    [DocContent("Output:")]
+    [DocCodeFile("GoingDeeper.txt", "text")]
     public void GoingDeeper()
     {
         var result = GoingDeeper_Example().Generate(102).PulseToLog("temp.log");
@@ -58,17 +60,6 @@ by adding call to `Configr<Folder>.Depth(min, max)`:")]
         from folderDepth in Configr<Folder>.Depth(2, 5)
         from folder in Fuzzr.One<Folder>()
         select folder;
-        // Results in =>
-        // {
-        //     Name: "Folder-1",
-        //     SubFolder: {
-        //         Name: "Folder-2",
-        //         SubFolder: {
-        //             Name: "Folder-3",
-        //             SubFolder: null
-        //         }
-        //     }
-        // }
     }
 
     [Fact]
