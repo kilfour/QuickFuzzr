@@ -1,36 +1,34 @@
 (
-    [
-        {
-            Name: "Advanced C# Patterns",
-            Period: {
-                Start: 26.November(2025),
-                End: 7.January(2026)
-            },
-            TimeSlots: [
-                { Day: Friday, Start: 11, End: 15 }
-            ],
-            RequiredSkills: [
+    {
+        Name: "Advanced C# Patterns",
+        Period: {
+            Start: 26.November(2025),
+            End: 7.January(2026)
+        },
+        TimeSlots: [
+            { Day: Friday, Start: 11, End: 15 }
+        ],
+        RequiredSkills: [
+            "C#"
+        ],
+        IsConfirmed: true,
+        AssignedCoach: {
+            Name: "Earl Owens",
+            Email: "earl.owens@hotmail.org",
+            Skills: [
+                "JavaScript",
+                "UnitTesting",
                 "C#"
             ],
-            IsConfirmed: true,
-            AssignedCoach: {
-                Name: "Earl Owens",
-                Email: "earl.owens@hotmail.org",
-                Skills: [
-                    "JavaScript",
-                    "UnitTesting",
-                    "C#"
-                ],
-                AssignedCourses: [
-                    <cycle => Course.Id: 1>
-                ],
-                Id: 1,
-                IsTransient: false
-            },
+            AssignedCourses: [
+                <cycle => Course.Id: 1>
+            ],
             Id: 1,
             IsTransient: false
-        }
-    ],
+        },
+        Id: 1,
+        IsTransient: false
+    },
     [
         {
             Name: "Earl Owens",
