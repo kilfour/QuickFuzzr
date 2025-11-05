@@ -678,7 +678,7 @@ private static FuzzrOf<int> GenericId<T>()
 // Name
 from isMale in Fuzzr.Bool()
 let firstNames = isMale ? DataLists.MaleFirstNames : DataLists.FemaleFirstNames
-from firstName in Fuzzr.OneOf(DataLists.FirstNames)
+from firstName in Fuzzr.OneOf(firstNames)
 from lastName in Fuzzr.OneOf(DataLists.LastNames)
 let name = $"{firstName} {lastName}"
 // Email

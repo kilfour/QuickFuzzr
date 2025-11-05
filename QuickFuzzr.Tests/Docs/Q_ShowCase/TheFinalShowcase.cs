@@ -17,12 +17,6 @@ namespace QuickFuzzr.Tests.Docs.Q_ShowCase;
 [DocFile]
 public class TheFinalShowcase
 {
-    [Fact]
-    public void Doc()
-    {
-        Explain.OnlyThis<TheFinalShowcase>("temp.md");
-    }
-
     [Fact(Skip = "explicit")]
     [DocContent(
 @"So, ..., if we have a domain that contains GenericIdentities, ValueObjects, Aggregates, etc.,
@@ -123,7 +117,7 @@ This example uses the [HorsesForCourses](https://github.com/kilfour/HorsesForCou
         // Name
         from isMale in Fuzzr.Bool()
         let firstNames = isMale ? DataLists.MaleFirstNames : DataLists.FemaleFirstNames
-        from firstName in Fuzzr.OneOf(DataLists.FirstNames)
+        from firstName in Fuzzr.OneOf(firstNames)
         from lastName in Fuzzr.OneOf(DataLists.LastNames)
         let name = $"{firstName} {lastName}"
         // Email

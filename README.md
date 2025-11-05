@@ -2,14 +2,48 @@
 
 > **A type-walking cheetah with a hand full of random.**
 
-A tiny library for building stateful, inspectable, composable flows.
+Generate realistic test data and fuzz your domain models with composable LINQ expressions.
 
 [![Docs](https://img.shields.io/badge/docs-QuickFuzzr-blue?style=flat-square&logo=readthedocs)](https://github.com/kilfour/QuickFuzzr/blob/main/Docs/ToC.md)
 [![NuGet](https://img.shields.io/nuget/v/QuickFuzzr.svg?style=flat-square&logo=nuget)](https://www.nuget.org/packages/QuickFuzzr)
 [![License: MIT](https://img.shields.io/badge/license-MIT-success?style=flat-square)](https://github.com/kilfour/QuickFuzzr/blob/main/LICENSE)  
+## Example
+```csharp
+var fuzzr =
+    from name in Fuzzr.OneOf("John", "Paul", "George", "Ringo")
+    let email = $"{name.ToLower()}@mail.com"
+    from customer in Fuzzr.One(() => new Customer(name, email))
+    from orders in Fuzzr.One<Order>()
+        .Apply(customer.PlaceOrder)
+        .Many(1, 4)
+    from payment in Fuzzr.One<Payment>()
+        .Apply(p => p.Amount = orders.Sum(o => o.Total))
+        .Apply(customer.MakePayment)
+    select (customer, orders, payment);
+fuzzr.Generate();
+// Results in =>
+// (
+//     Customer {
+//         Name: "Paul",
+//         Email: "paul@mail.com",
+//         Orders: [ Order { Total: 67 }, Order { Total: 23 } ],
+//         Payments: [ Payment { Amount: 90 } ]
+//     },
+//     [ Order { Total: 67 }, Order { Total: 23 } ],
+//     Payment {
+//         Amount: 90
+//     }
+// )
+```
 ## Highlights
 
-*   
+* **Zero-config generation:** `Fuzzr.One<T>()` works out of the box.
+* **LINQ-composable:** Build complex generators from simple parts.
+* **Property-based testing ready:** Great for fuzzing and edge case discovery.  
+* **Configurable defaults:** Fine-tune generation with `Configr`.
+* **Recursive object graphs:** Automatic depth-controlled nesting.
+* **Seed-based reproducibility:** Deterministic generation for reliable tests.
+* **Real-world domain ready:** Handles aggregates, value objects, and complex relationships.  
 ## Installation
 
 QuickFuzzr is available on NuGet:
