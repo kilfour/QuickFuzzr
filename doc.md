@@ -145,7 +145,7 @@ var infoFuzzr =
         $"{firstname} {lastname}",
         $"{firstname}.{lastname}@{email_provider}");
 ```
-**Person**  
+**Person/Employee**  
 ```csharp
 var employeeConfigr =
     from _ in Configr<Person>.With(infoFuzzr, info =>

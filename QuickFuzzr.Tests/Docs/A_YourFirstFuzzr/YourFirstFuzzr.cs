@@ -171,7 +171,7 @@ and rewrite it like so:
     [DocExample(typeof(YourFirstFuzzr), nameof(AddressConfigr))]
     [DocContent("**Info**  \n> This is a helper `record` in order to correlate name and email.")]
     [DocExample(typeof(YourFirstFuzzr), nameof(InfoFuzzr))]
-    [DocContent("**Person**")]
+    [DocContent("**Person/Employee**")]
     [DocExample(typeof(YourFirstFuzzr), nameof(PersonConfigr))]
     [DocContent("**All Together Now**")]
     [DocExample(typeof(YourFirstFuzzr), nameof(PeopleFuzzr))]
