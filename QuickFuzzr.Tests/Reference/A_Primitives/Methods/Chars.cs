@@ -13,7 +13,17 @@ public class Chars
 	[DocContent("- The overload `Fuzzr.Char(char min, char max)` generates a char greater than or equal to `min` and less than or equal to `maxs`.")]
 	public void MinMax()
 		=> CheckIf.GeneratedValuesShouldAllSatisfy(Fuzzr.Char('0', '9'),
-			("value >= '0", a => a >= '0'), ("value < '9'", a => a < '9'));
+			("value >= '0", a => a >= '0'), ("value <= '9'", a => a <= '9'));
+
+	[Fact]
+	public void Boundaries()
+		=> CheckIf.GeneratedValuesShouldEventuallySatisfyAll(Fuzzr.Char('0', '1'),
+			("a == '0'", a => a == '0'), ("a == '1'", a => a == '1'));
+
+	[Fact]
+	public void Boundaries_Single()
+		=> CheckIf.GeneratedValuesShouldAllSatisfy(Fuzzr.Char('0', '0'),
+			("a == '0'", a => a == '0'));
 
 	[Fact]
 	[DocContent("- Throws an `ArgumentException` when `min` > `max`.")]

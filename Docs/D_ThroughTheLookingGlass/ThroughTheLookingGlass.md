@@ -14,7 +14,7 @@ public class Folder
 ```
 Calling `Fuzzr.One<Folder>().Generate()` results in:  
 ```text
-{  Name: "ljcuu", SubFolder: null }
+{  Name: "ljduv", SubFolder: null }
 ```
 You can however influence how deep the rabbit hole goes,
 by adding call to `Configr<Folder>.Depth(min, max)`:  

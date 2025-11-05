@@ -13,7 +13,7 @@ public class YourFirstFuzzr
     [DocContent("You can generate a fully randomized instance like so:")]
     [DocExample(typeof(YourFirstFuzzr), nameof(Person_Example_GetResult))]
     [DocContent("**Output:**")]
-    [DocCode("Person { Name = \"ddnegsm\", Age = 18 }", "text")]
+    [DocCode("Person { Name = \"ddnegsn\", Age = 18 }", "text")]
     [DocContent(
 @"And that's it, ... no configuration required.  
 QuickFuzzr walks the `Person` type, detects its properties,
@@ -21,7 +21,7 @@ and fills them in using the default generators.")]
     public void Person_Example()
     {
         var result = Person_Example_GetResult();
-        Assert.Equal("ddnegsm", result.Name);
+        Assert.Equal("ddnegsn", result.Name);
         Assert.Equal(18, result.Age);
     }
 
@@ -258,23 +258,23 @@ But here are some counter arguments.
 @"{
     Address: {
         Street: ""u"",
-        City: ""xjgw""
+        City: ""ykgx""
     },
-    Email: ""dqasmq"",
-    SocialSecurityNumber: ""ggxgtn"",
-    Name: ""t"",
+    Email: ""dratnq"",
+    SocialSecurityNumber: ""ggygun"",
+    Name: ""v"",
     Age: 30
 }
 ", "text")]
     public void BackToSquareOne()
     {
         var result = Fuzzr.One<HousedEmployee>().Generate(58);
-        Assert.Equal("dqasmq", result.Email);
-        Assert.Equal("ggxgtn", result.SocialSecurityNumber);
-        Assert.Equal("t", result.Name);
+        Assert.Equal("dratnq", result.Email);
+        Assert.Equal("ggygun", result.SocialSecurityNumber);
+        Assert.Equal("u", result.Name);
         Assert.Equal(30, result.Age);
-        Assert.Equal("u", result.Address.Street);
-        Assert.Equal("xjgw", result.Address.City);
+        Assert.Equal("v", result.Address.Street);
+        Assert.Equal("ykgx", result.Address.City);
     }
 
     [Fact]

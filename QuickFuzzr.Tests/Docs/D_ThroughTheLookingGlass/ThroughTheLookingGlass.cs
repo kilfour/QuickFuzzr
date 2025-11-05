@@ -18,11 +18,11 @@ public class ThroughTheLookingGlass
     [DocContent("Imagine:")]
     [DocExample(typeof(Folder))]
     [DocContent("Calling `Fuzzr.One<Folder>().Generate()` results in:")]
-    [DocCode("{  Name: \"ljcuu\", SubFolder: null }", "text")]
+    [DocCode("{  Name: \"ljduv\", SubFolder: null }", "text")]
     public void StartingPoint()
     {
         var result = Fuzzr.One<Folder>().Generate(101);
-        Assert.Equal("ljcuu", result.Name);
+        Assert.Equal("ljduv", result.Name);
         Assert.Null(result.SubFolder);
     }
 

@@ -26,6 +26,16 @@ public class Halfs
             ("value >= 1", a => a >= (Half)1), ("value < 100", a => a < (Half)100));
 
     [Fact]
+    public void Boundaries()
+        => CheckIf.GeneratedValuesShouldAllSatisfy(Fuzzr.Half((Half)0, (Half)0.1),
+            ("a >= 0", a => a >= (Half)0), ("a < 0.1", a => a < (Half)0.1));
+
+    [Fact]
+    public void Boundaries_Single()
+        => CheckIf.GeneratedValuesShouldAllSatisfy(Fuzzr.Half((Half)0, (Half)0),
+            ("a == 0", a => a == (Half)0));
+
+    [Fact]
     [DocContent("- Can be made to return `Half?` using the `.Nullable()` combinator.")]
     public void Nullable()
         => CheckIf.GeneratesNullAndNotNull(Fuzzr.Half().Nullable());

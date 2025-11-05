@@ -190,7 +190,7 @@ allowing you to work with various access modifiers and C# patterns.
     public void FuzzrOne_Property_Access()
     {
         var (person1, person2) = FuzzrOne_Property_Access_Fuzzr().Generate(1234);
-        Assert.Equal("whxi", person1.Name);
+        Assert.Equal("xiyi", person1.Name);
         Assert.Equal(94, person1.Age);
         Assert.Equal("", person2.Name);
         Assert.Equal(0, person2.Age);
@@ -206,7 +206,7 @@ allowing you to work with various access modifiers and C# patterns.
         from disable in Configr.DisablePropertyAccessFor(PropertyAccess.InitOnly)
         from person2 in Fuzzr.One<PrivatePerson>()
         select (person1, person2);
-        // Results in => ( { Name: "whxi", Age: 94 }, { Name: "", Age: 0 } )
+        // Results in => ( { Name: "xiyi", Age: 94 }, { Name: "", Age: 0 } )
     }
 
     [Fact]

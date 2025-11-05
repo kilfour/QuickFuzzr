@@ -4,9 +4,17 @@ namespace QuickFuzzr;
 
 public static partial class Fuzzr
 {
+	/// <summary>
+	/// Creates a generator that produces random byte values across the full range (0-255).
+	/// Use for generating small numeric values, flags, or when working with binary data formats.
+	/// </summary>
 	public static FuzzrOf<byte> Byte()
 		=> Byte(byte.MinValue, byte.MaxValue);
 
+	/// <summary>
+	/// Creates a generator that produces random byte values within the specified inclusive range.
+	/// Use when you need constrained byte values for specific scenarios like ports, small counters, or bounded numeric fields.
+	/// </summary>
 	public static FuzzrOf<byte> Byte(int min, int max)
 	{
 		if (min < byte.MinValue)

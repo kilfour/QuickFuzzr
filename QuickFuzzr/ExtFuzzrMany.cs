@@ -4,9 +4,17 @@ namespace QuickFuzzr;
 
 public static partial class ExtFuzzr
 {
+	/// <summary>
+	/// Creates a generator that produces a fixed number of values from the source generator as an enumerable collection.
+	/// Use for generating lists of consistent size, batch data, or when you need a specific count of generated items.
+	/// </summary>
 	public static FuzzrOf<IEnumerable<T>> Many<T>(this FuzzrOf<T> generator, int number)
 		=> state => new Result<IEnumerable<T>>(GetEnumerable(number, generator, state), state);
 
+	/// <summary>
+	/// Creates a generator that produces a variable number of values from the source generator within the specified range.
+	/// Use for generating lists of varying sizes to test collection handling, pagination, or dynamic data sets.
+	/// </summary>
 	public static FuzzrOf<IEnumerable<T>> Many<T>(this FuzzrOf<T> generator, int min, int max)
 		=> state => new Result<IEnumerable<T>>(GetEnumerable(Fuzzr.Int(min, max)(state).Value, generator, state), state);
 

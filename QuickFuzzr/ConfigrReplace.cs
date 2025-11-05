@@ -4,6 +4,10 @@ namespace QuickFuzzr;
 
 public static partial class Fuzzr
 {
+	/// <summary>
+	/// Creates a generator that replaces the default generator for a value type and its nullable counterpart.
+	/// Use for customizing primitive value generation across all auto-generated properties of the specified type.
+	/// </summary>
 	public static FuzzrOf<Intent> Replace<T>(this FuzzrOf<T> generator)
 		where T : struct
 	{
@@ -15,6 +19,10 @@ public static partial class Fuzzr
 		};
 	}
 
+	/// <summary>
+	/// Creates a generator that replaces the default generator for a nullable value type.
+	/// Use for customizing nullable value type generation with specific null probability or value ranges.
+	/// </summary>
 	public static FuzzrOf<Intent> Replace<T>(this FuzzrOf<T?> generator)
 		where T : struct
 	{
@@ -25,6 +33,10 @@ public static partial class Fuzzr
 		};
 	}
 
+	/// <summary>
+	/// Creates a generator that replaces the default string generator.
+	/// Use for customizing string generation with specific patterns, lengths, or character sets across all auto-generated string properties.
+	/// </summary>
 	public static FuzzrOf<Intent> Replace(this FuzzrOf<string> generator)
 	{
 		return state =>

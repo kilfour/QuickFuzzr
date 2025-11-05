@@ -5,6 +5,10 @@ namespace QuickFuzzr;
 
 public static partial class Fuzzr
 {
+	/// <summary>
+	/// Creates a generator that produces random enum values of the specified enumeration type.
+	/// Use for generating enum values to test switch statements, state machines, or any code path that depends on enumeration cases.
+	/// </summary>
 	public static FuzzrOf<T> Enum<T>()
 		where T : struct, IConvertible
 	{

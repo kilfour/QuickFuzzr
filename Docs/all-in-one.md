@@ -13,7 +13,7 @@ Fuzzr.One<Person>().Generate();
 ```
 **Output:**  
 ```text
-Person { Name = "ddnegsm", Age = 18 }
+Person { Name = "ddnegsn", Age = 18 }
 ```
 And that's it, ... no configuration required.  
 QuickFuzzr walks the `Person` type, detects its properties,
@@ -188,9 +188,9 @@ But here are some counter arguments.
         Street: "u",
         City: "xjgw"
     },
-    Email: "dqasmq",
-    SocialSecurityNumber: "ggxgtn",
-    Name: "t",
+    Email: "dratnq",
+    SocialSecurityNumber: "ggygun",
+    Name: "u",
     Age: 30
 }
 ```
@@ -523,7 +523,7 @@ public class Folder
 ```
 Calling `Fuzzr.One<Folder>().Generate()` results in:  
 ```text
-{  Name: "ljcuu", SubFolder: null }
+{  Name: "ljduv", SubFolder: null }
 ```
 You can however influence how deep the rabbit hole goes,
 by adding call to `Configr<Folder>.Depth(min, max)`:  

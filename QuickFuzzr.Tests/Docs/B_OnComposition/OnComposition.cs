@@ -30,7 +30,7 @@ As an example of that, here is another social security generator, this time usin
     public void Composition()
     {
         var result = SsnFuzzr().Generate(42);
-        Assert.Equal("114-26-1622", result);
+        Assert.Equal("115-27-1722", result);
     }
 
     [CodeSnippet]
@@ -43,7 +43,7 @@ As an example of that, here is another social security generator, this time usin
             from b in Fuzzr.String(digit, 2)
             from c in Fuzzr.String(digit, 4)
             select $"{a}-{b}-{c}";
-        // Results in => "114-26-1622"
+        // Results in => "115-27-17222"
         return ssnFuzzr;
     }
 
@@ -68,7 +68,7 @@ The calls to `Configr` in effect do not generate values, they exist to **influen
     public void Configr_inlines()
     {
         var result = Configr_inlines_Example().Generate(123);
-        Assert.Equal("wsusbadepw", result.Name);
+        Assert.Equal("xtvtbadfqx", result.Name);
         Assert.Equal(720, result.Age);
     }
 
@@ -80,7 +80,7 @@ The calls to `Configr` in effect do not generate values, they exist to **influen
             from _ in Configr<Person>.Property(p => p.Age, Fuzzr.Int(666, 777))
             from person in Fuzzr.One<Person>()
             select person;
-        // Results in => { Name: "wsusbadepw", Age: 720 }
+        // Results in => { Name: "xtvtbadfqx", Age: 720 }
         return personFuzzr;
     }
 

@@ -4,6 +4,10 @@ namespace QuickFuzzr;
 
 public static partial class Configr<T>
 {
+    /// <summary>
+    /// Creates a generator that applies configuration based on a generated value from another generator.
+    /// Use for complex configuration scenarios where generation parameters depend on values produced by other generators.
+    /// </summary>
     public static FuzzrOf<Intent> With<TValue>(FuzzrOf<TValue> fuzzr, Func<TValue, FuzzrOf<Intent>> configrFactory)
         => state =>
             {
