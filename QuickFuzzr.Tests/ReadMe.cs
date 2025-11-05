@@ -10,7 +10,7 @@ namespace QuickFuzzr.Tests;
 @"
 > **A type-walking cheetah with a hand full of random.**
 
-Generate realistic test data and fuzz your domain models with composable LINQ expressions.
+Generate realistic test data and *fuzz* your domain models using composable LINQ expressions.
 
 [![Docs](https://img.shields.io/badge/docs-QuickFuzzr-blue?style=flat-square&logo=readthedocs)](https://github.com/kilfour/QuickFuzzr/blob/main/Docs/ToC.md)
 [![NuGet](https://img.shields.io/nuget/v/QuickFuzzr.svg?style=flat-square&logo=nuget)](https://www.nuget.org/packages/QuickFuzzr)
@@ -110,8 +110,21 @@ You can explore it here:
 * **[Table of Contents](https://github.com/kilfour/QuickFuzzr/blob/main/Docs/ToC.md)**
 * **[One File Doc](https://github.com/kilfour/QuickFuzzr/blob/main/Docs/all-in-one.md)**
 
+*Note:* A full API reference is currently being worked on.  
+For now all public methods have xml summary comments.
+
 ")]
     private static void Documentation() { }
+
+    [DocHeader("Roadmap")]
+    [DocContent(@"
+- Complete API reference documentation.
+- More Elm-style error messages.
+- More Primitives: DateTimeOffset, NInt, NUint, ...
+- QuickFuzzr.Reactor: Cookbook, reusable patterns.
+- QuickFuzzr.Evil: For all your property based testing needs.
+")]
+    private static void Roadmap() { }
 
     [DocHeader("License")]
     [DocContent(@"
