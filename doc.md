@@ -186,11 +186,11 @@ But here are some counter arguments.
 {
     Address: {
         Street: "u",
-        City: "xjgw"
+        City: "ykgx"
     },
     Email: "dratnq",
     SocialSecurityNumber: "ggygun",
-    Name: "u",
+    Name: "v",
     Age: 30
 }
 ```
@@ -304,7 +304,7 @@ var ssnFuzzr =
     from b in Fuzzr.String(digit, 2)
     from c in Fuzzr.String(digit, 4)
     select $"{a}-{b}-{c}";
-// Results in => "114-26-1622"
+// Results in => "115-27-17222"
 ```
 ### Configr
 The second way of getting a hold of `FuzzrOf<T>` building blocks is by calling the methods on the static factory class `Configr`.
@@ -320,7 +320,7 @@ var personFuzzr =
     from _ in Configr<Person>.Property(p => p.Age, Fuzzr.Int(666, 777))
     from person in Fuzzr.One<Person>()
     select person;
-// Results in => { Name: "wsusbadepw", Age: 720 }
+// Results in => { Name: "xtvtbadfqx", Age: 720 }
 ```
 ### Extension Methods
 Lastly, there are some extension methods defined for `FuzzrOf<T>`. I think the most obvious one is `.Many(...)`.  
@@ -451,7 +451,7 @@ from person1 in Fuzzr.One<PrivatePerson>()
 from disable in Configr.DisablePropertyAccessFor(PropertyAccess.InitOnly)
 from person2 in Fuzzr.One<PrivatePerson>()
 select (person1, person2);
-// Results in => ( { Name: "whxi", Age: 94 }, { Name: "", Age: 0 } )
+// Results in => ( { Name: "xiyi", Age: 94 }, { Name: "", Age: 0 } )
 ```
 This demonstrates how QuickFuzzr gives you fine-grained control over which properties get generated, 
 allowing you to work with various access modifiers and C# patterns.  

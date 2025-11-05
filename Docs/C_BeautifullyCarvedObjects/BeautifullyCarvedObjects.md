@@ -91,7 +91,7 @@ from person1 in Fuzzr.One<PrivatePerson>()
 from disable in Configr.DisablePropertyAccessFor(PropertyAccess.InitOnly)
 from person2 in Fuzzr.One<PrivatePerson>()
 select (person1, person2);
-// Results in => ( { Name: "whxi", Age: 94 }, { Name: "", Age: 0 } )
+// Results in => ( { Name: "xiyi", Age: 94 }, { Name: "", Age: 0 } )
 ```
 This demonstrates how QuickFuzzr gives you fine-grained control over which properties get generated, 
 allowing you to work with various access modifiers and C# patterns.  

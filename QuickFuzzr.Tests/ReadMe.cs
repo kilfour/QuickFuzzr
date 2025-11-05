@@ -108,7 +108,7 @@ QuickFuzzr is fully documented, with real, executable examples for each combinat
 You can explore it here:
 
 * **[Table of Contents](https://github.com/kilfour/QuickFuzzr/blob/main/Docs/ToC.md)**
-* **[One File Doc](https://github.com/kilfour/QuickFuzzr/blob/main/Docs/all-in-one.md)**
+* **[One File Doc](https://github.com/kilfour/QuickFuzzr/blob/main/doc.md)**
 
 *Note:* A full API reference is currently being worked on.  
 For now all public methods have xml summary comments.
