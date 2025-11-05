@@ -17,7 +17,7 @@ Generate realistic test data and fuzz your domain models with composable LINQ ex
 [![License: MIT](https://img.shields.io/badge/license-MIT-success?style=flat-square)](https://github.com/kilfour/QuickFuzzr/blob/main/LICENSE)")]
 public class ReadMe
 {
-    [Fact(Skip = "explicit")]
+    [Fact]
     [DocHeader("Example")]
     [DocExample(typeof(ReadMe), nameof(Example_Fuzzr))]
     public void Example()
@@ -37,6 +37,7 @@ public class ReadMe
     private static (Customer, IEnumerable<Order>, Payment) Example_Fuzzr()
     {
         var fuzzr =
+            from decimalPrecision in Fuzzr.Decimal().Apply(d => Math.Round(d, 2)).Replace()
             from name in Fuzzr.OneOf("John", "Paul", "George", "Ringo")
             let email = $"{name.ToLower()}@mail.com"
             from customer in Fuzzr.One(() => new Customer(name, email))
@@ -53,12 +54,12 @@ public class ReadMe
         //     Customer {
         //         Name: "Paul",
         //         Email: "paul@mail.com",
-        //         Orders: [ Order { Total: 67 }, Order { Total: 23 } ],
-        //         Payments: [ Payment { Amount: 90 } ]
+        //         Orders: [ Order { Total: 67.25 }, Order { Total: 23.41 } ],
+        //         Payments: [ Payment { Amount: 90.66 } ]
         //     },
-        //     [ Order { Total: 67 }, Order { Total: 23 } ],
+        //     [ Order { Total: 67.25 }, Order { Total: 23.41 } ],
         //     Payment {
-        //         Amount: 90
+        //         Amount: 90.66
         //     }
         // )
     }
@@ -73,9 +74,9 @@ public class ReadMe
         public void PlaceOrder(Order order) => Orders.Add(order);
     }
 
-    public class Order { public int Total { get; set; } }
+    public class Order { public decimal Total { get; set; } }
 
-    public class Payment { public int Amount { get; set; } }
+    public class Payment { public decimal Amount { get; set; } }
 
     [DocHeader("Highlights")]
     [DocContent(@"

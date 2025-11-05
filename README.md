@@ -10,6 +10,7 @@ Generate realistic test data and fuzz your domain models with composable LINQ ex
 ## Example
 ```csharp
 var fuzzr =
+    from decimalPrecision in Fuzzr.Decimal().Apply(d => Math.Round(d, 2)).Replace()
     from name in Fuzzr.OneOf("John", "Paul", "George", "Ringo")
     let email = $"{name.ToLower()}@mail.com"
     from customer in Fuzzr.One(() => new Customer(name, email))
@@ -26,12 +27,12 @@ fuzzr.Generate();
 //     Customer {
 //         Name: "Paul",
 //         Email: "paul@mail.com",
-//         Orders: [ Order { Total: 67 }, Order { Total: 23 } ],
-//         Payments: [ Payment { Amount: 90 } ]
+//         Orders: [ Order { Total: 67.25 }, Order { Total: 23.41 } ],
+//         Payments: [ Payment { Amount: 90.66 } ]
 //     },
-//     [ Order { Total: 67 }, Order { Total: 23 } ],
+//     [ Order { Total: 67.25 }, Order { Total: 23.41 } ],
 //     Payment {
-//         Amount: 90
+//         Amount: 90.66
 //     }
 // )
 ```
