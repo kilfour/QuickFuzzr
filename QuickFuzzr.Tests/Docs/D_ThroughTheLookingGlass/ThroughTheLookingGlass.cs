@@ -1,6 +1,5 @@
 using QuickFuzzr.Tests._Tools.Models;
 using QuickPulse.Explains;
-using QuickPulse.Show;
 
 namespace QuickFuzzr.Tests.Docs.D_ThroughTheLookingGlass;
 

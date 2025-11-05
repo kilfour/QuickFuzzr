@@ -1,7 +1,6 @@
 using QuickFuzzr.Tests._Tools.Models;
 using QuickFuzzr.Tests.Docs.A_YourFirstFuzzr;
 using QuickPulse.Explains;
-using QuickPulse.Show;
 
 namespace QuickFuzzr.Tests.Docs.B_OnComposition;
 
