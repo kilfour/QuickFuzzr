@@ -1,3 +1,4 @@
+using QuickFuzzr.Tests._Tools.Models;
 using QuickPulse.Arteries;
 using QuickPulse.Explains;
 using QuickPulse.Show;
@@ -19,13 +20,33 @@ public class ReadMe
 {
     private readonly bool ToFile = false;
     [Fact]
-    [DocHeader("Example")]
-    [DocExample(typeof(ReadMe), nameof(Example_Fuzzr))]
+    [DocHeader("Examples")]
+    [DocHeader("It Just Works", 1)]
+    [DocExample(typeof(ReadMe), nameof(Example_Simple_Fuzzr))]
+    public void Example_Simple()
+    {
+        var result = Example_Simple_Fuzzr().PulseToLog("temp.log");
+        Assert.Equal("ddnegsn", result.Name);
+        Assert.Equal(18, result.Age);
+    }
+
+    [CodeSnippet]
+    [CodeRemove("return ")]
+    [CodeRemove("42")]
+    private static Person Example_Simple_Fuzzr()
+    {
+        return Fuzzr.One<Person>().Generate(42);
+        // Results in => Person { Name = "ddnegsn", Age = 18 }
+    }
+
+    [Fact]
+    [DocHeader("Configurable", 1)]
+    [DocExample(typeof(ReadMe), nameof(Example_Configr_Fuzzr))]
     [DocContent("**Output:**")]
     [DocCodeFile("readme-example-output.txt")]
-    public void Example()
+    public void Example_Configr()
     {
-        var result = Example_Fuzzr().ToList();
+        var result = Example_Configr_Fuzzr().ToList();
         if (ToFile)
             FileLog.Write("./QuickFuzzr.Tests/readme-example-output.txt").Absorb(
                 Please.AllowMe()
@@ -54,14 +75,15 @@ public class ReadMe
     [CodeSnippet]
     [CodeRemove("return ")]
     [CodeRemove("987")]
-    private static IEnumerable<Customer> Example_Fuzzr()
+    private static IEnumerable<Customer> Example_Configr_Fuzzr()
     {
         var fuzzr =
-            from counter in Fuzzr.Counter("my-key")
+            // Generate complete customer with orders and payments
+            from counter in Fuzzr.Counter("my-key") // <= keyed auto incrementing int
             from customer in Fuzzr.One(() => new Customer($"Customer-{counter}"))
             from orders in Fuzzr.One<Order>()
-                .Apply(customer.PlaceOrder)
-                .Many(1, 4)
+                .Apply(customer.PlaceOrder) // <= add order to customer
+                .Many(1, 4) // <= add between 1 and 4 random orders
             from payment in Fuzzr.One<Payment>()
                 .Apply(p => p.Amount = orders.Sum(o => o.Total))
                 .Apply(customer.MakePayment)
@@ -90,7 +112,7 @@ public class ReadMe
 * **Configurable defaults:** Fine-tune generation with `Configr`.
 * **Recursive object graphs:** Automatic depth-controlled nesting.
 * **Seed-based reproducibility:** Deterministic generation for reliable tests.
-* **Handles real-world domains:** Handles aggregates, value objects, and complex relationships.")]
+* **Handles real-world domains:** Aggregates, value objects, and complex relationships.")]
     private static void Highlights() { }
 
     [DocHeader("Installation")]

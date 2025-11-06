@@ -7,14 +7,21 @@ Generate realistic test data and *fuzz* your domain models using composable LINQ
 [![Docs](https://img.shields.io/badge/docs-QuickFuzzr-blue?style=flat-square&logo=readthedocs)](https://github.com/kilfour/QuickFuzzr/blob/main/Docs/ToC.md)
 [![NuGet](https://img.shields.io/nuget/v/QuickFuzzr.svg?style=flat-square&logo=nuget)](https://www.nuget.org/packages/QuickFuzzr)
 [![License: MIT](https://img.shields.io/badge/license-MIT-success?style=flat-square)](https://github.com/kilfour/QuickFuzzr/blob/main/LICENSE)  
-## Example
+## Examples
+### It Just Works
+```csharp
+Fuzzr.One<Person>().Generate();
+// Results in => Person { Name = "ddnegsn", Age = 18 }
+```
+### Configurable
 ```csharp
 var fuzzr =
-    from counter in Fuzzr.Counter("my-key")
+    // Generate complete customer with orders and payments
+    from counter in Fuzzr.Counter("my-key") // <= keyed auto incrementing int
     from customer in Fuzzr.One(() => new Customer($"Customer-{counter}"))
     from orders in Fuzzr.One<Order>()
-        .Apply(customer.PlaceOrder)
-        .Many(1, 4)
+        .Apply(customer.PlaceOrder) // <= add order to customer
+        .Many(1, 4) // <= add between 1 and 4 random orders
     from payment in Fuzzr.One<Payment>()
         .Apply(p => p.Amount = orders.Sum(o => o.Total))
         .Apply(customer.MakePayment)
@@ -44,7 +51,7 @@ fuzzr.Many(2).Generate();
 * **Configurable defaults:** Fine-tune generation with `Configr`.
 * **Recursive object graphs:** Automatic depth-controlled nesting.
 * **Seed-based reproducibility:** Deterministic generation for reliable tests.
-* **Handles real-world domains:** Handles aggregates, value objects, and complex relationships.  
+* **Handles real-world domains:** Aggregates, value objects, and complex relationships.  
 ## Installation
 
 QuickFuzzr is available on NuGet:
