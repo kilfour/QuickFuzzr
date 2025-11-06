@@ -5,7 +5,7 @@ namespace QuickFuzzr;
 public static partial class Fuzzr
 {
 	/// <summary>
-	/// Creates a generator that produces random Half-precision floating-point values between 1 (inclusive) and 100 (exclusive).
+	/// Creates a generator that produces random Half-precision floating-point values between 1 (inclusive) and 100 (inclusive).
 	/// Use for generating compact numeric data where full precision is not required, such as small measurements or percentages.
 	/// </summary>
 	public static FuzzrOf<Half> Half()

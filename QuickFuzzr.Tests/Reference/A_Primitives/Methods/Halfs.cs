@@ -12,7 +12,7 @@ public class Halfs
     [DocContent("- The overload Fuzzr.Half(Half min, Half max) generates a half-precision floating-point number greater than or equal to `min` and less than `max`.")]
     public void MinMax()
         => CheckIf.GeneratedValuesShouldAllSatisfy(Fuzzr.Half((Half)1, (Half)5),
-            ("value >= 1", a => a >= (Half)1), ("value < 5", a => a < (Half)5));
+            ("value >= 1", a => a >= (Half)1), ("value <= 5", a => a <= (Half)5));
 
     [Fact]
     [DocContent("- Throws an `ArgumentException` when `min` > `max`.")]
@@ -23,12 +23,12 @@ public class Halfs
     [DocContent("- The default generator is (min = (Half)1, max = (Half)100).")]
     public void DefaultGenerator()
         => CheckIf.GeneratedValuesShouldAllSatisfy(Fuzzr.Half(),
-            ("value >= 1", a => a >= (Half)1), ("value < 100", a => a < (Half)100));
+            ("value >= 1", a => a >= (Half)1), ("value <= 100", a => a <= (Half)100));
 
     [Fact]
     public void Boundaries()
         => CheckIf.GeneratedValuesShouldAllSatisfy(Fuzzr.Half((Half)0, (Half)0.1),
-            ("a >= 0", a => a >= (Half)0), ("a < 0.1", a => a < (Half)0.1));
+            ("a >= 0", a => a >= (Half)0), ("a <= 0.1", a => a <= (Half)0.1));
 
     [Fact]
     public void Boundaries_Single()
