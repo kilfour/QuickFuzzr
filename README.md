@@ -10,31 +10,31 @@ Generate realistic test data and *fuzz* your domain models using composable LINQ
 ## Example
 ```csharp
 var fuzzr =
-    from decimalPrecision in Fuzzr.Decimal().Apply(d => Math.Round(d, 2)).Replace()
-    from name in Fuzzr.OneOf("John", "Paul", "George", "Ringo")
-    let email = $"{name.ToLower()}@mail.com"
-    from customer in Fuzzr.One(() => new Customer(name, email))
+    from counter in Fuzzr.Counter("my-key")
+    from customer in Fuzzr.One(() => new Customer($"Customer-{counter}"))
     from orders in Fuzzr.One<Order>()
         .Apply(customer.PlaceOrder)
         .Many(1, 4)
     from payment in Fuzzr.One<Payment>()
         .Apply(p => p.Amount = orders.Sum(o => o.Total))
         .Apply(customer.MakePayment)
-    select (customer, orders, payment);
-fuzzr.Generate();
-// Results in =>
-// (
-//     Customer {
-//         Name: "Paul",
-//         Email: "paul@mail.com",
-//         Orders: [ Order { Total: 67.25 }, Order { Total: 23.41 } ],
-//         Payments: [ Payment { Amount: 90.66 } ]
-//     },
-//     [ Order { Total: 67.25 }, Order { Total: 23.41 } ],
-//     Payment {
-//         Amount: 90.66
-//     }
-// )
+    select customer;
+fuzzr.Many(2).Generate();
+```
+**Output:**  
+```
+[
+    Customer {
+        Name: "Customer-1",
+        Orders: [ Order { Total: 42.73 }, Order { Total: 67.25 } ],
+        Payments: [ Payment { Amount: 109.98 } ]
+    },
+    Customer {
+        Name: "Customer-2",
+        Orders: [ Order { Total: 10.51 }, Order { Total: 14.66 }, Order { Total: 60.86 } ],
+        Payments: [ Payment { Amount: 86.03 } ]
+    }
+]
 ```
 ## Highlights
 

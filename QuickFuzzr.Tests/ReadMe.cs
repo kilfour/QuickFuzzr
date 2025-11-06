@@ -17,57 +17,61 @@ Generate realistic test data and *fuzz* your domain models using composable LINQ
 [![License: MIT](https://img.shields.io/badge/license-MIT-success?style=flat-square)](https://github.com/kilfour/QuickFuzzr/blob/main/LICENSE)")]
 public class ReadMe
 {
+    private readonly bool ToFile = false;
     [Fact]
     [DocHeader("Example")]
     [DocExample(typeof(ReadMe), nameof(Example_Fuzzr))]
+    [DocContent("**Output:**")]
+    [DocCodeFile("readme-example-output.txt")]
     public void Example()
     {
-        var result = Example_Fuzzr();
-        FileLog.Write("readme.log").Absorb(
-            Please.AllowMe()
-                .ToAddSomeClass()
-                .ToInline<List<Order>>()
-                .ToInline<List<Payment>>()
-                .IntroduceThis(result));
+        var result = Example_Fuzzr().ToList();
+        if (ToFile)
+            FileLog.Write("./QuickFuzzr.Tests/readme-example-output.txt").Absorb(
+                Please.AllowMe()
+                    .ToAddSomeClass()
+                    .ToInline<List<Order>>()
+                    .ToInline<List<Payment>>()
+                    .IntroduceThis(result));
+        Assert.Equal(2, result.Count);
+
+        Assert.Equal("Customer-1", result[0].Name);
+        Assert.Equal(2, result[0].Orders.Count);
+        Assert.Equal(42.73M, result[0].Orders[0].Total);
+        Assert.Equal(67.25M, result[0].Orders[1].Total);
+        Assert.Single(result[0].Payments);
+        Assert.Equal(109.98M, result[0].Payments[0].Amount);
+
+        Assert.Equal("Customer-2", result[1].Name);
+        Assert.Equal(3, result[1].Orders.Count);
+        Assert.Equal(10.51M, result[1].Orders[0].Total);
+        Assert.Equal(14.66M, result[1].Orders[1].Total);
+        Assert.Equal(60.86M, result[1].Orders[2].Total);
+        Assert.Single(result[1].Payments);
+        Assert.Equal(86.03M, result[1].Payments[0].Amount);
     }
 
     [CodeSnippet]
     [CodeRemove("return ")]
     [CodeRemove("987")]
-    private static (Customer, IEnumerable<Order>, Payment) Example_Fuzzr()
+    private static IEnumerable<Customer> Example_Fuzzr()
     {
         var fuzzr =
-            from decimalPrecision in Fuzzr.Decimal().Apply(d => Math.Round(d, 2)).Replace()
-            from name in Fuzzr.OneOf("John", "Paul", "George", "Ringo")
-            let email = $"{name.ToLower()}@mail.com"
-            from customer in Fuzzr.One(() => new Customer(name, email))
+            from counter in Fuzzr.Counter("my-key")
+            from customer in Fuzzr.One(() => new Customer($"Customer-{counter}"))
             from orders in Fuzzr.One<Order>()
                 .Apply(customer.PlaceOrder)
                 .Many(1, 4)
             from payment in Fuzzr.One<Payment>()
                 .Apply(p => p.Amount = orders.Sum(o => o.Total))
                 .Apply(customer.MakePayment)
-            select (customer, orders, payment);
-        return fuzzr.Generate(987);
-        // Results in =>
-        // (
-        //     Customer {
-        //         Name: "Paul",
-        //         Email: "paul@mail.com",
-        //         Orders: [ Order { Total: 67.25 }, Order { Total: 23.41 } ],
-        //         Payments: [ Payment { Amount: 90.66 } ]
-        //     },
-        //     [ Order { Total: 67.25 }, Order { Total: 23.41 } ],
-        //     Payment {
-        //         Amount: 90.66
-        //     }
-        // )
+            select customer;
+        return fuzzr.Many(2).Generate(987);
     }
 
-    public class Customer(string name, string email)
+    public class Customer(string name)
     {
         public string Name { get; init; } = name;
-        public string Email { get; init; } = email;
         public List<Order> Orders { get; set; } = [];
         public List<Payment> Payments { get; set; } = [];
         public void MakePayment(Payment payment) => Payments.Add(payment);

@@ -134,7 +134,7 @@ public class Genesis : ICreationEngine
         return properties;//.Where(prop => ShouldGenerateProperty(prop, state));
     }
 
-    private bool ShouldGenerateProperty(PropertyInfo prop, State state)
+    private static bool ShouldGenerateProperty(PropertyInfo prop, State state)
     {
         var setter = prop.SetMethod;
         var isInitOnly = setter?.ReturnParameter.GetRequiredCustomModifiers()
