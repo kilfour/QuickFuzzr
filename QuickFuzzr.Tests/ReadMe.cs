@@ -90,7 +90,7 @@ public class ReadMe
 * **Configurable defaults:** Fine-tune generation with `Configr`.
 * **Recursive object graphs:** Automatic depth-controlled nesting.
 * **Seed-based reproducibility:** Deterministic generation for reliable tests.
-* **Real-world domain ready:** Handles aggregates, value objects, and complex relationships.")]
+* **Handles real-world domains:** Handles aggregates, value objects, and complex relationships.")]
     private static void Highlights() { }
 
     [DocHeader("Installation")]
