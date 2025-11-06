@@ -56,7 +56,7 @@ so the switch from *fluent chaining* to *LINQ composition* was inevitable.
 
 By **March 9th**, I basically had the foundation of what is now QuickFuzzr.
 Between that date and early 2025, there were only five commits.
-Not because it was abandoned, I used it daily, but because it was good enough.
+Not because it was abandoned, I used it a lot, but because it was good enough.
 
 So what changed at the start of this year?
 
