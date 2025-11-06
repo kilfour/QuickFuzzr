@@ -23,8 +23,8 @@ var fuzzr =
         .Apply(customer.PlaceOrder) // <= add order to customer
         .Many(1, 4) // <= add between 1 and 4 random orders
     from payment in Fuzzr.One<Payment>()
-        .Apply(p => p.Amount = orders.Sum(o => o.Total))
-        .Apply(customer.MakePayment)
+        .Apply(p => p.Amount = orders.Sum(o => o.Total)) // <= calculate total from orders
+        .Apply(customer.MakePayment) // <= add payment to customer
     select customer;
 fuzzr.Many(2).Generate();
 ```
