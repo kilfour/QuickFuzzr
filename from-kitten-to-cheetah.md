@@ -1,7 +1,7 @@
 # From Kitten to Cheetah
 > A.k.a. Why QuickFuzzr exists and how it grew into what it is now.
 
-This one goes way back. So my memory might have some gaps, ..., but I reckon it started somewhere around 2007 or w2008.
+This one goes way back. So my memory might have some gaps, ..., but I reckon it started somewhere around 2007 or 2008.
 
 I was doing a lot of NHibernate stuff and wanted a minimal way to write persistancy tests.  
 People were starting to play with random data generation, but there wasn't much around yet in terms of libraries.  
