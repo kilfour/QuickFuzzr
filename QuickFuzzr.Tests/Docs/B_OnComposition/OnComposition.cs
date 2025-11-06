@@ -42,7 +42,7 @@ As an example of that, here is another social security generator, this time usin
             from b in Fuzzr.String(digit, 2)
             from c in Fuzzr.String(digit, 4)
             select $"{a}-{b}-{c}";
-        // Results in => "115-27-17222"
+        // Results in => "115-27-1722"
         return ssnFuzzr;
     }
 

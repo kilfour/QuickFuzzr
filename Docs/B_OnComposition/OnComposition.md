@@ -26,7 +26,7 @@ var ssnFuzzr =
     from b in Fuzzr.String(digit, 2)
     from c in Fuzzr.String(digit, 4)
     select $"{a}-{b}-{c}";
-// Results in => "115-27-17222"
+// Results in => "115-27-1722"
 ```
 ## Configr
 The second way of getting a hold of `FuzzrOf<T>` building blocks is by calling the methods on the static factory class `Configr`.

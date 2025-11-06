@@ -7,7 +7,7 @@ The main tool for this is `Fuzzr.One<T>()`, which tells QuickFuzzr to create a c
 When QuickFuzzr does this, it adheres to the following (adjustable) conventions:  
 - Primitive properties are generated using their default `Fuzzr` equivalents.  
 - Enumerations are filled using `Fuzzr.Enum<T>()`.  
-- Object properties are recursively generated where possible.  
+- Object properties are generated where possible.  
 
 Example:  
 ```csharp

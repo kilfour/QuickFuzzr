@@ -304,7 +304,7 @@ var ssnFuzzr =
     from b in Fuzzr.String(digit, 2)
     from c in Fuzzr.String(digit, 4)
     select $"{a}-{b}-{c}";
-// Results in => "115-27-17222"
+// Results in => "115-27-1722"
 ```
 ### Configr
 The second way of getting a hold of `FuzzrOf<T>` building blocks is by calling the methods on the static factory class `Configr`.
@@ -367,7 +367,7 @@ The main tool for this is `Fuzzr.One<T>()`, which tells QuickFuzzr to create a c
 When QuickFuzzr does this, it adheres to the following (adjustable) conventions:  
 - Primitive properties are generated using their default `Fuzzr` equivalents.  
 - Enumerations are filled using `Fuzzr.Enum<T>()`.  
-- Object properties are recursively generated where possible.  
+- Object properties are generated where possible.  
 
 Example:  
 ```csharp

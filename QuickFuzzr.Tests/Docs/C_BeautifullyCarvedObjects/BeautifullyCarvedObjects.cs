@@ -28,7 +28,7 @@ When QuickFuzzr does this, it adheres to the following (adjustable) conventions:
         Assert.Equal(DayOfWeek.Thursday, Fuzzr.One<TimeSlot>().Generate(42).Day);
 
     [Fact]
-    [DocContent("- Object properties are recursively generated where possible.")]
+    [DocContent("- Object properties are generated where possible.")]
     public void FuzzrOneFillsObjectProperties()
     {
         var result = Fuzzr.One<Appointment>().Generate(42);
