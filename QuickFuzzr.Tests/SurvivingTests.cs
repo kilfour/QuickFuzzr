@@ -9,7 +9,7 @@ public class SurvivingTests
     {
         var generator =
             from _ in Configr.EnablePropertyAccessFor(PropertyAccess.AllSetters)
-            from __ in Fuzzr.Constant(42).Replace()
+            from __ in Configr.Primitive(Fuzzr.Constant(42))
             from record in Fuzzr.One<MyRecord>()
             select record;
         var result = generator.Generate();

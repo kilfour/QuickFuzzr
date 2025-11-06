@@ -27,13 +27,13 @@ var generator =
 	public void RoundingExample()
 	{
 		var generator =
-			from _ in Fuzzr.Decimal().Apply(d => Math.Round(d, 2)).Replace()
+			from _ in Configr.Primitive(Fuzzr.Decimal(1, 100).Apply(d => Math.Round(d, 4)))
 			from result in Fuzzr.One<SomeThingToGenerate>()
 			select result;
 		var value = generator.Generate().MyProperty;
 		//var count = BitConverter.GetBytes(decimal.GetBits(generator.Generate().MyProperty)[3])[2];
 		var count = value.ToString().Split('.', ',')[1].Count();
-		Assert.Equal(2, count);
+		Assert.Equal(4, count);
 	}
 
 	[Fact]

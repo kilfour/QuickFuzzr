@@ -19,7 +19,7 @@ When executing above generator it will return a SomeThingToGenerate object where
 	public void UsesReplacement()
 	{
 		var generator =
-			from _ in Fuzzr.Constant(42).Replace()
+			from _ in Configr.Primitive(Fuzzr.Constant(42))
 			from result in Fuzzr.One<SomeThingToGenerate>()
 			select result;
 
@@ -33,7 +33,7 @@ When executing above generator it will return a SomeThingToGenerate object where
 	public void NullableUsesReplacement()
 	{
 		var generator =
-			from _ in Fuzzr.Int(42, 42).Replace()
+			from _ in Configr.Primitive(Fuzzr.Int(42, 42))
 			from result in Fuzzr.One<SomeThingToGenerate>()
 			select result;
 		CheckIf.GeneratedValuesShouldEventuallySatisfyAll(
@@ -47,7 +47,7 @@ When executing above generator it will return a SomeThingToGenerate object where
 	public void NullableReplace()
 	{
 		var generator =
-			from _ in Fuzzr.Int(666, 666).Nullable().NeverReturnNull().Replace()
+			from _ in Configr.Primitive(Fuzzr.Int(666, 666).Nullable().NeverReturnNull())
 			from result in Fuzzr.One<SomeThingToGenerate>()
 			select result;
 		var value = generator.Generate();
@@ -70,9 +70,9 @@ When executing above generator result1 will have all integers set to 42 and resu
 	public void MultipleReplacements()
 	{
 		var generator =
-			from _ in Fuzzr.Constant(42).Replace()
+			from _ in Configr.Primitive(Fuzzr.Constant(42))
 			from result1 in Fuzzr.One<SomeThingToGenerate>()
-			from __ in Fuzzr.Constant(666).Replace()
+			from __ in Configr.Primitive(Fuzzr.Constant(666))
 			from result2 in Fuzzr.One<SomeThingToGenerate>()
 			select new[] { result1, result2 };
 
@@ -86,7 +86,7 @@ When executing above generator result1 will have all integers set to 42 and resu
 	[DocContent("*Note :* The Replace combinator does not actually generate anything, it only influences further generation.")]
 	public void ReturnsUnit()
 	{
-		var generator = Fuzzr.Int(42, 42).Replace();
+		var generator = Configr.Primitive(Fuzzr.Int(42, 42));
 		Assert.Equal(Intent.Fixed, generator.Generate());
 	}
 
