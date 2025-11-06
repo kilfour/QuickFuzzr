@@ -79,3 +79,5 @@ For now all public methods have xml summary comments.
 ## License
 
 This project is licensed under the [MIT License](https://github.com/kilfour/QuickFuzzr/blob/main/LICENSE).  
+## Addendum
+The How and Why of QuickFuzzr: [From Kitten to Cheetah](https://github.com/kilfour/QuickFuzzr/blob/main/from-kitten-to-cheetah.md).  

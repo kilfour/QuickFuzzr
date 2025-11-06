@@ -134,4 +134,8 @@ For now all public methods have xml summary comments.
     [DocContent(@"
 This project is licensed under the [MIT License](https://github.com/kilfour/QuickFuzzr/blob/main/LICENSE).")]
     private static void License() { }
+
+    [DocHeader("Addendum")]
+    [DocContent("The How and Why of QuickFuzzr: [From Kitten to Cheetah](https://github.com/kilfour/QuickFuzzr/blob/main/from-kitten-to-cheetah.md).")]
+    private static void Origins() { }
 }
