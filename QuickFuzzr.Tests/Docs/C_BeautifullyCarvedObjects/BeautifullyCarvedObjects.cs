@@ -100,12 +100,9 @@ will throw an exception with the following message if used as is:")]
     }
 
     [CodeSnippet]
-    [CodeRemove("return")]
     [CodeRemove("@\"")]
     [CodeRemove("\";")]
-    private static string FuzzrOne_No_Default_Ctor_Throws_Message()
-    {
-        return
+    private static string FuzzrOne_No_Default_Ctor_Throws_Message() =>
 @"Cannot generate instance of PersonRecord.
 
 Possible solutions:
@@ -114,7 +111,7 @@ Possible solutions:
 • Use explicit generation: from x in Fuzzr.Int() ... select new PersonRecord(x)
 • Use the factory method overload: Fuzzr.One<T>(Func<T> constructor)
 ";
-    }
+
 
     [Fact]
     [DocContent(
