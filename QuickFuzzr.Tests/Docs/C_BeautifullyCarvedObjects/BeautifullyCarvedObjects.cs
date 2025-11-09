@@ -205,7 +205,7 @@ allowing you to work with various access modifiers and C# patterns.
     }
 
     [Fact]
-    [DocContent("Also if you `Configr` a property explicitly QuickFuzzr assumes you know what you're doing and generates a value:")]
+    [DocContent("Also if you `Configr` a property explicitly, QuickFuzzr assumes you know what you're doing and generates a value:")]
     [DocExample(typeof(BeautifullyCarvedObjects), nameof(FuzzrOne_Property_Acces_Override_Fuzzr))]
     public void FuzzrOne_Property_Acces_Override()
     {

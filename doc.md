@@ -454,7 +454,7 @@ select (person1, person2);
 This demonstrates how QuickFuzzr gives you fine-grained control over which properties get generated, 
 allowing you to work with various access modifiers and C# patterns.  
   
-Also if you `Configr` a property explicitly QuickFuzzr assumes you know what you're doing and generates a value:  
+Also if you `Configr` a property explicitly, QuickFuzzr assumes you know what you're doing and generates a value:  
 ```csharp
 from name in Configr<PrivatePerson>.Property(a => a.Name,
     from cnt in Fuzzr.Counter("person") select $"Person number {cnt}.")
