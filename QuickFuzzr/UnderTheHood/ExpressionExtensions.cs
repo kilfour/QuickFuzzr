@@ -1,5 +1,6 @@
 ﻿using System.Linq.Expressions;
 using System.Reflection;
+using QuickFuzzr.UnderTheHood.WhenThingsGoWrong;
 
 namespace QuickFuzzr.UnderTheHood;
 
@@ -19,6 +20,6 @@ public static class ExpressionExtensions
 				return property;
 		}
 
-		throw new ArgumentException($"Expression '{expression}' does not refer to a property.");
+		throw new PropertyConfigurationException(typeof(TTarget).Name, expression.ToString());
 	}
 }

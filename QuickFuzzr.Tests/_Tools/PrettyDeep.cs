@@ -1,13 +1,8 @@
 namespace QuickFuzzr.Tests._Tools;
 
-public class PrettyDeep
+public class PrettyDeep(Func<object, string> labelFunc)
 {
-    private readonly Func<object, string> labelFunc;
-
-    public PrettyDeep(Func<object, string> labelFunc)
-    {
-        this.labelFunc = labelFunc;
-    }
+    private readonly Func<object, string> labelFunc = labelFunc;
 
     public string Sculpt(object root)
     {

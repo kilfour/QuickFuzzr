@@ -11,6 +11,7 @@ using HorsesForCourses.Abstractions;
 using WibblyWobbly;
 using HorsesForCourses.Domain.Accounts;
 using System.Security.Claims;
+using QuickFuzzr.Tests._Tools;
 
 namespace QuickFuzzr.Tests.Docs.Q_ShowCase;
 
@@ -54,7 +55,7 @@ This example uses the [HorsesForCourses](https://github.com/kilfour/HorsesForCou
     [DocExample(typeof(TheFinalShowcase), nameof(CourseFuzzr))]
     [DocContent("**All Together Now**")]
     [DocExample(typeof(TheFinalShowcase), nameof(Domain))]
-    [DocContent("**Output:**")]
+    [DocOutput]
     [DocCodeFile("Result.txt", "text")]
     [DocHeader("Looking Back", 1)]
     [DocContent(

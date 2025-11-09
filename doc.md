@@ -337,7 +337,6 @@ When using the `FuzzrOf<T>` extension methods, scope is important.
 
 For instance the following might produce an, at first glance, surprising result:  
 ```csharp
-return
 from name in Fuzzr.OneOf("John", "Paul", "George", "Ringo")
 from age in Fuzzr.Int(18, 99)
 from people in Fuzzr.One(() => new PersonRecord(name, age)).Many(2)
@@ -350,7 +349,6 @@ so calling `.Many(2)` does not cause them to be regenerated.
 
 A corrected version of this Fuzzr would look like this:  
 ```csharp
-return
 (from name in Fuzzr.OneOf("John", "Paul", "George", "Ringo")
  from age in Fuzzr.Int(18, 99)
  from person in Fuzzr.One(() => new PersonRecord(name, age))
@@ -528,7 +526,6 @@ Calling `Fuzzr.One<Folder>().Generate()` results in:
 You can however influence how deep the rabbit hole goes,
 by adding call to `Configr<Folder>.Depth(min, max)`:  
 ```csharp
-return
 from name in Configr<Folder>.Property(a => a.Name,
     from cnt in Fuzzr.Counter("folder") select $"Folder-{cnt}")
 from folderDepth in Configr<Folder>.Depth(2, 5)

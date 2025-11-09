@@ -1,3 +1,4 @@
+using QuickFuzzr.Tests._Tools;
 using QuickFuzzr.Tests._Tools.Models;
 using QuickPulse.Arteries;
 using QuickPulse.Explains;
@@ -42,7 +43,7 @@ public class ReadMe
     [Fact]
     [DocHeader("Configurable", 1)]
     [DocExample(typeof(ReadMe), nameof(Example_Configr_Fuzzr))]
-    [DocContent("**Output:**")]
+    [DocOutput]
     [DocCodeFile("readme-example-output.txt")]
     public void Example_Configr()
     {

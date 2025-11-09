@@ -1,3 +1,4 @@
+using QuickFuzzr.Tests._Tools;
 using QuickFuzzr.Tests._Tools.Models;
 using QuickPulse.Explains;
 
@@ -30,7 +31,7 @@ public class ThroughTheLookingGlass
 @"You can however influence how deep the rabbit hole goes,
 by adding call to `Configr<Folder>.Depth(min, max)`:")]
     [DocExample(typeof(ThroughTheLookingGlass), nameof(GoingDeeper_Example))]
-    [DocContent("**Output:**")]
+    [DocOutput]
     [DocCodeFile("GoingDeeper.txt", "text")]
     public void GoingDeeper()
     {
@@ -44,7 +45,7 @@ by adding call to `Configr<Folder>.Depth(min, max)`:")]
     }
 
     [CodeSnippet]
-    [CodeRemove("return ")]
+    [CodeRemove("return")]
     private static FuzzrOf<Folder> GoingDeeper_Example()
     {
         return
@@ -74,7 +75,7 @@ Consider this small model:
     [DocExample(typeof(ThroughTheLookingGlass), nameof(OneStepBeyond_Folder_Cfg))]
     [DocContent("**Combined Fuzzr**")]
     [DocExample(typeof(ThroughTheLookingGlass), nameof(OneStepBeyond_Example))]
-    [DocContent("**Output:**")]
+    [DocOutput]
     [DocCodeFile("OneStepBeyond.txt", "text")]
     [DocContent(
 @"At this point QuickFuzzr has *type walked* an object graph that contains itself, stopped at a reasonable depth,

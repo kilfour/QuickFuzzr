@@ -1,3 +1,4 @@
+using QuickFuzzr.Tests._Tools;
 using QuickFuzzr.Tests._Tools.Models;
 using QuickPulse.Explains;
 
@@ -12,7 +13,7 @@ public class YourFirstFuzzr
     [DocExample(typeof(Person))]
     [DocContent("You can generate a fully randomized instance like so:")]
     [DocExample(typeof(YourFirstFuzzr), nameof(Person_Example_GetResult))]
-    [DocContent("**Output:**")]
+    [DocOutput]
     [DocCode("Person { Name = \"ddnegsn\", Age = 18 }", "text")]
     [DocContent(
 @"And that's it, ... no configuration required.  
@@ -41,7 +42,7 @@ and fills them in using the default generators.")]
  It is relatively easy however to *customize* the generation.  
  Let's for instance generate a *real* name and ensure our `Person` is eligible to vote:")]
     [DocExample(typeof(YourFirstFuzzr), nameof(Person_Example_GetResult_Customized))]
-    [DocContent("**Output:**")]
+    [DocOutput]
     [DocCode("Person { Name = \"George Lennon\", Age = 25 }", "text")]
     public void Person_Example_Customized()
     {
@@ -75,7 +76,7 @@ Consider this `Employee` class derived from `Person`:")]
     [DocExample(typeof(YourFirstFuzzr), nameof(SsnFuzzr))]
     [DocContent("**Employee**")]
     [DocExample(typeof(YourFirstFuzzr), nameof(EmployeeFuzzr))]
-    [DocContent("**Output:**")]
+    [DocOutput]
     [DocCodeFile("Employee.txt")]
     [DocContent(
 @"In this example the lists used by `OneOf` are declared outside of the generator.
@@ -130,7 +131,7 @@ I just used `string[]`'s but the data could easily be loaded from a file for ins
     [DocHeader("Please, Sir, I Want Some More.")]
     [DocContent("For MORE!, ..., oh well then.  \nJust use:")]
     [DocCode("employeeFuzzr.Many(3).Generate()")]
-    [DocContent("**Output:**")]
+    [DocOutput]
     [DocCodeFile("EmployeeMany.txt")]
     public void Employee_Example_Customized_Many()
     {
@@ -175,7 +176,7 @@ and rewrite it like so:
     [DocExample(typeof(YourFirstFuzzr), nameof(PersonConfigr))]
     [DocContent("**All Together Now**")]
     [DocExample(typeof(YourFirstFuzzr), nameof(PeopleFuzzr))]
-    [DocContent("**Output:**")]
+    [DocOutput]
     [DocCodeFile("HousedEmployee.txt")]
     public void HousedEmployee_Example()
     {
@@ -284,7 +285,7 @@ But here are some counter arguments.
 **Generate just addresses (or `Person`, `Employee`, etc.):**
 ")]
     [DocExample(typeof(YourFirstFuzzr), nameof(Addresses_Fuzzr))]
-    [DocContent("**Output:**")] // QuickPulse.Explains bug <= can't use records for the fragments
+    [DocOutput] // QuickPulse.Explains bug <= can't use records for the fragments
     [DocCodeFile("Addresses.txt")]
     public void Addresses()
     {
@@ -312,7 +313,7 @@ But here are some counter arguments.
     [Fact]
     [DocContent("**3. Composability**: Or configure and reconfigure on the fly:")]
     [DocExample(typeof(YourFirstFuzzr), nameof(Wild_Fuzzr))]
-    [DocContent("**Output:**")] // QuickPulse.Explains bug <= can't use records for the fragments
+    [DocOutput] // QuickPulse.Explains bug <= can't use records for the fragments
     [DocCodeFile("Mixed.txt")]
     [DocContent(
 @"As you can see this reuses the previous Fuzzr, generates a *normal* `HousedEmployee`,

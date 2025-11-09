@@ -71,9 +71,16 @@ public class Genesis : ICreationEngine
         if (defaultCtor == null)
             throw new ConstructionException(typeToGenerate.Name);
 
-        var defaultInstance = defaultCtor.Invoke([]);
-        // ValidateInstanceType(defaultInstance, typeToGenerate);
-        return defaultInstance;
+        try
+        {
+            var defaultInstance = defaultCtor.Invoke([]);
+            // ValidateInstanceType(defaultInstance, typeToGenerate);
+            return defaultInstance;
+        }
+        catch (MemberAccessException exception)
+        {
+            throw new InstantiationException(typeToGenerate.Name, exception);
+        }
     }
 
     private static void ValidateInstanceType(object instance, Type declaredType)

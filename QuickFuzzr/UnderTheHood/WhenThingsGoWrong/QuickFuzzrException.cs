@@ -4,4 +4,5 @@ public class QuickFuzzrException : Exception
 {
     public QuickFuzzrException() : base() { }
     public QuickFuzzrException(string message) : base(message) { }
+    public QuickFuzzrException(string message, Exception innerException) : base(message, innerException) { }
 }

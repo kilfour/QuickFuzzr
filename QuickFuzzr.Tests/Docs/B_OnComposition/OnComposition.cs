@@ -125,7 +125,7 @@ For instance the following might produce an, at first glance, surprising result:
     }
 
     [CodeSnippet]
-    [CodeRemove("return ")]
+    [CodeRemove("return")]
     private static FuzzrOf<IEnumerable<PersonRecord>> ExtensionMethods_Caution_Example()
     {
         return
@@ -154,7 +154,7 @@ A corrected version of this Fuzzr would look like this:")]
     }
 
     [CodeSnippet]
-    [CodeRemove("return ")]
+    [CodeRemove("return")]
     private static FuzzrOf<IEnumerable<PersonRecord>> ExtensionMethods_Caution_Example_Corrected()
     {
         return

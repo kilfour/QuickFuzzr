@@ -37,5 +37,18 @@ public class PrivatePerson
     public int Age { get; init; }
 }
 
+public abstract class AbstractPerson
+{
+    public string Name { get; set; } = string.Empty;
+    public int Age { get; set; }
+}
+
+public class PersonOutInTheFields
+{
+    public string Name = string.Empty;
+    public int Age;
+}
+
 [CodeExample]
 public record PersonRecord(string Name, int Age);
+
