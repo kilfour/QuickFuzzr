@@ -171,7 +171,7 @@ var peopleFuzzr =
         Street: "Victoria Street",
         City: "Manchester"
     },
-    Email: "George.Lennon@company.com",
+    Email: "george.lennon@company.com",
     SocialSecurityNumber: "336-74-5615",
     Name: "George Lennon",
     Age: 28
@@ -247,7 +247,7 @@ fuzzr.Generate();
             Street: "Station Road",
             City: "Bristol"
         },
-        Email: "Paul.mccartney@mailings.org",
+        Email: "paul.mccartney@mailings.org",
         SocialSecurityNumber: "621-54-5020",
         Name: "Paul McCartney",
         Age: 27

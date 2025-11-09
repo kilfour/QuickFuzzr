@@ -4,7 +4,7 @@
             Street: "Station Road",
             City: "Bristol"
         },
-        Email: "Paul.mccartney@mailings.org",
+        Email: "paul.mccartney@mailings.org",
         SocialSecurityNumber: "621-54-5020",
         Name: "Paul McCartney",
         Age: 27
