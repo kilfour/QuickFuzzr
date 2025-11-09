@@ -86,7 +86,7 @@ I just used `string[]`'s but the data could easily be loaded from a file for ins
         var result = EmployeeFuzzr(SsnFuzzr()).Generate(43);
         Assert.Equal("John McCartney", result.Name);
         Assert.Equal(69, result.Age);
-        Assert.Equal("John.McCartney@company.com", result.Email);
+        Assert.Equal("john.mccartney@company.com", result.Email);
         Assert.Equal("761-65-2228", result.SocialSecurityNumber);
     }
 
@@ -121,7 +121,7 @@ I just used `string[]`'s but the data could easily be loaded from a file for ins
                 {
                     Name = $"{firstname} {lastname}",
                     Age = age,
-                    Email = $"{firstname}.{lastname}@{email_provider}",
+                    Email = $"{firstname}.{lastname}@{email_provider}".ToLower(),
                     SocialSecurityNumber = ssn
                 };
         return employeeFuzzr;
@@ -137,17 +137,17 @@ I just used `string[]`'s but the data could easily be loaded from a file for ins
     {
         var result = EmployeeFuzzr(SsnFuzzr()).Many(3).Generate(44).ToList();
 
-        Assert.Equal("George.Harrison@mailings.org", result[0].Email);
+        Assert.Equal("george.harrison@mailings.org", result[0].Email);
         Assert.Equal("953-16-1093", result[0].SocialSecurityNumber);
         Assert.Equal("George Harrison", result[0].Name);
         Assert.Equal(50, result[0].Age);
 
-        Assert.Equal("George.McCartney@mailings.org", result[1].Email);
+        Assert.Equal("george.mccartney@mailings.org", result[1].Email);
         Assert.Equal("736-82-8923", result[1].SocialSecurityNumber);
         Assert.Equal("George McCartney", result[1].Name);
         Assert.Equal(48, result[1].Age);
 
-        Assert.Equal("Ringo.Harrison@mailings.org", result[2].Email);
+        Assert.Equal("ringo.harrison@mailings.org", result[2].Email);
         Assert.Equal("347-87-4164", result[2].SocialSecurityNumber);
         Assert.Equal("Ringo Harrison", result[2].Name);
         Assert.Equal(40, result[2].Age);

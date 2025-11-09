@@ -70,14 +70,14 @@ var employeeFuzzr =
         {
             Name = $"{firstname} {lastname}",
             Age = age,
-            Email = $"{firstname}.{lastname}@{email_provider}",
+            Email = $"{firstname}.{lastname}@{email_provider}".ToLower(),
             SocialSecurityNumber = ssn
         };
 ```
 **Output:**  
 ```
 {
-    Email: "John McCartney@company.com",
+    Email: "Jjohn.mccartney@company.com",
     SocialSecurityNumber: "761-65-2228",
     Name: "John McCartney",
     Age: 69
@@ -95,19 +95,19 @@ employeeFuzzr.Many(3).Generate()
 ```
 [
     {
-        Email: "George.Harrison@mailings.org",
+        Email: "george.harrison@mailings.org",
         SocialSecurityNumber: "953-16-1093",
         Name: "George Harrison",
         Age: 50
     },
     {
-        Email: "George.McCartney@mailings.org",
+        Email: "george.mccartney@mailings.org",
         SocialSecurityNumber: "736-82-8923",
         Name: "George McCartney",
         Age: 48
     },
     {
-        Email: "Ringo.Harrison@mailings.org",
+        Email: "ringo.harrison@mailings.org",
         SocialSecurityNumber: "347-87-4164",
         Name: "Ringo Harrison",
         Age: 40
