@@ -77,7 +77,7 @@ var employeeFuzzr =
 **Output:**  
 ```
 {
-    Email: "Jjohn.mccartney@company.com",
+    Email: "john.mccartney@company.com",
     SocialSecurityNumber: "761-65-2228",
     Name: "John McCartney",
     Age: 69
@@ -143,7 +143,7 @@ var infoFuzzr =
     from email_provider in Fuzzr.OneOf(emailProviders)
     select new Info(
         $"{firstname} {lastname}",
-        $"{firstname}.{lastname}@{email_provider}");
+        $"{firstname}.{lastname}@{email_provider}".ToLower());
 ```
 **Person/Employee**  
 ```csharp
@@ -247,7 +247,7 @@ fuzzr.Generate();
             Street: "Station Road",
             City: "Bristol"
         },
-        Email: "Paul.McCartney@mailings.org",
+        Email: "Paul.mccartney@mailings.org",
         SocialSecurityNumber: "621-54-5020",
         Name: "Paul McCartney",
         Age: 27
@@ -257,7 +257,7 @@ fuzzr.Generate();
             Street: "Victoria Street",
             City: "London"
         },
-        Email: "George.Harrison@freemail.net",
+        Email: "george.harrison@freemail.net",
         SocialSecurityNumber: "535-80-4278",
         Name: "George Harrison",
         Age: 34
@@ -267,7 +267,7 @@ fuzzr.Generate();
             Street: "Kings Road",
             City: "Manchester"
         },
-        Email: "Paul.Star@company.com",
+        Email: "paul.star@company.com",
         SocialSecurityNumber: "428-67-7239",
         Name: "Paul Star",
         Age: 11

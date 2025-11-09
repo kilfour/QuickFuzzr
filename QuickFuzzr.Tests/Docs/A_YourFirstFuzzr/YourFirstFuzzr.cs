@@ -181,7 +181,7 @@ and rewrite it like so:
     public void HousedEmployee_Example()
     {
         var result = CombinedFuzzr().Generate(42);
-        Assert.Equal("George.Lennon@company.com", result.Email);
+        Assert.Equal("george.lennon@company.com", result.Email);
         Assert.Equal("336-74-5615", result.SocialSecurityNumber);
         Assert.Equal("George Lennon", result.Name);
         Assert.Equal(28, result.Age);
@@ -212,7 +212,7 @@ and rewrite it like so:
             from email_provider in Fuzzr.OneOf(emailProviders)
             select new Info(
                 $"{firstname} {lastname}",
-                $"{firstname}.{lastname}@{email_provider}");
+                $"{firstname}.{lastname}@{email_provider}".ToLower());
         return infoFuzzr;
     }
 
@@ -323,7 +323,7 @@ another one that is guaranteed to live in London, and finally an underaged one."
         var result = Wild_Fuzzr(CombinedFuzzr());
 
         var normal = result.Item1;
-        Assert.Equal("Paul.McCartney@mailings.org", normal.Email);
+        Assert.Equal("paul.mccartney@mailings.org", normal.Email);
         Assert.Equal("621-54-5020", normal.SocialSecurityNumber);
         Assert.Equal("Paul McCartney", normal.Name);
         Assert.Equal(27, normal.Age);
@@ -331,7 +331,7 @@ another one that is guaranteed to live in London, and finally an underaged one."
         Assert.Equal("Bristol", normal.Address.City);
 
         var londoner = result.Item2;
-        Assert.Equal("George.Harrison@freemail.net", londoner.Email);
+        Assert.Equal("george.harrison@freemail.net", londoner.Email);
         Assert.Equal("535-80-4278", londoner.SocialSecurityNumber);
         Assert.Equal("George Harrison", londoner.Name);
         Assert.Equal(34, londoner.Age);
@@ -339,7 +339,7 @@ another one that is guaranteed to live in London, and finally an underaged one."
         Assert.Equal("London", londoner.Address.City);
 
         var underaged = result.Item3;
-        Assert.Equal("Paul.Star@company.com", underaged.Email);
+        Assert.Equal("paul.star@company.com", underaged.Email);
         Assert.Equal("428-67-7239", underaged.SocialSecurityNumber);
         Assert.Equal("Paul Star", underaged.Name);
         Assert.Equal(11, underaged.Age);

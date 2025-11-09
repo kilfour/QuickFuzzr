@@ -4,7 +4,7 @@
             Street: "Station Road",
             City: "Bristol"
         },
-        Email: "Paul.McCartney@mailings.org",
+        Email: "Paul.mccartney@mailings.org",
         SocialSecurityNumber: "621-54-5020",
         Name: "Paul McCartney",
         Age: 27
@@ -14,7 +14,7 @@
             Street: "Victoria Street",
             City: "London"
         },
-        Email: "George.Harrison@freemail.net",
+        Email: "george.harrison@freemail.net",
         SocialSecurityNumber: "535-80-4278",
         Name: "George Harrison",
         Age: 34
@@ -24,7 +24,7 @@
             Street: "Kings Road",
             City: "Manchester"
         },
-        Email: "Paul.Star@company.com",
+        Email: "paul.star@company.com",
         SocialSecurityNumber: "428-67-7239",
         Name: "Paul Star",
         Age: 11
