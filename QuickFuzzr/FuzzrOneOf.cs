@@ -1,4 +1,5 @@
 ﻿using QuickFuzzr.UnderTheHood;
+using QuickFuzzr.UnderTheHood.WhenThingsGoWrong;
 
 namespace QuickFuzzr;
 
@@ -22,21 +23,11 @@ public static partial class Fuzzr
 		return
 			s =>
 			{
+				if (!values.Any())
+					throw new OneOfEmptyOptionsException(typeof(T).Name);
 				var index = Int(0, values.Count())(s).Value;
 				return new Result<T>(values.ElementAt(index), s);
 			};
-	}
-
-	/// <summary>
-	/// Creates a generator that selects from available items or returns default if the collection is empty.
-	/// Use for safe generation from potentially empty data sources without throwing exceptions.
-	/// </summary>
-	public static FuzzrOf<T> OneOfOrDefault<T>(IEnumerable<T> items)
-	{
-		var list = items;
-		if (!list.Any())
-			return Constant(default(T)!);
-		return OneOf(list);
 	}
 
 	/// <summary>
@@ -48,7 +39,9 @@ public static partial class Fuzzr
 		return
 			s =>
 			{
-				var index = Int(0, values.Count())(s).Value;
+				if (values.Length == 0)
+					throw new OneOfEmptyOptionsException(typeof(T).Name);
+				var index = Int(0, values.Length)(s).Value;
 				return new Result<T>(values.ElementAt(index)(s).Value, s);
 			};
 	}

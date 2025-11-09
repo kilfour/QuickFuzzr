@@ -52,7 +52,8 @@ I.e. : `Fuzzr.ChooseFromThese(1, 2)`")]
 I.e. : `Fuzzr.ChooseFromWithDefaultWhenEmpty(new List<int>())`, which returns the default, in this case zero.")]
 	public void ParamsEmpty_int_list_returns_zero()
 	{
-		var generator = Fuzzr.OneOfOrDefault(new List<int>());
+		List<int> list = [];
+		var generator = Fuzzr.OneOf((IEnumerable<int>)list).WithDefault();
 		Assert.Equal(0, generator.Generate());
 	}
 
