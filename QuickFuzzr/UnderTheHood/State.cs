@@ -1,6 +1,7 @@
 ﻿using System.Reflection;
 using System.Security.Cryptography;
 using QuickFuzzr.Instruments;
+using QuickFuzzr.UnderTheHood.WhenThingsGoWrong;
 
 namespace QuickFuzzr.UnderTheHood;
 
@@ -27,9 +28,13 @@ public class State
 
 	// ---------------------------------------------------------------------
 	// Retrying Uniques et al
-	// privatise ?
-	public int RetryLimit { get; set; } = 64;
-
+	public int RetryLimit { get; private set; } = 64;
+	public void SetRetryLimit(int limit)
+	{
+		if (limit < 1 || limit > 1024)
+			throw new RetryLimitOutOfRangeException(limit);
+		RetryLimit = limit;
+	}
 	// ---------------------------------------------------------------------
 	// Depth Control
 	public Stack<bool> Collecting { get; set; } = new Stack<bool>([false]);

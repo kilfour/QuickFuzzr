@@ -12,5 +12,5 @@ public static partial class Configr
     /// Use to control how many times generators retry before giving up.
     /// </summary>
     public static FuzzrOf<Intent> RetryLimit(int limit)
-        => state => Chain.It(() => state.RetryLimit = limit, Result.Unit(state));
+        => state => Chain.It(() => state.SetRetryLimit(limit), Result.Unit(state));
 }

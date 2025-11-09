@@ -9,7 +9,7 @@ namespace QuickFuzzr.Tests.Reference.C_ExtensionMethods.Methods;
 public class ExtFuzzrUnique
 {
     [Fact]
-    [DocContent("Makes sure that every generated value is unique.")]
+    [DocContent("- Makes sure that every generated value is unique.")]
     public void IsUnique()
     {
         var generator = Fuzzr.OneOf(1, 2).Unique("TheKey").Many(2);
@@ -21,7 +21,7 @@ public class ExtFuzzrUnique
     }
 
     [Fact]
-    [DocContent("When asking for more unique values than the generator can supply, an exception is thrown.")]
+    [DocContent("- When asking for more unique values than the generator can supply, an exception is thrown.")]
     public void Not_Enough_Values()
     {
         var generator = Fuzzr.Constant(1).Unique("TheKey").Many(2);
@@ -45,7 +45,7 @@ Possible solutions:
 ";
 
     [Fact]
-    [DocContent("Multiple unique generators can be defined in one 'composed' generator, without interfering with eachother by using a different key.")]
+    [DocContent("- Multiple unique generators can be defined in one 'composed' generator, without interfering with eachother by using a different key.")]
     public void Multiple()
     {
         for (int i = 0; i < 100; i++)
@@ -64,7 +64,7 @@ Possible solutions:
     }
 
     [Fact]
-    [DocContent("When using the same key for multiple unique generators all values across these generators are unique.")]
+    [DocContent("- When using the same key for multiple unique generators all values across these generators are unique.")]
     public void MultipleSameKey()
     {
         for (int i = 0; i < 100; i++)
@@ -80,7 +80,7 @@ Possible solutions:
     }
 
     [Fact]
-    [DocContent("An overload exist taking a function as an argument allowing for a dynamic key.")]
+    [DocContent("- An overload exist taking a function as an argument allowing for a dynamic key.")]
     public void Dynamic_Key()
     {
         for (int i = 0; i < 100; i++)
