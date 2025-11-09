@@ -1,6 +1,10 @@
 namespace QuickFuzzr.UnderTheHood.WhenThingsGoWrong;
 
-public sealed class OneOfEmptyOptionsException(string typeName)
+/// <summary>
+/// Thrown when <c>Fuzzr.OneOf&lt;T&gt;</c> is called with an empty sequence,
+/// preventing a value from being selected.
+/// </summary>
+public class OneOfEmptyOptionsException(string typeName)
     : QuickFuzzrException(BuildMessage(typeName))
 {
     private static string BuildMessage(string typeName) =>

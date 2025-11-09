@@ -6,6 +6,7 @@ namespace QuickFuzzr.UnderTheHood;
 
 public class State
 {
+
 	public ICreationEngine CreationEngine { get; set; } = new Genesis();
 	public int Seed { get; }
 	public MoreRandom Random { get; }
@@ -23,10 +24,16 @@ public class State
 	}
 
 	public PropertyAccess PropertyAccess { get; set; } = PropertyAccess.PublicSetters;
-	public Stack<bool> Collecting { get; set; } = new Stack<bool>([false]);
+
+	// ---------------------------------------------------------------------
+	// Retrying Uniques et al
+	// privatise ?
+	public int RetryLimit { get; set; } = 64;
 
 	// ---------------------------------------------------------------------
 	// Depth Control
+	public Stack<bool> Collecting { get; set; } = new Stack<bool>([false]);
+
 	public readonly Dictionary<Type, DepthConstraint> DepthConstraints = [];
 
 	private readonly Stack<DepthFrame> depthFrames = new();

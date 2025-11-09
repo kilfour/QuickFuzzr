@@ -1,5 +1,10 @@
 namespace QuickFuzzr.UnderTheHood.WhenThingsGoWrong;
 
+/// <summary>
+/// Thrown when QuickFuzzr cannot construct an instance of a type.
+/// Occurs when the target type lacks a suitable constructor or cannot be created
+/// using the configured construction rules.
+/// </summary>
 public class ConstructionException(string typeName) : QuickFuzzrException(BuildMessage(typeName))
 {
     private static string BuildMessage(string typeName) =>

@@ -1,5 +1,10 @@
 namespace QuickFuzzr.UnderTheHood.WhenThingsGoWrong;
 
+/// <summary>
+/// Thrown when a configuration expression does not refer to a property.
+/// Occurs when attempting to configure a field or method instead of a property
+/// in a <c>Configr&lt;T&gt;</c> setup.
+/// </summary>
 public class PropertyConfigurationException(string typeName, string expression)
     : QuickFuzzrException(BuildMessage(typeName, expression))
 {

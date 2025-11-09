@@ -1,0 +1,16 @@
+using QuickFuzzr.Instruments;
+using QuickFuzzr.UnderTheHood;
+
+namespace QuickFuzzr;
+
+public static partial class Configr
+{
+    /// <summary>
+    /// Sets the global retry limit used by generators that may need to attempt multiple
+    /// value productions before succeeding, such as those created with <c>.Unique(...)</c>.
+    /// Throws a <see cref="UnderTheHood.WhenThingsGoWrong.UniqueValueExhaustedException"/> when the limit is reached.
+    /// Use to control how many times generators retry before giving up.
+    /// </summary>
+    public static FuzzrOf<Intent> RetryLimit(int limit)
+        => state => Chain.It(() => state.RetryLimit = limit, Result.Unit(state));
+}
