@@ -41,9 +41,9 @@ public static partial class ExtFuzzr
 		return
 			state =>
 				{
-					var limit = attempts.HasValue ? attempts.Value : state.RetryLimit;
+					var limit = attempts ?? state.RetryLimit;
 					var allreadyGenerated = state.Get(key(), new List<T>());
-					for (int i = 0; i <= limit; i++)
+					for (int i = 0; i < limit; i++)
 					{
 						var result = generator(state);
 						if (!allreadyGenerated.Contains(result.Value))

@@ -1,4 +1,4 @@
-﻿using QuickFuzzr.UnderTheHood;
+﻿using QuickFuzzr.UnderTheHood.WhenThingsGoWrong;
 
 namespace QuickFuzzr;
 
@@ -10,16 +10,16 @@ public static partial class ExtFuzzr
 	/// </summary>
 	public static FuzzrOf<T> Where<T>(this FuzzrOf<T> generator, Func<T, bool> predicate)
 	{
-		return
-			s =>
-				{
-					for (int i = 0; i < 50; i++)
-					{
-						var candidate = generator(s);
-						if (predicate(candidate.Value))
-							return candidate;
-					}
-					throw new HeyITriedFiftyTimesButCouldNotGetADifferentValue();
-				};
+		return s =>
+		{
+			var limit = s.RetryLimit;
+			for (var i = 0; i < limit; i++)
+			{
+				var candidate = generator(s);
+				if (predicate(candidate.Value))
+					return candidate;
+			}
+			throw new PredicateUnsatisfiedException(typeof(T).Name, limit);
+		};
 	}
 }
