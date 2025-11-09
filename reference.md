@@ -184,6 +184,9 @@ Possible solutions:
 • Use a fallback: Fuzzr.OneOf(values).WithDefault()
 • Guard upstream: values.Any() ? Fuzzr.OneOf(values) : Fuzzr.Constant(default!).
 ```
+- An overload exists that takes `params (int Weight, T Value)[] values` arguments in order to influence the distribution of generated values.  
+- An overload exists that takes `params (int Weight, FuzzrOf<T> Generator)[] values` arguments in order to influence the distribution of generated values.  
+### Fuzzr Shuffle
 ## Fuzzr Extension Methods
 ### Ext Fuzzr Apply
 ### Ext Fuzzr As Object
@@ -191,6 +194,7 @@ Possible solutions:
 ### Ext Fuzzr Never Return Null
 ### Ext Fuzzr Nullable
 ### Ext Fuzzr Nullable Ref
+### Ext Fuzzr Shuffle
 ### .Unique&lt;T&gt;(...)
 Using the `.Unique(object key)` extension method.  
 - Makes sure that every generated value is unique.  

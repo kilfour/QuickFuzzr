@@ -103,9 +103,9 @@ This example uses the [HorsesForCourses](https://github.com/kilfour/HorsesForCou
         where T : DomainEntity<T>
     {
         return
-        from id in Fuzzr.Counter($"{typeof(T).Name.ToLower()}-id")
-        from _ in Configr<T>.Property(a => a.Id, Id<T>.From(id))
-        select id;
+            from id in Fuzzr.Counter($"{typeof(T).Name.ToLower()}-id")
+            from _ in Configr<T>.Property(a => a.Id, Id<T>.From(id))
+            select id;
     }
 
     private record Info(string Name, string Email);
@@ -182,7 +182,7 @@ This example uses the [HorsesForCourses](https://github.com/kilfour/HorsesForCou
         let _2 = course.UpdateTimeSlots(Admin, [.. timeslots], a => a)
         let _3 = course.Confirm(Admin)
         // look for a coaches that can be assigned to the course
-        //   - WithDefault returns null if the collection is empty
+        //   - WithDefault results in <null> if the collection is empty
         let elligibleCoaches = coaches.Where(a => a.IsSuitableFor(course) && a.IsAvailableFor(course))
         from coachToAssign in Fuzzr.OneOf(elligibleCoaches).WithDefault()
             // Assign a Coach if possible

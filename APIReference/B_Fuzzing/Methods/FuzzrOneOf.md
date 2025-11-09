@@ -7,3 +7,5 @@ Possible solutions:
 • Use a fallback: Fuzzr.OneOf(values).WithDefault()
 • Guard upstream: values.Any() ? Fuzzr.OneOf(values) : Fuzzr.Constant(default!).
 ```
+- An overload exists that takes `params (int Weight, T Value)[] values` arguments in order to influence the distribution of generated values.  
+- An overload exists that takes `params (int Weight, FuzzrOf<T> Generator)[] values` arguments in order to influence the distribution of generated values.  
