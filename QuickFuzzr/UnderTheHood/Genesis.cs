@@ -54,7 +54,6 @@ public class Genesis : ICreationEngine
     private static object CreateInstance(State state, Type type, Type? typeToExlude)
         => CreateInstanceOfExactlyThisType(state, GetTypeToGenerate(state, type, typeToExlude));
 
-
     private static object CreateInstanceOfExactlyThisType(State state, Type typeToGenerate)
     {
         if (state.Constructors.TryGetValue(typeToGenerate, out var constructor))
@@ -66,16 +65,12 @@ public class Genesis : ICreationEngine
 
         var defaultCtor = typeToGenerate
             .GetConstructors(MyBinding.Flags)
-            .FirstOrDefault(c => c.GetParameters().Length == 0);
-
-        if (defaultCtor == null)
-            throw new ConstructionException(typeToGenerate.Name);
+            .FirstOrDefault(c => c.GetParameters().Length == 0)
+                ?? throw new ConstructionException(typeToGenerate.Name);
 
         try
         {
-            var defaultInstance = defaultCtor.Invoke([]);
-            // ValidateInstanceType(defaultInstance, typeToGenerate);
-            return defaultInstance;
+            return defaultCtor.Invoke([]);
         }
         catch (MemberAccessException exception)
         {
@@ -102,9 +97,8 @@ public class Genesis : ICreationEngine
     private static Type GetTypeToGenerate(State state, Type type, Type? typeToExlude)
     {
         var typeToGenerate = type;
-        if (state.InheritanceInfo.ContainsKey(typeToGenerate))
+        if (state.InheritanceInfo.TryGetValue(typeToGenerate, out List<Type>? derivedTypes))
         {
-            var derivedTypes = state.InheritanceInfo[typeToGenerate];
             if (typeToExlude != null)
                 derivedTypes = derivedTypes.Where(a => a != typeToExlude).ToList();
             var index = state.Random.Next(0, derivedTypes.Count);
@@ -124,41 +118,28 @@ public class Genesis : ICreationEngine
 
     private void FillProperties(object instance, State state)
     {
-        // .Any(info => info.ReflectedType!.IsAssignableFrom(propertyInfo.ReflectedType)
         _ = state.WithCustomizations
             .Where(a => a.Key.Item1.IsAssignableFrom(instance.GetType()))
-            .Select(a => a.Value.Item2(a.Value.Item1(state).Value)(state))//configrFactory(fuzzr(state).Value).AsObject();
+            .Select(a => a.Value.Item2(a.Value.Item1(state).Value)(state))
             .ToList();
-        foreach (var propertyInfo in GetPropertiesToGenerate(instance, state))
+        foreach (var propertyInfo in instance.GetType().GetProperties(MyBinding.Flags))
         {
             HandleProperty(instance, state, propertyInfo);
         }
     }
 
-    private IEnumerable<PropertyInfo> GetPropertiesToGenerate(object instance, State state)
-    {
-        var properties = instance.GetType().GetProperties(MyBinding.Flags);
-        return properties;//.Where(prop => ShouldGenerateProperty(prop, state));
-    }
-
     private static bool ShouldGenerateProperty(PropertyInfo prop, State state)
     {
         var setter = prop.SetMethod;
-        var isInitOnly = setter?.ReturnParameter.GetRequiredCustomModifiers()
-                        .Any(m => m == typeof(IsExternalInit)) == true;
-
-        // Handle properties with setters
         if (setter != null)
         {
             if (setter.IsPublic)
             {
-                // Public setter - check if it's init-only or regular public
-                if (isInitOnly)
+                if (IsInitOnly(setter))
                     return state.PropertyAccess.HasFlag(PropertyAccess.InitOnly);
                 else
                     return state.PropertyAccess.HasFlag(PropertyAccess.PublicSetters);
             }
-
             if (setter.IsPrivate && state.PropertyAccess.HasFlag(PropertyAccess.PrivateSetters))
                 return true;
             if (setter.IsFamily && state.PropertyAccess.HasFlag(PropertyAccess.ProtectedSetters))
@@ -166,45 +147,16 @@ public class Genesis : ICreationEngine
             if (setter.IsAssembly && state.PropertyAccess.HasFlag(PropertyAccess.InternalSetters))
                 return true;
         }
-
-        // Handle get-only properties (true read-only)
         if (setter == null && prop.GetMethod != null)
         {
             return state.PropertyAccess.HasFlag(PropertyAccess.ReadOnly);
         }
-
         return false;
     }
 
-    // private IEnumerable<PropertyInfo> GetPropertiesToGenerate(object instance)
-    // {
-    //     return instance.GetType()
-    //         .GetProperties(MyBinding.Flags).Where(HasPublicSetter);
-    // }
-
-    // private bool HasPublicSetter(PropertyInfo prop)
-    // {
-    //     var setter = prop.SetMethod;
-    //     if (setter == null) return true;
-    //     if (setter.IsPrivate || setter.IsFamily || setter.IsAssembly)
-    //         return false;
-    //     if (setter.ReturnParameter.GetRequiredCustomModifiers()
-    //         .Any(m => m == typeof(IsExternalInit)))
-    //         return false;
-    //     return true;
-    // }
-
-    // private bool DoesNotHavePublicSetter(PropertyInfo prop)
-    // {
-    //     var setter = prop.SetMethod;
-    //     if (setter == null) return false;
-    //     if (setter.IsPrivate || setter.IsFamily || setter.IsAssembly)
-    //         return true;
-    //     if (setter.ReturnParameter.GetRequiredCustomModifiers()
-    //         .Any(m => m == typeof(IsExternalInit)))
-    //         return true;
-    //     return false;
-    // }
+    private static bool IsInitOnly(MethodInfo? setter)
+        => setter?.ReturnParameter.GetRequiredCustomModifiers()
+            .Any(m => m == typeof(IsExternalInit)) == true;
 
     private void HandleProperty(object instance, State state, PropertyInfo propertyInfo)
     {
@@ -247,7 +199,7 @@ public class Genesis : ICreationEngine
             return;
         }
 
-        // Implement Lists et all here
+        // Implement Collections et all here, if ever we decide to
         if (typeof(IEnumerable).IsAssignableFrom(propertyInfo.PropertyType))
             return;
 
@@ -292,9 +244,7 @@ public class Genesis : ICreationEngine
     }
 
     private static bool IsAKnownPrimitive(State state, PropertyInfo propertyInfo)
-    {
-        return state.PrimitiveGenerators.ContainsKey(propertyInfo.PropertyType);
-    }
+        => state.PrimitiveGenerators.ContainsKey(propertyInfo.PropertyType);
 
     private static void SetPrimitive(object target, PropertyInfo propertyInfo, State state)
     {
@@ -354,45 +304,10 @@ public class Genesis : ICreationEngine
         {
             var genericArgument = propertyInfo.PropertyType.GetGenericArguments()[0];
             var value = Fuzzr.GetEnumValue(genericArgument, state);
-            SetPropertyValue(propertyInfo, instance, System.Enum.ToObject(genericArgument, value));
+            SetPropertyValue(propertyInfo, instance, Enum.ToObject(genericArgument, value));
         }
     }
 
     private static void SetPropertyValue(PropertyInfo propertyInfo, object target, object value)
-    {
-        var prop = propertyInfo;
-        // if (!prop.CanWrite)
-        // {
-        //     var field = GetBackingField(propertyInfo);
-        //     if (field is not null)
-        //     {
-        //         field.SetValue(target, value);
-        //         return;
-        //     }
-        //     prop = propertyInfo.DeclaringType!.GetProperty(propertyInfo.Name);
-        // }
-
-        if (prop != null && prop.CanWrite) // todo check this
-            prop.SetValue(target, value, null);
-    }
-
-    private static FieldInfo? GetBackingField(PropertyInfo property)
-    {
-        if (property == null)
-            throw new ArgumentNullException(nameof(property));
-
-        if (!property.CanRead
-            || property.GetMethod is null
-            || !property.GetMethod.IsDefined(typeof(CompilerGeneratedAttribute)))
-            return null;
-
-        var backingFieldName = $"<{property.Name}>k__BackingField";
-        var backingField = property.DeclaringType?.GetField(
-            backingFieldName,
-            BindingFlags.Instance | BindingFlags.NonPublic);
-
-        return backingField;
-    }
-
-
+        => propertyInfo.SetValue(target, value, null);
 }
