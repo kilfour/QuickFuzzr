@@ -1,8 +1,8 @@
 using QuickFuzzr.Tests._Tools;
 using QuickFuzzr.Tests._Tools.Models;
 using QuickFuzzr.UnderTheHood.WhenThingsGoWrong;
+using QuickFuzzr.UnderTheHood.WhenThingsGoWrong.AsOneOfExceptions;
 using QuickPulse.Explains;
-using QuickPulse.Show;
 
 namespace QuickFuzzr.Tests.Reference.D_Configuration.Methods;
 
@@ -47,6 +47,7 @@ public class ConfigrAsOneOf
     [Fact]
     [DocUsage]
     [DocExample(typeof(ConfigrAsOneOf), nameof(Generate))]
+    [DocContent("- **Exceptions:**")]
     public void ConfigrAsOneOf_GetConfig_ReturnsFuzzr()
     {
         var result = Generate().ToList();
@@ -66,7 +67,68 @@ public class ConfigrAsOneOf
     }
 
     [Fact]
-    [DocContent("- Throws a `DerivedTypeNotAssignableException` if any listed type is not a valid subclass of `BaseType`.")]
+    [DocContent("  - `EmptyDerivedTypesException`: When no types are provided.")]
+    public void ConfigrAsOneOf_NoDerivedTypes_Throws()
+    {
+        var fuzzr =
+            from inheritance in Configr<Person>.AsOneOf()
+            from item in Fuzzr.One<Person>()
+            select item;
+        var ex = Assert.Throws<EmptyDerivedTypesException>(() => fuzzr.Generate());
+        Assert.Equal(NoDerivedTypes_Message(), ex.Message);
+    }
+
+    private static string NoDerivedTypes_Message() =>
+@"No derived types were provided to AsOneOf for base type Person.
+
+Possible solutions:
+• Provide at least one derived type in Configr<Person>.AsOneOf(...).
+• Ensure that the derived types array is not empty.
+";
+
+    [Fact]
+    [DocContent("  - `DuplicateDerivedTypesException`: When the list of derived types contains duplicates.")]
+    public void ConfigrAsOneOf_Duplicates_Throws()
+    {
+        var fuzzr =
+            from _ in Configr<Person>.AsOneOf(typeof(Employee), typeof(Employee))
+            from item in Fuzzr.One<Person>()
+            select item;
+
+        var ex = Assert.Throws<DuplicateDerivedTypesException>(() => fuzzr.Generate());
+        Assert.Equal(Duplicates_Message(), ex.Message);
+    }
+
+    private static string Duplicates_Message() =>
+@"A duplicate derived type was provided to AsOneOf for base type Person: Employee.
+
+Possible solutions:
+• Ensure Employee only appears once in Configr<Person>.AsOneOf(...).
+";
+
+    [Fact]
+    public void ConfigrAsOneOf_Duplicates_Multiple_Throws()
+    {
+        var fuzzr =
+            from _ in Configr<Person>.AsOneOf(typeof(Employee), typeof(Employee), typeof(HousedEmployee), typeof(HousedEmployee))
+            from item in Fuzzr.One<Person>()
+            select item;
+
+        var ex = Assert.Throws<DuplicateDerivedTypesException>(() => fuzzr.Generate());
+        Assert.Equal(Duplicates_Multiple_Message(), ex.Message);
+    }
+
+    private static string Duplicates_Multiple_Message() =>
+@"Duplicate derived types were provided to AsOneOf for base type Person:
+• Employee
+• HousedEmployee
+
+Possible solutions:
+• Ensure each derived type in Configr<Person>.AsOneOf(...) is unique.
+";
+
+    [Fact]
+    [DocContent("  - `DerivedTypeNotAssignableException`: If any listed type is not a valid subclass of `BaseType`.")]
     public void ConfigrAsOneOf_DerivedTypeNotAssignable_Throws()
     {
         var fuzzr =
@@ -109,159 +171,33 @@ Possible solutions:
 ";
 
     [Fact]
-    [DocContent("- Throws a `DerivedTypeListEmptyException` if any listed type is not a valid subclass of `BaseType`.")]
-    public void ConfigrAsOneOf_NoDerivedTypes_Throws()
+    [DocContent("  - `DerivedTypeIsNullException`: If any listed type is `null`.")]
+    public void ConfigrAsOneOf_DerivedType_Null_Throws()
     {
         var fuzzr =
-            from inheritance in Configr<Person>.AsOneOf()
+            from inheritance in Configr<Person>.AsOneOf(typeof(Person), null!)
             from item in Fuzzr.One<Person>()
             select item;
-        var ex = Assert.Throws<ArgumentOutOfRangeException>(() => fuzzr.Generate());
-        //Assert.Contains("At least one derived type must be specified", ex.Message);
+
+        var ex = Assert.Throws<DerivedTypeIsNullException>(() => fuzzr.Generate());
+        Assert.Equal(DerivedType_Null_Message(), ex.Message);
+        //ex.Message.PulseToQuickLog();
     }
 
-    // [Fact]
-    // public void ConfigrAsOneOf_BaseTypeIncluded_Throws()
-    // {
-    //     var fuzzr =
-    //         from _ in Configr<Person>.AsOneOf(typeof(Person)) // base in list
-    //         from item in Fuzzr.One<Person>()
-    //         select item;
+    private static string DerivedType_Null_Message() =>
+@"A null derived type was provided to AsOneOf for base type Person.
 
-    //     var ex = Assert.Throws<BaseTypeIncludedInAsOneOfException>(() => fuzzr.Generate());
-    //     Assert.StartsWith($"The base type {nameof(Person)} cannot be listed in AsOneOf.", ex.Message);
-    // }
+Possible solutions:
+• Ensure that all derived types in Configr<Person>.AsOneOf(...) are non-null.
+";
 
-    // [Fact]
-    // public void ConfigrAsOneOf_Empty_Throws()
-    // {
-    //     var fuzzr =
-    //         from _ in Configr<Person>.AsOneOf(Array.Empty<Type>())
-    //         from item in Fuzzr.One<Person>()
-    //         select item;
-
-    //     Assert.Throws<EmptyDerivedTypesException>(() => fuzzr.Generate());
-    // }
-
-    // [Fact]
-    // public void ConfigrAsOneOf_Duplicates_Throws()
-    // {
-    //     var fuzzr =
-    //         from _ in Configr<Person>.AsOneOf(typeof(Agenda), typeof(Agenda))
-    //         from item in Fuzzr.One<Person>()
-    //         select item;
-
-    //     var ex = Assert.Throws<DuplicateDerivedTypesException>(() => fuzzr.Generate());
-    //     Assert.Contains(nameof(Agenda), ex.Message);
-    // }
-
-    // [Fact]
-    // public void ConfigrAsOneOf_NullDerivedType_ThrowsArgumentException()
-    // {
-    //     var fuzzr =
-    //         from inheritance in Configr<Person>.AsOneOf(typeof(Person), null)
-    //         from item in Fuzzr.One<Person>()
-    //         select item;
-    //     var ex = Assert.Throws<ArgumentException>(() => fuzzr.Generate());
-    //     Assert.Contains("Derived types cannot be null", ex.Message);
-    // }
-
-    // [Fact]
-    // public void ConfigrAsOneOf_DerivedTypeIsAbstract_ThrowsArgumentException()
-    // {
-    //     var fuzzr =
-    //         from inheritance in Configr<Person>.AsOneOf(typeof(Person), typeof(AbstractPerson))
-    //         from item in Fuzzr.One<Person>()
-    //         select item;
-    //     var ex = Assert.Throws<ArgumentException>(() => fuzzr.Generate());
-    //     Assert.Contains("is abstract and cannot be instantiated", ex.Message);
-    // }
-
-    // [Fact]
-    // public void ConfigrAsOneOf_DerivedTypeIsInterface_ThrowsArgumentException()
-    // {
-    //     var fuzzr =
-    //         from inheritance in Configr<Person>.AsOneOf(typeof(Person), typeof(IPerson))
-    //         from item in Fuzzr.One<Person>()
-    //         select item;
-    //     var ex = Assert.Throws<ArgumentException>(() => fuzzr.Generate());
-    //     Assert.Contains("is an interface and cannot be instantiated", ex.Message);
-    // }
-
-    // [Fact]
-    // public void ConfigrAsOneOf_DerivedTypeIsGeneric_ThrowsArgumentException()
-    // {
-    //     var fuzzr =
-    //         from inheritance in Configr<Person>.AsOneOf(typeof(Person), typeof(GenericPerson<>))
-    //         from item in Fuzzr.One<Person>()
-    //         select item;
-    //     var ex = Assert.Throws<ArgumentException>(() => fuzzr.Generate());
-    //     Assert.Contains("is an open generic type and cannot be instantiated", ex.Message);
-    // }
-
-    // [Fact]
-    // public void ConfigrAsOneOf_DerivedTypeIsValueType_ThrowsArgumentException()
-    // {
-    //     var fuzzr =
-    //         from inheritance in Configr<Person>.AsOneOf(typeof(Person), typeof(int))
-    //         from item in Fuzzr.One<Person>()
-    //         select item;
-    //     var ex = Assert.Throws<ArgumentException>(() => fuzzr.Generate());
-    //     Assert.Contains("is a value type and cannot be assigned to", ex.Message);
-    // }
-
-    // [Fact]
-    // public void ConfigrAsOneOf_DerivedTypeIsSealed_ThrowsArgumentException()
-    // {
-    //     var fuzzr =
-    //         from inheritance in Configr<Person>.AsOneOf(typeof(Person), typeof(SealedPerson))
-    //         from item in Fuzzr.One<Person>()
-    //         select item;
-    //     var ex = Assert.Throws<ArgumentException>(() => fuzzr.Generate());
-    //     Assert.Contains("is sealed and cannot be inherited from", ex.Message);
-    // }
-
-    // [Fact]
-    // public void ConfigrAsOneOf_DerivedTypeIsNotClass_ThrowsArgumentException()
-    // {
-    //     var fuzzr =
-    //         from inheritance in Configr<Person>.AsOneOf(typeof(Person), typeof(void))
-    //         from item in Fuzzr.One<Person>()
-    //         select item;
-    //     var ex = Assert.Throws<ArgumentException>(() => fuzzr.Generate());
-    //     Assert.Contains("is not a class type", ex.Message);
-    // }
-
-    // [Fact]
-    // public void ConfigrAsOneOf_DerivedTypeIsNull_ThrowsArgumentException()
-    // {
-    //     var fuzzr =
-    //         from inheritance in Configr<Person>.AsOneOf(typeof(Person), null!)
-    //         from item in Fuzzr.One<Person>()
-    //         select item;
-    //     var ex = Assert.Throws<ArgumentException>(() => fuzzr.Generate());
-    //     Assert.Contains("Derived types cannot be null", ex.Message);
-    // }
-
-    // [Fact]
-    // public void ConfigrAsOneOf_DerivedTypeIsNotSubclass_ThrowsArgumentException()
-    // {
-    //     var fuzzr =
-    //         from inheritance in Configr<Person>.AsOneOf(typeof(Person), typeof(object))
-    //         from item in Fuzzr.One<Person>()
-    //         select item;
-    //     var ex = Assert.Throws<ArgumentException>(() => fuzzr.Generate());
-    //     Assert.Contains("is not assignable to", ex.Message);
-    // }
-
-    // [Fact]
-    // public void ConfigrAsOneOf_DerivedTypeIsAbstractClass_ThrowsArgumentException()
-    // {
-    //     var fuzzr =
-    //         from inheritance in Configr<Person>.AsOneOf(typeof(Person), typeof(AbstractPerson))
-    //         from item in Fuzzr.One<Person>()
-    //         select item;
-    //     var ex = Assert.Throws<ArgumentException>(() => fuzzr.Generate());
-    //     Assert.Contains("is abstract and cannot be instantiated", ex.Message);
-    // }
+    [Fact]
+    public void ConfigrAsOneOf_DerivedTypeIsAbstract_Throws()
+    {
+        var fuzzr =
+            from inheritance in Configr<AbstractPerson>.AsOneOf(typeof(AbstractPerson))
+            from item in Fuzzr.One<AbstractPerson>()
+            select item;
+        var ex = Assert.Throws<InstantiationException>(() => fuzzr.Generate());
+    }
 }
