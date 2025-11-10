@@ -7,6 +7,21 @@ serving as a quick lookup for day-to-day use or library integration.
 If you're looking for examples or background explanations, see the main documentation.
 
 All examples and summaries are real, verified through executable tests, ensuring what you see here is exactly what QuickFuzzr does.  
+## Contents
+
+- [A. Primitive Fuzzrs][PrimitiveFuzzrs]
+- [B. Fuzzing][Fuzzing]
+- [C. Fuzzr Extension Methods][FuzzrExtensionMethods]
+- [D. Configuration][Configuring]
+  
+
+[PrimitiveFuzzrs]: #primitive-fuzzrs
+
+[Fuzzing]: #fuzzing
+
+[FuzzrExtensionMethods]: #fuzzr-extension-methods
+
+[Configuring]: #configuring
 ## Primitive Fuzzrs
 QuickFuzzr includes built-in generators for all common primitive types.
 These cover the usual suspects: numbers, booleans, characters, strings, dates, times, ...  
@@ -239,6 +254,36 @@ Using the `.Unique(object key)` extension method.
 - An overload exist taking a function as an argument allowing for a dynamic key.  
 ### Ext Fuzzr Where
 ## Configuring
+### Configr&lt;T&gt;AsOneOf(params Type[] types)
+Configures inheritance resolution for BaseType, 
+allowing QuickFuzzr to randomly select one of the specified derived types when generating instances.  
+
+Useful when generating domain hierarchies where multiple concrete subtypes exist.  
+  
+**Usage:**  
+```csharp
+var personFuzzr =
+    from asOneOf in Configr<Person>.AsOneOf(typeof(Person), typeof(Employee))
+    from item in Fuzzr.One<Person>()
+    select item;
+personFuzzr.Many(2).Generate();
+// Results in =>
+// [
+//     Employee {
+//         Email: "dn",
+//         SocialSecurityNumber: "gs",
+//         Name: "etggni",
+//         Age: 38
+//     },
+//     Person { Name: "avpkdc", Age: 70 }
+// ]
+```
+- **Exceptions:**  
+  - `EmptyDerivedTypesException`: When no types are provided.  
+  - `DuplicateDerivedTypesException`: When the list of derived types contains duplicates.  
+  - `DerivedTypeNotAssignableException`: If any listed type is not a valid subclass of `BaseType`.  
+  - `DerivedTypeIsNullException`: If any listed type is `null`.  
+  - `InstantiationException`: When one or more derived types cannot be instantiated.  
 ### Configr.Ignore(...)
 **Usage:**  
 ```csharp

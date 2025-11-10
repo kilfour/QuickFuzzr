@@ -37,6 +37,7 @@
     - [.Unique&lt;T&gt;(...)](C_ExtensionMethods/Methods/ExtFuzzrUnique.md)
     - [Ext Fuzzr Where](C_ExtensionMethods/Methods/ExtFuzzrWhere.md)
   - [Configuring](D_Configuration/Configuring.md)
+    - [Configr&lt;T&gt;AsOneOf(params Type[] types)](D_Configuration/Methods/ConfigrAsOneOf.md)
     - [Configr.Ignore(...)](D_Configuration/Methods/ConfigrIgnore.md)
     - [Configr.IgnoreAll()](D_Configuration/Methods/ConfigrIgnoreAll.md)
     - [Configr.Property(...)](D_Configuration/Methods/ConfigrProperty.md)

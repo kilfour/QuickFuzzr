@@ -1,4 +1,5 @@
-﻿using QuickPulse.Explains;
+﻿using QuickFuzzr.Tests._Tools;
+using QuickPulse.Explains;
 
 namespace QuickFuzzr.Tests.Reference.B_Fuzzing.Methods;
 
@@ -7,20 +8,35 @@ namespace QuickFuzzr.Tests.Reference.B_Fuzzing.Methods;
 public class FuzzrCounter
 {
 	[Fact]
+	public void ExplainOnlyThis()
+	{
+		Explain.OnlyThis<FuzzrCounter>("temp.md");
+	}
+
+	[Fact]
 	[DocContent(
-@"This generator returns an `int` starting at 1, and incrementing by 1 on each subsequent call.")]
+@"This generator returns an `int` starting at 1, and incrementing by 1 on each call.  
+Useful for generating unique sequential IDs or counters.  
+")]
 	public void Counter_Generates_One()
 		=> Assert.Equal(1, Fuzzr.Counter("a").Generate());
 
+	[CodeSnippet]
+	[CodeRemove("return ")]
+	private static IEnumerable<int> Usage_Example()
+	{
+		return Fuzzr.Counter("the-key").Many(5).Generate();
+		// Returns => [1, 2, 3, 4, 5]
+	}
+
 	[Fact]
+	[DocUsage]
+	[DocExample(typeof(FuzzrCounter), nameof(Usage_Example))]
 	public void Counter_Many_Produces_Expected_Run()
-		=> Assert.Equal([1, 2, 3, 4, 5], Fuzzr.Counter("a").Many(5).Generate());
+		=> Assert.Equal([1, 2, 3, 4, 5], Usage_Example());
 
 	[Fact]
-	public void Counter_Apply_Preserves_Sequence()
-		=> Assert.Equal([12, 13, 14], Fuzzr.Counter("a").Apply(x => x + 11).Many(3).Generate());
-
-	[Fact]
+	[DocContent("- Each `key` maintains its own independent counter sequence.")]
 	public void Counter_Instances_Are_Independent()
 	{
 		var gen =
@@ -35,10 +51,16 @@ public class FuzzrCounter
 	}
 
 	[Fact]
+	[DocContent("- Counter state resets between separate `Generate()` calls.")]
 	public void Counter_Resets_Between_Runs()
 	{
 		var gen = Fuzzr.Counter("a");
 		Assert.Equal([1, 2, 3], gen.Many(3).Generate());
 		Assert.Equal([1, 2, 3], gen.Many(3).Generate());
 	}
+
+	[Fact]
+	[DocContent("- Works seamlessly in LINQ chains and with .Apply(...) to offset or transform the sequence.")]
+	public void Counter_Apply_Preserves_Sequence()
+		=> Assert.Equal([12, 13, 14], Fuzzr.Counter("a").Apply(x => x + 11).Many(3).Generate());
 }

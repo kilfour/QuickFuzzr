@@ -16,12 +16,6 @@ Useful when generating domain hierarchies where multiple concrete subtypes exist
 ")]
 public class ConfigrAsOneOf
 {
-    [Fact]
-    public void DocIt()
-    {
-        Explain.OnlyThis<ConfigrAsOneOf>("temp.md");
-    }
-
     [CodeSnippet]
     [CodeRemove("42")]
     [CodeRemove("return ")]
@@ -181,7 +175,6 @@ Possible solutions:
 
         var ex = Assert.Throws<DerivedTypeIsNullException>(() => fuzzr.Generate());
         Assert.Equal(DerivedType_Null_Message(), ex.Message);
-        //ex.Message.PulseToQuickLog();
     }
 
     private static string DerivedType_Null_Message() =>
@@ -192,6 +185,7 @@ Possible solutions:
 ";
 
     [Fact]
+    [DocContent("  - `InstantiationException`: When one or more derived types cannot be instantiated.")]
     public void ConfigrAsOneOf_DerivedTypeIsAbstract_Throws()
     {
         var fuzzr =
