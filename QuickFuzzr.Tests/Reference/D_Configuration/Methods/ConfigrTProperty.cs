@@ -1,7 +1,6 @@
 ﻿using QuickFuzzr.Tests._Tools.Models;
 using QuickFuzzr.UnderTheHood.WhenThingsGoWrong;
 using QuickPulse.Explains;
-using QuickPulse.Show;
 
 namespace QuickFuzzr.Tests.Reference.D_Configuration.Methods;
 
