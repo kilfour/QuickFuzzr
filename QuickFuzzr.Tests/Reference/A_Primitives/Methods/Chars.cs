@@ -5,6 +5,7 @@ namespace QuickFuzzr.Tests.Reference.A_Primitives.Methods;
 
 [DocFile]
 [DocContent("Use `Fuzzr.Char()`.")]
+[DocColumn(PrimitiveFuzzrs.Columns.Description, "Generates random lowercase letters or characters within a specified range.")]
 public class Chars
 {
 	private readonly char[] valid = "abcdefghijklmnopqrstuvwxyz".ToCharArray();

@@ -5,6 +5,7 @@ namespace QuickFuzzr.Tests.Reference.A_Primitives.Methods;
 [DocFile]
 [DocFileHeader("DateTimes")]
 [DocContent("Use `Fuzzr.DateTime()`.")]
+[DocColumn(PrimitiveFuzzrs.Columns.Description, "Produces `DateTime` values between 1970-01-01 and 2020-12-31.")]
 public class DateTimes
 {
 	[Fact]

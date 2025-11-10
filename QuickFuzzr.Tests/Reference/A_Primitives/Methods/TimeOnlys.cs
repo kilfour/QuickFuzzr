@@ -5,6 +5,7 @@ namespace QuickFuzzr.Tests.Reference.A_Primitives.Methods;
 [DocFile]
 [DocFileHeader("TimeOnlys")]
 [DocContent("Use `Fuzzr.TimeOnly()`.")]
+[DocColumn(PrimitiveFuzzrs.Columns.Description, "Produces random times between midnight and 23:59:59.")]
 public class TimeOnlys
 {
 	[Fact]

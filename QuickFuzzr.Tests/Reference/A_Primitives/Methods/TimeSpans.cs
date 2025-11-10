@@ -6,6 +6,7 @@ namespace QuickFuzzr.Tests.Reference.A_Primitives.Methods;
 [DocFile]
 [DocFileHeader("TimeSpans")]
 [DocContent("Use `Fuzzr.TimeSpan()`.")]
+[DocColumn(PrimitiveFuzzrs.Columns.Description, "Generates random durations up to 1000 ticks by default.")]
 public class TimeSpans
 {
 	[Fact]

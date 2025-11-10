@@ -5,6 +5,7 @@ namespace QuickFuzzr.Tests.Reference.A_Primitives.Methods;
 
 [DocFile]
 [DocContent("Use `Fuzzr.Byte()`.")]
+[DocColumn(PrimitiveFuzzrs.Columns.Description, "Produces random bytes in the range 0-255 or within a custom range.")]
 public class Bytes
 {
     [Fact]

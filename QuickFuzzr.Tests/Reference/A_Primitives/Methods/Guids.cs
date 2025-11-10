@@ -4,6 +4,7 @@ namespace QuickFuzzr.Tests.Reference.A_Primitives.Methods;
 
 [DocFile]
 [DocContent("Use `Fuzzr.Guid()`. *There is no overload.*")]
+[DocColumn(PrimitiveFuzzrs.Columns.Description, "Produces non-empty random `Guid` values.")]
 public class Guids
 {
 	[Fact]

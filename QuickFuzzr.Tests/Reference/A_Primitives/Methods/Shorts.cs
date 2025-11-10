@@ -6,6 +6,7 @@ namespace QuickFuzzr.Tests.Reference.A_Primitives.Methods;
 
 [DocFile]
 [DocContent("Use `Fuzzr.Short()`.")]
+[DocColumn(PrimitiveFuzzrs.Columns.Description, "Generates random 16-bit integers (default 1-100).")]
 public class Shorts
 {
 	[Fact]

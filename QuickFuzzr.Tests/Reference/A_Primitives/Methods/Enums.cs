@@ -6,6 +6,7 @@ namespace QuickFuzzr.Tests.Reference.A_Primitives.Methods;
 [DocFile]
 [DocContent("Use `Fuzzr.Enum<T>()`, where T is the type of Enum you want to generate.")]
 [DocContent("> Enums are included here for convenience. While not numeric primitives themselves, they are generated as atomic values from their defined members.")]
+[DocColumn(PrimitiveFuzzrs.Columns.Description, "Randomly selects a defined member of an enum type.")]
 public class Enums
 {
 	[Fact]

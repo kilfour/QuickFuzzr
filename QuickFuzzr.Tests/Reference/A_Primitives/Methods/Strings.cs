@@ -6,6 +6,7 @@ namespace QuickFuzzr.Tests.Reference.A_Primitives.Methods;
 
 [DocFile]
 [DocContent("Use `Fuzzr.String()`.")]
+[DocColumn(PrimitiveFuzzrs.Columns.Description, "Creates random lowercase strings (default length 1-10).")]
 public class Strings
 {
 	private static readonly HashSet<char> Valid = [.. "abcdefghijklmnopqrstuvwxyz"];

@@ -4,6 +4,7 @@ namespace QuickFuzzr.Tests.Reference.A_Primitives.Methods;
 
 [DocFile]
 [DocContent("Use `Fuzzr.Decimal()`.")]
+[DocColumn(PrimitiveFuzzrs.Columns.Description, "Generates random decimal numbers (default 1-100).")]
 public class Decimals
 {
 	[Fact]

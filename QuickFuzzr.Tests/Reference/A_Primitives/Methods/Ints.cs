@@ -6,6 +6,7 @@ namespace QuickFuzzr.Tests.Reference.A_Primitives.Methods;
 
 [DocFile]
 [DocContent("Use `Fuzzr.Int()`.")]
+[DocColumn(PrimitiveFuzzrs.Columns.Description, "Produces random integers (default 1-100).")]
 public class Ints
 {
 	[Fact]

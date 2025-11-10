@@ -6,6 +6,7 @@ namespace QuickFuzzr.Tests.Reference.A_Primitives.Methods;
 
 [DocFile]
 [DocContent("Use `Fuzzr.Half()`.")]
+[DocColumn(PrimitiveFuzzrs.Columns.Description, "Generates random 16-bit floating-point numbers (default 1-100).")]
 public class Halfs
 {
     [Fact]

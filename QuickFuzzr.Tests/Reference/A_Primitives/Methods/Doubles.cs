@@ -4,6 +4,7 @@ namespace QuickFuzzr.Tests.Reference.A_Primitives.Methods;
 
 [DocFile]
 [DocContent("Use `Fuzzr.Double()`.")]
+[DocColumn(PrimitiveFuzzrs.Columns.Description, "Generates random double-precision numbers (default 1-100).")]
 public class Doubles
 {
 	[Fact]

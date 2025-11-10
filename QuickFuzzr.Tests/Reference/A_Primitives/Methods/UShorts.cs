@@ -7,6 +7,7 @@ namespace QuickFuzzr.Tests.Reference.A_Primitives.Methods;
 [DocFile]
 [DocFileHeader("UShorts")]
 [DocContent("Use `Fuzzr.UShort()`.")]
+[DocColumn(PrimitiveFuzzrs.Columns.Description, "Produces unsigned 16-bit integers (default 1-100).")]
 public class UShorts
 {
 	[Fact]

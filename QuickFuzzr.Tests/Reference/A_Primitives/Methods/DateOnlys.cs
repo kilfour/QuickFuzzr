@@ -5,6 +5,7 @@ namespace QuickFuzzr.Tests.Reference.A_Primitives.Methods;
 [DocFile]
 [DocFileHeader("DateOnlys")]
 [DocContent("Use `Fuzzr.DateOnly()`.")]
+[DocColumn(PrimitiveFuzzrs.Columns.Description, "Creates `DateOnly` values between 1970-01-01 and 2020-12-31 (by default).")]
 public class DateOnlys
 {
 	[Fact]

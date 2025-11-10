@@ -7,6 +7,7 @@ namespace QuickFuzzr.Tests.Reference.A_Primitives.Methods;
 [DocFile]
 [DocFileHeader("ULongs")]
 [DocContent("Use `Fuzzr.ULong()`.")]
+[DocColumn(PrimitiveFuzzrs.Columns.Description, "Generates unsigned 64-bit integers (default 1-100).")]
 public class ULongs
 {
 	[Fact]

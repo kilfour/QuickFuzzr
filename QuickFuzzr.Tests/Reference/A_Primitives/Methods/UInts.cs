@@ -7,6 +7,7 @@ namespace QuickFuzzr.Tests.Reference.A_Primitives.Methods;
 [DocFile]
 [DocFileHeader("UInts")]
 [DocContent("Use `Fuzzr.UInt()`.")]
+[DocColumn(PrimitiveFuzzrs.Columns.Description, "Produces unsigned integers (default 1-100).")]
 public class UInts
 {
 	[Fact]

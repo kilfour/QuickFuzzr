@@ -5,6 +5,7 @@ namespace QuickFuzzr.Tests.Reference.A_Primitives.Methods;
 
 [DocFile]
 [DocContent("Use `Fuzzr.Bool()`.")]
+[DocColumn(PrimitiveFuzzrs.Columns.Description, "Generates random `true` or `false` values. ")]
 public class Booleans
 {
 	[Fact]

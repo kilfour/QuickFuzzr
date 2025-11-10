@@ -4,6 +4,7 @@ namespace QuickFuzzr.Tests.Reference.A_Primitives.Methods;
 
 [DocFile]
 [DocContent("Use `Fuzzr.Float()`.")]
+[DocColumn(PrimitiveFuzzrs.Columns.Description, "Generates random single-precision numbers (default 1-100).")]
 public class Floats
 {
 	[Fact]
