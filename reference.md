@@ -3,29 +3,26 @@
 The Fuzzr class has many methods which can be used to obtain a corresponding primitive.  
 | Fuzzr| Description |
 | -| - |
-| Booleans| Generates random `true` or `false` values.  |
-| Bytes| Produces random bytes in the range 0-255 or within a custom range. |
-| Chars| Generates random lowercase letters or characters within a specified range. |
-| DateOnlys| Creates `DateOnly` values between 1970-01-01 and 2020-12-31 (by default). |
-| DateTimes| Produces `DateTime` values between 1970-01-01 and 2020-12-31. |
-| Decimals| Generates random decimal numbers (default 1-100). |
-| Doubles| Generates random double-precision numbers (default 1-100). |
-| Enums| Randomly selects a defined member of an enum type. |
-| Floats| Generates random single-precision numbers (default 1-100). |
-| Guids| Produces non-empty random `Guid` values. |
-| Halfs| Generates random 16-bit floating-point numbers (default 1-100). |
-| Ints| Produces random integers (default 1-100). |
-| Longs| Generates random 64-bit integers (default 1-100). |
-| Shorts| Generates random 16-bit integers (default 1-100). |
-| Strings| Creates random lowercase strings (default length 1-10). |
-| TimeOnlys| Produces random times between midnight and 23:59:59. |
-| TimeSpans| Generates random durations up to 1000 ticks by default. |
-| UInts| Produces unsigned integers (default 1-100). |
-| ULongs| Generates unsigned 64-bit integers (default 1-100). |
-| UShorts| Produces unsigned 16-bit integers (default 1-100). |
-Go to [UINTS].  
-
-[UINTS]: #uints
+| [Booleans](#booleans)| Generates random `true` or `false` values.  |
+| [Bytes](#bytes)| Produces random bytes in the range 0-255 or within a custom range. |
+| [Chars](#chars)| Generates random lowercase letters or characters within a specified range. |
+| [DateOnlys](#dateonlys)| Creates `DateOnly` values between 1970-01-01 and 2020-12-31 (by default). |
+| [DateTimes](#datetimes)| Produces `DateTime` values between 1970-01-01 and 2020-12-31. |
+| [Decimals](#decimals)| Generates random decimal numbers (default 1-100). |
+| [Doubles](#doubles)| Generates random double-precision numbers (default 1-100). |
+| [Enums](#enums)| Randomly selects a defined member of an enum type. |
+| [Floats](#floats)| Generates random single-precision numbers (default 1-100). |
+| [Guids](#guids)| Produces non-empty random `Guid` values. |
+| [Halfs](#halfs)| Generates random 16-bit floating-point numbers (default 1-100). |
+| [Ints](#ints)| Produces random integers (default 1-100). |
+| [Longs](#longs)| Generates random 64-bit integers (default 1-100). |
+| [Shorts](#shorts)| Generates random 16-bit integers (default 1-100). |
+| [Strings](#strings)| Creates random lowercase strings (default length 1-10). |
+| [TimeOnlys](#timeonlys)| Produces random times between midnight and 23:59:59. |
+| [TimeSpans](#timespans)| Generates random durations up to 1000 ticks by default. |
+| [UInts](#uints)| Produces unsigned integers (default 1-100). |
+| [ULongs](#ulongs)| Generates unsigned 64-bit integers (default 1-100). |
+| [UShorts](#ushorts)| Produces unsigned 16-bit integers (default 1-100). |
 ### Booleans
 Use `Fuzzr.Bool()`.  
 - The default generator generates True or False.  

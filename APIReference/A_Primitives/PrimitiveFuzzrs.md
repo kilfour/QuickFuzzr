@@ -22,6 +22,3 @@ The Fuzzr class has many methods which can be used to obtain a corresponding pri
 | [UInts](Methods/UInts.md)| Produces unsigned integers (default 1-100). |
 | [ULongs](Methods/ULongs.md)| Generates unsigned 64-bit integers (default 1-100). |
 | [UShorts](Methods/UShorts.md)| Produces unsigned 16-bit integers (default 1-100). |
-Go to [UINTS].  
-
-[UINTS]: Methods/UInts.md

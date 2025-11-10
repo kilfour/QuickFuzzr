@@ -6,8 +6,6 @@ namespace QuickFuzzr.Tests.Reference.A_Primitives;
 [DocFile]
 [DocContent("The Fuzzr class has many methods which can be used to obtain a corresponding primitive.")]
 [DocTable(nameof(Methods), Columns.Fuzzr, Columns.Description)]
-[DocLink(typeof(UInts), "UINTS")]
-[DocContent("Go to [UINTS].")]
 public class PrimitiveFuzzrs
 {
     public static class Columns

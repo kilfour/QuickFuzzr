@@ -22,7 +22,7 @@
   <ItemGroup>
     <PackageReference Include="QuickAcid" Version="0.0.2" /> 
     <!-- <PackageReference Include="QuickPulse" Version="0.3.2" />  -->
-    <!-- <PackageReference Include="QuickPulse.Explains" Version="0.3.5" />  -->
+    <PackageReference Include="QuickPulse.Explains" Version="0.3.6" /> 
   </ItemGroup>
 
   <ItemGroup>
@@ -31,7 +31,7 @@
 
   <ItemGroup>
     <!-- <ProjectReference Include="..\..\QuickAcid\QuickAcid\QuickAcid.csproj" /> -->
-    <ProjectReference Include="..\..\QuickPulse.Explains\QuickPulse.Explains\QuickPulse.Explains.csproj" />
+    <!-- <ProjectReference Include="..\..\QuickPulse.Explains\QuickPulse.Explains\QuickPulse.Explains.csproj" /> -->
   </ItemGroup>
 
 </Project>
