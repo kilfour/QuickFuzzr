@@ -213,12 +213,36 @@ Use `Fuzzr.UShort()`.
 - `ushort` is automatically detected and generated for object properties.  
 - `ushort?` is automatically detected and generated for object properties.  
 ## Fuzzing
+This section lists the core generators responsible for object creation and composition.  
+They provide controlled randomization, sequencing, and structural assembly beyond primitive value generation.  
+Use these methods to instantiate objects, select values, define constants, or maintain counters during generation.  
+All entries return a FuzzrOf<T> and can be composed using standard LINQ syntax.  
+### Contents
+| Fuzzr| Description |
+| -| - |
+| [Fuzzr.Constant&lt;T&gt;(T value)](#fuzzr.constant&lt;t&gt;(t-value))|   |
+| [Fuzzr.Counter(object key)](#fuzzr.counter(object-key))|   |
+| [Fuzzr.One&lt;T&gt;()](#fuzzr.one&lt;t&gt;())|   |
+| [Fuzzr.OneOf&lt;T&gt;(...)](#fuzzr.oneof&lt;t&gt;(...))|   |
+| [Fuzzr.Shuffle&lt;T&gt;()](#fuzzr.shuffle&lt;t&gt;())|   |
 ### Fuzzr.Constant&lt;T&gt;(T value)
 This generator wraps the value provided of type `T` in a `FuzzrOf<T>`.
 It is most useful in combination with others and is often used to inject constants into combined generators.  
 ### Fuzzr.Counter(object key)
-This generator returns an `int` starting at 1, and incrementing by 1 on each subsequent call.  
-### Fuzzr One
+This generator returns an `int` starting at 1, and incrementing by 1 on each call.  
+Useful for generating unique sequential IDs or counters.  
+  
+**Usage:**  
+```csharp
+Fuzzr.Counter("the-key").Many(5).Generate();
+// Returns => [1, 2, 3, 4, 5]
+```
+- Each `key` maintains its own independent counter sequence.  
+- Counter state resets between separate `Generate()` calls.  
+- Works seamlessly in LINQ chains and with .Apply(...) to offset or transform the sequence.  
+### Fuzzr.One&lt;T&gt;()
+Creates a generator that produces complete instances of type T using QuickFuzzr's automatic construction rules.  
+Object properties are filled using default generators for their types unless configured otherwise.  
 Trying to generate an abstract class throws an exception with the following message:  
 ```text
 Cannot generate an instance of the abstract class AbstractPerson.
@@ -236,7 +260,7 @@ Possible solutions:
 ```
 - An overload exists that takes `params (int Weight, T Value)[] values` arguments in order to influence the distribution of generated values.  
 - An overload exists that takes `params (int Weight, FuzzrOf<T> Generator)[] values` arguments in order to influence the distribution of generated values.  
-### Fuzzr Shuffle
+### Fuzzr.Shuffle&lt;T&gt;()
 ## Fuzzr Extension Methods
 ### Ext Fuzzr Apply
 ### Ext Fuzzr As Object

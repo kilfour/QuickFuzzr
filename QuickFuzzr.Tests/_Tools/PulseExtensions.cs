@@ -1,6 +1,7 @@
 using System.Runtime.CompilerServices;
 using QuickPulse;
 using QuickPulse.Arteries;
+using QuickPulse.Explains;
 using QuickPulse.Show;
 
 namespace QuickFuzzr.Tests._Tools;
@@ -18,5 +19,14 @@ public static class PulseExtensions
            .SetArtery(FileLog.Write(fullPath))
            .Pulse(Introduce.This(item!));
         return item;
+    }
+}
+
+public abstract class ExplainMe<T>
+{
+    [Fact]
+    public void ExplainOnlyThis()
+    {
+        Explain.OnlyThis<T>("temp.md");
     }
 }

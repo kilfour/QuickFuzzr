@@ -3,6 +3,7 @@ using QuickPulse.Explains;
 namespace QuickFuzzr.Tests.Reference.B_Fuzzing.Methods;
 
 [DocFile]
+[DocFileHeader("Fuzzr.Shuffle&lt;T&gt;()")]
 public class FuzzrShuffle
 {
     [Fact]

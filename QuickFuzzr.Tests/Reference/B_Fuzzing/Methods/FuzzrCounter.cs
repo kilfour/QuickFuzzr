@@ -8,12 +8,6 @@ namespace QuickFuzzr.Tests.Reference.B_Fuzzing.Methods;
 public class FuzzrCounter
 {
 	[Fact]
-	public void ExplainOnlyThis()
-	{
-		Explain.OnlyThis<FuzzrCounter>("temp.md");
-	}
-
-	[Fact]
 	[DocContent(
 @"This generator returns an `int` starting at 1, and incrementing by 1 on each call.  
 Useful for generating unique sequential IDs or counters.  
