@@ -9,3 +9,5 @@ temp*.md
 *.log
 .quickacid/
 .quickpulse/
+
+*instructions.md

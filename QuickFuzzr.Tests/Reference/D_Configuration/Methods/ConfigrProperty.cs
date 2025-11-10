@@ -1,3 +1,4 @@
+using QuickFuzzr.Tests._Tools;
 using QuickFuzzr.Tests._Tools.Models;
 using QuickPulse.Explains;
 
@@ -7,7 +8,7 @@ namespace QuickFuzzr.Tests.Reference.D_Configuration.Methods;
 [DocFileHeader("Configr.Property(...)")]
 public class ConfigrProperty
 {
-    [DocContent("**Usage:**")]
+    [DocUsage]
     [DocExample(typeof(ConfigrProperty), nameof(GetConfig))]
     [CodeSnippet]
     [CodeRemove("return")]

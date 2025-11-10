@@ -1,3 +1,4 @@
+using QuickFuzzr.Tests._Tools;
 using QuickFuzzr.UnderTheHood;
 using QuickFuzzr.UnderTheHood.WhenThingsGoWrong;
 using QuickPulse.Explains;
@@ -9,7 +10,7 @@ namespace QuickFuzzr.Tests.Reference.D_Configuration.Methods;
 [DocFileHeader("Configr.RetryLimit(int limit)")]
 public class ConfigrRetryLimit
 {
-    [DocContent("**Usage:**")]
+    [DocUsage]
     [DocExample(typeof(ConfigrRetryLimit), nameof(GetConfig))]
     [CodeSnippet]
     [CodeRemove("return")]

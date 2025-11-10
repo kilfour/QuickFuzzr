@@ -1,3 +1,4 @@
+using QuickFuzzr.Tests._Tools;
 using QuickFuzzr.Tests._Tools.Models;
 using QuickPulse.Explains;
 
@@ -8,7 +9,7 @@ namespace QuickFuzzr.Tests.Reference.D_Configuration.Methods;
 [DocFileHeader("Configr.IgnoreAll()")]
 public class ConfigrIgnoreAll
 {
-    [DocContent("**Usage:**")]
+    [DocUsage]
     [DocExample(typeof(ConfigrTIgnoreAll), nameof(GetConfig))]
     [CodeSnippet]
     [CodeRemove("return")]

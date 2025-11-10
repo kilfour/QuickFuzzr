@@ -1,4 +1,5 @@
-﻿using QuickPulse.Explains;
+﻿using QuickFuzzr.Tests._Tools;
+using QuickPulse.Explains;
 
 namespace QuickFuzzr.Tests.Reference.D_Configuration.Methods;
 
@@ -6,7 +7,7 @@ namespace QuickFuzzr.Tests.Reference.D_Configuration.Methods;
 [DocFileHeader("Configr&lt;T&gt;.Construct(...)")]
 public class ConfigrTConstruct
 {
-	[DocContent("**Usage:**")]
+	[DocUsage]
 	[DocExample(typeof(ConfigrTConstruct), nameof(GetConfig))]
 	[CodeSnippet]
 	[CodeRemove("return")]

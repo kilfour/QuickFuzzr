@@ -8,7 +8,7 @@ namespace QuickFuzzr.Tests.Reference.B_Fuzzing.Methods;
 [DocFileHeader("Fuzzr.OneOf&lt;T&gt;(...)")]
 public class FuzzrOneOf
 {
-    // [DocContent("**Usage:**")]
+    // [DocUsage]
     // [DocExample(typeof(ConfigrTProperty), nameof(GetConfig))]
     // [CodeSnippet]
     // [CodeRemove("return")]
