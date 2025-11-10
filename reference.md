@@ -220,11 +220,11 @@ All entries return a FuzzrOf<T> and can be composed using standard LINQ syntax.
 ### Contents
 | Fuzzr| Description |
 | -| - |
-| [Fuzzr.Constant&lt;T&gt;(T value)](#fuzzr.constant&lt;t&gt;(t-value))|   |
-| [Fuzzr.Counter(object key)](#fuzzr.counter(object-key))|   |
-| [Fuzzr.One&lt;T&gt;()](#fuzzr.one&lt;t&gt;())|   |
-| [Fuzzr.OneOf&lt;T&gt;(...)](#fuzzr.oneof&lt;t&gt;(...))|   |
-| [Fuzzr.Shuffle&lt;T&gt;()](#fuzzr.shuffle&lt;t&gt;())|   |
+| [Fuzzr.Constant&lt;T&gt;(T value)](#fuzzrconstanttt-value)|   |
+| [Fuzzr.Counter(object key)](#fuzzrcounterobject-key)|   |
+| [Fuzzr.One&lt;T&gt;()](#fuzzronet)|   |
+| [Fuzzr.OneOf&lt;T&gt;(...)](#fuzzroneoft)|   |
+| [Fuzzr.Shuffle&lt;T&gt;()](#fuzzrshufflet)|   |
 ### Fuzzr.Constant&lt;T&gt;(T value)
 This generator wraps the value provided of type `T` in a `FuzzrOf<T>`.
 It is most useful in combination with others and is often used to inject constants into combined generators.  
