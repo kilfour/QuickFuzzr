@@ -255,13 +255,16 @@ Fuzzr.One<Person>();
 - Recursive object creation is off by default.  
 - Field generation is not supported.  
 
-**Exceptions:**  
-  - `ConstructionException`: When type T cannot be constructed due to missing default constructor.  
-  - `InstantiationException`: When type T is abstract and cannot be instantiated.  
-
 **Overloads:**  
 - `Fuzzr.One<T>(Func<T> constructor)`:  
   Creates a generator that produces instances of T by invoking the supplied factory on each generation.  
+
+**Exceptions:**  
+  - `ConstructionException`: When type T cannot be constructed due to missing default constructor.  
+  - `InstantiationException`: When type T is abstract and cannot be instantiated.  
+  - `NullReferenceException`:  
+    - When the factory method returns null.  
+    - When the factory method is null.  
 ### Fuzzr.OneOf&lt;T&gt;(params &lt;T&gt;[] values)
 Creates a generator that randomly selects one value or generator from the provided options.  
 **Usage:**  
@@ -287,7 +290,22 @@ Creates a generator that randomly selects one value or generator from the provid
   - `OneOfEmptyOptionsException`: When trying to choose from an empty collection.  
   - `NegativeWeightException`: When one or more weights are negative.  
   - `ZeroTotalWeightException`: When the total of all weights is zero or negative.  
+  - `ArgumentNullException`: When the provided sequence is null.  
 ### Fuzzr.Shuffle&lt;T&gt;()
+Creates a generator that produces a random permutation of the provided sequence.  
+Use for randomized ordering, unbiased sampling without replacement.  
+**Usage:**  
+```csharp
+Fuzzr.Shuffle("John", "Paul", "George", "Ringo");
+// Results in => ["Paul", "Ringo", "John", "George"]
+```
+
+**Overloads:**  
+- `Shuffle<T>(IEnumerable<T> values)`:  
+  Same as above, but accepts any enumerable source.  
+
+**Exceptions:**  
+  - `ArgumentNullException`: When the input collection is `null`.  
 ## Fuzzr Extension Methods
 QuickFuzzr provides a collection of extension methods that enhance the expressiveness and composability of `FuzzrOf<T>`.
 These methods act as modifiers, they wrap existing generators to alter behavior, add constraints,

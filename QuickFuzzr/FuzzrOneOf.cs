@@ -20,16 +20,14 @@ public static partial class Fuzzr
 	/// </summary>
 	public static FuzzrOf<T> OneOf<T>(params (int Weight, T Value)[] values)
 	{
-		if (values is null || values.Length == 0)
+		CheckIfValuesIsNull(values, typeof(T).Name);
+		if (values.Length == 0)
 			throw new OneOfEmptyOptionsException(typeof(T).Name);
-
 		if (values.Any(w => w.Weight < 0))
 			throw new NegativeWeightException(typeof(T).Name);
-
 		long totalWeight = values.Aggregate(0L, (sum, v) => sum + v.Weight);
 		if (totalWeight <= 0)
 			throw new ZeroTotalWeightException(typeof(T).Name);
-
 		return state =>
 		{
 			var roll = state.Random.NextInt64(1, totalWeight + 1);
@@ -51,11 +49,12 @@ public static partial class Fuzzr
 	/// </summary>
 	public static FuzzrOf<T> OneOf<T>(IEnumerable<T> values)
 	{
+		CheckIfValuesIsNull(values, typeof(T).Name);
+		if (!values.Any())
+			throw new OneOfEmptyOptionsException(typeof(T).Name);
 		return
 			s =>
 			{
-				if (!values.Any())
-					throw new OneOfEmptyOptionsException(typeof(T).Name);
 				var index = Int(0, values.Count())(s).Value;
 				return new Result<T>(values.ElementAt(index), s);
 			};
@@ -67,11 +66,12 @@ public static partial class Fuzzr
 	/// </summary>
 	public static FuzzrOf<T> OneOf<T>(params FuzzrOf<T>[] values)
 	{
+		CheckIfValuesIsNull(values, typeof(T).Name);
+		if (values.Length == 0)
+			throw new OneOfEmptyOptionsException(typeof(T).Name);
 		return
 			s =>
 			{
-				if (values.Length == 0)
-					throw new OneOfEmptyOptionsException(typeof(T).Name);
 				var index = Int(0, values.Length)(s).Value;
 				return new Result<T>(values.ElementAt(index)(s).Value, s);
 			};
@@ -83,12 +83,11 @@ public static partial class Fuzzr
 	/// </summary>
 	public static FuzzrOf<T> OneOf<T>(params (int Weight, FuzzrOf<T> Generator)[] values)
 	{
-		if (values is null || values.Length == 0)
+		CheckIfValuesIsNull(values, typeof(T).Name);
+		if (values.Length == 0)
 			throw new OneOfEmptyOptionsException(typeof(T).Name);
-
 		if (values.Any(v => v.Weight <= 0))
 			throw new ArgumentException("All weights must be positive.", nameof(values));
-
 		long totalWeight = values.Aggregate(0L, (sum, v) => sum + v.Weight);
 		return state =>
 		{
@@ -103,5 +102,17 @@ public static partial class Fuzzr
 			// Fallback (should never occur)
 			return values[^1].Generator(state);
 		};
+	}
+
+	private static void CheckIfValuesIsNull<T>(IEnumerable<T> values, string typeName)
+	{
+		if (values is null)
+			throw new ArgumentNullException(nameof(values),
+@$"The sequence passed to Fuzzr.OneOf<{typeName}>(...) is null.
+
+Possible solutions:
+• Pass a non-null IEnumerable<T> (e.g. an empty array if you're building it later).
+• If the sequence may be empty, use .WithDefault().
+");
 	}
 }

@@ -163,5 +163,22 @@ Possible solutions:
 • Use zero weight entries only to disable specific options.
 • Adjust weights to ensure the total is greater than zero.
 ";
+
+    [Fact]
+    [DocContent("  - `ArgumentNullException`: When the provided sequence is null.")]
+    public void Null_Values_Argument()
+    {
+        IEnumerable<string> list = null!;
+        var ex = Assert.Throws<ArgumentNullException>(() => Fuzzr.OneOf(list).Generate());
+        Assert.Equal(Null_Values_Argument_Message(), ex.Message);
+    }
+
+    private static string Null_Values_Argument_Message() =>
+@"The sequence passed to Fuzzr.OneOf<String>(...) is null.
+
+Possible solutions:
+• Pass a non-null IEnumerable<T> (e.g. an empty array if you're building it later).
+• If the sequence may be empty, use .WithDefault().
+ (Parameter 'values')";
 }
 

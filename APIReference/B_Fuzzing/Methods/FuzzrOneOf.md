@@ -23,3 +23,4 @@ Creates a generator that randomly selects one value or generator from the provid
   - `OneOfEmptyOptionsException`: When trying to choose from an empty collection.  
   - `NegativeWeightException`: When one or more weights are negative.  
   - `ZeroTotalWeightException`: When the total of all weights is zero or negative.  
+  - `ArgumentNullException`: When the provided sequence is null.  

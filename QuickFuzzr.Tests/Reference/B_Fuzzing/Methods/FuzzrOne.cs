@@ -88,6 +88,22 @@ public class FuzzrOne
     }
 
     [Fact]
+    [DocContent("\n**Overloads:**")]
+    [DocContent("- `Fuzzr.One<T>(Func<T> constructor)`:")]
+    [DocContent("  Creates a generator that produces instances of T by invoking the supplied factory on each generation.")]
+    public void FuzzrOne_No_Default_Ctor_Construction_Options()
+    {
+        var fuzzr =
+            from name in Fuzzr.Constant("Who")
+            from age in Fuzzr.OneOf(1, 2, 3)
+            from person in Fuzzr.One(() => new PersonRecord(name, age))
+            select person;
+        var result = fuzzr.Generate(42);
+        Assert.Equal("Who", result.Name);
+        Assert.Equal(3, result.Age);
+    }
+
+    [Fact]
     [DocContent("\n**Exceptions:**")]
     [DocContent("  - `ConstructionException`: When type T cannot be constructed due to missing default constructor.")]
     public void FuzzrOne_No_Default_Ctor_Throws()
@@ -123,18 +139,25 @@ Possible solution:
 ";
 
     [Fact]
-    [DocContent("\n**Overloads:**")]
-    [DocContent("- `Fuzzr.One<T>(Func<T> constructor)`:")]
-    [DocContent("  Creates a generator that produces instances of T by invoking the supplied factory on each generation.")]
-    public void FuzzrOne_No_Default_Ctor_Construction_Options()
+    [DocContent("  - `NullReferenceException`:")]
+    [DocContent("    - When the factory method returns null.")]
+    public void FactoryMethod_Returning_Null_Throws() // TODO: Update message
     {
-        var fuzzr =
-            from name in Fuzzr.Constant("Who")
-            from age in Fuzzr.OneOf(1, 2, 3)
-            from person in Fuzzr.One(() => new PersonRecord(name, age))
-            select person;
-        var result = fuzzr.Generate(42);
-        Assert.Equal("Who", result.Name);
-        Assert.Equal(3, result.Age);
+        var ex = Assert.Throws<NullReferenceException>(() => Fuzzr.One<Person>(() => null!).Generate());
+        Assert.Equal(FactoryMethod_Returning_Null_Message(), ex.Message);
     }
+
+    private static string FactoryMethod_Returning_Null_Message() =>
+@"Object reference not set to an instance of an object.";
+
+    [Fact]
+    [DocContent("    - When the factory method is null.")]
+    public void FactoryMethod_Is_Null_Throws() // TODO: Update message
+    {
+        var ex = Assert.Throws<NullReferenceException>(() => Fuzzr.One<Person>(null!).Generate());
+        Assert.Equal(FactoryMethod_Is_Null_Message(), ex.Message);
+    }
+
+    private static string FactoryMethod_Is_Null_Message() =>
+@"Object reference not set to an instance of an object.";
 }

@@ -13,10 +13,13 @@ Fuzzr.One<Person>();
 - Recursive object creation is off by default.  
 - Field generation is not supported.  
 
-**Exceptions:**  
-  - `ConstructionException`: When type T cannot be constructed due to missing default constructor.  
-  - `InstantiationException`: When type T is abstract and cannot be instantiated.  
-
 **Overloads:**  
 - `Fuzzr.One<T>(Func<T> constructor)`:  
   Creates a generator that produces instances of T by invoking the supplied factory on each generation.  
+
+**Exceptions:**  
+  - `ConstructionException`: When type T cannot be constructed due to missing default constructor.  
+  - `InstantiationException`: When type T is abstract and cannot be instantiated.  
+  - `NullReferenceException`:  
+    - When the factory method returns null.  
+    - When the factory method is null.  
