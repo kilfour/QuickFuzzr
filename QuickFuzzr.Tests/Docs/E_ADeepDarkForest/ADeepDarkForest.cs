@@ -8,6 +8,8 @@ namespace QuickFuzzr.Tests.Docs.E_ADeepDarkForest;
 //[DocFile]
 public class ADeepDarkForest
 {
+    private readonly bool WriteToFile = false;
+
     [Fact]
     [DocContent(
 @"Depth control together with the `.AsOneOf(...)` combinator and the previously unmentioned `EndOn<T>()` one
@@ -84,14 +86,14 @@ Branch
             ("has RRE", s => s.Split("|").Contains("RRE")),
             ("valid", s => s.Split("|").All(validLabels.Contains))
         );
-
-        new PrettyDeep(a => ((Tree)a).ToTreeLabel())
-            .Sculpt((
-                     from depth in Configr<Tree>.Depth(1, 5)
-                     from inheritance in Configr<Tree>.AsOneOf(typeof(Branch), typeof(Leaf))
-                     from terminator in Configr<Tree>.EndOn<Leaf>()
-                     from tree in Fuzzr.One<Tree>()
-                     select tree).Generate(2))
-            ;//.PulseToLog("tree.log");
+        if (WriteToFile)
+            new PrettyDeep(a => ((Tree)a).ToTreeLabel())
+                .Sculpt((
+                         from depth in Configr<Tree>.Depth(1, 5)
+                         from inheritance in Configr<Tree>.AsOneOf(typeof(Branch), typeof(Leaf))
+                         from terminator in Configr<Tree>.EndOn<Leaf>()
+                         from tree in Fuzzr.One<Tree>()
+                         select tree).Generate(2))
+                .PulseToLog("tree.log");
     }
 }

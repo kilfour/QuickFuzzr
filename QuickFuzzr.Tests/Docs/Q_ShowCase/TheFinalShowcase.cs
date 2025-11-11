@@ -18,7 +18,8 @@ namespace QuickFuzzr.Tests.Docs.Q_ShowCase;
 [DocFile]
 public class TheFinalShowcase
 {
-    [Fact(Skip = "explicit")]
+    private readonly bool WriteToFile = false;
+
     [DocContent(
 @"So, ..., if we have a domain that contains GenericIdentities, ValueObjects, Aggregates, etc.,
 how *exactly* do we handle that in practice?
@@ -70,16 +71,17 @@ This example uses the [HorsesForCourses](https://github.com/kilfour/HorsesForCou
         var logFile = "horses-for-courses.log";
         File.Delete(Path.Combine(SolutionLocator.FindSolutionRoot()!, logFile));
         var result = Domain(CoachFuzzr()).Generate(42);
-        Please.AllowMe()
-            .ToSubstituteWithPropertyNamed<string>("Value")
-            .ToSubstituteWithPropertyNamed<int>("Value")
-            .ToSelfReference<Coach>(a => $"<cycle => Coach.Id: {a.Id.Value}>")
-            .ToSelfReference<Course>(a => $"<cycle => Course.Id: {a.Id.Value}>")
-            .ToInline<ReadOnlyCollection<Skill>>()
-            .ToInline<TimeSlot>()
-            .ToUseNonLinearTime()
-            .IntroduceThis(result)
-            .PulseToLog(logFile);
+        if (WriteToFile)
+            Please.AllowMe()
+                .ToSubstituteWithPropertyNamed<string>("Value")
+                .ToSubstituteWithPropertyNamed<int>("Value")
+                .ToSelfReference<Coach>(a => $"<cycle => Coach.Id: {a.Id.Value}>")
+                .ToSelfReference<Course>(a => $"<cycle => Course.Id: {a.Id.Value}>")
+                .ToInline<ReadOnlyCollection<Skill>>()
+                .ToInline<TimeSlot>()
+                .ToUseNonLinearTime()
+                .IntroduceThis(result)
+                .PulseToLog(logFile);
     }
 
     private static readonly Actor Admin = Actor.From([new(ClaimTypes.Role, ApplicationUser.AdminRole)]);
