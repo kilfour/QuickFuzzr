@@ -1,11 +1,22 @@
-# Fuzzr.OneOf&lt;T&gt;(...)
-- Trying to choose from an empty collection throws an exception with the following message:  
-```text
-Fuzzr.OneOf<Person> cannot select from an empty sequence.
-Possible solutions:
-• Provide at least one option (ensure the sequence is non-empty).
-• Use a fallback: Fuzzr.OneOf(values).WithDefault()
-• Guard upstream: values.Any() ? Fuzzr.OneOf(values) : Fuzzr.Constant(default!).
+# Fuzzr.OneOf&lt;T&gt;(params &lt;T&gt;[] values)
+Creates a generator that randomly selects one value or generator from the provided options.  
+**Usage:**  
+```csharp
+ Fuzzr.OneOf("a", "b", "c");
 ```
-- An overload exists that takes `params (int Weight, T Value)[] values` arguments in order to influence the distribution of generated values.  
-- An overload exists that takes `params (int Weight, FuzzrOf<T> Generator)[] values` arguments in order to influence the distribution of generated values.  
+- Selection is uniform unless weights are specified (see below).  
+
+**Overloads:**  
+- `Fuzzr.OneOf(IEnumerable<T> values)`:  
+  Same as above, but accepts any enumerable source.  
+- `Fuzzr.OneOf(params FuzzrOf<T>[] generators)`:  
+  Randomly selects and executes one of the provided generators.  
+- `Fuzzr.OneOf(params (int Weight, T Value)[] weightedValues)`:  
+  Selects a value using weighted probability. The higher the weight, the more likely the value is to be chosen.  
+- `Fuzzr.OneOf(params (int Weight, FuzzrOf<T> Generator)[] weightedGenerators)`:  
+  Like the weighted values overload, but applies weights to generators.  
+
+**Exceptions:**  
+  - `OneOfEmptyOptionsException`: When trying to choose from an empty collection.  
+  - `NegativeWeightException`: When one or more weights are negative.  
+  - `ZeroTotalWeightException`: When the total of all weights is zero or negative.  

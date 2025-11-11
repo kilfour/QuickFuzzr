@@ -26,7 +26,7 @@ public class ReadMe
     [DocExample(typeof(ReadMe), nameof(Example_Simple_Fuzzr))]
     public void Example_Simple()
     {
-        var result = Example_Simple_Fuzzr().PulseToLog("temp.log");
+        var result = Example_Simple_Fuzzr();
         Assert.Equal("ddnegsn", result.Name);
         Assert.Equal(18, result.Age);
     }

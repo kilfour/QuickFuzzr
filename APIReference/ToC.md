@@ -24,7 +24,7 @@
     - [Fuzzr.Constant&lt;T&gt;(T value)](B_Fuzzing/Methods/FuzzrConstant.md)
     - [Fuzzr.Counter(object key)](B_Fuzzing/Methods/FuzzrCounter.md)
     - [Fuzzr.One&lt;T&gt;()](B_Fuzzing/Methods/FuzzrOne.md)
-    - [Fuzzr.OneOf&lt;T&gt;(...)](B_Fuzzing/Methods/FuzzrOneOf.md)
+    - [Fuzzr.OneOf&lt;T&gt;(params &lt;T&gt;[] values)](B_Fuzzing/Methods/FuzzrOneOf.md)
     - [Fuzzr.Shuffle&lt;T&gt;()](B_Fuzzing/Methods/FuzzrShuffle.md)
   - [Fuzzr Extension Methods](C_ExtensionMethods/FuzzrExtensionMethods.md)
     - [Ext Fuzzr Apply](C_ExtensionMethods/Methods/ExtFuzzrApply.md)

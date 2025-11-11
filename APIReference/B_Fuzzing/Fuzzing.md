@@ -9,5 +9,5 @@ All entries return a FuzzrOf<T> and can be composed using standard LINQ syntax.
 | [Fuzzr.Constant&lt;T&gt;(T value)](Methods/FuzzrConstant.md)|   |
 | [Fuzzr.Counter(object key)](Methods/FuzzrCounter.md)|   |
 | [Fuzzr.One&lt;T&gt;()](Methods/FuzzrOne.md)|   |
-| [Fuzzr.OneOf&lt;T&gt;(...)](Methods/FuzzrOneOf.md)|   |
+| [Fuzzr.OneOf&lt;T&gt;(params &lt;T&gt;[] values)](Methods/FuzzrOneOf.md)|   |
 | [Fuzzr.Shuffle&lt;T&gt;()](Methods/FuzzrShuffle.md)|   |

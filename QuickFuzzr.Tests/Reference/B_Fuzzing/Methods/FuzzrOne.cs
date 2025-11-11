@@ -9,7 +9,7 @@ namespace QuickFuzzr.Tests.Reference.B_Fuzzing.Methods;
 [DocFileHeader("Fuzzr.One&lt;T&gt;()")]
 [DocContent(
 @"Creates a generator that produces complete instances of type T using QuickFuzzr's automatic construction rules: ")]
-public class FuzzrOne : ExplainMe<FuzzrOne>
+public class FuzzrOne
 {
     [CodeSnippet]
     [CodeRemove("return ")]
@@ -22,13 +22,6 @@ public class FuzzrOne : ExplainMe<FuzzrOne>
     [Fact]
     [DocUsage]
     [DocExample(typeof(FuzzrOne), nameof(Person_Example_Fuzzr))]
-    [DocContent("- Returns a `FuzzrOf<T>` instance.")]
-    public void Returns_Fuzzr_Of_T()
-    {
-        Assert.IsType<FuzzrOf<Person>>(Person_Example_Fuzzr());
-    }
-
-    [Fact]
     [DocContent(" - Uses `T`'s public parameterless constructor. Parameterized ctors aren't auto-filled.")]
     public void Person_Example()
     {

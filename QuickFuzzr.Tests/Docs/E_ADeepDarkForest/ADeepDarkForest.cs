@@ -92,6 +92,6 @@ Branch
                      from terminator in Configr<Tree>.EndOn<Leaf>()
                      from tree in Fuzzr.One<Tree>()
                      select tree).Generate(2))
-            .PulseToLog("tree.log");
+            ;//.PulseToLog("tree.log");
     }
 }

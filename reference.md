@@ -223,7 +223,7 @@ All entries return a FuzzrOf<T> and can be composed using standard LINQ syntax.
 | [Fuzzr.Constant&lt;T&gt;(T value)](#fuzzrconstanttt-value)|   |
 | [Fuzzr.Counter(object key)](#fuzzrcounterobject-key)|   |
 | [Fuzzr.One&lt;T&gt;()](#fuzzronet)|   |
-| [Fuzzr.OneOf&lt;T&gt;(...)](#fuzzroneoft)|   |
+| [Fuzzr.OneOf&lt;T&gt;(params &lt;T&gt;[] values)](#fuzzroneoftparams-t-values)|   |
 | [Fuzzr.Shuffle&lt;T&gt;()](#fuzzrshufflet)|   |
 ### Fuzzr.Constant&lt;T&gt;(T value)
 This generator wraps the value provided of type `T` in a `FuzzrOf<T>`.
@@ -246,7 +246,6 @@ Creates a generator that produces complete instances of type T using QuickFuzzr'
 ```csharp
 Fuzzr.One<Person>();
 ```
-- Returns a `FuzzrOf<T>` instance.  
  - Uses `T`'s public parameterless constructor. Parameterized ctors aren't auto-filled.  
 - Primitive properties are generated using their default `Fuzzr` equivalents.  
 - Enumerations are filled using `Fuzzr.Enum<T>()`.  
@@ -263,17 +262,28 @@ Fuzzr.One<Person>();
 **Overloads:**  
 - `Fuzzr.One<T>(Func<T> constructor)`:  
   Creates a generator that produces instances of T by invoking the supplied factory on each generation.  
-### Fuzzr.OneOf&lt;T&gt;(...)
-- Trying to choose from an empty collection throws an exception with the following message:  
-```text
-Fuzzr.OneOf<Person> cannot select from an empty sequence.
-Possible solutions:
-• Provide at least one option (ensure the sequence is non-empty).
-• Use a fallback: Fuzzr.OneOf(values).WithDefault()
-• Guard upstream: values.Any() ? Fuzzr.OneOf(values) : Fuzzr.Constant(default!).
+### Fuzzr.OneOf&lt;T&gt;(params &lt;T&gt;[] values)
+Creates a generator that randomly selects one value or generator from the provided options.  
+**Usage:**  
+```csharp
+ Fuzzr.OneOf("a", "b", "c");
 ```
-- An overload exists that takes `params (int Weight, T Value)[] values` arguments in order to influence the distribution of generated values.  
-- An overload exists that takes `params (int Weight, FuzzrOf<T> Generator)[] values` arguments in order to influence the distribution of generated values.  
+- Selection is uniform unless weights are specified (see below).  
+
+**Overloads:**  
+- `Fuzzr.OneOf(IEnumerable<T> values)`:  
+  Same as above, but accepts any enumerable source.  
+- `Fuzzr.OneOf(params FuzzrOf<T>[] generators)`:  
+  Randomly selects and executes one of the provided generators.  
+- `Fuzzr.OneOf(params (int Weight, T Value)[] weightedValues)`:  
+  Selects a value using weighted probability. The higher the weight, the more likely the value is to be chosen.  
+- `Fuzzr.OneOf(params (int Weight, FuzzrOf<T> Generator)[] weightedGenerators)`:  
+  Like the weighted values overload, but applies weights to generators.  
+
+**Exceptions:**  
+  - `OneOfEmptyOptionsException`: When trying to choose from an empty collection.  
+  - `NegativeWeightException`: When one or more weights are negative.  
+  - `ZeroTotalWeightException`: When the total of all weights is zero or negative.  
 ### Fuzzr.Shuffle&lt;T&gt;()
 ## Fuzzr Extension Methods
 ### Ext Fuzzr Apply

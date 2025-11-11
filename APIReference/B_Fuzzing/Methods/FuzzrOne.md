@@ -4,7 +4,6 @@ Creates a generator that produces complete instances of type T using QuickFuzzr'
 ```csharp
 Fuzzr.One<Person>();
 ```
-- Returns a `FuzzrOf<T>` instance.  
  - Uses `T`'s public parameterless constructor. Parameterized ctors aren't auto-filled.  
 - Primitive properties are generated using their default `Fuzzr` equivalents.  
 - Enumerations are filled using `Fuzzr.Enum<T>()`.  

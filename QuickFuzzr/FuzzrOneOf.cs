@@ -23,9 +23,12 @@ public static partial class Fuzzr
 		if (values is null || values.Length == 0)
 			throw new OneOfEmptyOptionsException(typeof(T).Name);
 
+		if (values.Any(w => w.Weight < 0))
+			throw new NegativeWeightException(typeof(T).Name);
+
 		long totalWeight = values.Aggregate(0L, (sum, v) => sum + v.Weight);
 		if (totalWeight <= 0)
-			throw new ArgumentException("Total weight must be greater than zero.", nameof(values));
+			throw new ZeroTotalWeightException(typeof(T).Name);
 
 		return state =>
 		{
