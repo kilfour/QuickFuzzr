@@ -1,9 +1,10 @@
-﻿using QuickPulse.Explains;
+﻿using QuickFuzzr.Tests._Tools;
+using QuickPulse.Explains;
 
 namespace QuickFuzzr.Tests.Reference.C_ExtensionMethods.Methods;
 
 [DocFile]
-public class ExtFuzzrApply
+public class ExtFuzzrApply : ExplainMe<ExtFuzzrApply>
 {
 }
 

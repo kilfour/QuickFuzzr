@@ -7,8 +7,9 @@ namespace QuickFuzzr.Tests.Reference.B_Fuzzing.Methods;
 
 [DocFile]
 [DocFileHeader("Fuzzr.OneOf&lt;T&gt;(params &lt;T&gt;[] values)")]
+[DocColumn(Fuzzing.Columns.Description, "Randomly selects one of the provided values.")]
 [DocContent("Creates a generator that randomly selects one value or generator from the provided options.")]
-public class FuzzrOneOf : ExplainMe<FuzzrOneOf>
+public class FuzzrOneOf
 {
     [CodeSnippet]
     [CodeRemove("return")]
@@ -60,13 +61,20 @@ public class FuzzrOneOf : ExplainMe<FuzzrOneOf>
         Assert.Equal("c", result);
     }
 
+    [CodeSnippet]
+    [CodeRemove("return")]
+    private static FuzzrOf<string> Weights_Example_GetFuzzr()
+    {
+        return Fuzzr.OneOf((1, "a"), (2, "b"), (3, "c"));
+    }
 
     [Fact]
     [DocContent("- `Fuzzr.OneOf(params (int Weight, T Value)[] weightedValues)`:")]
     [DocContent("  Selects a value using weighted probability. The higher the weight, the more likely the value is to be chosen.")]
+    [DocExample(typeof(FuzzrOneOf), nameof(Weights_Example_GetFuzzr))]
     public void Weights_Example()
     {
-        var fuzzr = Fuzzr.OneOf((1, "a"), (2, "b"), (3, "c")).Many(30);
+        var fuzzr = Weights_Example_GetFuzzr().Many(30);
 
         var result = fuzzr.Generate(1);
         Assert.Equal(4, result.Count(a => a == "a"));

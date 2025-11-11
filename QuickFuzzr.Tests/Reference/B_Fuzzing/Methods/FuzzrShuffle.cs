@@ -1,9 +1,11 @@
+using QuickFuzzr.Tests._Tools;
 using QuickPulse.Explains;
 
 namespace QuickFuzzr.Tests.Reference.B_Fuzzing.Methods;
 
 [DocFile]
 [DocFileHeader("Fuzzr.Shuffle&lt;T&gt;()")]
+[DocColumn(Fuzzing.Columns.Description, "Creates a generator that randomly shuffles an input sequence.")]
 public class FuzzrShuffle
 {
     [Fact]

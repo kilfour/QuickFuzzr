@@ -4,6 +4,7 @@ namespace QuickFuzzr.Tests.Reference.B_Fuzzing.Methods;
 
 [DocFile]
 [DocFileHeader("Fuzzr.Constant&lt;T&gt;(T value)")]
+[DocColumn(Fuzzing.Columns.Description, "Wraps a fixed value in a generator, producing the same result every time.")]
 public class FuzzrConstant
 {
     [Fact]

@@ -1,5 +1,5 @@
 # Fuzzr.One&lt;T&gt;()
-Creates a generator that produces complete instances of type T using QuickFuzzr's automatic construction rules:   
+Creates a generator that produces complete instances of type `T` using QuickFuzzr's automatic construction rules:   
 **Usage:**  
 ```csharp
 Fuzzr.One<Person>();

@@ -5,6 +5,7 @@ namespace QuickFuzzr.Tests.Reference.B_Fuzzing.Methods;
 
 [DocFile]
 [DocFileHeader("Fuzzr.Counter(object key)")]
+[DocColumn(Fuzzing.Columns.Description, "Generates a sequential integer per key, starting at 1.")]
 public class FuzzrCounter
 {
 	[Fact]

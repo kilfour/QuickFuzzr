@@ -6,8 +6,8 @@ All entries return a FuzzrOf<T> and can be composed using standard LINQ syntax.
 ## Contents
 | Fuzzr| Description |
 | -| - |
-| [Fuzzr.Constant&lt;T&gt;(T value)](Methods/FuzzrConstant.md)|   |
-| [Fuzzr.Counter(object key)](Methods/FuzzrCounter.md)|   |
-| [Fuzzr.One&lt;T&gt;()](Methods/FuzzrOne.md)|   |
-| [Fuzzr.OneOf&lt;T&gt;(params &lt;T&gt;[] values)](Methods/FuzzrOneOf.md)|   |
-| [Fuzzr.Shuffle&lt;T&gt;()](Methods/FuzzrShuffle.md)|   |
+| [Fuzzr.Constant&lt;T&gt;(T value)](Methods/FuzzrConstant.md)| Wraps a fixed value in a generator, producing the same result every time. |
+| [Fuzzr.Counter(object key)](Methods/FuzzrCounter.md)| Generates a sequential integer per key, starting at 1. |
+| [Fuzzr.One&lt;T&gt;()](Methods/FuzzrOne.md)| Creates a generator that produces an instances of type `T`. |
+| [Fuzzr.OneOf&lt;T&gt;(params &lt;T&gt;[] values)](Methods/FuzzrOneOf.md)| Randomly selects one of the provided values. |
+| [Fuzzr.Shuffle&lt;T&gt;()](Methods/FuzzrShuffle.md)| Creates a generator that randomly shuffles an input sequence. |

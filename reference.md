@@ -220,11 +220,11 @@ All entries return a FuzzrOf<T> and can be composed using standard LINQ syntax.
 ### Contents
 | Fuzzr| Description |
 | -| - |
-| [Fuzzr.Constant&lt;T&gt;(T value)](#fuzzrconstanttt-value)|   |
-| [Fuzzr.Counter(object key)](#fuzzrcounterobject-key)|   |
-| [Fuzzr.One&lt;T&gt;()](#fuzzronet)|   |
-| [Fuzzr.OneOf&lt;T&gt;(params &lt;T&gt;[] values)](#fuzzroneoftparams-t-values)|   |
-| [Fuzzr.Shuffle&lt;T&gt;()](#fuzzrshufflet)|   |
+| [Fuzzr.Constant&lt;T&gt;(T value)](#fuzzrconstanttt-value)| Wraps a fixed value in a generator, producing the same result every time. |
+| [Fuzzr.Counter(object key)](#fuzzrcounterobject-key)| Generates a sequential integer per key, starting at 1. |
+| [Fuzzr.One&lt;T&gt;()](#fuzzronet)| Creates a generator that produces an instances of type `T`. |
+| [Fuzzr.OneOf&lt;T&gt;(params &lt;T&gt;[] values)](#fuzzroneoftparams-t-values)| Randomly selects one of the provided values. |
+| [Fuzzr.Shuffle&lt;T&gt;()](#fuzzrshufflet)| Creates a generator that randomly shuffles an input sequence. |
 ### Fuzzr.Constant&lt;T&gt;(T value)
 This generator wraps the value provided of type `T` in a `FuzzrOf<T>`.
 It is most useful in combination with others and is often used to inject constants into combined generators.  
@@ -241,7 +241,7 @@ Fuzzr.Counter("the-key").Many(5).Generate();
 - Counter state resets between separate `Generate()` calls.  
 - Works seamlessly in LINQ chains and with .Apply(...) to offset or transform the sequence.  
 ### Fuzzr.One&lt;T&gt;()
-Creates a generator that produces complete instances of type T using QuickFuzzr's automatic construction rules:   
+Creates a generator that produces complete instances of type `T` using QuickFuzzr's automatic construction rules:   
 **Usage:**  
 ```csharp
 Fuzzr.One<Person>();
@@ -277,6 +277,9 @@ Creates a generator that randomly selects one value or generator from the provid
   Randomly selects and executes one of the provided generators.  
 - `Fuzzr.OneOf(params (int Weight, T Value)[] weightedValues)`:  
   Selects a value using weighted probability. The higher the weight, the more likely the value is to be chosen.  
+```csharp
+ Fuzzr.OneOf((1, "a"), (2, "b"), (3, "c"));
+```
 - `Fuzzr.OneOf(params (int Weight, FuzzrOf<T> Generator)[] weightedGenerators)`:  
   Like the weighted values overload, but applies weights to generators.  
 
@@ -286,6 +289,10 @@ Creates a generator that randomly selects one value or generator from the provid
   - `ZeroTotalWeightException`: When the total of all weights is zero or negative.  
 ### Fuzzr.Shuffle&lt;T&gt;()
 ## Fuzzr Extension Methods
+QuickFuzzr provides a collection of extension methods that enhance the expressiveness and composability of `FuzzrOf<T>`.
+These methods act as modifiers, they wrap existing generators to alter behavior, add constraints,
+or chain side-effects without changing the underlying LINQ-based model.
+  
 ### Ext Fuzzr Apply
 ### Ext Fuzzr As Object
 ### Ext Fuzzr Many

@@ -7,8 +7,9 @@ namespace QuickFuzzr.Tests.Reference.B_Fuzzing.Methods;
 
 [DocFile]
 [DocFileHeader("Fuzzr.One&lt;T&gt;()")]
+[DocColumn(Fuzzing.Columns.Description, "Creates a generator that produces an instances of type `T`.")]
 [DocContent(
-@"Creates a generator that produces complete instances of type T using QuickFuzzr's automatic construction rules: ")]
+@"Creates a generator that produces complete instances of type `T` using QuickFuzzr's automatic construction rules: ")]
 public class FuzzrOne
 {
     [CodeSnippet]

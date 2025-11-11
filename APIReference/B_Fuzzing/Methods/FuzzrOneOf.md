@@ -13,6 +13,9 @@ Creates a generator that randomly selects one value or generator from the provid
   Randomly selects and executes one of the provided generators.  
 - `Fuzzr.OneOf(params (int Weight, T Value)[] weightedValues)`:  
   Selects a value using weighted probability. The higher the weight, the more likely the value is to be chosen.  
+```csharp
+ Fuzzr.OneOf((1, "a"), (2, "b"), (3, "c"));
+```
 - `Fuzzr.OneOf(params (int Weight, FuzzrOf<T> Generator)[] weightedGenerators)`:  
   Like the weighted values overload, but applies weights to generators.  
 
