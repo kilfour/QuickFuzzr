@@ -293,6 +293,7 @@ QuickFuzzr provides a collection of extension methods that enhance the expressiv
 These methods act as modifiers, they wrap existing generators to alter behavior, add constraints,
 or chain side-effects without changing the underlying LINQ-based model.
   
+### Configr Depth T
 ### Ext Fuzzr Apply
 ### Ext Fuzzr As Object
 ### Ext Fuzzr Many
@@ -308,6 +309,7 @@ Using the `.Unique(object key)` extension method.
 - When using the same key for multiple unique generators all values across these generators are unique.  
 - An overload exist taking a function as an argument allowing for a dynamic key.  
 ### Ext Fuzzr Where
+### Ext Fuzzr With Default
 ## Configuring
 ### Configr&lt;T&gt;AsOneOf(params Type[] types)
 Configures inheritance resolution for BaseType, 
@@ -339,6 +341,16 @@ personFuzzr.Many(2).Generate();
   - `DerivedTypeNotAssignableException`: If any listed type is not a valid subclass of `BaseType`.  
   - `DerivedTypeIsNullException`: If any listed type is `null`.  
   - `InstantiationException`: When one or more derived types cannot be instantiated.  
+### Configr&lt;T&gt;.Construct(...)
+**Usage:**  
+```csharp
+ Configr<SomeThing>.Construct(Fuzzr.Constant(42));
+```
+Subsequent calls to `Fuzzr.One<T>()` will then use the registered constructor.  
+Various overloads exist that allow for up to five constructor arguments.  
+
+After that, ... you're on your own.  
+### Configr End On T
 ### Configr.Ignore(...)
 **Usage:**  
 ```csharp
@@ -351,6 +363,21 @@ Any property matching the predicate will be ignored during generation.
  Configr<Thing>.IgnoreAll();
 ```
 Ignore all properties while generating anything.  
+### Configr&lt;T&gt;.IgnoreAll()
+**Usage:**  
+```csharp
+ Configr<Thing>.IgnoreAll();
+```
+Ignore all properties while generating an object.  
+`IgnoreAll()`does not cause properties on derived classes to be ignored, even inherited properties.  
+### Configr&lt;T&gt;.Ignore(...)
+**Usage:**  
+```csharp
+ Configr<Thing>.Ignore(s => s.Id);
+```
+The property specified will be ignored during generation.  
+Derived classes generated also ignore the base property.  
+### Configr Primitive
 ### Configr.Property(...)
 **Usage:**  
 ```csharp
@@ -369,45 +396,7 @@ With the same *pass in a value* conveniance helper.
 ```csharp
  Configr.Property(a => a.Name == "Id", a => 42);
 ```
-### Configr.RetryLimit(int limit)
-**Usage:**  
-```csharp
- Configr.RetryLimit(256);
-```
-- Sets the global retry limit used by generators.  
-- Throws when trying to set limit to a value lesser than 1.  
-- Throws when trying to set limit to a value greater than 1024.  
-```text
-Invalid retry limit value: 1025
-Allowed range: 1-1024
-Possible solutions:
-• Use a value within the allowed range
-• Check for unintended configuration overrides
-• If you need more, consider revising your generator logic instead of increasing the limit
-```
-### Configr&lt;T&gt;.Construct(...)
-**Usage:**  
-```csharp
- Configr<SomeThing>.Construct(Fuzzr.Constant(42));
-```
-Subsequent calls to `Fuzzr.One<T>()` will then use the registered constructor.  
-Various overloads exist that allow for up to five constructor arguments.  
-
-After that, ... you're on your own.  
-### Configr&lt;T&gt;.Ignore(...)
-**Usage:**  
-```csharp
- Configr<Thing>.Ignore(s => s.Id);
-```
-The property specified will be ignored during generation.  
-Derived classes generated also ignore the base property.  
-### Configr&lt;T&gt;.IgnoreAll()
-**Usage:**  
-```csharp
- Configr<Thing>.IgnoreAll();
-```
-Ignore all properties while generating an object.  
-`IgnoreAll()`does not cause properties on derived classes to be ignored, even inherited properties.  
+### Configr Property Access
 ### Configr&lt;T&gt;.Property(...)
 **Usage:**  
 ```csharp
@@ -428,3 +417,20 @@ Possible solutions:
 • Use a property selector (e.g. a => a.PropertyName).
 • Then pass it to Configr<PersonOutInTheFields>.Property(...) to configure generation.
 ```
+### Configr.RetryLimit(int limit)
+**Usage:**  
+```csharp
+ Configr.RetryLimit(256);
+```
+- Sets the global retry limit used by generators.  
+- Throws when trying to set limit to a value lesser than 1.  
+- Throws when trying to set limit to a value greater than 1024.  
+```text
+Invalid retry limit value: 1025
+Allowed range: 1-1024
+Possible solutions:
+• Use a value within the allowed range
+• Check for unintended configuration overrides
+• If you need more, consider revising your generator logic instead of increasing the limit
+```
+### Configr With T

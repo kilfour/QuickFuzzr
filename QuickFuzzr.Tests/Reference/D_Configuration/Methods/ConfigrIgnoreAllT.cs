@@ -7,10 +7,10 @@ namespace QuickFuzzr.Tests.Reference.D_Configuration.Methods;
 
 [DocFile]
 [DocFileHeader("Configr&lt;T&gt;.IgnoreAll()")]
-public class ConfigrTIgnoreAll
+public class ConfigrIgnoreAllT
 {
     [DocUsage]
-    [DocExample(typeof(ConfigrTIgnoreAll), nameof(GetConfig))]
+    [DocExample(typeof(ConfigrIgnoreAllT), nameof(GetConfig))]
     [CodeSnippet]
     [CodeRemove("return")]
     private static FuzzrOf<Intent> GetConfig()

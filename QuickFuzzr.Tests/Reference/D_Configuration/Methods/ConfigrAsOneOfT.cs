@@ -14,7 +14,7 @@ allowing QuickFuzzr to randomly select one of the specified derived types when g
 
 Useful when generating domain hierarchies where multiple concrete subtypes exist.  
 ")]
-public class ConfigrAsOneOf
+public class ConfigrAsOneOfT
 {
     [CodeSnippet]
     [CodeRemove("42")]
@@ -40,7 +40,7 @@ public class ConfigrAsOneOf
 
     [Fact]
     [DocUsage]
-    [DocExample(typeof(ConfigrAsOneOf), nameof(Generate))]
+    [DocExample(typeof(ConfigrAsOneOfT), nameof(Generate))]
     [DocContent("- **Exceptions:**")]
     public void ConfigrAsOneOf_GetConfig_ReturnsFuzzr()
     {

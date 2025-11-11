@@ -5,10 +5,10 @@ namespace QuickFuzzr.Tests.Reference.D_Configuration.Methods;
 
 [DocFile]
 [DocFileHeader("Configr&lt;T&gt;.Construct(...)")]
-public class ConfigrTConstruct
+public class ConfigrConstructT
 {
 	[DocUsage]
-	[DocExample(typeof(ConfigrTConstruct), nameof(GetConfig))]
+	[DocExample(typeof(ConfigrConstructT), nameof(GetConfig))]
 	[CodeSnippet]
 	[CodeRemove("return")]
 	private static FuzzrOf<Intent> GetConfig()

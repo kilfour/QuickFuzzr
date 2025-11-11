@@ -8,10 +8,10 @@ namespace QuickFuzzr.Tests.Reference.D_Configuration.Methods;
 
 [DocFile]
 [DocFileHeader("Configr&lt;T&gt;.Property(...)")]
-public class ConfigrTProperty
+public class ConfigrPropertyT
 {
 	[DocUsage]
-	[DocExample(typeof(ConfigrTProperty), nameof(GetConfig))]
+	[DocExample(typeof(ConfigrPropertyT), nameof(GetConfig))]
 	[CodeSnippet]
 	[CodeRemove("return")]
 	private static FuzzrOf<Intent> GetConfig()
@@ -39,7 +39,7 @@ public class ConfigrTProperty
 
 	[Fact]
 	[DocContent("- An overload exists which allows for passing a value instead of a generator.")]
-	[DocExample(typeof(ConfigrTProperty), nameof(GetValueConfig))]
+	[DocExample(typeof(ConfigrPropertyT), nameof(GetValueConfig))]
 	public void UsingValue()
 	{
 		var generator =
@@ -62,7 +62,7 @@ public class ConfigrTProperty
 
 	[Fact]
 	[DocContent("- Trying to configure a field throws an exception with the following message:")]
-	[DocExample(typeof(ConfigrTProperty), nameof(Expression_Points_To_A_Field_Message), "text")]
+	[DocExample(typeof(ConfigrPropertyT), nameof(Expression_Points_To_A_Field_Message), "text")]
 	public void Expression_Points_To_A_Field()
 	{
 		var fuzzr =
