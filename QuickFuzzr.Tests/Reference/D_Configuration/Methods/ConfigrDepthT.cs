@@ -84,7 +84,6 @@ Depth is per type, not global. Each recursive type manages its own budget.
 
 
     [Fact]
-    [DocExceptions]
     [DocException("ArgumentOutOfRangeException", "When max is lesser than min")]
     public void Max_Is_Lesser_Than()
     {

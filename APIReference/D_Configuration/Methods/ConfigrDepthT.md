@@ -14,6 +14,4 @@ Depth is per type, not global. Each recursive type manages its own budget.
 
 **Exceptions:**  
 - `ArgumentOutOfRangeException`: When min is negative.  
-
-**Exceptions:**  
 - `ArgumentOutOfRangeException`: When max is lesser than min  
