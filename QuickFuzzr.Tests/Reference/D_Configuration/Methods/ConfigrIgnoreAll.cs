@@ -7,41 +7,32 @@ namespace QuickFuzzr.Tests.Reference.D_Configuration.Methods;
 
 [DocFile]
 [DocFileHeader("Configr.IgnoreAll()")]
-public class ConfigrIgnoreAll
+public class ConfigrIgnoreAll : ExplainMe<ConfigrIgnoreAll>
 {
-    [DocUsage]
-    [DocExample(typeof(ConfigrIgnoreAllT), nameof(GetConfig))]
+
     [CodeSnippet]
     [CodeRemove("return")]
-    private static FuzzrOf<Intent> GetConfig()
+    private static FuzzrOf<(Person, Address)> GetFuzzr()
     {
-        return Configr.IgnoreAll();
+        return
+        from ignore in Configr.IgnoreAll()
+        from person in Fuzzr.One<Person>()
+        from address in Fuzzr.One<Address>()
+        select (person, address);
+        // Results in => 
+        // ( Person { Name: "", Age: 0 }, Address { Street: "", City: "" } )
     }
 
     [Fact]
     [DocContent("Ignore all properties while generating anything.")]
+    [DocUsage]
+    [DocExample(typeof(ConfigrIgnoreAll), nameof(GetFuzzr))]
     public void StaysDefaultValue()
     {
-        var fuzzr =
-           from _ in GetConfig()
-           from result in Fuzzr.One<Thing>()
-           select result;
-        var thing = fuzzr.Generate();
-        Assert.Equal(0, thing.Id);
-        Assert.Equal(0, thing.Prop);
-    }
-
-
-    [Fact]
-    public void Derived()
-    {
-        var fuzzr =
-            from _ in GetConfig()
-            from result in Fuzzr.One<DerivedThing>()
-            select result;
-        var thing = fuzzr.Generate();
-        Assert.Equal(0, thing.Id);
-        Assert.Equal(0, thing.Prop);
-        Assert.Equal(0, thing.PropOnDerived);
+        var (person, address) = GetFuzzr().Generate(42).PulseToQuickLog();
+        Assert.Equal(string.Empty, person.Name);
+        Assert.Equal(0, person.Age);
+        Assert.Equal(string.Empty, address.Street);
+        Assert.Equal(string.Empty, address.City);
     }
 }

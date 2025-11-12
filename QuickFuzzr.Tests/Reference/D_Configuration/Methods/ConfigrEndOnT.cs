@@ -9,7 +9,7 @@ namespace QuickFuzzr.Tests.Reference.D_Configuration.Methods;
 [DocFileHeader("Configr&lt;T&gt;.EndOn&lt;TEnd&gt;()")]
 [DocContent(
 @"")]
-public class ConfigrEndOnT : ExplainMe<ConfigrEndOnT>
+public class ConfigrEndOnT
 {
     [CodeSnippet]
     [CodeRemove("return")]

@@ -409,7 +409,7 @@ Depth is per type, not global. Each recursive type manages its own budget.
 - `ArgumentOutOfRangeException`: When max is lesser than min  
 ### Configr&lt;T&gt;.EndOn&lt;TEnd&gt;()
   
-Configures a recursion stop condition for type T, instructing QuickFuzzr to generate instances of TEnd instead of continuing deeper.
+Configures a recursion stop condition for type `T`, instructing QuickFuzzr to generate `TEnd` instances instead of continuing deeper.
 Useful for defining explicit *end* types in recursive object graphs, preventing infinite nesting and keeping structure depth under control.
   
 **Usage:**  
@@ -432,18 +432,29 @@ select turtle;
 
 **Exceptions:**  
 - `DerivedTypeNotAssignableException`: When `TEnd` is not assignable to `T`.  
-### Configr.Ignore(...)
+### Configr.Ignore(Func&lt;PropertyInfo, bool&gt; predicate)
+Skips all properties matching the predicate across all types during generation.  
+Use to exclude recurring patterns like identifiers, foreign keys, or audit fields.  
 **Usage:**  
 ```csharp
- Configr.Ignore(a => a.Name == "Id");
+from ignore in Configr.Ignore(a => a.Name == "Name")
+from person in Fuzzr.One<Person>()
+from fileEntry in Fuzzr.One<FileEntry>()
+select (person, fileEntry);
+// Results in => 
+// ( Person { Name: "", Age: 67 }, FileEntry { Name: "" } )
 ```
-Any property matching the predicate will be ignored during generation.  
 ### Configr.IgnoreAll()
+Ignore all properties while generating anything.  
 **Usage:**  
 ```csharp
- Configr<Thing>.IgnoreAll();
+from ignore in Configr.IgnoreAll()
+from person in Fuzzr.One<Person>()
+from address in Fuzzr.One<Address>()
+select (person, address);
+// Results in => 
+// ( Person { Name: "", Age: 0 }, Address { Street: "", City: "" } )
 ```
-Ignore all properties while generating anything.  
 ### Configr&lt;T&gt;.IgnoreAll()
 **Usage:**  
 ```csharp

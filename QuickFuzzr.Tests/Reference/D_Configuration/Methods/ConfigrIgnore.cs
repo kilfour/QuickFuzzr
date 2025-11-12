@@ -5,26 +5,34 @@ using QuickPulse.Explains;
 namespace QuickFuzzr.Tests.Reference.D_Configuration.Methods;
 
 [DocFile]
-[DocFileHeader("Configr.Ignore(...)")]
+[DocFileHeader("Configr.Ignore(Func&lt;PropertyInfo, bool&gt; predicate)")]
 public class ConfigrIgnore
 {
-    [DocUsage]
-    [DocExample(typeof(ConfigrIgnore), nameof(GetConfig))]
+
     [CodeSnippet]
     [CodeRemove("return")]
-    private static FuzzrOf<Intent> GetConfig()
+    private static FuzzrOf<(Person, FileEntry)> GetFuzzr()
     {
-        return Configr.Ignore(a => a.Name == "Id");
+        return
+        from ignore in Configr.Ignore(a => a.Name == "Name")
+        from person in Fuzzr.One<Person>()
+        from fileEntry in Fuzzr.One<FileEntry>()
+        select (person, fileEntry);
+        // Results in => 
+        // ( Person { Name: "", Age: 67 }, FileEntry { Name: "" } )
     }
 
     [Fact]
-    [DocContent("Any property matching the predicate will be ignored during generation.")]
+    [DocContent(
+@"Skips all properties matching the predicate across all types during generation.  
+Use to exclude recurring patterns like identifiers, foreign keys, or audit fields.")]
+    [DocUsage]
+    [DocExample(typeof(ConfigrIgnore), nameof(GetFuzzr))]
     public void StaysDefaultValue()
     {
-        var fuzzr =
-           from _ in GetConfig()
-           from result in Fuzzr.One<Thing>()
-           select result;
-        Assert.Equal(0, fuzzr.Generate().Id);
+        var (person, fileEntry) = GetFuzzr().Generate(42).PulseToQuickLog();
+        Assert.Equal(string.Empty, person.Name);
+        Assert.Equal(67, person.Age);
+        Assert.Equal(string.Empty, fileEntry.Name);
     }
 }

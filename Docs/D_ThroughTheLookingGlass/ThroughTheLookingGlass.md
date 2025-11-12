@@ -46,7 +46,7 @@ Consider this small model:
 ```csharp
 public abstract class FileSystemEntry
 {
-    public string Name { get; set; } = default!;
+    public string Name { get; set; } = string.Empty;
 }
 ```
 ```csharp
