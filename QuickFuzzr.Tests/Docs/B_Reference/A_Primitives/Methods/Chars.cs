@@ -32,8 +32,8 @@ public class Chars
 		=> Assert.Throws<ArgumentException>(() => Fuzzr.Char('2', '1').Generate());
 
 	[Fact]
-	[DocContent("- The default generator always generates a char between lower case 'a' and lower case 'z'.")]
-	public void DefaultGeneratorAlwaysBetweenLowerCaseAAndLowerCaseZ()
+	[DocContent("- The default fuzzr always generates a char between lower case 'a' and lower case 'z'.")]
+	public void DefaultFuzzrAlwaysBetweenLowerCaseAAndLowerCaseZ()
 	{
 		CheckIf.GeneratedValuesShouldAllSatisfy(Fuzzr.Char(),
 			("char between lower case 'a' and lower case 'z'", val => valid.Any(c => c == val)));
@@ -42,12 +42,12 @@ public class Chars
 	[Fact]
 	public void IsRandom()
 	{
-		var generator = Fuzzr.Char();
-		var val = generator.Generate();
+		var fuzzr = Fuzzr.Char();
+		var val = fuzzr.Generate();
 		var differs = false;
 		for (int i = 0; i < 10; i++)
 		{
-			if (val != generator.Generate())
+			if (val != fuzzr.Generate())
 				differs = true;
 		}
 		Assert.True(differs);
@@ -64,10 +64,10 @@ public class Chars
 	[DocContent("- `char` is automatically detected and generated for object properties.")]
 	public void Property()
 	{
-		var generator = Fuzzr.One<SomeThingToGenerate>();
+		var fuzzr = Fuzzr.One<SomeThingToGenerate>();
 		for (int i = 0; i < 10; i++)
 		{
-			var value = generator.Generate().AProperty;
+			var value = fuzzr.Generate().AProperty;
 			Assert.True(valid.Any(c => c == value), value.ToString());
 		}
 	}

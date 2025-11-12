@@ -4,11 +4,11 @@ using QuickPulse.Explains;
 namespace QuickFuzzr.Tests.Docs.B_Reference.C_ExtensionMethods.Methods;
 
 [DocFile]
-[DocFileCodeHeader("ExtFuzzr.WithDefault(this FuzzrOf<T> generator, T def = default)")]
+[DocFileCodeHeader("ExtFuzzr.WithDefault(this FuzzrOf<T> fuzzr, T def = default)")]
 public class ExtFuzzrWithDefault
 {
     [Fact]
-    [DocContent("Returns a default value when the underlying generator fails due to empty choices.")]
+    [DocContent("Returns a default value when the underlying fuzzr fails due to empty choices.")]
     public void Uses_Default_On_Empty_Choices()
     {
         var fuzzr = Fuzzr.OneOf(Array.Empty<int>()).WithDefault(42);

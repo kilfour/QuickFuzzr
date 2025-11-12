@@ -17,7 +17,7 @@ Person { Name = "ddnegsn", Age = 18 }
 ```
 And that's it, ... no configuration required.  
 QuickFuzzr walks the `Person` type, detects its properties,
-and fills them in using the default generators.  
+and fills them in using the default fuzzrs.  
 ## Your First Customization
 QuickFuzzr is primarily designed to generate inputs for **fuzz-testing**, 
  so the default settings are mainly aimed towards that goal.  
@@ -83,7 +83,7 @@ var employeeFuzzr =
     Age: 69
 }
 ```
-In this example the lists used by `OneOf` are declared outside of the generator.
+In this example the lists used by `OneOf` are declared outside of the fuzzr.
 I just used `string[]`'s but the data could easily be loaded from a file for instance.  
 ## Please, Sir, I Want Some More.
 For MORE!, ..., oh well then.  

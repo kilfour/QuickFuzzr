@@ -249,11 +249,11 @@ public class Genesis : ICreationEngine
     }
 
     private static bool IsAKnownPrimitive(State state, PropertyInfo propertyInfo)
-        => state.PrimitiveGenerators.ContainsKey(propertyInfo.PropertyType);
+        => state.PrimitiveFuzzrs.ContainsKey(propertyInfo.PropertyType);
 
     private static void SetPrimitive(object target, PropertyInfo propertyInfo, State state)
     {
-        var fuzzr = state.PrimitiveGenerators[propertyInfo.PropertyType];
+        var fuzzr = state.PrimitiveFuzzrs[propertyInfo.PropertyType];
         if (propertyInfo.PropertyType == typeof(string))
         {
             var ctx = new NullabilityInfoContext();

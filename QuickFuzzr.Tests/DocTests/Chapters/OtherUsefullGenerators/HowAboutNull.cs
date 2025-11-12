@@ -1,6 +1,6 @@
 ﻿using QuickPulse.Explains;
 
-namespace QuickFuzzr.Tests.DocTests.Chapters.OtherUsefullGenerators;
+namespace QuickFuzzr.Tests.DocTests.Chapters.OtherUsefullFuzzrs;
 
 [DocFileHeader("How About Null(s) ?")]
 [DocContent("Various extension methods allow for influencing null generation.")]
@@ -8,7 +8,7 @@ public class HowAboutNull
 {
 	[Fact]
 	[DocContent(
-@"- `.Nullable()` : Casts a `Generator<T>` to `Generator<T?>`. In addition generates null 1 out of 5 times.  
+@"- `.Nullable()` : Casts a `FuzzrOf<T>` to `FuzzrOf<T?>`. In addition generates null 1 out of 5 times.  
 > Used for value types.")]
 	public void Nullable()
 	{
@@ -38,7 +38,7 @@ public class HowAboutNull
 
 	[Fact]
 	[DocContent(
-@"- `.NullableRef()` : Casts a `Generator<T>` to `Generator<T?>`. In addition generates null 1 out of 5 times.  
+@"- `.NullableRef()` : Casts a `FuzzrOf<T>` to `FuzzrOf<T?>`. In addition generates null 1 out of 5 times.  
 > Used for reference types, including `string`.")]
 	public void NullableRef()
 	{

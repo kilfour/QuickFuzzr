@@ -18,7 +18,7 @@ public class TimeSpans
 	}
 
 	[Fact]
-	[DocContent("- The default generator is (max = 1000).")]
+	[DocContent("- The default fuzzr is (max = 1000).")]
 	public void GeneratesValuesBetweenOneIncludedAndThousandExcluded()
 	{
 		CheckIf.GeneratedValuesShouldAllSatisfy(Fuzzr.TimeSpan(),

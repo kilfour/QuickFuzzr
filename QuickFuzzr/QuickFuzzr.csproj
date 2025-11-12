@@ -11,7 +11,7 @@
     <PackageId>QuickFuzzr</PackageId>
     <Title>QuickFuzzr</Title>
     <Description>A type-walking cheetah with a hand full of random.</Description>
-    <PackageTags>LINQ;fuzzing;testing;diagnostics;random-data;generators</PackageTags>
+    <PackageTags>LINQ;fuzzing;testing;diagnostics;random-data;fuzzrs</PackageTags>
 
     <RepositoryType>git</RepositoryType>
     <RepositoryUrl>https://github.com/kilfour/QuickFuzzr</RepositoryUrl>

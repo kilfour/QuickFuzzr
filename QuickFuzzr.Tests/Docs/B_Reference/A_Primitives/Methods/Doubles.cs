@@ -11,10 +11,10 @@ public class Doubles
 	[DocContent("- The overload `Fuzzr.Double(double min, double max)` generates a double greater than or equal to `min` and less than `max`.")]
 	public void Zero()
 	{
-		var generator = Fuzzr.Double(0, 0);
+		var fuzzr = Fuzzr.Double(0, 0);
 		for (int i = 0; i < 10; i++)
 		{
-			Assert.Equal(0, generator.Generate());
+			Assert.Equal(0, fuzzr.Generate());
 		}
 	}
 
@@ -26,13 +26,13 @@ public class Doubles
 	}
 
 	[Fact]
-	[DocContent("- The default generator is (min = 1, max = 100).")]
-	public void DefaultGeneratorBetweenOneAndHundred()
+	[DocContent("- The default fuzzr is (min = 1, max = 100).")]
+	public void DefaultFuzzrBetweenOneAndHundred()
 	{
-		var generator = Fuzzr.Double();
+		var fuzzr = Fuzzr.Double();
 		for (int i = 0; i < 10; i++)
 		{
-			var val = generator.Generate();
+			var val = fuzzr.Generate();
 			Assert.True(val >= 1);
 			Assert.True(val < 100);
 		}
@@ -42,12 +42,12 @@ public class Doubles
 	[DocContent("- Can be made to return `double?` using the `.Nullable()` combinator.")]
 	public void Nullable()
 	{
-		var generator = Fuzzr.Double().Nullable();
+		var fuzzr = Fuzzr.Double().Nullable();
 		var isSomeTimesNull = false;
 		var isSomeTimesNotNull = false;
 		for (int i = 0; i < 50; i++)
 		{
-			var value = generator.Generate();
+			var value = fuzzr.Generate();
 			if (value.HasValue)
 			{
 				isSomeTimesNotNull = true;
@@ -64,10 +64,10 @@ public class Doubles
 	[DocContent("- `double` is automatically detected and generated for object properties.")]
 	public void Property()
 	{
-		var generator = Fuzzr.One<SomeThingToGenerate>();
+		var fuzzr = Fuzzr.One<SomeThingToGenerate>();
 		for (int i = 0; i < 10; i++)
 		{
-			Assert.NotEqual(0, generator.Generate().AProperty);
+			Assert.NotEqual(0, fuzzr.Generate().AProperty);
 		}
 	}
 
@@ -75,12 +75,12 @@ public class Doubles
 	[DocContent("- `double?` is automatically detected and generated for object properties.")]
 	public void NullableProperty()
 	{
-		var generator = Fuzzr.One<SomeThingToGenerate>();
+		var fuzzr = Fuzzr.One<SomeThingToGenerate>();
 		var isSomeTimesNull = false;
 		var isSomeTimesNotNull = false;
 		for (int i = 0; i < 50; i++)
 		{
-			var value = generator.Generate().ANullableProperty;
+			var value = fuzzr.Generate().ANullableProperty;
 			if (value.HasValue)
 			{
 				isSomeTimesNotNull = true;

@@ -18,7 +18,7 @@ public class YourFirstFuzzr
     [DocContent(
 @"And that's it, ... no configuration required.  
 QuickFuzzr walks the `Person` type, detects its properties,
-and fills them in using the default generators.")]
+and fills them in using the default fuzzrs.")]
     public void Person_Example()
     {
         var result = Person_Example_GetResult();
@@ -79,7 +79,7 @@ Consider this `Employee` class derived from `Person`:")]
     [DocOutput]
     [DocCodeFile("Employee.txt")]
     [DocContent(
-@"In this example the lists used by `OneOf` are declared outside of the generator.
+@"In this example the lists used by `OneOf` are declared outside of the fuzzr.
 I just used `string[]`'s but the data could easily be loaded from a file for instance.")]
     public void Employee_Example_Customized()
     {

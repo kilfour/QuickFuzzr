@@ -1,13 +1,13 @@
 ﻿using QuickPulse.Explains;
 
-namespace QuickFuzzr.Tests.DocTests.Chapters.OtherUsefullGenerators;
+namespace QuickFuzzr.Tests.DocTests.Chapters.OtherUsefullFuzzrs;
 
 [DocContent("Various extension methods allow for casting the generated value.")]
-public class CastingGenerators
+public class CastingFuzzrs
 {
 	[Fact]
 	[DocContent(
-@" - `.AsObject()` : Simply casts the fuzzr itself from `Generator<T>` to `Generator<object>`. Mostly used internally.")]
+@" - `.AsObject()` : Simply casts the fuzzr itself from `FuzzrOf<T>` to `FuzzrOf<object>`. Mostly used internally.")]
 	public void AsObject()
 	{
 		Assert.IsType<FuzzrOf<object>>(Fuzzr.Int().AsObject());
@@ -15,7 +15,7 @@ public class CastingGenerators
 
 	[Fact]
 	[DocContent(
-@" - `.Nullable()` : Casts a `Generator<T>` to `Generator<T?>`. In addition generates null 1 out of 5 times.")]
+@" - `.Nullable()` : Casts a `FuzzrOf<T>` to `FuzzrOf<T?>`. In addition generates null 1 out of 5 times.")]
 	public void Nullable()
 	{
 		var fuzzr = Fuzzr.Int().Nullable();

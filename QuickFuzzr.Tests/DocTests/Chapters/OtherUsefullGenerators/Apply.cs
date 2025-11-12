@@ -1,6 +1,6 @@
 ﻿using QuickPulse.Explains;
 
-namespace QuickFuzzr.Tests.DocTests.Chapters.OtherUsefullGenerators;
+namespace QuickFuzzr.Tests.DocTests.Chapters.OtherUsefullFuzzrs;
 
 [DocContent("Use the `.Apply<T>(Func<T, T> func)` extension method.")]
 public class Apply

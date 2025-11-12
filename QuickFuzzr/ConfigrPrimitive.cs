@@ -14,8 +14,8 @@ public static partial class Configr
     {
         return state =>
         {
-            state.PrimitiveGenerators[typeof(T)] = fuzzr.AsObject();
-            state.PrimitiveGenerators[typeof(T?)] = fuzzr.Nullable().AsObject();
+            state.PrimitiveFuzzrs[typeof(T)] = fuzzr.AsObject();
+            state.PrimitiveFuzzrs[typeof(T?)] = fuzzr.Nullable().AsObject();
             return new Result<Intent>(Intent.Fixed, state);
         };
     }
@@ -29,7 +29,7 @@ public static partial class Configr
     {
         return state =>
         {
-            state.PrimitiveGenerators[typeof(T?)] = fuzzr.AsObject();
+            state.PrimitiveFuzzrs[typeof(T?)] = fuzzr.AsObject();
             return new Result<Intent>(Intent.Fixed, state);
         };
     }
@@ -42,7 +42,7 @@ public static partial class Configr
     {
         return state =>
         {
-            state.PrimitiveGenerators[typeof(string)] = fuzzr.AsObject();
+            state.PrimitiveFuzzrs[typeof(string)] = fuzzr.AsObject();
             return new Result<Intent>(Intent.Fixed, state);
         };
     }

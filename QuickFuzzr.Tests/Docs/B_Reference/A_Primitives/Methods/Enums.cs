@@ -10,8 +10,8 @@ namespace QuickFuzzr.Tests.Docs.B_Reference.A_Primitives.Methods;
 public class Enums
 {
 	[Fact]
-	[DocContent("- The default generator just picks a random value from all enumeration values.")]
-	public void DefaultGenerator()
+	[DocContent("- The default fuzzr just picks a random value from all enumeration values.")]
+	public void DefaultFuzzr()
 	{
 		CheckIf.TheseValuesAreGenerated(Fuzzr.Enum<MyEnumeration>(),
 			MyEnumeration.MyOne, MyEnumeration.Mytwo);

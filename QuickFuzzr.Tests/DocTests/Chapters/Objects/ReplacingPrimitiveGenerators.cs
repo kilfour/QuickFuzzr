@@ -4,7 +4,7 @@ using QuickPulse.Explains;
 namespace QuickFuzzr.Tests.DocTests.Chapters.Objects;
 
 [DocContent("Use the `.Replace()` extension method.")]
-public class ReplacingPrimitiveGenerators
+public class ReplacingPrimitiveFuzzrs
 {
 	[Fact]
 	[DocContent(@"Example

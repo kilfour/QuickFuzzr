@@ -12,7 +12,7 @@ public class Strings
 	private static readonly HashSet<char> Valid = [.. "abcdefghijklmnopqrstuvwxyz"];
 
 	[Fact]
-	[DocContent("- The Default generator generates a string of length greater than or equal to 1 and less than or equal to 10.")]
+	[DocContent("- The Default fuzzr generates a string of length greater than or equal to 1 and less than or equal to 10.")]
 	public void DefaultMinMax()
 		=> CheckIf.GeneratedValuesShouldAllSatisfy(Fuzzr.String(),
 			("length >= 1", a => a?.Length >= 1), ("length <= 10", a => a?.Length <= 10));
@@ -55,8 +55,8 @@ public class Strings
 			("length == 1", a => a.Length == 1), ("length == 2", a => a.Length == 2));
 
 	[Fact]
-	[DocContent("- The default generator always generates every char element of the string to be between lower case 'a' and lower case 'z'.")]
-	public void DefaultGeneratorStringElementsAlwaysBetweenLowerCaseAAndLowerCaseZ()
+	[DocContent("- The default fuzzr always generates every char element of the string to be between lower case 'a' and lower case 'z'.")]
+	public void DefaultFuzzrStringElementsAlwaysBetweenLowerCaseAAndLowerCaseZ()
 		=> CheckIf.GeneratedValuesShouldAllSatisfy(Fuzzr.String(),
 			("is letter", a => a.All(Valid.Contains)));
 

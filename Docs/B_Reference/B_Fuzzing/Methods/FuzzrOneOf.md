@@ -1,5 +1,5 @@
 # Fuzzr.OneOf&lt;T&gt;(params &lt;T&gt;[] values)
-Creates a generator that randomly selects one value or generator from the provided options.  
+Creates a fuzzr that randomly selects one value or fuzzr from the provided options.  
 **Usage:**  
 ```csharp
  Fuzzr.OneOf("a", "b", "c");
@@ -9,15 +9,15 @@ Creates a generator that randomly selects one value or generator from the provid
 **Overloads:**  
 - `Fuzzr.OneOf(IEnumerable<T> values)`:  
   Same as above, but accepts any enumerable source.  
-- `Fuzzr.OneOf(params FuzzrOf<T>[] generators)`:  
-  Randomly selects and executes one of the provided generators.  
+- `Fuzzr.OneOf(params FuzzrOf<T>[] fuzzrs)`:  
+  Randomly selects and executes one of the provided fuzzrs.  
 - `Fuzzr.OneOf(params (int Weight, T Value)[] weightedValues)`:  
   Selects a value using weighted probability. The higher the weight, the more likely the value is to be chosen.  
 ```csharp
  Fuzzr.OneOf((1, "a"), (2, "b"), (3, "c"));
 ```
-- `Fuzzr.OneOf(params (int Weight, FuzzrOf<T> Generator)[] weightedGenerators)`:  
-  Like the weighted values overload, but applies weights to generators.  
+- `Fuzzr.OneOf(params (int Weight, FuzzrOf<T> fuzzr)[] weightedFuzzrs)`:  
+  Like the weighted values overload, but applies weights to fuzzrs.  
 
 **Exceptions:**  
   - `OneOfEmptyOptionsException`: When trying to choose from an empty collection.  

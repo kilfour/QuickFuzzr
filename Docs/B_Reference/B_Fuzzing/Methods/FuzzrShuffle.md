@@ -1,5 +1,5 @@
 # Fuzzr.Shuffle&lt;T&gt;()
-Creates a generator that produces a random permutation of the provided sequence.  
+Creates a fuzzr that produces a random permutation of the provided sequence.  
 Use for randomized ordering, unbiased sampling without replacement.  
 **Usage:**  
 ```csharp

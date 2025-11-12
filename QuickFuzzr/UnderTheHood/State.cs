@@ -102,7 +102,7 @@ public class State
 	public readonly Dictionary<(Type, Type), (FuzzrOf<object>, Func<object, FuzzrOf<Intent>>)> WithCustomizations = [];
 	public readonly Dictionary<Type, Func<State, object>> Constructors = [];
 
-	public readonly Dictionary<Type, FuzzrOf<object>> PrimitiveGenerators
+	public readonly Dictionary<Type, FuzzrOf<object>> PrimitiveFuzzrs
 		= new()
 			{
 				{ typeof(string), Fuzzr.String().AsObject() },

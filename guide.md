@@ -36,7 +36,7 @@ Person { Name = "ddnegsn", Age = 18 }
 ```
 And that's it, ... no configuration required.  
 QuickFuzzr walks the `Person` type, detects its properties,
-and fills them in using the default generators.  
+and fills them in using the default fuzzrs.  
 ### Your First Customization
 QuickFuzzr is primarily designed to generate inputs for **fuzz-testing**, 
  so the default settings are mainly aimed towards that goal.  
@@ -102,7 +102,7 @@ var employeeFuzzr =
     Age: 69
 }
 ```
-In this example the lists used by `OneOf` are declared outside of the generator.
+In this example the lists used by `OneOf` are declared outside of the fuzzr.
 I just used `string[]`'s but the data could easily be loaded from a file for instance.  
 ### Please, Sir, I Want Some More.
 For MORE!, ..., oh well then.  
@@ -315,7 +315,7 @@ The `select` then combines those using string interpolation, meaning that the wh
 
 
 *Sidenote:* There's usually more than one way to get things done in QuickFuzzr.
-As an example of that, here is another social security generator, this time using `char`'s and `string`'s:  
+As an example of that, here is another social security fuzzr, this time using `char`'s and `string`'s:  
 ```csharp
 var digit = Fuzzr.Char('0', '9');
 var ssnFuzzr =
@@ -669,7 +669,7 @@ and made sense of collections nested inside collections, with controlled recursi
 
 Each type involved carries its own depth constraint, and every recursive property or list of child elements
 simply burns through that budget one level at a time.
-When the counter hits zero, the generator yields null (or an empty list), and the story ends right there.
+When the counter hits zero, the fuzzr yields null (or an empty list), and the story ends right there.
 
 It also means you can mix these with inheritance and collection combinators.  
 And depth is local, not global: one deep branch does not force all others to go equally deep.  

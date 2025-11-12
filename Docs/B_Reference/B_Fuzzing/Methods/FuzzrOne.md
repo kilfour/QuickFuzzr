@@ -1,5 +1,5 @@
 # Fuzzr.One&lt;T&gt;()
-Creates a generator that produces complete instances of type `T` using QuickFuzzr's automatic construction rules:   
+Creates a fuzzr that produces complete instances of type `T` using QuickFuzzr's automatic construction rules:   
 **Usage:**  
 ```csharp
 Fuzzr.One<Person>();
@@ -15,7 +15,7 @@ Fuzzr.One<Person>();
 
 **Overloads:**  
 - `Fuzzr.One<T>(Func<T> constructor)`:  
-  Creates a generator that produces instances of T by invoking the supplied factory on each generation.  
+  Creates a fuzzr that produces instances of T by invoking the supplied factory on each generation.  
 
 **Exceptions:**  
 - `ConstructionException`: When type T cannot be constructed due to missing default constructor.  

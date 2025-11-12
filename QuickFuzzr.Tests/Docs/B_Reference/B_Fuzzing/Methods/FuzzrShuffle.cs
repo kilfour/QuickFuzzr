@@ -5,9 +5,9 @@ namespace QuickFuzzr.Tests.Docs.B_Reference.B_Fuzzing.Methods;
 
 [DocFile]
 [DocFileHeader("Fuzzr.Shuffle&lt;T&gt;()")]
-[DocColumn(Fuzzing.Columns.Description, "Creates a generator that randomly shuffles an input sequence.")]
+[DocColumn(Fuzzing.Columns.Description, "Creates a fuzzr that randomly shuffles an input sequence.")]
 [DocContent(
-@"Creates a generator that produces a random permutation of the provided sequence.  
+@"Creates a fuzzr that produces a random permutation of the provided sequence.  
 Use for randomized ordering, unbiased sampling without replacement.")]
 public class FuzzrShuffle
 {

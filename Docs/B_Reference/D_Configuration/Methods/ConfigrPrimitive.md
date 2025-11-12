@@ -24,7 +24,7 @@ select (person, nullablePerson);
 // Results in => 
 // ( Person { Name: "cmu", Age: 66 }, NullablePerson { Name: "ycqa", Age: 42 } )
 ```
-  Replacing a nullable primitive generator does not impacts it's non-nullable counterpart.  
+  Replacing a nullable primitive fuzzr does not impacts it's non-nullable counterpart.  
 - `Fuzzr.Primitive(this FuzzrOf<string> fuzzr)`:  
   Registers a global default fuzzr for strings, overriding all string values produced across generated objects.  
 ```csharp

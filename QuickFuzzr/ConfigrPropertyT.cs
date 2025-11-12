@@ -9,10 +9,10 @@ public static partial class Configr<T>
     /// Creates a fuzzr that configures a specific property to use a custom fuzzr for its values.
     /// Use for overriding default generation behavior for individual properties with specialized generation logic.
     /// </summary>
-    public static FuzzrOf<Intent> Property<TProperty>(Expression<Func<T, TProperty>> func, FuzzrOf<TProperty> propertyGenerator)
+    public static FuzzrOf<Intent> Property<TProperty>(Expression<Func<T, TProperty>> func, FuzzrOf<TProperty> fuzzr)
         => state =>
             {
-                state.Customizations[(func.AsPropertyInfo(), typeof(T))] = propertyGenerator.AsObject();
+                state.Customizations[(func.AsPropertyInfo(), typeof(T))] = fuzzr.AsObject();
                 return new Result<Intent>(Intent.Fixed, state);
             };
 

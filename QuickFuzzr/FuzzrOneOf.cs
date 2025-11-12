@@ -81,7 +81,7 @@ public static partial class Fuzzr
 	/// Creates a fuzzr that randomly selects and executes one of the provided weighted fuzzrs.
 	/// Use when different generation strategies should occur with varying frequency, proportional to their weights.
 	/// </summary>
-	public static FuzzrOf<T> OneOf<T>(params (int Weight, FuzzrOf<T> Generator)[] values)
+	public static FuzzrOf<T> OneOf<T>(params (int Weight, FuzzrOf<T> fuzzr)[] values)
 	{
 		CheckIfValuesIsNull(values, typeof(T).Name);
 
@@ -101,7 +101,7 @@ public static partial class Fuzzr
 					return fuzzr(state);
 			}
 			// Fallback (should never occur)
-			return values[^1].Generator(state);
+			return values[^1].fuzzr(state);
 		};
 	}
 

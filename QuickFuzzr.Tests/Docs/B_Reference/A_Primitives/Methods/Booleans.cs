@@ -9,8 +9,8 @@ namespace QuickFuzzr.Tests.Docs.B_Reference.A_Primitives.Methods;
 public class Booleans
 {
 	[Fact]
-	[DocContent("- The default generator generates True or False.")]
-	public void DefaultGeneratorGeneratesTrueOrFalse()
+	[DocContent("- The default fuzzr generates True or False.")]
+	public void DefaultFuzzrGeneratesTrueOrFalse()
 	{
 		CheckIf.TheseValuesAreGenerated(Fuzzr.Bool(), true, false);
 	}

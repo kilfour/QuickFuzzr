@@ -1,6 +1,6 @@
 # Guids
 Use `Fuzzr.Guid()`. *There is no overload.*  
-- The default generator never generates Guid.Empty.  
+- The default fuzzr never generates Guid.Empty.  
 - `Fuzzr.Guid()` is deterministic when seeded.  
 - Can be made to return `Guid?` using the `.Nullable()` combinator.  
 - `Guid` is automatically detected and generated for object properties.  

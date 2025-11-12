@@ -2,7 +2,7 @@
 
 namespace QuickFuzzr;
 
-public static class GeneratorToLinq
+public static class FuzzrToLinq
 {
 	public static FuzzrOf<TValueTwo> Select<TValueOne, TValueTwo>(
 		this FuzzrOf<TValueOne> fuzzr,

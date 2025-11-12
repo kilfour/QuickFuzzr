@@ -8,7 +8,7 @@ namespace QuickFuzzr.Tests.Docs.B_Reference.B_Fuzzing.Methods;
 [DocFile]
 [DocFileHeader("Fuzzr.OneOf&lt;T&gt;(params &lt;T&gt;[] values)")]
 [DocColumn(Fuzzing.Columns.Description, "Randomly selects one of the provided values.")]
-[DocContent("Creates a generator that randomly selects one value or generator from the provided options.")]
+[DocContent("Creates a fuzzr that randomly selects one value or fuzzr from the provided options.")]
 public class FuzzrOneOf
 {
     [CodeSnippet]
@@ -53,9 +53,9 @@ public class FuzzrOneOf
     }
 
     [Fact]
-    [DocContent("- `Fuzzr.OneOf(params FuzzrOf<T>[] generators)`:")]
-    [DocContent("  Randomly selects and executes one of the provided generators.")]
-    public void Generators_Example()
+    [DocContent("- `Fuzzr.OneOf(params FuzzrOf<T>[] fuzzrs)`:")]
+    [DocContent("  Randomly selects and executes one of the provided fuzzrs.")]
+    public void Fuzzrs_Example()
     {
         var result = Fuzzr.OneOf(Fuzzr.Constant("a"), Fuzzr.Constant("b"), Fuzzr.Constant("c")).Generate(42);
         Assert.Equal("c", result);
@@ -88,8 +88,8 @@ public class FuzzrOneOf
     }
 
     [Fact]
-    [DocContent("- `Fuzzr.OneOf(params (int Weight, FuzzrOf<T> Generator)[] weightedGenerators)`:")]
-    [DocContent("  Like the weighted values overload, but applies weights to generators.")]
+    [DocContent("- `Fuzzr.OneOf(params (int Weight, FuzzrOf<T> fuzzr)[] weightedFuzzrs)`:")]
+    [DocContent("  Like the weighted values overload, but applies weights to fuzzrs.")]
     public void Weights_Fuzzrs()
     {
         var fuzzr =
