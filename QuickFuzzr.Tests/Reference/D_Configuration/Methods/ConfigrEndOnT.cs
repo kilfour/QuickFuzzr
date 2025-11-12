@@ -87,6 +87,5 @@ Possible solutions:
 • Use a compatible type in Configr<Turtle>.EndOn<String>().
 • Ensure String inherits from or implements Turtle.
 ";
-    // TODO: `ConfigurationException`: duplicate/conflicting `EndOn` for the same `T`.
 
 }

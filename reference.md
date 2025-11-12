@@ -429,6 +429,9 @@ select turtle;
 // Results in => 
 // Turtle { Down: Turtle { Down: MoreTurtles { Down: null } } }
 ```
+
+**Exceptions:**  
+- `DerivedTypeNotAssignableException`: When `TEnd` is not assignable to `T`.  
 ### Configr.Ignore(...)
 **Usage:**  
 ```csharp
