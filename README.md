@@ -70,7 +70,7 @@ You can explore it here:
 * **[Table of Contents](https://github.com/kilfour/QuickFuzzr/blob/main/Docs/ToC.md)**
 * **[One File Guide](https://github.com/kilfour/QuickFuzzr/blob/main/guide.md)**
 
-*Note:* A full [API reference](https://github.com/kilfour/QuickFuzzr/blob/main/Docs/B_Reference/Reference.md) is currently being worked on.  
+*Note:* A full [API reference](https://github.com/kilfour/QuickFuzzr/blob/main/reference.md) is currently being worked on.  
 For now all public methods have xml summary comments.
 
   
@@ -78,7 +78,7 @@ For now all public methods have xml summary comments.
 
 - Complete API reference documentation.
 - More Elm-style error messages.
-- [Cookbook](https://github.com/kilfour/QuickFuzzr/blob/main/Docs/C_Cookbook/Cookbook.md)
+- [Cookbook](https://github.com/kilfour/QuickFuzzr/blob/cookbook.md)
 - More Primitives: DateTimeOffset, NInt, NUint, ...
 - QuickFuzzr.Reactor: Convention based generation, reusable patterns.
 - QuickFuzzr.Evil: For all your property based testing needs.
