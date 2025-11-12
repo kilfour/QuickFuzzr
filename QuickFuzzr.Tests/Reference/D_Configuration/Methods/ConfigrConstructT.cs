@@ -21,11 +21,11 @@ public class ConfigrConstructT
 		return Configr<SomeThing>.Construct(Fuzzr.Constant(42));
 	}
 
-	private static SomeThing Generate(FuzzrOf<Intent> ctorConfig)
+	private static SomeThing Generate(FuzzrOf<Intent> config)
 	{
 		var fuzzr =
 			from ignore in Configr.IgnoreAll()
-			from cfg in ctorConfig
+			from cfg in config
 			from thing in Fuzzr.One<SomeThing>()
 			select thing;
 		return fuzzr.Generate();

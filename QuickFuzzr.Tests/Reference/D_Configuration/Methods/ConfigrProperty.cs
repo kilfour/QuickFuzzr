@@ -21,11 +21,11 @@ public class ConfigrProperty
     [DocContent("Any property matching the predicate will use the specified Fuzzr during generation.")]
     public void IsApplied()
     {
-        var generator =
+        var fuzzr =
            from _ in GetConfig()
            from result in Fuzzr.One<Thing>()
            select result;
-        Assert.Equal(42, generator.Generate().Id);
+        Assert.Equal(42, fuzzr.Generate().Id);
     }
 
     [CodeSnippet]
@@ -41,11 +41,11 @@ public class ConfigrProperty
     [CodeSnippet]
     public void IsApplied_Constant()
     {
-        var generator =
+        var fuzzr =
            from _ in GetConfigConstant()
            from result in Fuzzr.One<Thing>()
            select result;
-        Assert.Equal(42, generator.Generate().Id);
+        Assert.Equal(42, fuzzr.Generate().Id);
     }
 
     [CodeSnippet]
@@ -60,11 +60,11 @@ public class ConfigrProperty
     [DocExample(typeof(ConfigrProperty), nameof(GetConfigFactory))]
     public void IsApplied_Factory()
     {
-        var generator =
+        var fuzzr =
            from _ in GetConfigFactory()
            from result in Fuzzr.One<Thing>()
            select result;
-        Assert.Equal(42, generator.Generate().Id);
+        Assert.Equal(42, fuzzr.Generate().Id);
     }
 
     [CodeSnippet]
@@ -79,10 +79,10 @@ public class ConfigrProperty
     [DocExample(typeof(ConfigrProperty), nameof(GetConfigFactory_Constant))]
     public void IsApplied_Factory_Constant()
     {
-        var generator =
+        var fuzzr =
            from _ in GetConfigFactory_Constant()
            from result in Fuzzr.One<Thing>()
            select result;
-        Assert.Equal(42, generator.Generate().Id);
+        Assert.Equal(42, fuzzr.Generate().Id);
     }
 }

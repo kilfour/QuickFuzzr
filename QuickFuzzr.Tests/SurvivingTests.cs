@@ -7,12 +7,12 @@ public class SurvivingTests
     // `record` generation is also possible.")]
     public void CanGenerateRecords()
     {
-        var generator =
+        var fuzzr =
             from _ in Configr.EnablePropertyAccessFor(PropertyAccess.AllSetters)
             from __ in Configr.Primitive(Fuzzr.Constant(42))
             from record in Fuzzr.One<MyRecord>()
             select record;
-        var result = generator.Generate();
+        var result = fuzzr.Generate();
         Assert.Equal(42, result.Value);
     }
 

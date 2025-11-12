@@ -21,10 +21,10 @@ public class ConfigrIgnore
     [DocContent("Any property matching the predicate will be ignored during generation.")]
     public void StaysDefaultValue()
     {
-        var generator =
+        var fuzzr =
            from _ in GetConfig()
            from result in Fuzzr.One<Thing>()
            select result;
-        Assert.Equal(0, generator.Generate().Id);
+        Assert.Equal(0, fuzzr.Generate().Id);
     }
 }

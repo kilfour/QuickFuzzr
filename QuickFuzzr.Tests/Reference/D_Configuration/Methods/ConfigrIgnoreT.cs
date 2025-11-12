@@ -22,11 +22,11 @@ public class ConfigrIgnoreT
     [DocContent("The property specified will be ignored during generation.")]
     public void StaysDefaultValue()
     {
-        var generator =
+        var fuzzr =
            from _ in GetConfig()
            from result in Fuzzr.One<Thing>()
            select result;
-        Assert.Equal(0, generator.Generate().Id);
+        Assert.Equal(0, fuzzr.Generate().Id);
     }
 
 
@@ -34,10 +34,10 @@ public class ConfigrIgnoreT
     [DocContent("Derived classes generated also ignore the base property.")]
     public void WorksForDerived()
     {
-        var generator =
+        var fuzzr =
             from _ in GetConfig()
             from result in Fuzzr.One<DerivedThing>()
             select result;
-        Assert.Equal(0, generator.Generate().Id);
+        Assert.Equal(0, fuzzr.Generate().Id);
     }
 }

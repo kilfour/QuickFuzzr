@@ -324,9 +324,9 @@ or chain side-effects without changing the underlying LINQ-based model.
 ### .Unique&lt;T&gt;(...)
 Using the `.Unique(object key)` extension method.  
 - Makes sure that every generated value is unique.  
-- When asking for more unique values than the generator can supply, an exception is thrown.  
-- Multiple unique generators can be defined in one 'composed' generator, without interfering with eachother by using a different key.  
-- When using the same key for multiple unique generators all values across these generators are unique.  
+- When asking for more unique values than the fuzzr can supply, an exception is thrown.  
+- Multiple unique fuzzrs can be defined in one 'composed' fuzzr, without interfering with eachother by using a different key.  
+- When using the same key for multiple unique fuzzrs all values across these fuzzrs are unique.  
 - An overload exist taking a function as an argument allowing for a dynamic key.  
 ### Ext Fuzzr Where
 ### Ext Fuzzr With Default
@@ -401,6 +401,14 @@ Configr<Turtle>.Depth(2, 5);
 ```
 Subsequent calls to `Fuzzr.One<T>()` will generate between 2 and 5 nested levels of `Turtle` instances,
 depending on the random draw and available recursion budget.  
+Depth is per type, not global. Each recursive type manages its own budget.
+  
+
+**Exceptions:**  
+- `ArgumentOutOfRangeException`: When min is negative.  
+
+**Exceptions:**  
+- `ArgumentOutOfRangeException`: When max is lesser than min  
 ### Configr End On T
 ### Configr.Ignore(...)
 **Usage:**  
@@ -453,8 +461,8 @@ With the same *pass in a value* conveniance helper.
 ```csharp
  Configr<Thing>.Property(s => s.Id, Fuzzr.Constant(42));
 ```
-- The property specified will be generated using the passed in generator.  
-- An overload exists which allows for passing a value instead of a generator.  
+- The property specified will be generated using the passed in fuzzr.  
+- An overload exists which allows for passing a value instead of a fuzzr.  
 ```csharp
  Configr<Thing>.Property(s => s.Id, 666);
 ```

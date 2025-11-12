@@ -27,7 +27,9 @@ public class ConfigrDepthT : ExplainMe<ConfigrDepthT>
     [DocExample(typeof(ConfigrDepthT), nameof(GetConfig))]
     [DocContent(
 @"Subsequent calls to `Fuzzr.One<T>()` will generate between 2 and 5 nested levels of `Turtle` instances,
-depending on the random draw and available recursion budget.")]
+depending on the random draw and available recursion budget.  
+Depth is per type, not global. Each recursive type manages its own budget.
+")] // TODO: test different types with different depths
     public void Example()
     {
         var fuzzr =
@@ -43,19 +45,53 @@ depending on the random draw and available recursion budget.")]
         Assert.Null(result.Down.Down.Down.Down);
     }
 
-    //     Behavior:
+    [Fact]
+    public void WithDepth_1_3()
+    {
+        var fuzzr =
+            from _ in Configr<Turtle>.Depth(1, 3)
+            from value in Fuzzr.One<Turtle>()
+            select value;
 
-    // min defines the minimum guaranteed nesting depth.
+        CheckIf.GeneratedValuesShouldEventuallySatisfyAll(
+            fuzzr.Select(GetTurtleDepth),
+            ("has depth 1", d => d == 1),
+            ("has depth 2", d => d == 2),
+            ("has depth 3", d => d == 3),
+            ("no depth 4", d => d != 4)
+        );
+    }
 
-    // max defines the maximum possible nesting depth.
+    private static int GetTurtleDepth(Turtle turtle)
+    {
+        if (turtle.Down == null) return 1;
+        if (turtle.Down.Down == null) return 2;
+        if (turtle.Down.Down.Down == null) return 3;
+        return 4;
+    }
 
-    // When the recursion counter reaches zero, QuickFuzzr yields null (or an empty collection for lists).
+    [Fact]
+    [DocExceptions]
+    [DocException("ArgumentOutOfRangeException", "When min is negative.")]
+    public void Min_Is_Negative()
+    {
+        var ex = Assert.Throws<ArgumentOutOfRangeException>(() => Configr<Turtle>.Depth(-1, 3));
+        Assert.Equal(Min_Is_Negative_Message(), ex.Message);
+    }
 
-    // Depth is per type, not global — each recursive type manages its own budget.
+    private static string Min_Is_Negative_Message() =>
+@"Minimum depth must be non-negative for type Turtle. (Parameter 'min')";
 
-    // Exceptions:
 
-    // ArgumentOutOfRangeException: When min or max are negative.
+    [Fact]
+    [DocExceptions]
+    [DocException("ArgumentOutOfRangeException", "When max is lesser than min")]
+    public void Max_Is_Lesser_Than()
+    {
+        var ex = Assert.Throws<ArgumentOutOfRangeException>(() => Configr<Turtle>.Depth(3, 1));
+        Assert.Equal(Max_Is_Lesser_Than_Message(), ex.Message);
+    }
 
-    // ArgumentException: When min > max.
+    private static string Max_Is_Lesser_Than_Message() =>
+@"Maximum depth must be greater than or equal to minimum depth for type Turtle. (Parameter 'max')";
 }

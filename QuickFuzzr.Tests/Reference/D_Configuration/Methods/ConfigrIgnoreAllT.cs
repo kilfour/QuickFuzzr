@@ -22,11 +22,11 @@ public class ConfigrIgnoreAllT
     [DocContent("Ignore all properties while generating an object.")]
     public void StaysDefaultValue()
     {
-        var generator =
+        var fuzzr =
            from _ in GetConfig()
            from result in Fuzzr.One<Thing>()
            select result;
-        var thing = generator.Generate();
+        var thing = fuzzr.Generate();
         Assert.Equal(0, thing.Id);
         Assert.Equal(0, thing.Prop);
     }
@@ -36,11 +36,11 @@ public class ConfigrIgnoreAllT
     [DocContent("`IgnoreAll()`does not cause properties on derived classes to be ignored, even inherited properties.")]
     public void Derived()
     {
-        var generator =
+        var fuzzr =
             from _ in GetConfig()
             from result in Fuzzr.One<DerivedThing>()
             select result;
-        var thing = generator.Generate();
+        var thing = fuzzr.Generate();
         Assert.NotEqual(0, thing.Id);
         Assert.NotEqual(0, thing.Prop);
         Assert.NotEqual(0, thing.PropOnDerived);

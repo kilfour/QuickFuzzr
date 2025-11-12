@@ -22,11 +22,11 @@ public class ConfigrIgnoreAll
     [DocContent("Ignore all properties while generating anything.")]
     public void StaysDefaultValue()
     {
-        var generator =
+        var fuzzr =
            from _ in GetConfig()
            from result in Fuzzr.One<Thing>()
            select result;
-        var thing = generator.Generate();
+        var thing = fuzzr.Generate();
         Assert.Equal(0, thing.Id);
         Assert.Equal(0, thing.Prop);
     }
@@ -35,11 +35,11 @@ public class ConfigrIgnoreAll
     [Fact]
     public void Derived()
     {
-        var generator =
+        var fuzzr =
             from _ in GetConfig()
             from result in Fuzzr.One<DerivedThing>()
             select result;
-        var thing = generator.Generate();
+        var thing = fuzzr.Generate();
         Assert.Equal(0, thing.Id);
         Assert.Equal(0, thing.Prop);
         Assert.Equal(0, thing.PropOnDerived);

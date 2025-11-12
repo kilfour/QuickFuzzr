@@ -20,14 +20,14 @@ public class ConfigrPropertyT
 	}
 
 	[Fact]
-	[DocContent("- The property specified will be generated using the passed in generator.")]
+	[DocContent("- The property specified will be generated using the passed in fuzzr.")]
 	public void StaysDefaultValue()
 	{
-		var generator =
+		var fuzzr =
 			from c in GetConfig()
 			from r in Fuzzr.One<Thing>()
 			select r;
-		Assert.Equal(42, generator.Generate().Id);
+		Assert.Equal(42, fuzzr.Generate().Id);
 	}
 
 	[CodeSnippet]
@@ -38,26 +38,26 @@ public class ConfigrPropertyT
 	}
 
 	[Fact]
-	[DocContent("- An overload exists which allows for passing a value instead of a generator.")]
+	[DocContent("- An overload exists which allows for passing a value instead of a fuzzr.")]
 	[DocExample(typeof(ConfigrPropertyT), nameof(GetValueConfig))]
 	public void UsingValue()
 	{
-		var generator =
+		var fuzzr =
 			from c in GetValueConfig()
 			from r in Fuzzr.One<Thing>()
 			select r;
-		Assert.Equal(666, generator.Generate().Id);
+		Assert.Equal(666, fuzzr.Generate().Id);
 	}
 
 	[Fact]
 	[DocContent("- Derived classes generated also use the custom property.")]
 	public void WorksForDerived()
 	{
-		var generator =
+		var fuzzr =
 			from _ in Configr<Thing>.Property(s => s.Id, 42)
 			from result in Fuzzr.One<DerivedThing>()
 			select result;
-		Assert.Equal(42, generator.Generate().Id);
+		Assert.Equal(42, fuzzr.Generate().Id);
 	}
 
 	[Fact]
