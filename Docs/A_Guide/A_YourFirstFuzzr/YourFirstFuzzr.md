@@ -196,7 +196,7 @@ But here are some counter arguments.
 ```
 **2. Reusability**: Once you have defined a `LINQ` chain like the one above, you can do more than one thing with it.
 
-**Generate just addresses (or `Person`, `Employee`, etc.):**
+Generate just addresses (or `Person`, `Employee`, etc.):
   
 ```csharp
 var fuzzr =

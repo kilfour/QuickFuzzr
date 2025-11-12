@@ -282,7 +282,7 @@ But here are some counter arguments.
     [DocContent(
 @"**2. Reusability**: Once you have defined a `LINQ` chain like the one above, you can do more than one thing with it.
 
-**Generate just addresses (or `Person`, `Employee`, etc.):**
+Generate just addresses (or `Person`, `Employee`, etc.):
 ")]
     [DocExample(typeof(YourFirstFuzzr), nameof(Addresses_Fuzzr))]
     [DocOutput] // QuickPulse.Explains bug <= can't use records for the fragments
