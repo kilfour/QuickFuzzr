@@ -38,11 +38,6 @@ Fuzzr.One<Appointment>().Generate();
 Consider:  
 ```csharp
 public record PersonRecord(string Name, int Age);
-public class NullablePerson
-{
-    public string? Name { get; set; } = string.Empty;
-    public int? Age { get; set; }
-}
 ```
 This record does not have a default constructor, so `Fuzzr.One<PersonRecord>()`
 will throw an exception with the following message if used as is:  
