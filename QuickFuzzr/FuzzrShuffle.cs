@@ -5,14 +5,14 @@ namespace QuickFuzzr;
 public static partial class Fuzzr
 {
 	/// <summary>
-	/// Creates a generator that produces a random permutation of the provided items.
+	/// Creates a fuzzr that produces a random permutation of the provided items.
 	/// Use for randomized ordering, sampling without replacement, and unbiased permutations.
 	/// </summary>
 	public static FuzzrOf<IEnumerable<T>> Shuffle<T>(params T[] values) =>
 		Shuffle((IEnumerable<T>)values);
 
 	/// <summary>
-	/// Creates a generator that produces a random permutation of the provided collection.
+	/// Creates a fuzzr that produces a random permutation of the provided collection.
 	/// Use for randomized ordering, sampling without replacement, and unbiased permutations.
 	/// </summary>
 	public static FuzzrOf<IEnumerable<T>> Shuffle<T>(IEnumerable<T> values)

@@ -9,48 +9,48 @@ public class ReplacingPrimitiveGenerators
 	[Fact]
 	[DocContent(@"Example
 ```
-var generator =
+var fuzzr =
 	from _ in Fuzzr.Constant(42).Replace()
 	from result in Fuzzr.One<SomeThingToGenerate>()
 	select result;
 ```
-When executing above generator it will return a SomeThingToGenerate object where all integers have the value 42.
+When executing above fuzzr it will return a SomeThingToGenerate object where all integers have the value 42.
 ")]
 	public void UsesReplacement()
 	{
-		var generator =
+		var fuzzr =
 			from _ in Configr.Primitive(Fuzzr.Constant(42))
 			from result in Fuzzr.One<SomeThingToGenerate>()
 			select result;
 
-		var value = generator.Generate();
+		var value = fuzzr.Generate();
 
 		Assert.Equal(42, value.AnInt);
 	}
 
 	[Fact]
-	[DocContent("Replacing a primitive generator automatically impacts its nullable counterpart.")]
+	[DocContent("Replacing a primitive fuzzr automatically impacts its nullable counterpart.")]
 	public void NullableUsesReplacement()
 	{
-		var generator =
+		var fuzzr =
 			from _ in Configr.Primitive(Fuzzr.Int(42, 42))
 			from result in Fuzzr.One<SomeThingToGenerate>()
 			select result;
 		CheckIf.GeneratedValuesShouldEventuallySatisfyAll(
-			generator.Select(a => a.ANullableProperty),
+			fuzzr.Select(a => a.ANullableProperty),
 				("is null", a => a == null),
 				("is not null", a => a != null));
 	}
 
 	[Fact]
-	[DocContent("Replacing a nullable primitive generator does not impacts it's non-nullable counterpart.")]
+	[DocContent("Replacing a nullable primitive fuzzr does not impacts it's non-nullable counterpart.")]
 	public void NullableReplace()
 	{
-		var generator =
+		var fuzzr =
 			from _ in Configr.Primitive(Fuzzr.Int(666, 666).Nullable().NeverReturnNull())
 			from result in Fuzzr.One<SomeThingToGenerate>()
 			select result;
-		var value = generator.Generate();
+		var value = fuzzr.Generate();
 		Assert.True(value.AnInt < 100, value.AnInt.ToString());
 		Assert.Equal(666, value.ANullableProperty);
 	}

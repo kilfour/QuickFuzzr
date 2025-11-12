@@ -5,7 +5,7 @@ namespace QuickFuzzr;
 public static partial class Fuzzr
 {
 	/// <summary>
-	/// Creates a generator that produces random TimeSpan values between 1 and 1000 ticks.
+	/// Creates a fuzzr that produces random TimeSpan values between 1 and 1000 ticks.
 	/// Use for generating short duration values to test timing logic, intervals, or any scenario requiring basic time span data.
 	/// </summary>
 	public static FuzzrOf<TimeSpan> TimeSpan()
@@ -14,7 +14,7 @@ public static partial class Fuzzr
 	}
 
 	/// <summary>
-	/// Creates a generator that produces random TimeSpan values between 1 and the specified maximum number of ticks (exclusive).
+	/// Creates a fuzzr that produces random TimeSpan values between 1 and the specified maximum number of ticks (exclusive).
 	/// Use when you need duration values constrained to specific ranges for timeout testing, performance measurements, or interval validation.
 	/// </summary>
 	public static FuzzrOf<TimeSpan> TimeSpan(int max)

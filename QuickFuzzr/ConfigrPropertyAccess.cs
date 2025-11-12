@@ -36,7 +36,7 @@ public enum PropertyAccess
 public static partial class Configr
 {
     /// <summary>
-    /// Creates a generator that enables property generation for the specified access levels.
+    /// Creates a fuzzr that enables property generation for the specified access levels.
     /// Use to expand auto-generation to include properties with specific accessibility like init-only, internal, or private setters.
     /// </summary>
     public static FuzzrOf<Intent> EnablePropertyAccessFor(PropertyAccess propertyAccess) =>
@@ -47,7 +47,7 @@ public static partial class Configr
         };
 
     /// <summary>
-    /// Creates a generator that disables property generation for the specified access levels.
+    /// Creates a fuzzr that disables property generation for the specified access levels.
     /// Use to restrict auto-generation by excluding properties with specific accessibility like read-only or calculated properties.
     /// </summary>
     public static FuzzrOf<Intent> DisablePropertyAccessFor(PropertyAccess propertyAccess) =>

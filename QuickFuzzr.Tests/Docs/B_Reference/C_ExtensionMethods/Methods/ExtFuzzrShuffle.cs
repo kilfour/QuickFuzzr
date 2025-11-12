@@ -15,6 +15,12 @@ public class ExtFuzzrShuffle
         Assert.Equal(["Paul", "Ringo", "John", "George"], result);
     }
 
-    // TODO : implement tests in the same vein as the other test in the B_Reference namespace for 
-    // - ExtFuzzr.Shuffle
+    [Fact]
+    public void Preserves_Elements()
+    {
+        var source = new[] { "a", "b", "c", "d" };
+        var shuffled = Fuzzr.Constant((IEnumerable<string>)source).Shuffle().Generate(5).ToArray();
+        Assert.Equal(source.Length, shuffled.Length);
+        Assert.True(source.All(shuffled.Contains));
+    }
 }

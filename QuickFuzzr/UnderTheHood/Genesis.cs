@@ -229,8 +229,8 @@ public class Genesis : ICreationEngine
     private static void GenerallyCustomizeProperty(object target, PropertyInfo propertyInfo, State state)
     {
         var key = state.GeneralCustomizations.Keys.First(info => info(propertyInfo));
-        var generator = state.GeneralCustomizations[key](propertyInfo);
-        SetPropertyValue(propertyInfo, target, generator(state).Value);
+        var fuzzr = state.GeneralCustomizations[key](propertyInfo);
+        SetPropertyValue(propertyInfo, target, fuzzr(state).Value);
     }
 
     private static bool NeedsToBeCustomized(State state, PropertyInfo propertyInfo)
@@ -244,8 +244,8 @@ public class Genesis : ICreationEngine
             state.Customizations.Keys.First(info =>
                 info.Item2.IsAssignableFrom(propertyInfo.ReflectedType)
                 && info.Item1.Name == propertyInfo.Name);
-        var generator = state.Customizations[key];
-        SetPropertyValue(propertyInfo, target, generator(state).Value);
+        var fuzzr = state.Customizations[key];
+        SetPropertyValue(propertyInfo, target, fuzzr(state).Value);
     }
 
     private static bool IsAKnownPrimitive(State state, PropertyInfo propertyInfo)
@@ -253,16 +253,16 @@ public class Genesis : ICreationEngine
 
     private static void SetPrimitive(object target, PropertyInfo propertyInfo, State state)
     {
-        var generator = state.PrimitiveGenerators[propertyInfo.PropertyType];
+        var fuzzr = state.PrimitiveGenerators[propertyInfo.PropertyType];
         if (propertyInfo.PropertyType == typeof(string))
         {
             var ctx = new NullabilityInfoContext();
             var nullabilityInfo = ctx.Create(propertyInfo);
             bool allowsNull = nullabilityInfo.ReadState == NullabilityState.Nullable;
             if (allowsNull)
-                generator = generator.NullableRef()!;
+                fuzzr = fuzzr.NullableRef()!;
         }
-        SetPropertyValue(propertyInfo, target, generator(state).Value);
+        SetPropertyValue(propertyInfo, target, fuzzr(state).Value);
     }
 
     private static bool IsObject(PropertyInfo propertyInfo)

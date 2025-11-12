@@ -7,7 +7,7 @@ public class CastingGenerators
 {
 	[Fact]
 	[DocContent(
-@" - `.AsObject()` : Simply casts the generator itself from `Generator<T>` to `Generator<object>`. Mostly used internally.")]
+@" - `.AsObject()` : Simply casts the fuzzr itself from `Generator<T>` to `Generator<object>`. Mostly used internally.")]
 	public void AsObject()
 	{
 		Assert.IsType<FuzzrOf<object>>(Fuzzr.Int().AsObject());
@@ -18,13 +18,13 @@ public class CastingGenerators
 @" - `.Nullable()` : Casts a `Generator<T>` to `Generator<T?>`. In addition generates null 1 out of 5 times.")]
 	public void Nullable()
 	{
-		var generator = Fuzzr.Int().Nullable();
+		var fuzzr = Fuzzr.Int().Nullable();
 		var seenNull = false;
 		var seenValue = false;
 		var tries = 0;
 		while (tries++ < 1000 && !(seenNull && seenValue))
 		{
-			var value = generator.Generate();
+			var value = fuzzr.Generate();
 			if (value is null)
 				seenNull = true;
 			else

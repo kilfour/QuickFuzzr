@@ -1,11 +1,28 @@
+using QuickFuzzr.Tests._Tools;
 using QuickPulse.Explains;
 
 namespace QuickFuzzr.Tests.Docs.B_Reference.C_ExtensionMethods.Methods;
 
 [DocFile]
+[DocFileHeader("ExtFuzzr.Many(this FuzzrOf&lt;T&gt; fuzzr, int number)")]
 public class ExtFuzzrMany
 {
-    // TODO : implement tests in the same vein as the other test in the B_Reference namespace for 
-    // - ExtFuzzr.Many
-}
+    [Fact]
+    [DocContent("Produces a fixed number of values from a fuzzr.")]
+    public void Fixed_Count()
+    {
+        var values = Fuzzr.Constant(7).Many(3).Generate().ToArray();
+        Assert.Equal(3, values.Length);
+        Assert.True(values.All(v => v == 7));
+    }
 
+    [DocOverloads]
+    [DocOverload("ExtFuzzr.Many(this FuzzrOf<T> fuzzr, int min, int max)")]
+    [DocContent("  Produces a variable number of values within bounds.")]
+    [Fact]
+    public void Range_Count()
+    {
+        var values = Fuzzr.Int().Many(1, 3).Generate(42).ToArray();
+        Assert.InRange(values.Length, 1, 3);
+    }
+}

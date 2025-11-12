@@ -6,7 +6,7 @@ namespace QuickFuzzr;
 public static partial class Configr
 {
     /// <summary>
-    /// Creates a generator that configures all properties to be ignored during automatic generation.
+    /// Creates a fuzzr that configures all properties to be ignored during automatic generation.
     /// Use when you want complete manual control over property population and no automatic property filling should occur.
     /// </summary>
     public static FuzzrOf<Intent> IgnoreAll()

@@ -1,11 +1,33 @@
-﻿using QuickPulse.Explains;
+﻿using QuickFuzzr.Tests._Tools;
+using QuickPulse.Explains;
 
 namespace QuickFuzzr.Tests.Docs.B_Reference.C_ExtensionMethods.Methods;
 
 [DocFile]
+[DocFileHeader("ExtFuzzr.Apply(this FuzzrOf&lt;T&gt; fuzzr, Action&lt;T&gt; action)")]
 public class ExtFuzzrApply
 {
-    // TODO : implement tests in the same vein as the other test in the B_Reference namespace for 
-    // - ExtFuzzr.Apply
+
+    [DocContent("Executes a side-effect per generated value without altering it.")]
+    [Fact]
+    [DocUsage]
+    public void Apply_Action_PerformsSideEffect_AndKeepsValue()
+    {
+        var seen = new List<int>();
+        var fuzzr = Fuzzr.Int().Apply(seen.Add);
+        var value = fuzzr.Generate(42);
+        Assert.Single(seen);
+        Assert.Equal(seen[0], value);
+    }
+
+    [DocOverloads]
+    [DocOverload("ExtFuzzr.Apply(this FuzzrOf<T> fuzzr, Func<T,T> func)")]
+    [DocContent("  Transforms generated values while preserving generation context.")]
+    [Fact]
+    public void Apply_Func_TransformsValue()
+    {
+        var fuzzr = Fuzzr.Constant(41).Apply(x => x + 1);
+        Assert.Equal(42, fuzzr.Generate());
+    }
 }
 

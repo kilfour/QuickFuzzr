@@ -68,7 +68,7 @@ Branch
     [Fact]
     public void Trees_PropertyTest()
     {
-        var generator =
+        var fuzzr =
             from depth in Configr<Tree>.Depth(1, 3)
             from inheritance in Configr<Tree>.AsOneOf(typeof(Branch), typeof(Leaf))
             from terminator in Configr<Tree>.EndOn<Leaf>()
@@ -76,7 +76,7 @@ Branch
             select tree.ToLabel();
         var validLabels = new[] { "E", "LE", "RE", "LLE", "LRE", "RLE", "RRE" };
         CheckIf.GeneratedValuesShouldEventuallySatisfyAll(200,
-            generator,
+            fuzzr,
             ("has E", s => s.Split("|").Contains("E")),
             ("has LE", s => s.Split("|").Contains("LE")),
             ("has RE", s => s.Split("|").Contains("RE")),

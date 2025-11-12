@@ -11,27 +11,27 @@ public class Apply
 F.i. `Fuzzr.Constant(41).Apply(i =>  i + 1)` will return 42.")]
 	public void FunctionIsApplied()
 	{
-		var generator = Fuzzr.Constant(41).Apply(i => i + 1);
-		Assert.Equal(42, generator.Generate());
+		var fuzzr = Fuzzr.Constant(41).Apply(i => i + 1);
+		Assert.Equal(42, fuzzr.Generate());
 	}
 
 	[Fact]
 	[DocContent(
 @"Par example, when you want all decimals to be rounded to a certain precision : 
 ```
-var generator = 
+var fuzzr = 
 	from _ in Fuzzr.Decimal().Apply(d => Math.Round(d, 2)).Replace()
 	from result in Fuzzr.One<SomeThingToGenerate>()
 	select result;
 ```")]
 	public void RoundingExample()
 	{
-		var generator =
+		var fuzzr =
 			from _ in Configr.Primitive(Fuzzr.Decimal(1, 100).Apply(d => Math.Round(d, 4)))
 			from result in Fuzzr.One<SomeThingToGenerate>()
 			select result;
-		var value = generator.Generate().MyProperty;
-		//var count = BitConverter.GetBytes(decimal.GetBits(generator.Generate().MyProperty)[3])[2];
+		var value = fuzzr.Generate().MyProperty;
+		//var count = BitConverter.GetBytes(decimal.GetBits(fuzzr.Generate().MyProperty)[3])[2];
 		var count = value.ToString().Split('.', ',')[1].Count();
 		Assert.Equal(4, count);
 	}
@@ -43,9 +43,9 @@ This is useful when dealing with objects and you just don't want to return said 
 E.g. `Fuzzr.One<SomeThingToGenerate>().Apply(session.Save)`.")]
 	public void ActionIsApplied()
 	{
-		var generator = Fuzzr.One<SomeThingToGenerate>().Apply(thing => thing.MyProperty = 42);
+		var fuzzr = Fuzzr.One<SomeThingToGenerate>().Apply(thing => thing.MyProperty = 42);
 
-		Assert.Equal(42, generator.Generate().MyProperty);
+		Assert.Equal(42, fuzzr.Generate().MyProperty);
 	}
 
 	public class SomeThingToGenerate

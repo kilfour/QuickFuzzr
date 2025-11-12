@@ -5,7 +5,7 @@ namespace QuickFuzzr;
 public static partial class Fuzzr
 {
 	/// <summary>
-	/// Creates a generator that produces random DateTime values between January 1, 1970 and December 31, 2020 (inclusive), snapped to whole seconds.
+	/// Creates a fuzzr that produces random DateTime values between January 1, 1970 and December 31, 2020 (inclusive), snapped to whole seconds.
 	/// Use for generating realistic timestamp values within a common historical range for testing temporal logic and events.
 	/// </summary>
 	public static FuzzrOf<DateTime> DateTime()
@@ -14,7 +14,7 @@ public static partial class Fuzzr
 	}
 
 	/// <summary>
-	/// Creates a generator that produces random DateTime values within the specified inclusive range, snapped to whole seconds.
+	/// Creates a fuzzr that produces random DateTime values within the specified inclusive range, snapped to whole seconds.
 	/// Use when you need timestamp values constrained to specific time periods with simplified second-level precision.
 	/// </summary>
 	public static FuzzrOf<DateTime> DateTime(DateTime min, DateTime max)

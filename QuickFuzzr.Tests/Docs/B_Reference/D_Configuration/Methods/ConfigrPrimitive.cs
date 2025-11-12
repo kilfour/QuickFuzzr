@@ -56,7 +56,7 @@ public class ConfigrPrimitive
     [DocContent("- `Primitive<T>(this FuzzrOf<T?> fuzzr)`:")]
     [DocContent("  Registers a global default fuzzr for nullable primitives `T?`, overriding all nullable values produced across generated objects.")]
     [DocExample(typeof(ConfigrPrimitive), nameof(GetNullableFuzzr))]
-    [DocContent("  Replacing a nullable primitive generator does not impacts it's non-nullable counterpart.")]
+    [DocContent("  Replacing a nullable primitive fuzzr does not impacts it's non-nullable counterpart.")]
     public void Nullable()
     {
         var (person, nullablePerson) = GetNullableFuzzr().Generate(1).PulseToQuickLog();

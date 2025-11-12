@@ -20,7 +20,7 @@ public class ConfigrRetryLimit
     }
 
     [Fact]
-    [DocContent("- Sets the global retry limit used by generators.")]
+    [DocContent("- Sets the global retry limit used by fuzzrs.")]
     public void SetsPropertyOnState()
     {
         var state = new State();
@@ -58,6 +58,6 @@ Allowed range: 1-1024
 Possible solutions:
 • Use a value within the allowed range
 • Check for unintended configuration overrides
-• If you need more, consider revising your generator logic instead of increasing the limit
+• If you need more, consider revising your fuzzr logic instead of increasing the limit
 ";
 }

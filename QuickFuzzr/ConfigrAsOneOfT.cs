@@ -6,7 +6,7 @@ namespace QuickFuzzr;
 public static partial class Configr<T>
 {
     /// <summary>
-    /// Creates a generator that configures inheritance resolution for type T to randomly select from the specified derived types.
+    /// Creates a fuzzr that configures inheritance resolution for type T to randomly select from the specified derived types.
     /// Use for generating polymorphic object graphs where you need random but controlled type selection from a hierarchy.
     /// </summary>
     public static FuzzrOf<Intent> AsOneOf(params Type[] derivedTypes)

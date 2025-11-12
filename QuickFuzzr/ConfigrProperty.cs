@@ -6,7 +6,7 @@ namespace QuickFuzzr;
 public static partial class Configr
 {
     /// <summary>
-    /// Creates a generator that configures custom property generation for properties matching the predicate using the specified generator.
+    /// Creates a fuzzr that configures custom property generation for properties matching the predicate using the specified fuzzr.
     /// Use for applying specialized generation rules to groups of properties based on their characteristics or metadata.
     /// </summary>
     public static FuzzrOf<Intent> Property<TProperty>(Func<PropertyInfo, bool> predicate, FuzzrOf<TProperty> fuzzr)
@@ -17,7 +17,7 @@ public static partial class Configr
             };
 
     /// <summary>
-    /// Creates a generator that configures custom property generation using a factory function that receives property metadata.
+    /// Creates a fuzzr that configures custom property generation using a factory function that receives property metadata.
     /// Use when property generation logic depends on property characteristics like name, type, or custom attributes.
     /// </summary>
     public static FuzzrOf<Intent> Property<TProperty>(Func<PropertyInfo, bool> predicate,
@@ -29,7 +29,7 @@ public static partial class Configr
             };
 
     /// <summary>
-    /// Creates a generator that configures properties matching the predicate to always generate the same constant value.
+    /// Creates a fuzzr that configures properties matching the predicate to always generate the same constant value.
     /// Use for setting fixed values on properties that should never vary, such as constants, default values, or test fixtures.
     /// </summary>
     public static FuzzrOf<Intent> Property<TProperty>(Func<PropertyInfo, bool> predicate, TProperty value)
@@ -40,7 +40,7 @@ public static partial class Configr
             };
 
     /// <summary>
-    /// Creates a generator that configures properties matching the predicate to generate values based on property metadata.
+    /// Creates a fuzzr that configures properties matching the predicate to generate values based on property metadata.
     /// Use when property values should be derived from property characteristics like name, declaring type, or custom attributes.
     /// </summary>
     public static FuzzrOf<Intent> Property<TProperty>(Func<PropertyInfo, bool> predicate, Func<PropertyInfo, TProperty> func)

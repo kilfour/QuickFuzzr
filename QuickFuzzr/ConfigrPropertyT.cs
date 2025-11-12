@@ -6,7 +6,7 @@ namespace QuickFuzzr;
 public static partial class Configr<T>
 {
     /// <summary>
-    /// Creates a generator that configures a specific property to use a custom generator for its values.
+    /// Creates a fuzzr that configures a specific property to use a custom fuzzr for its values.
     /// Use for overriding default generation behavior for individual properties with specialized generation logic.
     /// </summary>
     public static FuzzrOf<Intent> Property<TProperty>(Expression<Func<T, TProperty>> func, FuzzrOf<TProperty> propertyGenerator)
@@ -17,7 +17,7 @@ public static partial class Configr<T>
             };
 
     /// <summary>
-    /// Creates a generator that configures a specific property to always generate the same constant value.
+    /// Creates a fuzzr that configures a specific property to always generate the same constant value.
     /// Use for setting fixed values on specific properties that should never vary across generated instances.
     /// </summary>
     public static FuzzrOf<Intent> Property<TProperty>(Expression<Func<T, TProperty>> func, TProperty value)

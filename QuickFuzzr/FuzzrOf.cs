@@ -3,8 +3,8 @@
 namespace QuickFuzzr;
 
 /// <summary>
-/// Represents a generator function that produces random values of type TValue given a generation state.
-/// Used as the fundamental building block for composing complex data generators through LINQ expressions.
+/// Represents a fuzzr function that produces random values of type TValue given a generation state.
+/// Used as the fundamental building block for composing complex data fuzzrs through LINQ expressions.
 /// </summary>
 public delegate IResult<TValue> FuzzrOf<out TValue>(State input);
 

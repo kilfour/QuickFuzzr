@@ -5,7 +5,7 @@ namespace QuickFuzzr;
 public static partial class ExtFuzzr
 {
 	/// <summary>
-	/// Creates a generator that shuffles the sequence produced by the source generator.
+	/// Creates a fuzzr that shuffles the sequence produced by the source fuzzr.
 	/// Use when the collection is itself generated (e.g., from <c>.Many(...)</c>) and you
 	/// want an unbiased random ordering for each generation.
 	/// </summary>

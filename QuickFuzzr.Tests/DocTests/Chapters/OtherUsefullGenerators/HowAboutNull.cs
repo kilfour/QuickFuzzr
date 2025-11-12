@@ -12,13 +12,13 @@ public class HowAboutNull
 > Used for value types.")]
 	public void Nullable()
 	{
-		var generator = Fuzzr.Int().Nullable();
+		var fuzzr = Fuzzr.Int().Nullable();
 		var seenNull = false;
 		var seenValue = false;
 		var tries = 0;
 		while (tries++ < 1000 && !(seenNull && seenValue))
 		{
-			var value = generator.Generate();
+			var value = fuzzr.Generate();
 			if (value is null)
 				seenNull = true;
 			else
@@ -42,13 +42,13 @@ public class HowAboutNull
 > Used for reference types, including `string`.")]
 	public void NullableRef()
 	{
-		var generator = Fuzzr.String().NullableRef();
+		var fuzzr = Fuzzr.String().NullableRef();
 		var seenNull = false;
 		var seenValue = false;
 		var tries = 0;
 		while (tries++ < 1000 && !(seenNull && seenValue))
 		{
-			var value = generator.Generate();
+			var value = fuzzr.Generate();
 			if (value is null)
 				seenNull = true;
 			else
@@ -68,7 +68,7 @@ public class HowAboutNull
 
 	[Fact]
 	[DocContent(
-@"- `.NeverReturnNull()` : Only available on generators that provide `Nullable<T>` values, this one makes sure that, you guessed it, the nullable generator never returns null.")]
+@"- `.NeverReturnNull()` : Only available on fuzzrs that provide `Nullable<T>` values, this one makes sure that, you guessed it, the nullable fuzzr never returns null.")]
 	public void NeverNull()
 	{
 		for (int i = 0; i < 10; i++)

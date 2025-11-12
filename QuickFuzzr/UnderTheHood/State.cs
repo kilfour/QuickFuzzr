@@ -81,17 +81,17 @@ public class State
 	public readonly HashSet<Func<PropertyInfo, bool>> GeneralStuffToIgnore = [];
 	public readonly HashSet<Type> StuffToIgnoreAll = [];
 	public readonly HashSet<PropertyInfo> StuffToIgnore = [];
-	private readonly Dictionary<object, object> generatorMemory = [];
+	private readonly Dictionary<object, object> fuzzrMemory = [];
 
 	public T Get<T>(object key, T newValue)
 	{
-		if (!generatorMemory.ContainsKey(key))
-			generatorMemory[key] = newValue!;
-		return (T)generatorMemory[key];
+		if (!fuzzrMemory.ContainsKey(key))
+			fuzzrMemory[key] = newValue!;
+		return (T)fuzzrMemory[key];
 	}
 
 	public T Set<T>(object key, T value)
-		=> Chain.It(() => generatorMemory[key] = value!, value);
+		=> Chain.It(() => fuzzrMemory[key] = value!, value);
 
 	public readonly Dictionary<Type, List<Type>> InheritanceInfo = [];
 
