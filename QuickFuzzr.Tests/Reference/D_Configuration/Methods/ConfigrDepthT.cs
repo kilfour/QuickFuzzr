@@ -1,6 +1,5 @@
 using QuickFuzzr.Tests._Tools;
 using QuickFuzzr.Tests._Tools.Models;
-using QuickFuzzr.Tests.Reference.B_Fuzzing.Methods;
 using QuickPulse.Explains;
 
 namespace QuickFuzzr.Tests.Reference.D_Configuration.Methods;

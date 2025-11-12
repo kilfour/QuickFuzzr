@@ -1,5 +1,4 @@
 using QuickFuzzr.Tests._Tools;
-using QuickFuzzr.UnderTheHood.WhenThingsGoWrong;
 using QuickPulse.Explains;
 
 namespace QuickFuzzr.Tests.Reference.B_Fuzzing.Methods;

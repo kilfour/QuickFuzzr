@@ -1,4 +1,3 @@
-using QuickFuzzr.Instruments;
 using QuickFuzzr.UnderTheHood;
 
 namespace QuickFuzzr;

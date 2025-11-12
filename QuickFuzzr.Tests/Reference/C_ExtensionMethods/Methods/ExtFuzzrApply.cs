@@ -1,5 +1,4 @@
-﻿using QuickFuzzr.Tests._Tools;
-using QuickPulse.Explains;
+﻿using QuickPulse.Explains;
 
 namespace QuickFuzzr.Tests.Reference.C_ExtensionMethods.Methods;
 
