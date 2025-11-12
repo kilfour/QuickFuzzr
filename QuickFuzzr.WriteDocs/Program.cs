@@ -1,10 +1,15 @@
 ﻿using QuickFuzzr.Tests;
 using QuickFuzzr.Tests.Docs;
-using QuickFuzzr.Tests.Reference;
+using QuickFuzzr.Tests.Docs.A_Guide;
+using QuickFuzzr.Tests.Docs.B_Reference;
+using QuickFuzzr.Tests.Docs.C_Cookbook;
 using QuickPulse.Explains;
 
-Explain.These<Documentation>("Docs/");
-Explain.This<Documentation>("doc.md");
-Explain.These<Reference>("APIReference/");
+Explain.These<Documentation>("Docs");
+
+Explain.This<Documentation>("full-doc.md");
+Explain.This<Guide>("guide.md");
 Explain.This<Reference>("reference.md");
+Explain.This<Cookbook>("cookbook.md");
+
 Explain.OnlyThis<ReadMe>("README.md");

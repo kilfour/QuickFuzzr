@@ -9,10 +9,10 @@ If you're looking for examples or background explanations, see the main document
 All examples and summaries are real, verified through executable tests, ensuring what you see here is exactly what QuickFuzzr does.  
 ## Contents
 
-- [A. Primitive Fuzzrs][PrimitiveFuzzrs]
-- [B. Fuzzing][Fuzzing]
-- [C. Fuzzr Extension Methods][FuzzrExtensionMethods]
-- [D. Configuration][Configuring]
+- [Primitive Fuzzrs][PrimitiveFuzzrs]
+- [Fuzzing][Fuzzing]
+- [Fuzzr Extension Methods][FuzzrExtensionMethods]
+- [Configuration][Configuring]
   
 
 [PrimitiveFuzzrs]: #primitive-fuzzrs
