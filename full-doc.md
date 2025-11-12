@@ -1395,7 +1395,7 @@ Possible solutions:
 
 [ADeepDarkForest]: #a-deep-dark-forest
 ### A Deep Dark Forest
-Depth control together with the `.AsOneOf(...)` combinator and the previously unmentioned `EndOn<T>()` one
+Using `Fuzzr<T>.Depth()` together with the `Fuzzr<T>.AsOneOf(...)` combinator and `Fuzzr<T>.EndOn<TEnd>()`
 allows you to build tree type hierarchies.  
 Given the canonical abstract `Tree`, concrete `Branch` and `Leaf` example model:   
 ```csharp
