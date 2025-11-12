@@ -10,3 +10,6 @@ Fuzzr.Counter("the-key").Many(5).Generate();
 - Each `key` maintains its own independent counter sequence.  
 - Counter state resets between separate `Generate()` calls.  
 - Works seamlessly in LINQ chains and with .Apply(...) to offset or transform the sequence.  
+
+**Exceptions:**  
+- `ArgumentNullException`: When the provided key is null.  

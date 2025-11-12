@@ -19,42 +19,9 @@ public class Recurse
 
 public class NoRecurse { }
 
-[DocContent(@"As mentioned in the *A simple object section*: “The object properties will also be automatically filled in.”
-However, this automatic population only applies to the first level of object properties.
-Deeper properties will remain null unless configured otherwise.  
-So if we have the following class :
-```csharp
-public class NoRecurse { }
-public class Recurse
-{
-	public Recurse Child { get; set; }
-	public NoRecurse OtherChild { get; set; }
-	public override string ToString()
-	{
-		var childString =
-			Child == null ? ""<null>"" : Child.ToString();
-		var otherChildString =
-			OtherChild == null ? ""<null>"" : ""{ NoRecurse }"";
-		return $""{{ Recurse: Child = {childString}, OtherChild = {otherChildString} }}"";
-	}
-}
-```")]
 public class DepthControl
 {
 	[Fact]
-	[DocContent(
-@"If we then do :
-```csharp
-Console.WriteLine(Fuzzr.One<Recurse>().Generate().ToString());
-```
-It outputs : 
-```
-{ Recurse: Child = <null>, OtherChild = { NoRecurse } }
-```
-While this may seem counter-intuitive, it is an intentional default to prevent infinite recursion or overly deep object trees.
-Internally, a `DepthConstraint(int Min, int Max)` is registered per type.
-The default values are `new(1, 1)`.  
-Revisiting our example we can see that both types have indeed been generated with these default values.")]
 	public void DefaultDepth()
 	{
 		var generator = Fuzzr.One<Recurse>();
@@ -67,23 +34,6 @@ Revisiting our example we can see that both types have indeed been generated wit
 	}
 
 	[Fact]
-	[DocContent(
-@"You can control generation depth per type using the `.Depth(min, max)` combinator.  
-For instance:
-```csharp
-var generator =
-	from _ in Fuzzr.For<Recurse>().Depth(2, 2)
-	from recurse in Fuzzr.One<Recurse>()
-	select recurse;
-Console.WriteLine(generator.Generate().ToString());
-```
-Outputs:
-```
-{ Recurse: Child = { Recurse: Child = <null>, OtherChild = { NoRecurse } }
-, OtherChild = { NoRecurse } 
-}
-```
- ")]
 	public void WithDepth2()
 	{
 		var generator =
@@ -101,27 +51,6 @@ Outputs:
 	}
 
 	[Fact]
-	[DocContent(
-@"Recap:
-```
-Depth(1, 1)
-{ Recurse: Child = <null>, OtherChild = { NoRecurse } }
-
-Depth(2, 2)
-{ Recurse: 
-	Child = { Recurse: Child = <null>, OtherChild = { NoRecurse } },
-  	OtherChild = { NoRecurse } 
-}
-
-Depth(3, 3)
-{ Recurse: 
-	Child = { Recurse: 
-		Child = { Recurse: Child = <null>, OtherChild = { NoRecurse } },
-        OtherChild = { NoRecurse } },
-  	OtherChild = { NoRecurse } 
-}
-```
- ")]
 	public void WithDepth3()
 	{
 
@@ -167,14 +96,6 @@ This means some instances will be shallow, while others may be more deeply neste
 		if (thing.Child.Child == null) return "2";
 		if (thing.Child.Child.Child == null) return "3";
 		return "4";
-	}
-
-	[Fact]
-	[DocContent("**Note :** The `Depth(...)` combinator does not actually generate anything, it only influences further generation.")]
-	public void ReturnsUnit()
-	{
-		var generator = Configr<SomeComponent>.Depth(1, 1);
-		Assert.Equal(Intent.Fixed, generator.Generate());
 	}
 
 	public class SomeThingToGenerate

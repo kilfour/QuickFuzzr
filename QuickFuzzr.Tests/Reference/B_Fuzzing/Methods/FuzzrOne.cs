@@ -88,7 +88,7 @@ public class FuzzrOne
     }
 
     [Fact]
-    [DocContent("\n**Overloads:**")]
+    [DocOverloads]
     [DocContent("- `Fuzzr.One<T>(Func<T> constructor)`:")]
     [DocContent("  Creates a generator that produces instances of T by invoking the supplied factory on each generation.")]
     public void FuzzrOne_No_Default_Ctor_Construction_Options()
@@ -104,8 +104,8 @@ public class FuzzrOne
     }
 
     [Fact]
-    [DocContent("\n**Exceptions:**")]
-    [DocContent("  - `ConstructionException`: When type T cannot be constructed due to missing default constructor.")]
+    [DocExceptions]
+    [DocException("ConstructionException", "When type T cannot be constructed due to missing default constructor.")]
     public void FuzzrOne_No_Default_Ctor_Throws()
     {
         var ex = Assert.Throws<ConstructionException>(() => Fuzzr.One<PersonRecord>().Generate());
@@ -124,7 +124,7 @@ Possible solutions:
 
 
     [Fact]
-    [DocContent("  - `InstantiationException`: When type T is abstract and cannot be instantiated.")]
+    [DocException("InstantiationException", "When type T is an interface and cannot be instantiated.")]
     public void Generating_Abstract_Class_Shows_Helpfull_Exception()
     {
         var ex = Assert.Throws<InstantiationException>(() => Fuzzr.One<AbstractPerson>().Generate());
@@ -139,8 +139,8 @@ Possible solution:
 ";
 
     [Fact]
-    [DocContent("  - `NullReferenceException`:")]
-    [DocContent("    - When the factory method returns null.")]
+    [DocContent("- `NullReferenceException`:")]
+    [DocContent("  - When the factory method returns null.")]
     public void FactoryMethod_Returning_Null_Throws() // TODO: Update message
     {
         var ex = Assert.Throws<NullReferenceException>(() => Fuzzr.One<Person>(() => null!).Generate());
@@ -151,7 +151,7 @@ Possible solution:
 @"Object reference not set to an instance of an object.";
 
     [Fact]
-    [DocContent("    - When the factory method is null.")]
+    [DocContent("  - When the factory method is null.")]
     public void FactoryMethod_Is_Null_Throws() // TODO: Update message
     {
         var ex = Assert.Throws<NullReferenceException>(() => Fuzzr.One<Person>(null!).Generate());

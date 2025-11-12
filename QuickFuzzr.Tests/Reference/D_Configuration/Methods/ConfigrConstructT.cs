@@ -4,73 +4,76 @@ using QuickPulse.Explains;
 namespace QuickFuzzr.Tests.Reference.D_Configuration.Methods;
 
 [DocFile]
-[DocFileHeader("Configr&lt;T&gt;.Construct(...)")]
+[DocFileHeader("Configr&lt;T&gt;.Construct(FuzzrOf&lt;T1&gt; arg1)")]
+[DocContent(
+@"Configures a custom constructor for type T, used when Fuzzr.One<T>() is called.
+Useful for records or classes without parameterless constructors or when `T` has multiple constructors
+and you want to control which one is used during fuzzing.  
+")] // TODO: check multiple constructors random selection
+
 public class ConfigrConstructT
 {
-	[DocUsage]
-	[DocExample(typeof(ConfigrConstructT), nameof(GetConfig))]
+
 	[CodeSnippet]
-	[CodeRemove("return")]
+	[CodeRemove("return ")]
 	private static FuzzrOf<Intent> GetConfig()
 	{
 		return Configr<SomeThing>.Construct(Fuzzr.Constant(42));
 	}
 
-	[Fact]
-	[DocContent("Subsequent calls to `Fuzzr.One<T>()` will then use the registered constructor.")]
-	public void Works()
+	private static SomeThing Generate(FuzzrOf<Intent> ctorConfig)
 	{
-		var generator =
-			from i in Configr<SomeThing>.Ignore(a => a.AnInt1)
-			from c in GetConfig()
-			from r in Fuzzr.One<SomeThing>()
-			select r;
-		Assert.Equal(42, generator.Generate().AnInt1);
+		var fuzzr =
+			from ignore in Configr.IgnoreAll()
+			from cfg in ctorConfig
+			from thing in Fuzzr.One<SomeThing>()
+			select thing;
+		return fuzzr.Generate();
 	}
 
 	[Fact]
-	[DocContent("Various overloads exist that allow for up to five constructor arguments.")]
-	public void WorksTwoArgs()
+	[DocUsage]
+	[DocExample(typeof(ConfigrConstructT), nameof(GetConfig))]
+	public void Works() =>
+		Assert.Equal(42, Generate(GetConfig()).AnInt1);
+
+	[Fact]
+	[DocOverloads]
+	[DocCode("Construct<T1,T2>(FuzzrOf<T1> arg1, FuzzrOf<T2> arg2)")]
+	public void TwoArgs()
 	{
-		var generator =
-			from i1 in Configr<SomeThing>.Ignore(a => a.AnInt1)
-			from i2 in Configr<SomeThing>.Ignore(a => a.AnInt2)
-			from c in Configr<SomeThing>.Construct(Fuzzr.Constant(42), Fuzzr.Constant(43))
-			from r in Fuzzr.One<SomeThing>()
-			select r;
-		var result = generator.Generate();
+		var cfg = Configr<SomeThing>.Construct(
+			Fuzzr.Constant(42),
+			Fuzzr.Constant(43));
+		var result = Generate(cfg);
 		Assert.Equal(42, result.AnInt1);
 		Assert.Equal(43, result.AnInt2);
 	}
 
 	[Fact]
-	public void WorksThreeArgs()
+	[DocCode("Construct<T1,T2,T3>(FuzzrOf<T1> arg1, FuzzrOf<T2> arg2, FuzzrOf<T3> arg3)")]
+	public void ThreeArgs()
 	{
-		var generator =
-			from i1 in Configr<SomeThing>.Ignore(a => a.AnInt1)
-			from i2 in Configr<SomeThing>.Ignore(a => a.AnInt2)
-			from i3 in Configr<SomeThing>.Ignore(a => a.AnInt3)
-			from c in Configr<SomeThing>.Construct(Fuzzr.Constant(42), Fuzzr.Constant(43), Fuzzr.Constant(44))
-			from r in Fuzzr.One<SomeThing>()
-			select r;
-		var result = generator.Generate();
+		var cfg = Configr<SomeThing>.Construct(
+			Fuzzr.Constant(42),
+			Fuzzr.Constant(43),
+			Fuzzr.Constant(44));
+		var result = Generate(cfg);
 		Assert.Equal(42, result.AnInt1);
 		Assert.Equal(43, result.AnInt2);
 		Assert.Equal(44, result.AnInt3);
 	}
 
 	[Fact]
-	public void WorksFourArgs()
+	[DocCode("Construct<T1,T2,T3,T4>(FuzzrOf<T1> arg1, FuzzrOf<T2> arg2, FuzzrOf<T3> arg3, FuzzrOf<T4> arg4)")]
+	public void FourArgs()
 	{
-		var generator =
-			from i1 in Configr<SomeThing>.Ignore(a => a.AnInt1)
-			from i2 in Configr<SomeThing>.Ignore(a => a.AnInt2)
-			from i3 in Configr<SomeThing>.Ignore(a => a.AnInt3)
-			from i4 in Configr<SomeThing>.Ignore(a => a.AnInt4)
-			from c in Configr<SomeThing>.Construct(Fuzzr.Constant(42), Fuzzr.Constant(43), Fuzzr.Constant(44), Fuzzr.Constant(45))
-			from r in Fuzzr.One<SomeThing>()
-			select r;
-		var result = generator.Generate();
+		var cfg = Configr<SomeThing>.Construct(
+			Fuzzr.Constant(42),
+			Fuzzr.Constant(43),
+			Fuzzr.Constant(44),
+			Fuzzr.Constant(45));
+		var result = Generate(cfg);
 		Assert.Equal(42, result.AnInt1);
 		Assert.Equal(43, result.AnInt2);
 		Assert.Equal(44, result.AnInt3);
@@ -78,19 +81,16 @@ public class ConfigrConstructT
 	}
 
 	[Fact]
-	[DocContent("\nAfter that, ... you're on your own.")]
-	public void WorksFiveArgs()
+	[DocCode("Construct<T1,T2,T3,T4,T5>(FuzzrOf<T1> arg1, FuzzrOf<T2> arg2, FuzzrOf<T3> arg3, FuzzrOf<T4> arg4, FuzzrOf<T5> arg5)")]
+	public void FiveArgs()
 	{
-		var generator =
-			from i1 in Configr<SomeThing>.Ignore(a => a.AnInt1)
-			from i2 in Configr<SomeThing>.Ignore(a => a.AnInt2)
-			from i3 in Configr<SomeThing>.Ignore(a => a.AnInt3)
-			from i4 in Configr<SomeThing>.Ignore(a => a.AnInt4)
-			from i5 in Configr<SomeThing>.Ignore(a => a.AString)
-			from c in Configr<SomeThing>.Construct(Fuzzr.Constant(42), Fuzzr.Constant(43), Fuzzr.Constant(44), Fuzzr.Constant(45), Fuzzr.Constant("answer"))
-			from r in Fuzzr.One<SomeThing>()
-			select r;
-		var result = generator.Generate();
+		var cfg = Configr<SomeThing>.Construct(
+			Fuzzr.Constant(42),
+			Fuzzr.Constant(43),
+			Fuzzr.Constant(44),
+			Fuzzr.Constant(45),
+			Fuzzr.Constant("answer"));
+		var result = Generate(cfg);
 		Assert.Equal(42, result.AnInt1);
 		Assert.Equal(43, result.AnInt2);
 		Assert.Equal(44, result.AnInt3);
@@ -98,34 +98,30 @@ public class ConfigrConstructT
 		Assert.Equal("answer", result.AString);
 	}
 
-	// [CodeSnippet]
-	// [CodeRemove("return")]
-	// private static FuzzrOf<Intent> GetFactoryConfig()
-	// {
-	// 	return Configr<SomeThing>.Construct(() => new SomeThing(1, 2, 3, 4, "5"));
-	// }
+	[Fact]
+	[DocExceptions]
+	[DocException("ArgumentNullException", "If one of the `TArg` parameters is null.")]
+	public void Null_Arg()
+	{
+		var cfg = Configr<SomeThing>.Construct<int>(null!);
+		var ex = Assert.Throws<NullReferenceException>(() => Generate(cfg));
+		Assert.Equal(Null_Arg_Message(), ex.Message);
+	}
 
-	// [Fact]
-	// [DocContent("Or use the factory method overload: ")]
-	// [DocExample(typeof(ConfigrTConstruct), nameof(GetFactoryConfig))]
-	// public void FactoryCtor()
-	// {
-	// 	var generator =
-	// 		from i1 in Configr<SomeThing>.Ignore(a => a.AnInt1)
-	// 		from i2 in Configr<SomeThing>.Ignore(a => a.AnInt2)
-	// 		from i3 in Configr<SomeThing>.Ignore(a => a.AnInt3)
-	// 		from i4 in Configr<SomeThing>.Ignore(a => a.AnInt4)
-	// 		from i5 in Configr<SomeThing>.Ignore(a => a.AString)
-	// 		from c in GetFactoryConfig()
-	// 		from r in Fuzzr.One<SomeThing>()
-	// 		select r;
-	// 	var result = generator.Generate();
-	// 	Assert.Equal(1, result.AnInt1);
-	// 	Assert.Equal(2, result.AnInt2);
-	// 	Assert.Equal(3, result.AnInt3);
-	// 	Assert.Equal(4, result.AnInt4);
-	// 	Assert.Equal("5", result.AString);
-	// }
+	private static string Null_Arg_Message() =>
+@"Object reference not set to an instance of an object."; // TODO: Update Message
+
+	[Fact]
+	[DocException("InvalidOperationException", "If no matching constructor is found on type T.")]
+	public void No_Such_Ctor()
+	{
+		var cfg = Configr<SomeThing>.Construct(Fuzzr.Constant("nope"));
+		var ex = Assert.Throws<InvalidOperationException>(() => Generate(cfg));
+		Assert.Equal(No_Such_Ctor_Message(), ex.Message);
+	}
+
+	private static string No_Such_Ctor_Message() =>
+@"No constructor found on QuickFuzzr.Tests.Reference.D_Configuration.Methods.ConfigrConstructT+SomeThing with args (String).";
 
 	public class SomeThing
 	{

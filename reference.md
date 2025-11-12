@@ -240,6 +240,9 @@ Fuzzr.Counter("the-key").Many(5).Generate();
 - Each `key` maintains its own independent counter sequence.  
 - Counter state resets between separate `Generate()` calls.  
 - Works seamlessly in LINQ chains and with .Apply(...) to offset or transform the sequence.  
+
+**Exceptions:**  
+- `ArgumentNullException`: When the provided key is null.  
 ### Fuzzr.One&lt;T&gt;()
 Creates a generator that produces complete instances of type `T` using QuickFuzzr's automatic construction rules:   
 **Usage:**  
@@ -260,11 +263,11 @@ Fuzzr.One<Person>();
   Creates a generator that produces instances of T by invoking the supplied factory on each generation.  
 
 **Exceptions:**  
-  - `ConstructionException`: When type T cannot be constructed due to missing default constructor.  
-  - `InstantiationException`: When type T is abstract and cannot be instantiated.  
-  - `NullReferenceException`:  
-    - When the factory method returns null.  
-    - When the factory method is null.  
+- `ConstructionException`: When type T cannot be constructed due to missing default constructor.  
+- `InstantiationException`: When type T is an interface and cannot be instantiated.  
+- `NullReferenceException`:  
+  - When the factory method returns null.  
+  - When the factory method is null.  
 ### Fuzzr.OneOf&lt;T&gt;(params &lt;T&gt;[] values)
 Creates a generator that randomly selects one value or generator from the provided options.  
 **Usage:**  
@@ -311,7 +314,6 @@ QuickFuzzr provides a collection of extension methods that enhance the expressiv
 These methods act as modifiers, they wrap existing generators to alter behavior, add constraints,
 or chain side-effects without changing the underlying LINQ-based model.
   
-### Configr Depth T
 ### Ext Fuzzr Apply
 ### Ext Fuzzr As Object
 ### Ext Fuzzr Many
@@ -353,21 +355,52 @@ personFuzzr.Many(2).Generate();
 //     Person { Name: "avpkdc", Age: 70 }
 // ]
 ```
-- **Exceptions:**  
-  - `EmptyDerivedTypesException`: When no types are provided.  
+
+**Exceptions:**  
+- `EmptyDerivedTypesException`: When no types are provided.  
+- `DuplicateDerivedTypesException`: When the list of derived types contains duplicates.  
   - `DuplicateDerivedTypesException`: When the list of derived types contains duplicates.  
-  - `DerivedTypeNotAssignableException`: If any listed type is not a valid subclass of `BaseType`.  
-  - `DerivedTypeIsNullException`: If any listed type is `null`.  
-  - `InstantiationException`: When one or more derived types cannot be instantiated.  
-### Configr&lt;T&gt;.Construct(...)
+- `DerivedTypeNotAssignableException`: If any listed type is not a valid subclass of `BaseType`.  
+- `DerivedTypeIsNullException`: If any listed type is `null`.  
+- `DerivedTypeIsAbstractException`: When one or more derived types cannot be instantiated.  
+### Configr&lt;T&gt;.Construct(FuzzrOf&lt;T1&gt; arg1)
+Configures a custom constructor for type T, used when Fuzzr.One<T>() is called.
+Useful for records or classes without parameterless constructors or when `T` has multiple constructors
+and you want to control which one is used during fuzzing.  
+  
 **Usage:**  
 ```csharp
- Configr<SomeThing>.Construct(Fuzzr.Constant(42));
+Configr<SomeThing>.Construct(Fuzzr.Constant(42));
 ```
-Subsequent calls to `Fuzzr.One<T>()` will then use the registered constructor.  
-Various overloads exist that allow for up to five constructor arguments.  
 
-After that, ... you're on your own.  
+**Overloads:**  
+```csharp
+Construct<T1,T2>(FuzzrOf<T1> arg1, FuzzrOf<T2> arg2)
+```
+```csharp
+Construct<T1,T2,T3>(FuzzrOf<T1> arg1, FuzzrOf<T2> arg2, FuzzrOf<T3> arg3)
+```
+```csharp
+Construct<T1,T2,T3,T4>(FuzzrOf<T1> arg1, FuzzrOf<T2> arg2, FuzzrOf<T3> arg3, FuzzrOf<T4> arg4)
+```
+```csharp
+Construct<T1,T2,T3,T4,T5>(FuzzrOf<T1> arg1, FuzzrOf<T2> arg2, FuzzrOf<T3> arg3, FuzzrOf<T4> arg4, FuzzrOf<T5> arg5)
+```
+
+**Exceptions:**  
+- `ArgumentNullException`: If one of the `TArg` parameters is null.  
+- `InvalidOperationException`: If no matching constructor is found on type T.  
+### Configr&lt;T&gt;.Depth(int min, int max)
+Configures depth constraints for type `T` to control recursive object graph generation. 
+  
+**Usage:**  
+```csharp
+Configr<Turtle>.Depth(2, 5);
+// Results in =>
+// Turtle { Down: { Down: { Down: { Down: null } } } }
+```
+Subsequent calls to `Fuzzr.One<T>()` will generate between 2 and 5 nested levels of `Turtle` instances,
+depending on the random draw and available recursion budget.  
 ### Configr End On T
 ### Configr.Ignore(...)
 **Usage:**  

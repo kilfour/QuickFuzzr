@@ -6,27 +6,6 @@ namespace QuickFuzzr;
 
 public static partial class Configr<T>
 {
-    private static readonly ConcurrentDictionary<(Type Target, Type[] Args), ConstructorInfo> CtorCache = new();
-
-    //public static FuzzrOf<Intent> Construct(Func<T> ctor) => state => Add(state, _ => ctor()!);
-
-    // public static FuzzrOf<Intent> Construct(Func<T> ctor)
-    //     => state =>
-    //         {
-    //             // Create a fingerprint of this configuration
-    //             var configKey = (typeof(T), ctor.Method.GetHashCode()); // or more sophisticated fingerprint
-
-    //             // Only add if not already configured
-    //             if (!state.AppliedConfigurations.Contains(configKey))
-    //             {
-    //                 var list = GetOrAddList(state, typeof(T));
-    //                 list.Add(_ => ctor()!);
-    //                 state.AppliedConfigurations.Add(configKey);
-    //             }
-
-    //             return new Result<Intent>(Intent.Fixed, state);
-    //         };
-
     /// <summary>
     /// Creates a generator that configures a single-parameter constructor for type T using the specified parameter generator.
     /// Use for types that require constructor arguments when automatic parameterless construction is not available or desired.
@@ -90,6 +69,7 @@ public static partial class Configr<T>
             return ci.Invoke(args);
         };
     }
+    private static readonly ConcurrentDictionary<(Type Target, Type[] Args), ConstructorInfo> CtorCache = new();
 
     private static ConstructorInfo GetCtor(Type targetType, Type[] argTypes)
     {

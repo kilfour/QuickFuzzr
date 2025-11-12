@@ -58,4 +58,13 @@ Useful for generating unique sequential IDs or counters.
 	[DocContent("- Works seamlessly in LINQ chains and with .Apply(...) to offset or transform the sequence.")]
 	public void Counter_Apply_Preserves_Sequence()
 		=> Assert.Equal([12, 13, 14], Fuzzr.Counter("a").Apply(x => x + 11).Many(3).Generate());
+
+	[Fact]
+	[DocExceptions]
+	[DocException("ArgumentNullException", "When the provided key is null.")]
+	public void Counter_Null_Key() // TODO: change message
+	{
+		var ex = Assert.Throws<ArgumentNullException>(() => Fuzzr.Counter(null!).Generate());
+		Assert.Equal("Value cannot be null. (Parameter 'key')", ex.Message);
+	}
 }

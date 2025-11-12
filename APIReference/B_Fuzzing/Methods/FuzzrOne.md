@@ -18,8 +18,8 @@ Fuzzr.One<Person>();
   Creates a generator that produces instances of T by invoking the supplied factory on each generation.  
 
 **Exceptions:**  
-  - `ConstructionException`: When type T cannot be constructed due to missing default constructor.  
-  - `InstantiationException`: When type T is abstract and cannot be instantiated.  
-  - `NullReferenceException`:  
-    - When the factory method returns null.  
-    - When the factory method is null.  
+- `ConstructionException`: When type T cannot be constructed due to missing default constructor.  
+- `InstantiationException`: When type T is an interface and cannot be instantiated.  
+- `NullReferenceException`:  
+  - When the factory method returns null.  
+  - When the factory method is null.  

@@ -32,7 +32,7 @@ public class FuzzrShuffle
     }
 
     [Fact]
-    [DocContent("\n**Overloads:**")]
+    [DocOverloads]
     [DocContent("- `Shuffle<T>(IEnumerable<T> values)`:")]
     [DocContent("  Same as above, but accepts any enumerable source.")]
     public void Enumerable_Example()
@@ -43,7 +43,7 @@ public class FuzzrShuffle
     }
 
     [Fact]
-    [DocContent("\n**Exceptions:**")]
+    [DocExceptions]
     [DocContent("  - `ArgumentNullException`: When the input collection is `null`.")]
     public void Null_Values_Throws()
     {

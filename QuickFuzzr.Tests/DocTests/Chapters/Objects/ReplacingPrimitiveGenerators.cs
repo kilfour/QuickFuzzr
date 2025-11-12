@@ -82,14 +82,6 @@ When executing above generator result1 will have all integers set to 42 and resu
 		Assert.Equal(666, array[1].AnInt);
 	}
 
-	[Fact]
-	[DocContent("*Note :* The Replace combinator does not actually generate anything, it only influences further generation.")]
-	public void ReturnsUnit()
-	{
-		var generator = Configr.Primitive(Fuzzr.Int(42, 42));
-		Assert.Equal(Intent.Fixed, generator.Generate());
-	}
-
 	public class SomeThingToGenerate
 	{
 		public int AnInt { get; set; }

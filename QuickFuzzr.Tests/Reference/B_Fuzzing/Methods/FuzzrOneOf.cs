@@ -42,7 +42,7 @@ public class FuzzrOneOf
     }
 
     [Fact]
-    [DocContent("\n**Overloads:**")]
+    [DocOverloads]
     [DocContent("- `Fuzzr.OneOf(IEnumerable<T> values)`:")]
     [DocContent("  Same as above, but accepts any enumerable source.")]
     public void Enumerable_Example()
@@ -111,7 +111,7 @@ public class FuzzrOneOf
     }
 
     [Fact]
-    [DocContent("\n**Exceptions:**")]
+    [DocExceptions]
     [DocContent("  - `OneOfEmptyOptionsException`: When trying to choose from an empty collection.")]
     public void Collection_Is_Empty()
     {

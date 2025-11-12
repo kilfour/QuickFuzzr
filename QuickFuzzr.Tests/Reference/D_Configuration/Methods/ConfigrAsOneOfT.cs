@@ -41,7 +41,7 @@ public class ConfigrAsOneOfT
     [Fact]
     [DocUsage]
     [DocExample(typeof(ConfigrAsOneOfT), nameof(Generate))]
-    [DocContent("- **Exceptions:**")]
+    [DocExceptions]
     public void ConfigrAsOneOf_GetConfig_ReturnsFuzzr()
     {
         var result = Generate().ToList();
@@ -61,7 +61,7 @@ public class ConfigrAsOneOfT
     }
 
     [Fact]
-    [DocContent("  - `EmptyDerivedTypesException`: When no types are provided.")]
+    [DocException("EmptyDerivedTypesException", "When no types are provided.")]
     public void ConfigrAsOneOf_NoDerivedTypes_Throws()
     {
         var fuzzr =
@@ -81,6 +81,7 @@ Possible solutions:
 ";
 
     [Fact]
+    [DocException("DuplicateDerivedTypesException", "When the list of derived types contains duplicates.")]
     [DocContent("  - `DuplicateDerivedTypesException`: When the list of derived types contains duplicates.")]
     public void ConfigrAsOneOf_Duplicates_Throws()
     {
@@ -122,7 +123,7 @@ Possible solutions:
 ";
 
     [Fact]
-    [DocContent("  - `DerivedTypeNotAssignableException`: If any listed type is not a valid subclass of `BaseType`.")]
+    [DocException("DerivedTypeNotAssignableException", "If any listed type is not a valid subclass of `BaseType`.")]
     public void ConfigrAsOneOf_DerivedTypeNotAssignable_Throws()
     {
         var fuzzr =
@@ -165,7 +166,7 @@ Possible solutions:
 ";
 
     [Fact]
-    [DocContent("  - `DerivedTypeIsNullException`: If any listed type is `null`.")]
+    [DocException("DerivedTypeIsNullException", "If any listed type is `null`.")]
     public void ConfigrAsOneOf_DerivedType_Null_Throws()
     {
         var fuzzr =
@@ -185,7 +186,7 @@ Possible solutions:
 ";
 
     [Fact]
-    [DocContent("  - `InstantiationException`: When one or more derived types cannot be instantiated.")]
+    [DocException("DerivedTypeIsAbstractException", "When one or more derived types cannot be instantiated.")]
     public void ConfigrAsOneOf_DerivedTypeIsAbstract_Throws()
     {
         var fuzzr =
