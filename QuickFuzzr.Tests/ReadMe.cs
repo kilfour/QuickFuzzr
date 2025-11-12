@@ -146,7 +146,7 @@ For now all public methods have xml summary comments.
     [DocContent(@"
 - Complete API reference documentation.
 - More Elm-style error messages.
-- [Cookbook](https://github.com/kilfour/QuickFuzzr/blob/cookbook.md)
+- [Cookbook](https://github.com/kilfour/QuickFuzzr/blob/main/cookbook.md)
 - More Primitives: DateTimeOffset, NInt, NUint, ...
 - QuickFuzzr.Reactor: Convention based generation, reusable patterns.
 - QuickFuzzr.Evil: For all your property based testing needs.
