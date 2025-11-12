@@ -41,6 +41,23 @@ public class State
 
 	public readonly Dictionary<Type, DepthConstraint> DepthConstraints = [];
 
+	public Stack<Type> BuildingEndings { get; set; } = [];
+
+	public bool IsBuildingEnding(Type type)
+		=> BuildingEndings.Contains(type);
+
+	public void StartBuildingEnding(Type type)
+		=> BuildingEndings.Push(type);
+
+	public void StopBuildingEnding()
+		=> BuildingEndings.Pop();
+
+	public DisposableAction BuildEnding(Type type)
+	{
+		StartBuildingEnding(type);
+		return new DisposableAction(StopBuildingEnding);
+	}
+
 	private readonly Stack<DepthFrame> depthFrames = new();
 
 	public DepthConstraint GetDepthConstraint(Type type) =>
@@ -49,10 +66,10 @@ public class State
 	public int GetDepth(Type type) =>
 		depthFrames.FirstOrDefault(f => f.Type == type)?.Depth ?? 0;
 
-	public void PushDepthFrame(Type type)
+	private void PushDepthFrame(Type type)
 		=> depthFrames.Push(new(type, GetDepth(type) + 1));
 
-	public void PopDepthFrame() => depthFrames.Pop();
+	private void PopDepthFrame() => depthFrames.Pop();
 
 	public DisposableAction WithDepthFrame(Type type)
 	{
@@ -78,7 +95,7 @@ public class State
 
 	public readonly Dictionary<Type, List<Type>> InheritanceInfo = [];
 
-	public Dictionary<Type, Type> TreeLeaves = [];
+	public Dictionary<Type, Type> Endings = [];
 
 	public readonly Dictionary<Func<PropertyInfo, bool>, Func<PropertyInfo, FuzzrOf<object>>> GeneralCustomizations = [];
 	public readonly Dictionary<(PropertyInfo, Type), FuzzrOf<object>> Customizations = [];

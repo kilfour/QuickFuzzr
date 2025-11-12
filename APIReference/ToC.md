@@ -41,7 +41,7 @@
     - [Configr&lt;T&gt;AsOneOf(params Type[] types)](D_Configuration/Methods/ConfigrAsOneOfT.md)
     - [Configr&lt;T&gt;.Construct(FuzzrOf&lt;T1&gt; arg1)](D_Configuration/Methods/ConfigrConstructT.md)
     - [Configr&lt;T&gt;.Depth(int min, int max)](D_Configuration/Methods/ConfigrDepthT.md)
-    - [Configr End On T](D_Configuration/Methods/ConfigrEndOnT.md)
+    - [Configr&lt;T&gt;.EndOn&lt;TEnd&gt;()](D_Configuration/Methods/ConfigrEndOnT.md)
     - [Configr.Ignore(...)](D_Configuration/Methods/ConfigrIgnore.md)
     - [Configr.IgnoreAll()](D_Configuration/Methods/ConfigrIgnoreAll.md)
     - [Configr&lt;T&gt;.IgnoreAll()](D_Configuration/Methods/ConfigrIgnoreAllT.md)

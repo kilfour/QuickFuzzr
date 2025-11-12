@@ -10,7 +10,7 @@ namespace QuickFuzzr.Tests.Reference.D_Configuration.Methods;
 [DocContent(
 @"Configures depth constraints for type `T` to control recursive object graph generation. 
 ")]
-public class ConfigrDepthT : ExplainMe<ConfigrDepthT>
+public class ConfigrDepthT
 {
     [CodeSnippet]
     [CodeRemove("return ")]

@@ -29,7 +29,10 @@ public static partial class Configr<T>
             throw new DuplicateDerivedTypesException(baseType.Name, duplicates);
         var nonAssignableTypes = derivedTypes.Where(t => !baseType.IsAssignableFrom(t)).ToList();
         if (nonAssignableTypes.Count == 0) return;
-        throw new DerivedTypeNotAssignableException(baseType.Name!, nonAssignableTypes);
+        throw new DerivedTypeNotAssignableException(
+            baseType.Name!,
+            DerivedTypeNotAssignableException.Method.AsOneOf,
+            nonAssignableTypes);
     }
 
     private static List<Type> GetDuplicates(Type[] derivedTypes)

@@ -139,7 +139,7 @@ Possible solutions:
 @"The type Agenda is not assignable to the base type Person.
 
 Possible solutions:
-• Use compatible types in Configr<Person>.AsOneOf(...).
+• Use a compatible type in Configr<Person>.AsOneOf(...).
 • Ensure Agenda inherits from or implements Person.
 ";
 

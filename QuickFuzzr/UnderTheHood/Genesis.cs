@@ -14,8 +14,8 @@ public class Genesis : ICreationEngine
     {
         using (state.WithDepthFrame(type))
         {
-            state.TreeLeaves.TryGetValue(type, out var leafType);
-            if (leafType == null)
+            state.Endings.TryGetValue(type, out var endingType);
+            if (endingType == null)
             {
                 var currentDepth = state.GetDepth(type);
                 var (min, max) = state.GetDepthConstraint(type);
@@ -30,14 +30,16 @@ public class Genesis : ICreationEngine
             }
             else
             {
+                if (state.IsBuildingEnding(type))
+                    return null!;
                 var currentDepth = state.GetDepth(type);
                 var (min, max) = state.GetDepthConstraint(type);
                 if (currentDepth == max)
-                    return BuildLeaf(state, leafType);
+                    return BuildEnding(state, type, endingType);
                 if (currentDepth < min)
-                    return BuildInstance(ctor(leafType), state, type);
+                    return BuildInstance(ctor(endingType), state, type);
                 if (Fuzzr.Bool()(state).Value)
-                    return BuildLeaf(state, leafType);
+                    return BuildEnding(state, type, endingType);
                 else
                     return BuildInstance(ctor(null), state, type);
             }
@@ -48,8 +50,11 @@ public class Genesis : ICreationEngine
         => state =>
             new Result<object>(Create(state, type, a => CreateInstance(state, type, a)), state);
 
-    private object BuildLeaf(State state, Type leafType)
-        => BuildInstance(CreateInstanceOfExactlyThisType(state, leafType), state, leafType);
+    private object BuildEnding(State state, Type type, Type endingType)
+    {
+        using (state.BuildEnding(type))
+            return BuildInstance(CreateInstanceOfExactlyThisType(state, endingType), state, endingType);
+    }
 
     private static object CreateInstance(State state, Type type, Type? typeToExlude)
         => CreateInstanceOfExactlyThisType(state, GetTypeToGenerate(state, type, typeToExlude));
