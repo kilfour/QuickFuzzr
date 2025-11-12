@@ -2,7 +2,7 @@
 This section lists the core fuzzrs responsible for object creation and composition.  
 They provide controlled randomization, sequencing, and structural assembly beyond primitive value generation.  
 Use these methods to instantiate objects, select values, define constants, or maintain counters during generation.  
-All entries return a FuzzrOf<T> and can be composed using standard LINQ syntax.  
+All entries return a `FuzzrOf<T>` and can be composed using standard LINQ syntax.  
 ## Contents
 | Fuzzr| Description |
 | -| - |

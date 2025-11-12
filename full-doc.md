@@ -865,7 +865,7 @@ It lists all available fuzzrs, configuration points, and extension methods, orga
 Each entry includes a concise description of its purpose and behavior,
 serving as a quick lookup for day-to-day use or library integration.
 
-If you're looking for examples or background explanations, see the main documentation.
+If you're looking for examples or background explanations, see the guide or cookbook.
 
 All examples and summaries are real, verified through executable tests, ensuring what you see here is exactly what QuickFuzzr does.  
 ### Contents
@@ -1077,7 +1077,7 @@ Use `Fuzzr.UShort()`.
 This section lists the core fuzzrs responsible for object creation and composition.  
 They provide controlled randomization, sequencing, and structural assembly beyond primitive value generation.  
 Use these methods to instantiate objects, select values, define constants, or maintain counters during generation.  
-All entries return a FuzzrOf<T> and can be composed using standard LINQ syntax.  
+All entries return a `FuzzrOf<T>` and can be composed using standard LINQ syntax.  
 #### Contents
 | Fuzzr| Description |
 | -| - |
