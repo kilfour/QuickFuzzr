@@ -14,7 +14,7 @@ public class ConfigrEndOnT : ExplainMe<ConfigrEndOnT>
     [CodeSnippet]
     [CodeRemove("return")]
     [DocContent(
-@"Configures a recursion stop condition for type T, instructing QuickFuzzr to generate instances of TEnd instead of continuing deeper.
+@"Configures a recursion stop condition for type `T`, instructing QuickFuzzr to generate `TEnd` instances instead of continuing deeper.
 Useful for defining explicit *end* types in recursive object graphs, preventing infinite nesting and keeping structure depth under control.
 ")]
     private static FuzzrOf<Turtle> GetFuzzr()
