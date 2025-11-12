@@ -9,10 +9,10 @@ public static partial class Configr
     /// Creates a generator that configures custom property generation for properties matching the predicate using the specified generator.
     /// Use for applying specialized generation rules to groups of properties based on their characteristics or metadata.
     /// </summary>
-    public static FuzzrOf<Intent> Property<TProperty>(Func<PropertyInfo, bool> predicate, FuzzrOf<TProperty> propertyGenerator)
+    public static FuzzrOf<Intent> Property<TProperty>(Func<PropertyInfo, bool> predicate, FuzzrOf<TProperty> fuzzr)
         => state =>
             {
-                state.GeneralCustomizations[predicate] = _ => propertyGenerator.AsObject();
+                state.GeneralCustomizations[predicate] = _ => fuzzr.AsObject();
                 return new Result<Intent>(Intent.Fixed, state);
             };
 

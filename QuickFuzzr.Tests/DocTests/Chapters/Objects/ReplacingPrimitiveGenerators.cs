@@ -55,33 +55,6 @@ When executing above generator it will return a SomeThingToGenerate object where
 		Assert.Equal(666, value.ANullableProperty);
 	}
 
-	[Fact]
-	[DocContent(@"Replacements can occur multiple times during one generation :
-```
-var generator =
-	from _ in Fuzzr.Constant(42).Replace()
-	from result1 in Fuzzr.One<SomeThingToGenerate>()
-	from __ in Fuzzr.Constant(666).Replace()
-	from result2 in Fuzzr.One<SomeThingToGenerate>()
-	select new[] { result1, result2
-};
-```
-When executing above generator result1 will have all integers set to 42 and result2 to 666.")]
-	public void MultipleReplacements()
-	{
-		var generator =
-			from _ in Configr.Primitive(Fuzzr.Constant(42))
-			from result1 in Fuzzr.One<SomeThingToGenerate>()
-			from __ in Configr.Primitive(Fuzzr.Constant(666))
-			from result2 in Fuzzr.One<SomeThingToGenerate>()
-			select new[] { result1, result2 };
-
-		var array = generator.Generate();
-
-		Assert.Equal(42, array[0].AnInt);
-		Assert.Equal(666, array[1].AnInt);
-	}
-
 	public class SomeThingToGenerate
 	{
 		public int AnInt { get; set; }

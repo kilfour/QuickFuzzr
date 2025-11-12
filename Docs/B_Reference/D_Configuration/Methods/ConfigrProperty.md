@@ -1,4 +1,4 @@
-# Configr.Property(...)
+# ConfigrProperty&lt;TProperty&gt;(Func&lt;PropertyInfo, bool&gt; predicate, FuzzrOf&lt;TProperty&gt; fuzzr)
 **Usage:**  
 ```csharp
  Configr.Property(a => a.Name == "Id", Fuzzr.Constant(42));

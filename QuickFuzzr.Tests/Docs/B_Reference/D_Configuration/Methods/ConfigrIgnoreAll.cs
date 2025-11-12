@@ -7,7 +7,7 @@ namespace QuickFuzzr.Tests.Docs.B_Reference.D_Configuration.Methods;
 
 [DocFile]
 [DocFileHeader("Configr.IgnoreAll()")]
-public class ConfigrIgnoreAll : ExplainMe<ConfigrIgnoreAll>
+public class ConfigrIgnoreAll
 {
 
     [CodeSnippet]

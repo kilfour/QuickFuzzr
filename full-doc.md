@@ -415,6 +415,11 @@ Fuzzr.One<Appointment>().Generate();
 Consider:  
 ```csharp
 public record PersonRecord(string Name, int Age);
+public class NullablePerson
+{
+    public string? Name { get; set; } = string.Empty;
+    public int? Age { get; set; }
+}
 ```
 This record does not have a default constructor, so `Fuzzr.One<PersonRecord>()`
 will throw an exception with the following message if used as is:  
@@ -1319,19 +1324,64 @@ select (person, address);
 #### Configr&lt;T&gt;.IgnoreAll()
 **Usage:**  
 ```csharp
- Configr<Thing>.IgnoreAll();
+from ignore in Configr<Person>.IgnoreAll()
+from person in Fuzzr.One<Person>()
+from address in Fuzzr.One<Address>()
+select (person, address);
+// Results in => 
+// ( Person { Name: "", Age: 0 }, Address { Street: "", City: "" } )
 ```
 Ignore all properties while generating an object.  
 `IgnoreAll()`does not cause properties on derived classes to be ignored, even inherited properties.  
 #### Configr&lt;T&gt;.Ignore(...)
 **Usage:**  
 ```csharp
- Configr<Thing>.Ignore(s => s.Id);
+from ignore in Configr<Person>.Ignore(a => a.Name)
+from person in Fuzzr.One<Person>()
+select person;
+// Results in => 
+// ( Person { Name: "", Age: 0 }, Address { Street: "", City: "" } )
 ```
 The property specified will be ignored during generation.  
 Derived classes generated also ignore the base property.  
-#### Configr Primitive
-#### Configr.Property(...)
+#### Configr.Primitive&lt;T&gt;(this FuzzrOf&lt;T&gt; fuzzr)
+Registers a global default fuzzr for primitive types.
+Use this to override how QuickFuzzr generates built-in types across all automatically created objects.
+  
+**Usage:**  
+```csharp
+from cfgInt in Configr.Primitive(Fuzzr.Constant(42))
+from person in Fuzzr.One<Person>()
+from timeslot in Fuzzr.One<TimeSlot>()
+select (person, timeslot);
+// Results in => 
+// ( Person { Name: "ddnegsn", Age: 42 }, TimeSlot { Day: Monday, Time: 42 } )
+```
+Replacing a primitive fuzzr automatically impacts its nullable counterpart.  
+
+**Overloads:**  
+- `Primitive<T>(this FuzzrOf<T?> fuzzr)`:  
+  Registers a global default fuzzr for nullable primitives `T?`, overriding all nullable values produced across generated objects.  
+```csharp
+from cfgString in Configr.Primitive(Fuzzr.Constant<int?>(42))
+from person in Fuzzr.One<Person>()
+from nullablePerson in Fuzzr.One<NullablePerson>()
+select (person, nullablePerson);
+// Results in => 
+// ( Person { Name: "cmu", Age: 66 }, NullablePerson { Name: "ycqa", Age: 42 } )
+```
+  Replacing a nullable primitive generator does not impacts it's non-nullable counterpart.  
+- `Fuzzr.Primitive(this FuzzrOf<string> fuzzr)`:  
+  Registers a global default fuzzr for strings, overriding all string values produced across generated objects.  
+```csharp
+from cfgString in Configr.Primitive(Fuzzr.Constant("FIXED"))
+from person in Fuzzr.One<Person>()
+from address in Fuzzr.One<Address>()
+select (person, address);
+// Results in => 
+// ( Person { Name: "FIXED", Age: 67 }, Address { Street: "FIXED", City: "FIXED" } )
+```
+#### ConfigrProperty&lt;TProperty&gt;(Func&lt;PropertyInfo, bool&gt; predicate, FuzzrOf&lt;TProperty&gt; fuzzr)
 **Usage:**  
 ```csharp
  Configr.Property(a => a.Name == "Id", Fuzzr.Constant(42));
@@ -1349,7 +1399,18 @@ With the same *pass in a value* conveniance helper.
 ```csharp
  Configr.Property(a => a.Name == "Id", a => 42);
 ```
-#### Configr Property Access
+#### Configr.EnablePropertyAccessFor(PropertyAccess propertyAccess) / Configr.DisablePropertyAccessFor(PropertyAccess propertyAccess)
+**Usage:**  
+```csharp
+from enable in Configr.EnablePropertyAccessFor(PropertyAccess.InitOnly)
+from person1 in Fuzzr.One<PrivatePerson>()
+from disable in Configr.DisablePropertyAccessFor(PropertyAccess.InitOnly)
+from person2 in Fuzzr.One<PrivatePerson>()
+select (person1, person2);
+// Results in => ( { Name: "xiyi", Age: 94 }, { Name: "", Age: 0 } )
+```
+Enables and then disables generation for init-only properties.  
+Updates state flags using bitwise enable/disable semantics.  
 #### Configr&lt;T&gt;.Property(...)
 **Usage:**  
 ```csharp

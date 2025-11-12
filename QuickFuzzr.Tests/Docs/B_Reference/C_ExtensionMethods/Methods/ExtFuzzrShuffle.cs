@@ -14,4 +14,7 @@ public class ExtFuzzrShuffle
             .ToArray();
         Assert.Equal(["Paul", "Ringo", "John", "George"], result);
     }
+
+    // TODO : implement tests in the same vein as the other test in the B_Reference namespace for 
+    // - ExtFuzzr.Shuffle
 }

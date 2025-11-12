@@ -5,7 +5,7 @@ using QuickPulse.Explains;
 namespace QuickFuzzr.Tests.Docs.B_Reference.D_Configuration.Methods;
 
 [DocFile]
-[DocFileHeader("Configr.Property(...)")]
+[DocFileHeader("ConfigrProperty&lt;TProperty&gt;(Func&lt;PropertyInfo, bool&gt; predicate, FuzzrOf&lt;TProperty&gt; fuzzr)")]
 public class ConfigrProperty
 {
     [DocUsage]

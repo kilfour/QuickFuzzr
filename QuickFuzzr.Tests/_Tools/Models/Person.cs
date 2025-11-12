@@ -52,3 +52,9 @@ public class PersonOutInTheFields
 [CodeExample]
 public record PersonRecord(string Name, int Age);
 
+
+public class NullablePerson
+{
+    public string? Name { get; set; } = string.Empty;
+    public int? Age { get; set; }
+}

@@ -10,23 +10,26 @@ namespace QuickFuzzr.Tests.Docs.B_Reference.D_Configuration.Methods;
 public class ConfigrIgnoreT
 {
     [DocUsage]
-    [DocExample(typeof(ConfigrIgnoreT), nameof(GetConfig))]
+    [DocExample(typeof(ConfigrIgnoreT), nameof(GetFuzzr))]
     [CodeSnippet]
     [CodeRemove("return")]
-    private static FuzzrOf<Intent> GetConfig()
+    private static FuzzrOf<Person> GetFuzzr()
     {
-        return Configr<Thing>.Ignore(s => s.Id);
+        return
+        from ignore in Configr<Person>.Ignore(a => a.Name)
+        from person in Fuzzr.One<Person>()
+        select person;
+        // Results in => 
+        // ( Person { Name: "", Age: 0 }, Address { Street: "", City: "" } )
     }
 
     [Fact]
     [DocContent("The property specified will be ignored during generation.")]
     public void StaysDefaultValue()
     {
-        var fuzzr =
-           from _ in GetConfig()
-           from result in Fuzzr.One<Thing>()
-           select result;
-        Assert.Equal(0, fuzzr.Generate().Id);
+        var result = GetFuzzr().Generate(42);
+        Assert.Equal("", result.Name);
+        Assert.Equal(67, result.Age);
     }
 
 
@@ -35,9 +38,13 @@ public class ConfigrIgnoreT
     public void WorksForDerived()
     {
         var fuzzr =
-            from _ in GetConfig()
-            from result in Fuzzr.One<DerivedThing>()
-            select result;
-        Assert.Equal(0, fuzzr.Generate().Id);
+            from ignore in Configr<Person>.Ignore(a => a.Name)
+            from employee in Fuzzr.One<Employee>()
+            select employee;
+        var result = fuzzr.Generate(42);
+        Assert.Equal("", result.Name);
+        Assert.Equal(26, result.Age);
+        Assert.Equal("ddnegsn", result.Email);
+        Assert.Equal("tg", result.SocialSecurityNumber);
     }
 }

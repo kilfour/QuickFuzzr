@@ -62,7 +62,7 @@ Useful for generating unique sequential IDs or counters.
 	[Fact]
 	[DocExceptions]
 	[DocException("ArgumentNullException", "When the provided key is null.")]
-	public void Counter_Null_Key() // TODO: change message
+	public void Counter_Null_Key() // Check: change message
 	{
 		var ex = Assert.Throws<ArgumentNullException>(() => Fuzzr.Counter(null!).Generate());
 		Assert.Equal("Value cannot be null. (Parameter 'key')", ex.Message);

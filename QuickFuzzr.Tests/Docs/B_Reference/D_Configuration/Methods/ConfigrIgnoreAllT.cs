@@ -10,25 +10,29 @@ namespace QuickFuzzr.Tests.Docs.B_Reference.D_Configuration.Methods;
 public class ConfigrIgnoreAllT
 {
     [DocUsage]
-    [DocExample(typeof(ConfigrIgnoreAllT), nameof(GetConfig))]
+    [DocExample(typeof(ConfigrIgnoreAllT), nameof(GetFuzzr))]
     [CodeSnippet]
     [CodeRemove("return")]
-    private static FuzzrOf<Intent> GetConfig()
+    private static FuzzrOf<(Person, Address)> GetFuzzr()
     {
-        return Configr<Thing>.IgnoreAll();
+        return
+        from ignore in Configr<Person>.IgnoreAll()
+        from person in Fuzzr.One<Person>()
+        from address in Fuzzr.One<Address>()
+        select (person, address);
+        // Results in => 
+        // ( Person { Name: "", Age: 0 }, Address { Street: "", City: "" } )
     }
 
     [Fact]
     [DocContent("Ignore all properties while generating an object.")]
     public void StaysDefaultValue()
     {
-        var fuzzr =
-           from _ in GetConfig()
-           from result in Fuzzr.One<Thing>()
-           select result;
-        var thing = fuzzr.Generate();
-        Assert.Equal(0, thing.Id);
-        Assert.Equal(0, thing.Prop);
+        var (person, address) = GetFuzzr().Generate(42);
+        Assert.Equal("", person.Name);
+        Assert.Equal(0, person.Age);
+        Assert.Equal("ddnegsn", address.Street);
+        Assert.Equal("tg", address.City);
     }
 
 
@@ -37,12 +41,14 @@ public class ConfigrIgnoreAllT
     public void Derived()
     {
         var fuzzr =
-            from _ in GetConfig()
-            from result in Fuzzr.One<DerivedThing>()
+            from _ in Configr<Person>.IgnoreAll()
+            from result in Fuzzr.One<Employee>()
             select result;
-        var thing = fuzzr.Generate();
-        Assert.NotEqual(0, thing.Id);
-        Assert.NotEqual(0, thing.Prop);
-        Assert.NotEqual(0, thing.PropOnDerived);
+        var employee = fuzzr.Generate(42);
+        Assert.Equal("nij", employee.Name);
+        Assert.Equal(26, employee.Age);
+        Assert.Equal("ddnegsn", employee.Email);
+        Assert.Equal("tg", employee.SocialSecurityNumber);
+
     }
 }

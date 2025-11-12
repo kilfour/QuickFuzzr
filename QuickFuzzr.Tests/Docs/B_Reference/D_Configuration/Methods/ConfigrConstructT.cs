@@ -9,7 +9,7 @@ namespace QuickFuzzr.Tests.Docs.B_Reference.D_Configuration.Methods;
 @"Configures a custom constructor for type T, used when Fuzzr.One<T>() is called.
 Useful for records or classes without parameterless constructors or when `T` has multiple constructors
 and you want to control which one is used during fuzzing.  
-")] // TODO: check multiple constructors random selection
+")] // Check: check multiple constructors random selection
 
 public class ConfigrConstructT
 {
@@ -109,7 +109,7 @@ public class ConfigrConstructT
 	}
 
 	private static string Null_Arg_Message() =>
-@"Object reference not set to an instance of an object."; // TODO: Update Message
+@"Object reference not set to an instance of an object."; // Check: Update Message
 
 	[Fact]
 	[DocException("InvalidOperationException", "If no matching constructor is found on type T.")]
