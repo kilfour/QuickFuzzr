@@ -1,6 +1,12 @@
-# Fuzzr.Counter(object key)
+# Counter
 This fuzzr returns an `int` starting at 1, and incrementing by 1 on each call.  
 Useful for generating unique sequential IDs or counters.  
+  
+
+**Signature:**  
+```csharp
+Fuzzr.Counter(object key)
+```
   
 
 **Usage:**  

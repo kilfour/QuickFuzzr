@@ -6,7 +6,7 @@ select derived types, or wire dynamic behaviors that apply when calling `Fuzzr.O
 ## Contents
 | Configr| Description |
 | -| - |
-| [Configr&lt;T&gt;.Ignore(...)](Methods/A_ConfigrIgnoreT.md)|   |
+| [Configr&lt;T&gt;.Ignore(Expression&lt;Func&lt;T, TProperty&gt;&gt; expr)](Methods/A_ConfigrIgnoreT.md)|   |
 | [Configr.Ignore(Func&lt;PropertyInfo, bool&gt; predicate)](Methods/B_ConfigrIgnore.md)|   |
 | [Configr&lt;T&gt;.IgnoreAll()](Methods/C_ConfigrIgnoreAllT.md)|   |
 | [Configr.IgnoreAll()](Methods/D_ConfigrIgnoreAll.md)|   |

@@ -6,23 +6,23 @@ using QuickPulse.Explains;
 namespace QuickFuzzr.Tests.Docs.B_Reference.B_Fuzzing.Methods;
 
 [DocFile]
-[DocFileCodeHeader("Fuzzr.One<T>()")]
 [DocColumn(Fuzzing.Columns.Description, "Creates a fuzzr that produces an instances of type `T`.")]
-[DocContent(
-@"Creates a fuzzr that produces complete instances of type `T` using QuickFuzzr's automatic construction rules: ")]
-public class A_FuzzrOne
+[DocContent("Creates a fuzzr that produces complete instances of type `T` using QuickFuzzr's automatic construction rules.")]
+[DocSignature("Fuzzr.One<T>()")]
+public class A_One
 {
     [CodeSnippet]
     [CodeRemove("return ")]
     private static FuzzrOf<Person> Person_Example_Fuzzr()
     {
         return Fuzzr.One<Person>();
+        // Results in => { Name: "ddnegsn", Age: 18 }
     }
-    // Results in => { Name: "ddnegsn", Age: 18 }
+
 
     [Fact]
     [DocUsage]
-    [DocExample(typeof(A_FuzzrOne), nameof(Person_Example_Fuzzr))]
+    [DocExample(typeof(A_One), nameof(Person_Example_Fuzzr))]
     [DocContent(" - Uses `T`'s public parameterless constructor. Parameterized ctors aren't auto-filled.")]
     public void Person_Example()
     {

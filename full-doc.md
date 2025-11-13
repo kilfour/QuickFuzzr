@@ -895,17 +895,24 @@ All entries return a `FuzzrOf<T>` and can be composed using standard LINQ syntax
 #### Contents
 | Fuzzr| Description |
 | -| - |
-| [Fuzzr.One&lt;T&gt;()](#fuzzronet)| Creates a fuzzr that produces an instances of type `T`. |
-| [Fuzzr.OneOf&lt;T&gt;(params &lt;T&gt;[] values)](#fuzzroneoftparams-t-values)| Randomly selects one of the provided values. |
-| [Fuzzr.Shuffle&lt;T&gt;()](#fuzzrshufflet)| Creates a fuzzr that randomly shuffles an input sequence. |
-| [Fuzzr.Counter(object key)](#fuzzrcounterobject-key)| Generates a sequential integer per key, starting at 1. |
-| [Fuzzr.Constant&lt;T&gt;(T value)](#fuzzrconstanttt-value)| Wraps a fixed value in a fuzzr, producing the same result every time. |
-#### Fuzzr.One&lt;T&gt;()
-Creates a fuzzr that produces complete instances of type `T` using QuickFuzzr's automatic construction rules:   
+| [One](#one)| Creates a fuzzr that produces an instances of type `T`. |
+| [OneOf](#oneof)| Randomly selects one of the provided values. |
+| [Shuffle](#shuffle)| Creates a fuzzr that randomly shuffles an input sequence. |
+| [Counter](#counter)| Generates a sequential integer per key, starting at 1. |
+| [Constant](#constant)| Wraps a fixed value in a fuzzr, producing the same result every time. |
+#### One
+Creates a fuzzr that produces complete instances of type `T` using QuickFuzzr's automatic construction rules.  
+
+**Signature:**  
+```csharp
+Fuzzr.One<T>()
+```
+  
 
 **Usage:**  
 ```csharp
 Fuzzr.One<Person>();
+// Results in => { Name: "ddnegsn", Age: 18 }
 ```
  - Uses `T`'s public parameterless constructor. Parameterized ctors aren't auto-filled.  
 - Primitive properties are generated using their default `Fuzzr` equivalents.  
@@ -926,8 +933,14 @@ Fuzzr.One<Person>();
 - `NullReferenceException`:  
   - When the factory method returns null.  
   - When the factory method is null.  
-#### Fuzzr.OneOf&lt;T&gt;(params &lt;T&gt;[] values)
+#### OneOf
 Creates a fuzzr that randomly selects one value or fuzzr from the provided options.  
+
+**Signature:**  
+```csharp
+Fuzzr.OneOf(params T[] values)
+```
+  
 
 **Usage:**  
 ```csharp
@@ -953,9 +966,15 @@ Creates a fuzzr that randomly selects one value or fuzzr from the provided optio
   - `NegativeWeightException`: When one or more weights are negative.  
   - `ZeroTotalWeightException`: When the total of all weights is zero or negative.  
   - `ArgumentNullException`: When the provided sequence is null.  
-#### Fuzzr.Shuffle&lt;T&gt;()
+#### Shuffle
 Creates a fuzzr that produces a random permutation of the provided sequence.  
 Use for randomized ordering, unbiased sampling without replacement.
+  
+
+**Signature:**  
+```csharp
+Fuzzr.Shuffle(params T[] values)
+```
   
 
 **Usage:**  
@@ -970,9 +989,15 @@ Fuzzr.Shuffle("John", "Paul", "George", "Ringo");
 
 **Exceptions:**  
   - `ArgumentNullException`: When the input collection is `null`.  
-#### Fuzzr.Counter(object key)
+#### Counter
 This fuzzr returns an `int` starting at 1, and incrementing by 1 on each call.  
 Useful for generating unique sequential IDs or counters.  
+  
+
+**Signature:**  
+```csharp
+Fuzzr.Counter(object key)
+```
   
 
 **Usage:**  
@@ -986,9 +1011,15 @@ Fuzzr.Counter("the-key").Many(5).Generate();
 
 **Exceptions:**  
 - `ArgumentNullException`: When the provided key is null.  
-#### Fuzzr.Constant&lt;T&gt;(T value)
+#### Constant
 This fuzzr wraps the value provided of type `T` in a `FuzzrOf<T>`.
 It is most useful in combination with others and is often used to inject constants into combined fuzzrs.  
+
+**Signature:**  
+```csharp
+Fuzzr.Constant(T value)
+```
+  
 
 **Usage:**  
 ```csharp
@@ -1003,7 +1034,7 @@ select derived types, or wire dynamic behaviors that apply when calling `Fuzzr.O
 #### Contents
 | Configr| Description |
 | -| - |
-| [Configr&lt;T&gt;.Ignore(...)](#configrtignore)|   |
+| [Configr&lt;T&gt;.Ignore(Expression&lt;Func&lt;T, TProperty&gt;&gt; expr)](#configrtignoreexpressionfunct-tproperty-expr)|   |
 | [Configr.Ignore(Func&lt;PropertyInfo, bool&gt; predicate)](#configrignorefuncpropertyinfo-bool-predicate)|   |
 | [Configr&lt;T&gt;.IgnoreAll()](#configrtignoreall)|   |
 | [Configr.IgnoreAll()](#configrignoreall)|   |
@@ -1017,7 +1048,7 @@ select derived types, or wire dynamic behaviors that apply when calling `Fuzzr.O
 | [Configr<T>.With<TValue>(FuzzrOf<TValue> fuzzr, Func<TValue, FuzzrOf<Intent>> configrFactory)](#configrtwithtvaluefuzzroftvalue-fuzzr-functvalue-fuzzrofintent-configrfactory)|   |
 | [Configr.Primitive&lt;T&gt;(this FuzzrOf&lt;T&gt; fuzzr)](#configrprimitivetthis-fuzzroft-fuzzr)|   |
 | [Configr.EnablePropertyAccessFor(PropertyAccess propertyAccess) / Configr.DisablePropertyAccessFor(PropertyAccess propertyAccess)](#configrenablepropertyaccessforpropertyaccess-propertyaccess-/-configrdisablepropertyaccessforpropertyaccess-propertyaccess)|   |
-#### Configr&lt;T&gt;.Ignore(...)
+#### Configr&lt;T&gt;.Ignore(Expression&lt;Func&lt;T, TProperty&gt;&gt; expr)
 
 **Usage:**  
 ```csharp

@@ -1,9 +1,16 @@
-# Fuzzr.One&lt;T&gt;()
-Creates a fuzzr that produces complete instances of type `T` using QuickFuzzr's automatic construction rules:   
+# One
+Creates a fuzzr that produces complete instances of type `T` using QuickFuzzr's automatic construction rules.  
+
+**Signature:**  
+```csharp
+Fuzzr.One<T>()
+```
+  
 
 **Usage:**  
 ```csharp
 Fuzzr.One<Person>();
+// Results in => { Name: "ddnegsn", Age: 18 }
 ```
  - Uses `T`'s public parameterless constructor. Parameterized ctors aren't auto-filled.  
 - Primitive properties are generated using their default `Fuzzr` equivalents.  

@@ -4,13 +4,13 @@ using QuickPulse.Explains;
 namespace QuickFuzzr.Tests.Docs.B_Reference.B_Fuzzing.Methods;
 
 [DocFile]
-[DocFileCodeHeader("Fuzzr.Shuffle<T>()")]
 [DocColumn(Fuzzing.Columns.Description, "Creates a fuzzr that randomly shuffles an input sequence.")]
 [DocContent(
 @"Creates a fuzzr that produces a random permutation of the provided sequence.  
 Use for randomized ordering, unbiased sampling without replacement.
 ")]
-public class C_FuzzrShuffle
+[DocSignature("Fuzzr.Shuffle(params T[] values)")]
+public class C_Shuffle
 {
     [CodeSnippet]
     [CodeRemove("return ")]
@@ -22,7 +22,7 @@ public class C_FuzzrShuffle
 
     [Fact]
     [DocUsage]
-    [DocExample(typeof(C_FuzzrShuffle), nameof(Shuffle_Example_Fuzzr))]
+    [DocExample(typeof(C_Shuffle), nameof(Shuffle_Example_Fuzzr))]
     public void Shuffle_Example()
     {
         var result = Shuffle_Example_Fuzzr()

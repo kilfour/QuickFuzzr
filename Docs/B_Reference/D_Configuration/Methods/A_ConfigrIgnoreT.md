@@ -1,4 +1,4 @@
-# Configr&lt;T&gt;.Ignore(...)
+# Configr&lt;T&gt;.Ignore(Expression&lt;Func&lt;T, TProperty&gt;&gt; expr)
 
 **Usage:**  
 ```csharp
