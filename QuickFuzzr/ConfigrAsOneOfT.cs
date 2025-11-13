@@ -11,10 +11,10 @@ public static partial class Configr<T>
     /// </summary>
     public static FuzzrOf<Intent> AsOneOf(params Type[] derivedTypes)
     {
+        ValidateTypes(typeof(T), derivedTypes);
         return
             s =>
                 {
-                    ValidateTypes(typeof(T), derivedTypes);
                     s.InheritanceInfo[typeof(T)] = [.. derivedTypes];
                     return new Result<Intent>(Intent.Fixed, s);
                 };

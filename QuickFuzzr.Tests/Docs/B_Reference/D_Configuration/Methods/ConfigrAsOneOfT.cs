@@ -41,7 +41,6 @@ public class ConfigrAsOneOfT
     [Fact]
     [DocUsage]
     [DocExample(typeof(ConfigrAsOneOfT), nameof(Generate))]
-    [DocExceptions]
     public void ConfigrAsOneOf_GetConfig_ReturnsFuzzr()
     {
         var result = Generate().ToList();
@@ -61,14 +60,11 @@ public class ConfigrAsOneOfT
     }
 
     [Fact]
+    [DocExceptions]
     [DocException("EmptyDerivedTypesException", "When no types are provided.")]
     public void ConfigrAsOneOf_NoDerivedTypes_Throws()
     {
-        var fuzzr =
-            from inheritance in Configr<Person>.AsOneOf()
-            from item in Fuzzr.One<Person>()
-            select item;
-        var ex = Assert.Throws<EmptyDerivedTypesException>(() => fuzzr.Generate());
+        var ex = Assert.Throws<EmptyDerivedTypesException>(() => Configr<Person>.AsOneOf());
         Assert.Equal(NoDerivedTypes_Message(), ex.Message);
     }
 
@@ -85,12 +81,7 @@ Possible solutions:
     [DocContent("  - `DuplicateDerivedTypesException`: When the list of derived types contains duplicates.")]
     public void ConfigrAsOneOf_Duplicates_Throws()
     {
-        var fuzzr =
-            from _ in Configr<Person>.AsOneOf(typeof(Employee), typeof(Employee))
-            from item in Fuzzr.One<Person>()
-            select item;
-
-        var ex = Assert.Throws<DuplicateDerivedTypesException>(() => fuzzr.Generate());
+        var ex = Assert.Throws<DuplicateDerivedTypesException>(() => Configr<Person>.AsOneOf(typeof(Employee), typeof(Employee)));
         Assert.Equal(Duplicates_Message(), ex.Message);
     }
 
@@ -104,12 +95,12 @@ Possible solutions:
     [Fact]
     public void ConfigrAsOneOf_Duplicates_Multiple_Throws()
     {
-        var fuzzr =
-            from _ in Configr<Person>.AsOneOf(typeof(Employee), typeof(Employee), typeof(HousedEmployee), typeof(HousedEmployee))
-            from item in Fuzzr.One<Person>()
-            select item;
-
-        var ex = Assert.Throws<DuplicateDerivedTypesException>(() => fuzzr.Generate());
+        var ex = Assert.Throws<DuplicateDerivedTypesException>(
+            () => Configr<Person>.AsOneOf(
+                typeof(Employee),
+                typeof(Employee),
+                typeof(HousedEmployee),
+                typeof(HousedEmployee)));
         Assert.Equal(Duplicates_Multiple_Message(), ex.Message);
     }
 
@@ -126,12 +117,8 @@ Possible solutions:
     [DocException("DerivedTypeNotAssignableException", "If any listed type is not a valid subclass of `BaseType`.")]
     public void ConfigrAsOneOf_DerivedTypeNotAssignable_Throws()
     {
-        var fuzzr =
-            from inheritance in Configr<Person>.AsOneOf(typeof(Person), typeof(Agenda))
-            from item in Fuzzr.One<Person>()
-            select item;
-
-        var ex = Assert.Throws<DerivedTypeNotAssignableException>(() => fuzzr.Generate());
+        var ex = Assert.Throws<DerivedTypeNotAssignableException>(
+            () => Configr<Person>.AsOneOf(typeof(Person), typeof(Agenda)));
         Assert.Equal(DerivedTypeNotAssignable_Message(), ex.Message);
     }
 
@@ -146,12 +133,11 @@ Possible solutions:
     [Fact]
     public void ConfigrAsOneOf_DerivedTypeNotAssignable_Multiple_Throws()
     {
-        var fuzzr =
-            from inheritance in Configr<Person>.AsOneOf(typeof(Person), typeof(string), typeof(Agenda))
-            from item in Fuzzr.One<Person>()
-            select item;
-
-        var ex = Assert.Throws<DerivedTypeNotAssignableException>(() => fuzzr.Generate());
+        var ex = Assert.Throws<DerivedTypeNotAssignableException>(
+            () => Configr<Person>.AsOneOf(
+                typeof(Person),
+                typeof(string),
+                typeof(Agenda)));
         Assert.Equal(DerivedTypeNotAssignable_Multiple_Message(), ex.Message);
     }
 
@@ -169,12 +155,7 @@ Possible solutions:
     [DocException("DerivedTypeIsNullException", "If any listed type is `null`.")]
     public void ConfigrAsOneOf_DerivedType_Null_Throws()
     {
-        var fuzzr =
-            from inheritance in Configr<Person>.AsOneOf(typeof(Person), null!)
-            from item in Fuzzr.One<Person>()
-            select item;
-
-        var ex = Assert.Throws<DerivedTypeIsNullException>(() => fuzzr.Generate());
+        var ex = Assert.Throws<DerivedTypeIsNullException>(() => Configr<Person>.AsOneOf(typeof(Person), null!));
         Assert.Equal(DerivedType_Null_Message(), ex.Message);
     }
 
@@ -184,15 +165,4 @@ Possible solutions:
 Possible solutions:
 - Ensure that all derived types in Configr<Person>.AsOneOf(...) are non-null.
 ";
-
-    [Fact]
-    [DocException("DerivedTypeIsAbstractException", "When one or more derived types cannot be instantiated.")]
-    public void ConfigrAsOneOf_DerivedTypeIsAbstract_Throws()
-    {
-        var fuzzr =
-            from inheritance in Configr<AbstractPerson>.AsOneOf(typeof(AbstractPerson))
-            from item in Fuzzr.One<AbstractPerson>()
-            select item;
-        var ex = Assert.Throws<InstantiationException>(() => fuzzr.Generate());
-    }
 }
