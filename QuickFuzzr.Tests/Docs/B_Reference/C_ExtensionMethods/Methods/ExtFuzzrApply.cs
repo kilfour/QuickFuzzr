@@ -4,7 +4,7 @@ using QuickPulse.Explains;
 namespace QuickFuzzr.Tests.Docs.B_Reference.C_ExtensionMethods.Methods;
 
 [DocFile]
-[DocFileHeader("ExtFuzzr.Apply(this FuzzrOf&lt;T&gt; fuzzr, Action&lt;T&gt; action)")]
+[DocFileCodeHeader("ExtFuzzr.Apply(this FuzzrOf<T> fuzzr, Action<T> action)")]
 public class ExtFuzzrApply
 {
 

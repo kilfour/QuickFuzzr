@@ -8,6 +8,13 @@ namespace QuickFuzzr.Tests.Docs.B_Reference.C_ExtensionMethods;
 These methods act as modifiers, they wrap existing fuzzrs to alter behavior, add constraints,
 or chain side-effects without changing the underlying LINQ-based model.
 ")]
+[DocHeader("Contents")]
+[DocTable(nameof(Methods), Columns.Method, Columns.Description)]
 public class FuzzrExtensionMethods
 {
+    public static class Columns
+    {
+        public const string Method = "Method";
+        public const string Description = "Description";
+    }
 }

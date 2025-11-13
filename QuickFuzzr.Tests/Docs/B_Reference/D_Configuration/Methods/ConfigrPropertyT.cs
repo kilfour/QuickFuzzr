@@ -7,7 +7,7 @@ namespace QuickFuzzr.Tests.Docs.B_Reference.D_Configuration.Methods;
 
 
 [DocFile]
-[DocFileHeader("Configr&lt;T&gt;.Property(...)")]
+[DocFileCodeHeader("Configr<T>.Property(...)")]
 public class ConfigrPropertyT
 {
 	[DocUsage]

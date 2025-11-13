@@ -1,8 +1,10 @@
+using QuickFuzzr.Tests._Tools;
 using QuickPulse.Explains;
 
 namespace QuickFuzzr.Tests.Docs.B_Reference.C_ExtensionMethods.Methods;
 
 [DocFile]
+[DocFileCodeHeader("ExtFuzzr.Shuffle<T>(this FuzzrOf<IEnumerable<T>> source)")]
 public class ExtFuzzrShuffle
 {
     [Fact]

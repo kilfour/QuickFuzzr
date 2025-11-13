@@ -4,7 +4,7 @@ using QuickPulse.Explains;
 namespace QuickFuzzr.Tests.Docs.B_Reference.B_Fuzzing.Methods;
 
 [DocFile]
-[DocFileHeader("Fuzzr.Shuffle&lt;T&gt;()")]
+[DocFileCodeHeader("Fuzzr.Shuffle<T>()")]
 [DocColumn(Fuzzing.Columns.Description, "Creates a fuzzr that randomly shuffles an input sequence.")]
 [DocContent(
 @"Creates a fuzzr that produces a random permutation of the provided sequence.  

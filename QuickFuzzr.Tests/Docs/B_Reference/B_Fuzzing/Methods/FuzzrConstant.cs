@@ -1,9 +1,10 @@
+using QuickFuzzr.Tests._Tools;
 using QuickPulse.Explains;
 
 namespace QuickFuzzr.Tests.Docs.B_Reference.B_Fuzzing.Methods;
 
 [DocFile]
-[DocFileHeader("Fuzzr.Constant&lt;T&gt;(T value)")]
+[DocFileCodeHeader("Fuzzr.Constant<T>(T value)")]
 [DocColumn(Fuzzing.Columns.Description, "Wraps a fixed value in a fuzzr, producing the same result every time.")]
 public class FuzzrConstant
 {

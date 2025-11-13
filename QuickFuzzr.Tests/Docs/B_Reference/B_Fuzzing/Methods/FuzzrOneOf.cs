@@ -6,7 +6,7 @@ using QuickPulse.Explains;
 namespace QuickFuzzr.Tests.Docs.B_Reference.B_Fuzzing.Methods;
 
 [DocFile]
-[DocFileHeader("Fuzzr.OneOf&lt;T&gt;(params &lt;T&gt;[] values)")]
+[DocFileCodeHeader("Fuzzr.OneOf<T>(params <T>[] values)")]
 [DocColumn(Fuzzing.Columns.Description, "Randomly selects one of the provided values.")]
 [DocContent("Creates a fuzzr that randomly selects one value or fuzzr from the provided options.")]
 public class FuzzrOneOf

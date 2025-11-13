@@ -4,7 +4,7 @@ using QuickPulse.Explains;
 namespace QuickFuzzr.Tests.Docs.B_Reference.C_ExtensionMethods.Methods;
 
 [DocFile]
-[DocFileHeader("ExtFuzzr.Many(this FuzzrOf&lt;T&gt; fuzzr, int number)")]
+[DocFileCodeHeader("ExtFuzzr.Many(this FuzzrOf<T> fuzzr, int number)")]
 public class ExtFuzzrMany
 {
     [Fact]

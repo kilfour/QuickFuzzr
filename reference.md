@@ -314,6 +314,19 @@ QuickFuzzr provides a collection of extension methods that enhance the expressiv
 These methods act as modifiers, they wrap existing fuzzrs to alter behavior, add constraints,
 or chain side-effects without changing the underlying LINQ-based model.
   
+### Contents
+| Method| Description |
+| -| - |
+| [ExtFuzzr.Apply(this FuzzrOf&lt;T&gt; fuzzr, Action&lt;T&gt; action)](#extfuzzrapplythis-fuzzroft-fuzzr,-actiont-action)|   |
+| [ExtFuzzr.AsObject(this FuzzrOf&lt;T&gt; fuzzr)](#extfuzzrasobjectthis-fuzzroft-fuzzr)|   |
+| [ExtFuzzr.Many(this FuzzrOf&lt;T&gt; fuzzr, int number)](#extfuzzrmanythis-fuzzroft-fuzzr,-int-number)|   |
+| [ExtFuzzr.NeverReturnNull(this FuzzrOf&lt;T?&gt; fuzzr)](#extfuzzrneverreturnnullthis-fuzzroft?-fuzzr)|   |
+| [ExtFuzzr.Nullable(this FuzzrOf&lt;T&gt; fuzzr)](#extfuzzrnullablethis-fuzzroft-fuzzr)|   |
+| [ExtFuzzr.NullableRef(this FuzzrOf<T> fuzzr)](#extfuzzrnullablerefthis-fuzzroft-fuzzr)|   |
+| [ExtFuzzr.Shuffle&lt;T&gt;(this FuzzrOf&lt;IEnumerable&lt;T&gt;&gt; source)](#extfuzzrshuffletthis-fuzzrofienumerablet-source)|   |
+| [ExtFuzzr.Unique&lt;T&gt;(this FuzzrOf&lt;T&gt; fuzzr, object key)](#extfuzzruniquetthis-fuzzroft-fuzzr,-object-key)|   |
+| [ExtFuzzr.Where(this FuzzrOf&lt;T&gt; fuzzr, Func&lt;T,bool&gt; predicate)](#extfuzzrwherethis-fuzzroft-fuzzr,-funct,bool-predicate)|   |
+| [ExtFuzzr.WithDefault(this FuzzrOf&lt;T&gt; fuzzr, T def = default)](#extfuzzrwithdefaultthis-fuzzroft-fuzzr,-t-def-=-default)|   |
 ### ExtFuzzr.Apply(this FuzzrOf&lt;T&gt; fuzzr, Action&lt;T&gt; action)
 Executes a side-effect per generated value without altering it.  
 **Usage:**  
@@ -321,7 +334,7 @@ Executes a side-effect per generated value without altering it.
 **Overloads:**  
 - `ExtFuzzr.Apply(this FuzzrOf<T> fuzzr, Func<T,T> func)`  
   Transforms generated values while preserving generation context.  
-### ExtFuzzr.AsObject(this FuzzrOf&lt;T> fuzzr)
+### ExtFuzzr.AsObject(this FuzzrOf&lt;T&gt; fuzzr)
 Boxes generated values as object without altering them.  
 ### ExtFuzzr.Many(this FuzzrOf&lt;T&gt; fuzzr, int number)
 Produces a fixed number of values from a fuzzr.  
@@ -329,31 +342,31 @@ Produces a fixed number of values from a fuzzr.
 **Overloads:**  
 - `ExtFuzzr.Many(this FuzzrOf<T> fuzzr, int min, int max)`  
   Produces a variable number of values within bounds.  
-### ExtFuzzr.NeverReturnNull(this FuzzrOf&lt;T?> fuzzr)
+### ExtFuzzr.NeverReturnNull(this FuzzrOf&lt;T?&gt; fuzzr)
 Filters out nulls from a nullable fuzzr, retrying up to the retry limit.  
 **Usage:**  
 
 **Exceptions:**  
 - `NonNullValueExhaustedException`: When all attempts result in null.  
-### ExtFuzzr.Nullable(this FuzzrOf&lt;T> fuzzr)
+### ExtFuzzr.Nullable(this FuzzrOf&lt;T&gt; fuzzr)
 Wraps a value type fuzzr to sometimes yield null values.  
 **Usage:**  
 ### ExtFuzzr.NullableRef(this FuzzrOf<T> fuzzr)
 Wraps a reference type fuzzr to sometimes yield null values.  
-### Ext Fuzzr Shuffle
-### .Unique&lt;T&gt;(...)
+### ExtFuzzr.Shuffle&lt;T&gt;(this FuzzrOf&lt;IEnumerable&lt;T&gt;&gt; source)
+### ExtFuzzr.Unique&lt;T&gt;(this FuzzrOf&lt;T&gt; fuzzr, object key)
 Using the `.Unique(object key)` extension method.  
 - Makes sure that every generated value is unique.  
 - When asking for more unique values than the fuzzr can supply, an exception is thrown.  
 - Multiple unique fuzzrs can be defined in one 'composed' fuzzr, without interfering with eachother by using a different key.  
 - When using the same key for multiple unique fuzzrs all values across these fuzzrs are unique.  
 - An overload exist taking a function as an argument allowing for a dynamic key.  
-### ExtFuzzr.Where(this FuzzrOf&lt;T> fuzzr, Func&lt;T,bool> predicate)
+### ExtFuzzr.Where(this FuzzrOf&lt;T&gt; fuzzr, Func&lt;T,bool&gt; predicate)
 Filters generated values to those satisfying the predicate.  
 
 **Exceptions:**  
 - `PredicateUnsatisfiedException`: When no value satisfies the predicate within the retry limit.  
-### ExtFuzzr.WithDefault(this FuzzrOf&lt;T> fuzzr, T def = default)
+### ExtFuzzr.WithDefault(this FuzzrOf&lt;T&gt; fuzzr, T def = default)
 Returns a default value when the underlying fuzzr fails due to empty choices.  
 ## Configuring
 `Configr` provides a fluent API to influence how QuickFuzzr builds objects.

@@ -6,7 +6,7 @@ using QuickPulse.Explains;
 namespace QuickFuzzr.Tests.Docs.B_Reference.D_Configuration.Methods;
 
 [DocFile]
-[DocFileHeader("Configr&lt;T&gt;.EndOn&lt;TEnd&gt;()")]
+[DocFileCodeHeader("Configr<T>.EndOn<TEnd>()")]
 [DocContent(
 @"")]
 public class ConfigrEndOnT

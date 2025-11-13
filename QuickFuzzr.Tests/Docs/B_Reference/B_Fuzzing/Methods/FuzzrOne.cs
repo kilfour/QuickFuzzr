@@ -6,7 +6,7 @@ using QuickPulse.Explains;
 namespace QuickFuzzr.Tests.Docs.B_Reference.B_Fuzzing.Methods;
 
 [DocFile]
-[DocFileHeader("Fuzzr.One&lt;T&gt;()")]
+[DocFileCodeHeader("Fuzzr.One<T>()")]
 [DocColumn(Fuzzing.Columns.Description, "Creates a fuzzr that produces an instances of type `T`.")]
 [DocContent(
 @"Creates a fuzzr that produces complete instances of type `T` using QuickFuzzr's automatic construction rules: ")]

@@ -6,7 +6,7 @@ namespace QuickFuzzr.Tests.Docs.B_Reference.D_Configuration.Methods;
 
 
 [DocFile]
-[DocFileHeader("Configr&lt;T&gt;.Ignore(...)")]
+[DocFileCodeHeader("Configr<T>.Ignore(...)")]
 public class ConfigrIgnoreT
 {
     [DocUsage]

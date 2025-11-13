@@ -4,7 +4,7 @@ using QuickPulse.Explains;
 namespace QuickFuzzr.Tests.Docs.B_Reference.D_Configuration.Methods;
 
 [DocFile]
-[DocFileHeader("Configr&lt;T&gt;.Construct(FuzzrOf&lt;T1&gt; arg1)")]
+[DocFileCodeHeader("Configr<T>.Construct(FuzzrOf<T1> arg1)")]
 [DocContent(
 @"Configures a custom constructor for type T, used when Fuzzr.One<T>() is called.
 Useful for records or classes without parameterless constructors or when `T` has multiple constructors

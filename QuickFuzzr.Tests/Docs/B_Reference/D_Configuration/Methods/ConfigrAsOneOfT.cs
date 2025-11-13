@@ -7,7 +7,7 @@ using QuickPulse.Explains;
 namespace QuickFuzzr.Tests.Docs.B_Reference.D_Configuration.Methods;
 
 [DocFile]
-[DocFileHeader("Configr&lt;T&gt;AsOneOf(params Type[] types)")]
+[DocFileCodeHeader("Configr<T>AsOneOf(params Type[] types)")]
 [DocContent(
 @"Configures inheritance resolution for BaseType, 
 allowing QuickFuzzr to randomly select one of the specified derived types when generating instances.  

@@ -1,4 +1,4 @@
-# ExtFuzzr.Where(this FuzzrOf&lt;T> fuzzr, Func&lt;T,bool> predicate)
+# ExtFuzzr.Where(this FuzzrOf&lt;T&gt; fuzzr, Func&lt;T,bool&gt; predicate)
 Filters generated values to those satisfying the predicate.  
 
 **Exceptions:**  

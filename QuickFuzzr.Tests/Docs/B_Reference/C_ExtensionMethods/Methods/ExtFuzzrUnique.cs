@@ -1,10 +1,11 @@
+using QuickFuzzr.Tests._Tools;
 using QuickFuzzr.UnderTheHood.WhenThingsGoWrong;
 using QuickPulse.Explains;
 
 namespace QuickFuzzr.Tests.Docs.B_Reference.C_ExtensionMethods.Methods;
 
 [DocFile]
-[DocFileHeader(".Unique&lt;T&gt;(...)")]
+[DocFileCodeHeader("ExtFuzzr.Unique<T>(this FuzzrOf<T> fuzzr, object key)")]
 [DocContent("Using the `.Unique(object key)` extension method.")]
 public class ExtFuzzrUnique
 {

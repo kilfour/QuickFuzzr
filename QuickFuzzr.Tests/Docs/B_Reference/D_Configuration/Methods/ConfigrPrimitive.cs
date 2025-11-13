@@ -5,7 +5,7 @@ using QuickPulse.Explains;
 namespace QuickFuzzr.Tests.Docs.B_Reference.D_Configuration.Methods;
 
 [DocFile]
-[DocFileHeader("Configr.Primitive&lt;T&gt;(this FuzzrOf&lt;T&gt; fuzzr)")]
+[DocFileCodeHeader("Configr.Primitive<T>(this FuzzrOf<T> fuzzr)")]
 [DocContent(
 @"Registers a global default fuzzr for primitive types.
 Use this to override how QuickFuzzr generates built-in types across all automatically created objects.
