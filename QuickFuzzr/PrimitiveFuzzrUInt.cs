@@ -21,6 +21,13 @@ public static partial class Fuzzr
 	{
 		if (min > max)
 			throw new ArgumentException($"Invalid range: min ({min}) > max ({max})");
-		return s => new Result<uint>((uint)s.Random.Next((int)min, (int)max), s);
+		return s =>
+		{
+			var span = (ulong)(max - min);
+			if (span == 0)
+				return new Result<uint>(min, s);
+			var offset = (ulong)s.Random.NextInt64(0, (long)span);
+			return new Result<uint>(min + (uint)offset, s);
+		};
 	}
 }
