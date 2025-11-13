@@ -11,7 +11,7 @@ public static partial class Fuzzr
 	public static FuzzrOf<char> Char() => Char('a', 'z');
 
 	/// <summary>
-	/// Creates a fuzzr that produces random characters within the specified inclusive character range.
+	/// Creates a fuzzr that produces random characters within the inclusive range [min, max].
 	/// Use for generating characters from specific ranges like uppercase letters, digits, or custom character sets.
 	/// </summary>
 	public static FuzzrOf<char> Char(char min, char max)

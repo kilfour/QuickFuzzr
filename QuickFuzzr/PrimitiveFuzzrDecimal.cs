@@ -14,7 +14,7 @@ public static partial class Fuzzr
 
 	/// <summary>
 	/// Creates a fuzzr that produces random decimal values in the range [1, 100)
-	/// (1 inclusive, 100 exclusive) with the specified precision.
+	/// (min inclusive, max exclusive) with up to the specified precision.
 	/// Use for generating decimal values with controlled decimal places for currency
 	/// formatting, fixed-point calculations, or display requirements.
 	/// </summary>
@@ -32,7 +32,7 @@ public static partial class Fuzzr
 
 	/// <summary>
 	/// Creates a fuzzr that produces random decimal values in the range [min, max)
-	/// (min inclusive, max exclusive) with controlled precision.
+	/// (min inclusive, max exclusive) with up to the specified precision.
 	/// Use when you need precise decimal values with fixed decimal places for
 	/// financial reporting, measurement data, or formatted numeric output.
 	/// </summary>

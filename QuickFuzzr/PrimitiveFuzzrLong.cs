@@ -5,7 +5,7 @@ namespace QuickFuzzr;
 public static partial class Fuzzr
 {
 	/// <summary>
-	/// Creates a fuzzr that produces random long integer values between 1 (inclusive) and 100 (exclusive).
+	/// Creates a fuzzr that produces random long integer values in the range [1, 100) (min inclusive, max exclusive).
 	/// Use for generating large numeric identifiers, file sizes, or any scenario requiring 64-bit whole numbers within a typical range.
 	/// </summary>
 	public static FuzzrOf<long> Long()
@@ -14,7 +14,7 @@ public static partial class Fuzzr
 	}
 
 	/// <summary>
-	/// Creates a fuzzr that produces random long integer values within the specified range [min, max).
+	/// Creates a fuzzr that produces random long integer values in the range [min, max) (min inclusive, max exclusive).
 	/// Use when you need large integer values constrained to specific bounds for testing big number arithmetic, database IDs, or high-range counters.
 	/// </summary>
 	public static FuzzrOf<long> Long(long min, long max)

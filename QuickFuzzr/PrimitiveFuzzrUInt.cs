@@ -5,7 +5,7 @@ namespace QuickFuzzr;
 public static partial class Fuzzr
 {
 	/// <summary>
-	/// Creates a fuzzr that produces random unsigned integer values between 1 (inclusive) and 100 (exclusive).
+	/// Creates a fuzzr that produces random unsigned integer values in the range [1, 100) (min inclusive, max exclusive).
 	/// Use for generating positive numeric data like sizes, counts, or any scenario requiring non-negative whole numbers within a typical range.
 	/// </summary>
 	public static FuzzrOf<uint> UInt()
@@ -14,7 +14,7 @@ public static partial class Fuzzr
 	}
 
 	/// <summary>
-	/// Creates a fuzzr that produces random unsigned integer values within the specified range [min, max).
+	/// Creates a fuzzr that produces random unsigned integer values in the range [min, max) (min inclusive, max exclusive).
 	/// Use when you need positive integer values constrained to specific bounds for array sizes, memory allocations, or unsigned numeric validation.
 	/// </summary>
 	public static FuzzrOf<uint> UInt(uint min, uint max)

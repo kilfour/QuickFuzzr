@@ -5,7 +5,7 @@ namespace QuickFuzzr;
 public static partial class Fuzzr
 {
 	/// <summary>
-	/// Creates a fuzzr that produces random single-precision floating-point values between 1 (inclusive) and 100 (exclusive).
+	/// Creates a fuzzr that produces random single-precision floating-point values in the range [1, 100) (min inclusive, max exclusive).
 	/// Use for generating efficient numeric data where full double precision is not required, such as graphics, physics, or performance-sensitive calculations.
 	/// </summary>
 	public static FuzzrOf<float> Float()
@@ -14,7 +14,7 @@ public static partial class Fuzzr
 	}
 
 	/// <summary>
-	/// Creates a fuzzr that produces random single-precision floating-point values within the specified range [min, max).
+	/// Creates a fuzzr that produces random single-precision floating-point values in the range [min, max) (min inclusive, max exclusive).
 	/// Use when you need float values constrained to specific numeric bounds for 3D graphics, game development, or memory-optimized numeric testing.
 	/// </summary>
 	public static FuzzrOf<float> Float(float min, float max)
