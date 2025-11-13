@@ -11,7 +11,7 @@ select derived types, or wire dynamic behaviors that apply when calling `Fuzzr.O
 | [Configr&lt;T&gt;.IgnoreAll()](Methods/C_ConfigrIgnoreAllT.md)|   |
 | [Configr.IgnoreAll()](Methods/D_ConfigrIgnoreAll.md)|   |
 | [Configr&lt;T&gt;.Property(...)](Methods/E_ConfigrPropertyT.md)|   |
-| [ConfigrProperty&lt;TProperty&gt;(Func&lt;PropertyInfo, bool&gt; predicate, FuzzrOf&lt;TProperty&gt; fuzzr)](Methods/F_ConfigrProperty.md)|   |
+| [Configr.Property<TProperty>(Func<PropertyInfo, bool> predicate, FuzzrOf<TProperty> fuzzr)](Methods/F_ConfigrProperty.md)|   |
 | [Configr&lt;T&gt;.Construct(FuzzrOf&lt;T1&gt; arg1)](Methods/G_ConfigrConstructT.md)|   |
 | [Configr&lt;T&gt;AsOneOf(params Type[] types)](Methods/H_ConfigrAsOneOfT.md)|   |
 | [Configr&lt;T&gt;.EndOn&lt;TEnd&gt;()](Methods/I_ConfigrEndOnT.md)|   |

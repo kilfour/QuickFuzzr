@@ -17,7 +17,7 @@
       - [Configr&lt;T&gt;.IgnoreAll()](B_Reference/D_Configuration/Methods/C_ConfigrIgnoreAllT.md)
       - [Configr.IgnoreAll()](B_Reference/D_Configuration/Methods/D_ConfigrIgnoreAll.md)
       - [Configr&lt;T&gt;.Property(...)](B_Reference/D_Configuration/Methods/E_ConfigrPropertyT.md)
-      - [ConfigrProperty&lt;TProperty&gt;(Func&lt;PropertyInfo, bool&gt; predicate, FuzzrOf&lt;TProperty&gt; fuzzr)](B_Reference/D_Configuration/Methods/F_ConfigrProperty.md)
+      - [Configr.Property<TProperty>(Func<PropertyInfo, bool> predicate, FuzzrOf<TProperty> fuzzr)](B_Reference/D_Configuration/Methods/F_ConfigrProperty.md)
       - [Configr&lt;T&gt;.Construct(FuzzrOf&lt;T1&gt; arg1)](B_Reference/D_Configuration/Methods/G_ConfigrConstructT.md)
       - [Configr&lt;T&gt;AsOneOf(params Type[] types)](B_Reference/D_Configuration/Methods/H_ConfigrAsOneOfT.md)
       - [Configr&lt;T&gt;.EndOn&lt;TEnd&gt;()](B_Reference/D_Configuration/Methods/I_ConfigrEndOnT.md)

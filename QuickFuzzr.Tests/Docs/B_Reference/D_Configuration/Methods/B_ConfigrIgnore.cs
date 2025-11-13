@@ -5,7 +5,7 @@ using QuickPulse.Explains;
 namespace QuickFuzzr.Tests.Docs.B_Reference.D_Configuration.Methods;
 
 [DocFile]
-[DocFileHeader("Configr.Ignore(Func&lt;PropertyInfo, bool&gt; predicate)")]
+[DocFileCodeHeader("Configr.Ignore(Func<PropertyInfo, bool> predicate)")]
 public class B_ConfigrIgnore
 {
 

@@ -1008,7 +1008,7 @@ select derived types, or wire dynamic behaviors that apply when calling `Fuzzr.O
 | [Configr&lt;T&gt;.IgnoreAll()](#configrtignoreall)|   |
 | [Configr.IgnoreAll()](#configrignoreall)|   |
 | [Configr&lt;T&gt;.Property(...)](#configrtproperty)|   |
-| [ConfigrProperty&lt;TProperty&gt;(Func&lt;PropertyInfo, bool&gt; predicate, FuzzrOf&lt;TProperty&gt; fuzzr)](#configrpropertytpropertyfuncpropertyinfo-bool-predicate-fuzzroftproperty-fuzzr)|   |
+| [Configr.Property<TProperty>(Func<PropertyInfo, bool> predicate, FuzzrOf<TProperty> fuzzr)](#configrpropertytpropertyfuncpropertyinfo-bool-predicate-fuzzroftproperty-fuzzr)|   |
 | [Configr&lt;T&gt;.Construct(FuzzrOf&lt;T1&gt; arg1)](#configrtconstructfuzzroft1-arg1)|   |
 | [Configr&lt;T&gt;AsOneOf(params Type[] types)](#configrtasoneofparams-type-types)|   |
 | [Configr&lt;T&gt;.EndOn&lt;TEnd&gt;()](#configrtendontend)|   |
@@ -1088,7 +1088,7 @@ Possible solutions:
 - Use a property selector (e.g. a => a.PropertyName).
 - Then pass it to Configr<PersonOutInTheFields>.Property(...) to configure generation.
 ```
-#### ConfigrProperty&lt;TProperty&gt;(Func&lt;PropertyInfo, bool&gt; predicate, FuzzrOf&lt;TProperty&gt; fuzzr)
+#### Configr.Property<TProperty>(Func<PropertyInfo, bool> predicate, FuzzrOf<TProperty> fuzzr)
 
 **Usage:**  
 ```csharp
