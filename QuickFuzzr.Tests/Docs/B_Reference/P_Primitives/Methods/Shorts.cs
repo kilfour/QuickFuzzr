@@ -16,6 +16,11 @@ public class Shorts
 			("value >= 1", a => a >= 1), ("value < 5", a => a < 5));
 
 	[Fact]
+	public void MinMaxSame()
+		=> CheckIf.GeneratedValuesShouldAllSatisfy(Fuzzr.Short(1, 1),
+			("value == 1", a => a == 1));
+
+	[Fact]
 	[DocContent("- Throws an `ArgumentException` when `min` > `max`.")]
 	public void Throws()
 		=> Assert.Throws<ArgumentException>(() => Fuzzr.Short(1, 0).Generate());
