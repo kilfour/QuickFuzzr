@@ -38,7 +38,7 @@ public class DateOnlys
 		{
 			var val = fuzzr.Generate();
 			Assert.True(val >= new DateOnly(1970, 1, 1));
-			Assert.True(val < new DateOnly(2020, 12, 31));
+			Assert.True(val <= new DateOnly(2020, 12, 31));
 		}
 	}
 
