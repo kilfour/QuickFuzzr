@@ -19,10 +19,8 @@ public static partial class Fuzzr
 	{
 		if (min < byte.MinValue)
 			throw new ArgumentOutOfRangeException(nameof(min), $"Must be ≥ {byte.MinValue}.");
-
 		if (max > byte.MaxValue)
 			throw new ArgumentOutOfRangeException(nameof(max), $"Must be ≤ {byte.MaxValue}.");
-
 		MinMax.Check(min, max);
 		return s =>
 		{
