@@ -6,7 +6,7 @@ namespace QuickFuzzr;
 public static partial class Fuzzr
 {
 	/// <summary>
-	/// Creates a fuzzr that produces random strings of lowercase letters with length between 1 and 10 characters.
+	/// Creates a fuzzr that produces random strings of lowercase letters with length between 1 and 10 (inclusive) characters .
 	/// Use for generating simple text data like names, identifiers, or any scenario requiring basic string content.
 	/// </summary>
 	public static FuzzrOf<string> String() => StringInternal(Char(), 1, 10);
@@ -24,7 +24,7 @@ public static partial class Fuzzr
 	public static FuzzrOf<string> String(int min, int max) => StringInternal(Char(), min, max);
 
 	/// <summary>
-	/// Creates a fuzzr that produces random strings using the specified character fuzzr with length between 1 and 10 characters.
+	/// Creates a fuzzr that produces random strings using the specified character fuzzr with length between 1 and 10 (inclusive) characters.
 	/// Use when you need custom character sets like digits, uppercase letters, or symbols in your generated strings.
 	/// </summary>
 	public static FuzzrOf<string> String(FuzzrOf<char> charFuzzr) => StringInternal(charFuzzr, 1, 10);

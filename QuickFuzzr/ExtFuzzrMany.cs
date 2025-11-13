@@ -12,7 +12,7 @@ public static partial class ExtFuzzr
 		=> state => new Result<IEnumerable<T>>(GetEnumerable(number, fuzzr, state), state);
 
 	/// <summary>
-	/// Creates a fuzzr that produces a variable number of values from the source fuzzr within the specified range.
+	/// Creates a fuzzr that produces a variable number of values from the source fuzzr within the specified range (upper bound inclusive).
 	/// Use for generating lists of varying sizes to test collection handling, pagination, or dynamic data sets.
 	/// </summary>
 	public static FuzzrOf<IEnumerable<T>> Many<T>(this FuzzrOf<T> fuzzr, int min, int max)

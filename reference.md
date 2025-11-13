@@ -559,7 +559,9 @@ Use `Fuzzr.DateTime()`.
 - `DateTime?` is automatically detected and generated for object properties.  
 ### Decimals
 Use `Fuzzr.Decimal()`.  
-- The overload `Fuzzr.Decimal(decimal min, decimal max)` generates a decimal greater than or equal to `min` and less than `max`.  
+
+- The overload `Fuzzr.Decimal(decimal min, decimal max)` generates a decimal greater than or equal to `min` and less than `max`.
+  *Note:* Due to floating-point rounding, max may occasionally be produced.  
 - The overload `Decimal(int precision)` generates a decimal with `precision` precision.  
 - The overload `Decimal(decimal min, decimal max, int precision)` generates a decimal greater than or equal to `min` and less than `max`, with `precision` precision.  
 - When `min == max`, the fuzzr always returns that exact value.  
