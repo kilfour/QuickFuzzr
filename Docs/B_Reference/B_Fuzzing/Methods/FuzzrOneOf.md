@@ -1,5 +1,6 @@
 # Fuzzr.OneOf&lt;T&gt;(params &lt;T&gt;[] values)
 Creates a fuzzr that randomly selects one value or fuzzr from the provided options.  
+
 **Usage:**  
 ```csharp
  Fuzzr.OneOf("a", "b", "c");

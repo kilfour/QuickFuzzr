@@ -1,6 +1,8 @@
 # Fuzzr.Shuffle&lt;T&gt;()
 Creates a fuzzr that produces a random permutation of the provided sequence.  
-Use for randomized ordering, unbiased sampling without replacement.  
+Use for randomized ordering, unbiased sampling without replacement.
+  
+
 **Usage:**  
 ```csharp
 Fuzzr.Shuffle("John", "Paul", "George", "Ringo");

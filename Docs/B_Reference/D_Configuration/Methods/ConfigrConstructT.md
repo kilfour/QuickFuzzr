@@ -3,6 +3,7 @@ Configures a custom constructor for type T, used when Fuzzr.One<T>() is called.
 Useful for records or classes without parameterless constructors or when `T` has multiple constructors
 and you want to control which one is used during fuzzing.  
   
+
 **Usage:**  
 ```csharp
 Configr<SomeThing>.Construct(Fuzzr.Constant(42));

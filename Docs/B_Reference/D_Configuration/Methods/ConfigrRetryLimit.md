@@ -1,4 +1,5 @@
 # Configr.RetryLimit(int limit)
+
 **Usage:**  
 ```csharp
  Configr.RetryLimit(256);

@@ -1,4 +1,5 @@
 # Configr&lt;T&gt;.Property(...)
+
 **Usage:**  
 ```csharp
  Configr<Thing>.Property(s => s.Id, Fuzzr.Constant(42));

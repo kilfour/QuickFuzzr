@@ -5,7 +5,7 @@ using QuickPulse.Explains;
 namespace QuickFuzzr.Tests.Docs.B_Reference.C_ExtensionMethods.Methods;
 
 [DocFile]
-[DocFileCodeHeader("ExtFuzzr.Where(this FuzzrOf<T> fuzzr, Func<T,bool> predicate)")]
+[DocFileCodeHeader("Where(this FuzzrOf<T> fuzzr, Func<T,bool> predicate)")]
 [DocColumn(FuzzrExtensionMethods.Columns.Description, "Filters generated values so only values satisfying the predicate are returned.")]
 public class ExtFuzzrWhere
 {

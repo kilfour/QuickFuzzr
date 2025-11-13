@@ -1,4 +1,5 @@
 # Configr&lt;T&gt;.Ignore(...)
+
 **Usage:**  
 ```csharp
 from ignore in Configr<Person>.Ignore(a => a.Name)

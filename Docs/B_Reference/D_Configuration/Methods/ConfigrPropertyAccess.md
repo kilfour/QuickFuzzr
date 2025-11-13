@@ -1,4 +1,5 @@
 # Configr.EnablePropertyAccessFor(PropertyAccess propertyAccess) / Configr.DisablePropertyAccessFor(PropertyAccess propertyAccess)
+
 **Usage:**  
 ```csharp
 from enable in Configr.EnablePropertyAccessFor(PropertyAccess.InitOnly)

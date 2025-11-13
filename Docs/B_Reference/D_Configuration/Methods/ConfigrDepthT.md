@@ -1,6 +1,7 @@
 # Configr&lt;T&gt;.Depth(int min, int max)
 Configures depth constraints for type `T` to control recursive object graph generation. 
   
+
 **Usage:**  
 ```csharp
 Configr<Turtle>.Depth(2, 5);

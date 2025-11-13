@@ -3,6 +3,7 @@
 Configures a recursion stop condition for type `T`, instructing QuickFuzzr to generate `TEnd` instances instead of continuing deeper.
 Useful for defining explicit *end* types in recursive object graphs, preventing infinite nesting and keeping structure depth under control.
   
+
 **Usage:**  
 ```csharp
 from ending in Configr<Turtle>.EndOn<MoreTurtles>()

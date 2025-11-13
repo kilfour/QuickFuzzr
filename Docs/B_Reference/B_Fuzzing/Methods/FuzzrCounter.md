@@ -2,6 +2,7 @@
 This fuzzr returns an `int` starting at 1, and incrementing by 1 on each call.  
 Useful for generating unique sequential IDs or counters.  
   
+
 **Usage:**  
 ```csharp
 Fuzzr.Counter("the-key").Many(5).Generate();

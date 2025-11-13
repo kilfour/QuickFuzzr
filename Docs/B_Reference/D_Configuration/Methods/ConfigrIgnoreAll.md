@@ -1,5 +1,6 @@
 # Configr.IgnoreAll()
 Ignore all properties while generating anything.  
+
 **Usage:**  
 ```csharp
 from ignore in Configr.IgnoreAll()

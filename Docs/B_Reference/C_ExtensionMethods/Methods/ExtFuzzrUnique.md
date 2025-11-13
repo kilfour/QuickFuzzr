@@ -1,4 +1,4 @@
-# ExtFuzzr.Unique&lt;T&gt;(this FuzzrOf&lt;T&gt; fuzzr, object key)
+# Unique&lt;T&gt;(this FuzzrOf&lt;T&gt; fuzzr, object key)
 Using the `.Unique(object key)` extension method.  
 - Makes sure that every generated value is unique.  
 - When asking for more unique values than the fuzzr can supply, an exception is thrown.  

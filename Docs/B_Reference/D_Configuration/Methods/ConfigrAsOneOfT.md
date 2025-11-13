@@ -4,6 +4,7 @@ allowing QuickFuzzr to randomly select one of the specified derived types when g
 
 Useful when generating domain hierarchies where multiple concrete subtypes exist.  
   
+
 **Usage:**  
 ```csharp
 var personFuzzr =

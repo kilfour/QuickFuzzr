@@ -5,7 +5,7 @@ using QuickPulse.Explains;
 namespace QuickFuzzr.Tests.Docs.B_Reference.C_ExtensionMethods.Methods;
 
 [DocFile]
-[DocFileCodeHeader("ExtFuzzr.NeverReturnNull(this FuzzrOf<T?> fuzzr)")]
+[DocFileCodeHeader("NeverReturnNull(this FuzzrOf<T?> fuzzr)")]
 [DocColumn(FuzzrExtensionMethods.Columns.Description, "Filters out null values, retrying until a non-null value is produced or the retry limit is exceeded.")]
 public class ExtFuzzrNeverReturnNull
 {
