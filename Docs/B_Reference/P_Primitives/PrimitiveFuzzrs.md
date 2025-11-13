@@ -10,7 +10,7 @@ They form the foundation on which more complex fuzzrs are composed, and are used
 | [Bytes](Methods/Bytes.md)| Produces random bytes in the range 0-255 or within a custom range. |
 | [Chars](Methods/Chars.md)| Generates random lowercase letters or characters within a specified range. |
 | [DateOnlys](Methods/DateOnlys.md)| Creates `DateOnly` values between 1970-01-01 and 2020-12-31 (by default). |
-| [DateTimes](Methods/DateTimes.md)| Produces `DateTime` values between 1970-01-01 and 2020-12-31. |
+| [DateTimes](Methods/DateTimes.md)| Produces `DateTime` values between 1970-01-01 and 2020-12-31 (inclusive), snapped to whole seconds. |
 | [Decimals](Methods/Decimals.md)| Generates random decimal numbers (default 1-100). |
 | [Doubles](Methods/Doubles.md)| Generates random double-precision numbers (default 1-100). |
 | [Enums](Methods/Enums.md)| Randomly selects a defined member of an enum type. |

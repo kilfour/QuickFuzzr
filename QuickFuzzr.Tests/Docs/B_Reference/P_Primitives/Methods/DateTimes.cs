@@ -1,32 +1,47 @@
-﻿using QuickPulse.Explains;
+﻿using QuickFuzzr.Tests._Tools;
+using QuickPulse.Explains;
 
 namespace QuickFuzzr.Tests.Docs.B_Reference.P_Primitives.Methods;
 
 [DocFile]
 [DocFileHeader("DateTimes")]
 [DocContent("Use `Fuzzr.DateTime()`.")]
-[DocColumn(PrimitiveFuzzrs.Columns.Description, "Produces `DateTime` values between 1970-01-01 and 2020-12-31.")]
+[DocColumn(PrimitiveFuzzrs.Columns.Description, "Produces `DateTime` values between 1970-01-01 and 2020-12-31 (inclusive), snapped to whole seconds.")]
 public class DateTimes
 {
 	[Fact]
-	[DocContent("- The overload `Fuzzr.DateTime(DateTime min, DateTime max)` generates a DateTime greater than or equal to `min` and less than `max`.")]
-	public void Zero()
-	{
-		var fuzzr = Fuzzr.DateTime(new DateTime(2000, 1, 1), new DateTime(2000, 1, 5));
-		for (int i = 0; i < 10; i++)
-		{
-			var value = fuzzr.Generate();
-			Assert.True(value >= new DateTime(2000, 1, 1));
-			Assert.True(value < new DateTime(2000, 1, 5));
-		}
-	}
+	[DocContent("- The overload `Fuzzr.DateTime(DateTime min, DateTime max)` generates a `DateTime` in the inclusive range [min, max], snapped to whole seconds.")]
+	public void MinMax()
+		=> CheckIf.GeneratedValuesShouldAllSatisfy(Fuzzr.DateTime(new DateTime(2000, 1, 1), new DateTime(2000, 1, 5)),
+			("value >= new DateTime(2000, 1, 1)", a => a >= new DateTime(2000, 1, 1)),
+			("value <= new DateTime(2000, 1, 5)", a => a <= new DateTime(2000, 1, 5)));
+
+	[Fact]
+	public void MinMaxShouldGenerateBounds()
+		=> CheckIf.GeneratedValuesShouldEventuallySatisfyAll(Fuzzr.DateTime(new DateTime(1), new DateTime(2)),
+			("value == new DateTime(1)", a => a == new DateTime(1)),
+			("value == new DateTime(2)", a => a == new DateTime(2)));
+
+	[Fact]
+	public void MinMaxShouldGenerateSecondsBounds()
+		=> CheckIf.GeneratedValuesShouldEventuallySatisfyAll(Fuzzr.DateTime(new DateTime(1, 1, 1, 1, 1, 1), new DateTime(1, 1, 1, 1, 1, 2)),
+			("value == new DateTime(1, 1, 1, 1, 1, 1)", a => a == new DateTime(1, 1, 1, 1, 1, 1)),
+			("value == new DateTime(1, 1, 1, 1, 1, 2)", a => a == new DateTime(1, 1, 1, 1, 1, 2)));
+
+	[Fact]
+	[DocContent("- Generated values are snapped to whole seconds.")]
+	public void MinMaxShouldSnapToSeconds()
+		=> CheckIf.GeneratedValuesShouldAllSatisfy(Fuzzr.DateTime(new DateTime(2000, 1, 1), new DateTime(2000, 1, 5)),
+			("value.Millisecond == 0", a => a.Millisecond == 0),
+			("value.Nanosecond == 0", a => a.Nanosecond == 0));
+
 	[Fact]
 	[DocContent("- Throws an `ArgumentException` when `min` > `max`.")]
 	public void Throws()
 		=> Assert.Throws<ArgumentException>(() => Fuzzr.DateTime(new DateTime(2000, 1, 5), new DateTime(2000, 1, 1)).Generate());
 
 	[Fact]
-	[DocContent("- The default fuzzr is (min = new DateTime(1970, 1, 1), max = new DateTime(2020, 12, 31)).")]
+	[DocContent("- The default fuzzr is (min = new DateTime(1970, 1, 1), max = new DateTime(2020, 12, 31)) inclusive, snapped to whole seconds.")]
 	public void DefaultFuzzrNeverGeneratesZero()
 	{
 		var fuzzr = Fuzzr.DateTime();

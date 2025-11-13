@@ -23,15 +23,24 @@ public static partial class Fuzzr
 	private static FuzzrOf<DateTime> DateTimeInternal(DateTime min, DateTime max) =>
 		state =>
 		{
-			var ticks = state.Random.NextInt64(min.Ticks, max.Ticks + 1);
-			ticks = SnapToWholeSeconds(ticks);
+			const long tps = System.TimeSpan.TicksPerSecond;
+			long minTicks = min.Ticks;
+			long maxTicks = max.Ticks;
+			// Compute first whole-second start >= min
+			long minSecStart = (minTicks % tps == 0) ? minTicks : (minTicks + (tps - (minTicks % tps)));
+			// Compute last whole-second start <= max (inclusive upper bound)
+			long maxSecStart = (maxTicks / tps) * tps;
+			if (minSecStart > maxSecStart)
+			{
+				// No whole-second boundary inside [min, max]; sample uniformly at tick resolution (inclusive)
+				var ticksInclusive = state.Random.NextInt64(minTicks, maxTicks + 1);
+				var valueInclusive = new DateTime(ticksInclusive, DateTimeKind.Utc);
+				return new Result<DateTime>(valueInclusive, state);
+			}
+			long secondsCount = ((maxSecStart - minSecStart) / tps) + 1;
+			long secondOffset = state.Random.NextInt64(0, secondsCount);
+			var ticks = minSecStart + (secondOffset * tps);
 			var value = new DateTime(ticks, DateTimeKind.Utc);
 			return new Result<DateTime>(value, state);
 		};
-
-	private static long SnapToWholeSeconds(long ticks)
-	{
-		ticks -= ticks % System.TimeSpan.TicksPerSecond; // snap to whole seconds
-		return ticks;
-	}
 }

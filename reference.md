@@ -499,7 +499,7 @@ They form the foundation on which more complex fuzzrs are composed, and are used
 | [Bytes](#bytes)| Produces random bytes in the range 0-255 or within a custom range. |
 | [Chars](#chars)| Generates random lowercase letters or characters within a specified range. |
 | [DateOnlys](#dateonlys)| Creates `DateOnly` values between 1970-01-01 and 2020-12-31 (by default). |
-| [DateTimes](#datetimes)| Produces `DateTime` values between 1970-01-01 and 2020-12-31. |
+| [DateTimes](#datetimes)| Produces `DateTime` values between 1970-01-01 and 2020-12-31 (inclusive), snapped to whole seconds. |
 | [Decimals](#decimals)| Generates random decimal numbers (default 1-100). |
 | [Doubles](#doubles)| Generates random double-precision numbers (default 1-100). |
 | [Enums](#enums)| Randomly selects a defined member of an enum type. |
@@ -551,18 +551,19 @@ Use `Fuzzr.DateOnly()`.
 - `DateOnly?` is automatically detected and generated for object properties.  
 ### DateTimes
 Use `Fuzzr.DateTime()`.  
-- The overload `Fuzzr.DateTime(DateTime min, DateTime max)` generates a DateTime greater than or equal to `min` and less than `max`.  
+- The overload `Fuzzr.DateTime(DateTime min, DateTime max)` generates a `DateTime` in the inclusive range [min, max], snapped to whole seconds.  
+- Generated values are snapped to whole seconds.  
 - Throws an `ArgumentException` when `min` > `max`.  
-- The default fuzzr is (min = new DateTime(1970, 1, 1), max = new DateTime(2020, 12, 31)).  
+- The default fuzzr is (min = new DateTime(1970, 1, 1), max = new DateTime(2020, 12, 31)) inclusive, snapped to whole seconds.  
 - Can be made to return `DateTime?` using the `.Nullable()` combinator.  
 - `DateTime` is automatically detected and generated for object properties.  
 - `DateTime?` is automatically detected and generated for object properties.  
 ### Decimals
 Use `Fuzzr.Decimal()`.  
 
-- The overload `Fuzzr.Decimal(decimal min, decimal max)` generates a decimal greater than or equal to `min` and less than `max`.  
-- The overload `Decimal(int precision)` generates a decimal with `precision` precision.  
-- The overload `Decimal(decimal min, decimal max, int precision)` generates a decimal greater than or equal to `min` and less than `max`, with `precision` precision.  
+- The overload `Fuzzr.Decimal(decimal min, decimal max)` generates a decimal in the range [min, max) (min inclusive, max exclusive).  
+- The overload `Decimal(int precision)` generates a decimal with up to `precision` decimal places.  
+- The overload `Decimal(decimal min, decimal max, int precision)` generates a decimal in the range [min, max) (min inclusive, max exclusive), with up to `precision` decimal places.  
 - When `min == max`, the fuzzr always returns that exact value.  
 - Throws an `ArgumentException` when `min` > `max`.  
 - The default fuzzr is (min = 1, max = 100, precision = 2).  
