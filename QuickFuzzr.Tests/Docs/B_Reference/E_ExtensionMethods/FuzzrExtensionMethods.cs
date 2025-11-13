@@ -1,6 +1,6 @@
 using QuickPulse.Explains;
 
-namespace QuickFuzzr.Tests.Docs.B_Reference.C_ExtensionMethods;
+namespace QuickFuzzr.Tests.Docs.B_Reference.E_ExtensionMethods;
 
 [DocFile]
 [DocContent(

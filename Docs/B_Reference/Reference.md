@@ -9,16 +9,16 @@ If you're looking for examples or background explanations, see the guide or cook
 All examples and summaries are real, verified through executable tests, ensuring what you see here is exactly what QuickFuzzr does.  
 ## Contents
 
-- [Primitive Fuzzrs][PrimitiveFuzzrs]
 - [Fuzzing][Fuzzing]
-- [Fuzzr Extension Methods][FuzzrExtensionMethods]
 - [Configuration][Configuring]
+- [Fuzzr Extension Methods][FuzzrExtensionMethods]
+- [Primitive Fuzzrs][PrimitiveFuzzrs]
   
 
 [PrimitiveFuzzrs]: P_Primitives/PrimitiveFuzzrs.md
 
 [Fuzzing]: B_Fuzzing/Fuzzing.md
 
-[FuzzrExtensionMethods]: C_ExtensionMethods/FuzzrExtensionMethods.md
+[FuzzrExtensionMethods]: E_ExtensionMethods/FuzzrExtensionMethods.md
 
 [Configuring]: D_Configuration/Configuring.md

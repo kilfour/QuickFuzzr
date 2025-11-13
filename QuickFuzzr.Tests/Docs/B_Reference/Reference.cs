@@ -1,6 +1,6 @@
 using QuickFuzzr.Tests.Docs.B_Reference.P_Primitives;
 using QuickFuzzr.Tests.Docs.B_Reference.B_Fuzzing;
-using QuickFuzzr.Tests.Docs.B_Reference.C_ExtensionMethods;
+using QuickFuzzr.Tests.Docs.B_Reference.E_ExtensionMethods;
 using QuickFuzzr.Tests.Docs.B_Reference.D_Configuration;
 using QuickPulse.Explains;
 
@@ -26,10 +26,10 @@ public class Reference
     [DocHeader("Contents")]
     [DocContent(
 @"
-- [Primitive Fuzzrs][PrimitiveFuzzrs]
 - [Fuzzing][Fuzzing]
-- [Fuzzr Extension Methods][FuzzrExtensionMethods]
 - [Configuration][Configuring]
+- [Fuzzr Extension Methods][FuzzrExtensionMethods]
+- [Primitive Fuzzrs][PrimitiveFuzzrs]
 ")]
     public static void Contents() { }
 }

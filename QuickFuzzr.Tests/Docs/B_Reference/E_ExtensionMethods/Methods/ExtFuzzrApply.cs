@@ -1,7 +1,7 @@
 ﻿using QuickFuzzr.Tests._Tools;
 using QuickPulse.Explains;
 
-namespace QuickFuzzr.Tests.Docs.B_Reference.C_ExtensionMethods.Methods;
+namespace QuickFuzzr.Tests.Docs.B_Reference.E_ExtensionMethods.Methods;
 
 [DocFile]
 [DocFileCodeHeader("Apply(this FuzzrOf<T> fuzzr, Action<T> action)")]
