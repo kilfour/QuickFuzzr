@@ -5,6 +5,7 @@ namespace QuickFuzzr.Tests.Docs.B_Reference.C_ExtensionMethods.Methods;
 
 [DocFile]
 [DocFileCodeHeader("ExtFuzzr.AsObject(this FuzzrOf<T> fuzzr)")]
+[DocColumn(FuzzrExtensionMethods.Columns.Description, "Boxes generated values as `object` without modifying them.")]
 public class ExtFuzzrAsObject
 {
 

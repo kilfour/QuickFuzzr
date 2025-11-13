@@ -6,6 +6,7 @@ namespace QuickFuzzr.Tests.Docs.B_Reference.C_ExtensionMethods.Methods;
 
 [DocFile]
 [DocFileCodeHeader("ExtFuzzr.Unique<T>(this FuzzrOf<T> fuzzr, object key)")]
+[DocColumn(FuzzrExtensionMethods.Columns.Description, "Ensures all generated values are unique within the given key scope.")]
 [DocContent("Using the `.Unique(object key)` extension method.")]
 public class ExtFuzzrUnique
 {

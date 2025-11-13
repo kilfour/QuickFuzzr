@@ -5,6 +5,7 @@ namespace QuickFuzzr.Tests.Docs.B_Reference.C_ExtensionMethods.Methods;
 
 [DocFile]
 [DocFileCodeHeader("ExtFuzzr.WithDefault(this FuzzrOf<T> fuzzr, T def = default)")]
+[DocColumn(FuzzrExtensionMethods.Columns.Description, "Returns def instead of throwing when the underlying fuzzr fails due to empty choices.")]
 public class ExtFuzzrWithDefault
 {
     [Fact]
