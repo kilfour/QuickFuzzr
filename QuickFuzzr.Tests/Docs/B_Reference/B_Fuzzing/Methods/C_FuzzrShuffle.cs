@@ -10,7 +10,7 @@ namespace QuickFuzzr.Tests.Docs.B_Reference.B_Fuzzing.Methods;
 @"Creates a fuzzr that produces a random permutation of the provided sequence.  
 Use for randomized ordering, unbiased sampling without replacement.
 ")]
-public class FuzzrShuffle
+public class C_FuzzrShuffle
 {
     [CodeSnippet]
     [CodeRemove("return ")]
@@ -22,7 +22,7 @@ public class FuzzrShuffle
 
     [Fact]
     [DocUsage]
-    [DocExample(typeof(FuzzrShuffle), nameof(Shuffle_Example_Fuzzr))]
+    [DocExample(typeof(C_FuzzrShuffle), nameof(Shuffle_Example_Fuzzr))]
     public void Shuffle_Example()
     {
         var result = Shuffle_Example_Fuzzr()

@@ -6,7 +6,7 @@ namespace QuickFuzzr.Tests.Docs.B_Reference.B_Fuzzing.Methods;
 [DocFile]
 [DocFileHeader("Fuzzr.Counter(object key)")]
 [DocColumn(Fuzzing.Columns.Description, "Generates a sequential integer per key, starting at 1.")]
-public class FuzzrCounter
+public class D_FuzzrCounter
 {
 	[Fact]
 	[DocContent(
@@ -26,7 +26,7 @@ Useful for generating unique sequential IDs or counters.
 
 	[Fact]
 	[DocUsage]
-	[DocExample(typeof(FuzzrCounter), nameof(Usage_Example))]
+	[DocExample(typeof(D_FuzzrCounter), nameof(Usage_Example))]
 	public void Counter_Many_Produces_Expected_Run()
 		=> Assert.Equal([1, 2, 3, 4, 5], Usage_Example());
 

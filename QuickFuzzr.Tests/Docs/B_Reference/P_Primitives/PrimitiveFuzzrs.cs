@@ -1,6 +1,6 @@
 using QuickPulse.Explains;
 
-namespace QuickFuzzr.Tests.Docs.B_Reference.A_Primitives;
+namespace QuickFuzzr.Tests.Docs.B_Reference.P_Primitives;
 
 [DocFile]
 [DocContent(

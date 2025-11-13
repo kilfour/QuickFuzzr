@@ -9,7 +9,7 @@ namespace QuickFuzzr.Tests.Docs.B_Reference.B_Fuzzing.Methods;
 [DocFileCodeHeader("Fuzzr.OneOf<T>(params <T>[] values)")]
 [DocColumn(Fuzzing.Columns.Description, "Randomly selects one of the provided values.")]
 [DocContent("Creates a fuzzr that randomly selects one value or fuzzr from the provided options.")]
-public class FuzzrOneOf
+public class B_FuzzrOneOf
 {
     [CodeSnippet]
     [CodeRemove("return")]
@@ -20,7 +20,7 @@ public class FuzzrOneOf
 
     [Fact]
     [DocUsage]
-    [DocExample(typeof(FuzzrOneOf), nameof(GetFuzzr))]
+    [DocExample(typeof(B_FuzzrOneOf), nameof(GetFuzzr))]
     public void Example()
     {
         var result = GetFuzzr().Generate(42);
@@ -71,7 +71,7 @@ public class FuzzrOneOf
     [Fact]
     [DocContent("- `Fuzzr.OneOf(params (int Weight, T Value)[] weightedValues)`:")]
     [DocContent("  Selects a value using weighted probability. The higher the weight, the more likely the value is to be chosen.")]
-    [DocExample(typeof(FuzzrOneOf), nameof(Weights_Example_GetFuzzr))]
+    [DocExample(typeof(B_FuzzrOneOf), nameof(Weights_Example_GetFuzzr))]
     public void Weights_Example()
     {
         var fuzzr = Weights_Example_GetFuzzr().Many(30);

@@ -15,7 +15,7 @@ All examples and summaries are real, verified through executable tests, ensuring
 - [Configuration][Configuring]
   
 
-[PrimitiveFuzzrs]: A_Primitives/PrimitiveFuzzrs.md
+[PrimitiveFuzzrs]: P_Primitives/PrimitiveFuzzrs.md
 
 [Fuzzing]: B_Fuzzing/Fuzzing.md
 

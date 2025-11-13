@@ -1,7 +1,7 @@
 ﻿using QuickFuzzr.Tests._Tools;
 using QuickPulse.Explains;
 
-namespace QuickFuzzr.Tests.Docs.B_Reference.A_Primitives.Methods;
+namespace QuickFuzzr.Tests.Docs.B_Reference.P_Primitives.Methods;
 
 [DocFile]
 [DocFileHeader("TimeSpans")]

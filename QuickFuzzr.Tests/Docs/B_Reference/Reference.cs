@@ -1,4 +1,4 @@
-using QuickFuzzr.Tests.Docs.B_Reference.A_Primitives;
+using QuickFuzzr.Tests.Docs.B_Reference.P_Primitives;
 using QuickFuzzr.Tests.Docs.B_Reference.B_Fuzzing;
 using QuickFuzzr.Tests.Docs.B_Reference.C_ExtensionMethods;
 using QuickFuzzr.Tests.Docs.B_Reference.D_Configuration;
