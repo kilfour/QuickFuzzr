@@ -43,7 +43,6 @@ public class DateOnlys
 	}
 
 	[Fact]
-	[DocContent("- Can be made to return `DateOnly?` using the `.Nullable()` combinator.")]
 	public void Nullable()
 	{
 		var fuzzr = Fuzzr.DateOnly().Nullable();
@@ -65,7 +64,6 @@ public class DateOnlys
 	}
 
 	[Fact]
-	[DocContent("- `DateOnly` is automatically detected and generated for object properties.")]
 	public void Property()
 	{
 		var fuzzr = Fuzzr.One<SomeThingToGenerate>();
@@ -76,7 +74,6 @@ public class DateOnlys
 	}
 
 	[Fact]
-	[DocContent("- `DateOnly?` is automatically detected and generated for object properties.")]
 	public void NullableProperty()
 	{
 		var fuzzr = Fuzzr.One<SomeThingToGenerate>();

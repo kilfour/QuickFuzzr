@@ -52,18 +52,15 @@ public class Bytes
             ("== 1", a => a == 1));
 
     [Fact]
-    [DocContent("- Can be made to return `byte?` using the `.Nullable()` combinator.")]
     public void Nullable()
         => CheckIf.GeneratesNullAndNotNull(Fuzzr.Byte().Nullable());
 
     [Fact]
-    [DocContent("- `byte` is automatically detected and generated for object properties.")]
     public void Property()
         => CheckIf.GeneratedValuesShouldAllSatisfy(Fuzzr.One<PrimitivesBag<byte>>(),
             ("Value in range", a => a.Value >= byte.MinValue && a.Value <= byte.MaxValue));
 
     [Fact]
-    [DocContent("- `byte?` is automatically detected and generated for object properties.")]
     public void NullableProperty()
         => CheckIf.GeneratesNullAndNotNull(
             Fuzzr.One<PrimitivesBag<byte>>().Select(a => a.NullableValue));

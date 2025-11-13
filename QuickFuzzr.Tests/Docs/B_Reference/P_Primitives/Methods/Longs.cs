@@ -31,18 +31,15 @@ public class Longs
 			("value >= 1", a => a >= 1), ("value < 100", a => a < 100));
 
 	[Fact]
-	[DocContent("- Can be made to return `long?` using the `.Nullable()` combinator.")]
 	public void Nullable()
 		=> CheckIf.GeneratesNullAndNotNull(Fuzzr.Long().Nullable());
 
 	[Fact]
-	[DocContent("- `long` is automatically detected and generated for object properties.")]
 	public void Property()
 		=> CheckIf.GeneratedValuesShouldAllSatisfy(Fuzzr.One<PrimitivesBag<long>>(),
 			("value != 0", a => a.Value != 0));
 
 	[Fact]
-	[DocContent("- `long?` is automatically detected and generated for object properties.")]
 	public void NullableProperty()
 		=> CheckIf.GeneratesNullAndNotNull(
 			Fuzzr.One<PrimitivesBag<long>>().Select(a => a.NullableValue));

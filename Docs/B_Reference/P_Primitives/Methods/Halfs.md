@@ -5,6 +5,3 @@ Use `Fuzzr.Half()`.
   *Note:* Due to floating-point rounding, max may occasionally be produced.  
 - Throws an `ArgumentException` when `min` > `max`.  
 - The default fuzzr is (min = (Half)1, max = (Half)100).  
-- Can be made to return `Half?` using the `.Nullable()` combinator.  
-- `Half` is automatically detected and generated for object properties.  
-- `Half?` is automatically detected and generated for object properties.  

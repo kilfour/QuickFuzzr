@@ -77,18 +77,15 @@ public class Strings
 			("is 'a'", a => a.All(b => b == 'a')));
 
 	[Fact]
-	[DocContent("- Can be made to return `string?` using the `.NullableRef()` combinator.")]
 	public void Nullable()
 		=> CheckIf.GeneratesNullAndNotNull(Fuzzr.String().NullableRef());
 
 	[Fact]
-	[DocContent("- `string` is automatically detected and generated for object properties.")]
 	public void Property()
 		=> CheckIf.GeneratedValuesShouldAllSatisfy(Fuzzr.One<StringBag>(),
 			("value.Length >= 1", a => a.Value.Length >= 1));
 
 	[Fact]
-	[DocContent("- `string?` is automatically detected and generated for object properties.")]
 	public void NullableProperty()
 		=> CheckIf.GeneratesNullAndNotNull(
 			Fuzzr.One<StringBag>().Select(a => a.NullableValue));

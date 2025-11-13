@@ -28,18 +28,15 @@ public class UInts
 			("value >= 1", a => a >= 1), ("value < 100", a => a < 100));
 
 	[Fact]
-	[DocContent("- Can be made to return `uint?` using the `.Nullable()` combinator.")]
 	public void Nullable()
 		=> CheckIf.GeneratesNullAndNotNull(Fuzzr.UInt().Nullable());
 
 	[Fact]
-	[DocContent("- `uint` is automatically detected and generated for object properties.")]
 	public void Property()
 		=> CheckIf.GeneratedValuesShouldAllSatisfy(Fuzzr.One<PrimitivesBag<uint>>(),
 			("value != 0", a => a.Value != 0));
 
 	[Fact]
-	[DocContent("- `uint?` is automatically detected and generated for object properties.")]
 	public void NullableProperty()
 		=> CheckIf.GeneratesNullAndNotNull(
 			Fuzzr.One<PrimitivesBag<uint>>().Select(a => a.NullableValue));

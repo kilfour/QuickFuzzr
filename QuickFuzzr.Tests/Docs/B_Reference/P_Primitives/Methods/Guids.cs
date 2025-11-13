@@ -27,7 +27,6 @@ public class Guids
 	}
 
 	[Fact]
-	[DocContent("- Can be made to return `Guid?` using the `.Nullable()` combinator.")]
 	public void Nullable()
 	{
 		var fuzzr = Fuzzr.Guid().Nullable();
@@ -49,7 +48,6 @@ public class Guids
 	}
 
 	[Fact]
-	[DocContent("- `Guid` is automatically detected and generated for object properties.")]
 	public void Property()
 	{
 		var fuzzr = Fuzzr.One<SomeThingToGenerate>();
@@ -60,7 +58,6 @@ public class Guids
 	}
 
 	[Fact]
-	[DocContent("- `Guid?` is automatically detected and generated for object properties.")]
 	public void NullableProperty()
 	{
 		var fuzzr = Fuzzr.One<SomeThingToGenerate>();

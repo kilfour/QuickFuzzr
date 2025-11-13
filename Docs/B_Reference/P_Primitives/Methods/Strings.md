@@ -7,6 +7,3 @@ Use `Fuzzr.String()`.
 - Throws an `ArgumentOutOfRangeException` when `length` < 0.  
 - The default fuzzr always generates every char element of the string to be between lower case 'a' and lower case 'z'.  
 - A version exists for all methods mentioned above that takes a `FuzzrOf<char>` as parameter and then this one will be used to build up the resulting string.  
-- Can be made to return `string?` using the `.NullableRef()` combinator.  
-- `string` is automatically detected and generated for object properties.  
-- `string?` is automatically detected and generated for object properties.  

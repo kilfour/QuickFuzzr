@@ -18,7 +18,6 @@ public class Enums
 	}
 
 	[Fact]
-	[DocContent("- An Enumeration is automatically detected and generated for object properties.")]
 	public void Property()
 	{
 		CheckIf.TheseValuesAreGenerated(
@@ -27,7 +26,6 @@ public class Enums
 	}
 
 	[Fact]
-	[DocContent("- A nullable enumeration is automatically detected and generated for object properties.")]
 	public void NullableProperty()
 	{
 		CheckIf.GeneratesNullAndNotNull(

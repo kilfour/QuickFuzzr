@@ -40,18 +40,15 @@ public class Halfs
             ("a == 0", a => a == (Half)0));
 
     [Fact]
-    [DocContent("- Can be made to return `Half?` using the `.Nullable()` combinator.")]
     public void Nullable()
         => CheckIf.GeneratesNullAndNotNull(Fuzzr.Half().Nullable());
 
     [Fact]
-    [DocContent("- `Half` is automatically detected and generated for object properties.")]
     public void Property()
         => CheckIf.GeneratedValuesShouldAllSatisfy(Fuzzr.One<PrimitivesBag<Half>>(),
             ("value != 0", a => a.Value != (Half)0));
 
     [Fact]
-    [DocContent("- `Half?` is automatically detected and generated for object properties.")]
     public void NullableProperty()
         => CheckIf.GeneratesNullAndNotNull(
             Fuzzr.One<PrimitivesBag<Half>>().Select(a => a.NullableValue));

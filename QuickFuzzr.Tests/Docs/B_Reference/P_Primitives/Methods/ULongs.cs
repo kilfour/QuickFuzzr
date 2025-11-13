@@ -27,18 +27,15 @@ public class ULongs
 			("value >= 1", a => a >= 1), ("value < 100", a => a < 100));
 
 	[Fact]
-	[DocContent("- Can be made to return `ulong?` using the `.Nullable()` combinator.")]
 	public void Nullable()
 		=> CheckIf.GeneratesNullAndNotNull(Fuzzr.ULong().Nullable());
 
 	[Fact]
-	[DocContent("- `ulong` is automatically detected and generated for object properties.")]
 	public void Property()
 		=> CheckIf.GeneratedValuesShouldAllSatisfy(Fuzzr.One<PrimitivesBag<ulong>>(),
 			("value != 0", a => a.Value != 0));
 
 	[Fact]
-	[DocContent("- `ulong?` is automatically detected and generated for object properties.")]
 	public void NullableProperty()
 		=> CheckIf.GeneratesNullAndNotNull(
 			Fuzzr.One<PrimitivesBag<ulong>>().Select(a => a.NullableValue));

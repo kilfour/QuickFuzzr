@@ -59,18 +59,15 @@ public class Decimals
 			("precision <= 2", a => GetPrecision(a) <= 2));
 
 	[Fact]
-	[DocContent("- Can be made to return `decimal?` using the `.Nullable()` combinator.")]
 	public void Nullable()
 		=> CheckIf.GeneratesNullAndNotNull(Fuzzr.Decimal().Nullable());
 
 	[Fact]
-	[DocContent("- `decimal` is automatically detected and generated for object properties.")]
 	public void Property()
 		=> CheckIf.GeneratedValuesShouldAllSatisfy(Fuzzr.One<PrimitivesBag<decimal>>(),
 			("value != 0", a => a.Value != 0));
 
 	[Fact]
-	[DocContent("- `decimal?` is automatically detected and generated for object properties.")]
 	public void NullableProperty()
 		=> CheckIf.GeneratesNullAndNotNull(
 			Fuzzr.One<PrimitivesBag<decimal>>().Select(a => a.NullableValue));

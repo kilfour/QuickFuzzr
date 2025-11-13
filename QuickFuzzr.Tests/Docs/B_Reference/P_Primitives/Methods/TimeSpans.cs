@@ -26,14 +26,12 @@ public class TimeSpans
 	}
 
 	[Fact]
-	[DocContent("- Can be made to return `TimeSpan?` using the `.Nullable()` combinator.")]
 	public void Nullable()
 	{
 		CheckIf.GeneratesNullAndNotNull(Fuzzr.TimeSpan().Nullable());
 	}
 
 	[Fact]
-	[DocContent("- `TimeSpan` is automatically detected and generated for object properties.")]
 	public void Property()
 	{
 		CheckIf.GeneratedValuesShouldAllSatisfy(
@@ -42,7 +40,6 @@ public class TimeSpans
 	}
 
 	[Fact]
-	[DocContent("- `TimeSpan?` is automatically detected and generated for object properties.")]
 	public void NullableProperty()
 	{
 		CheckIf.GeneratesNullAndNotNull(

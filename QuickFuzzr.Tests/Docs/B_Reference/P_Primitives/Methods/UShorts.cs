@@ -28,18 +28,15 @@ public class UShorts
 			("value >= 1", a => a >= 1), ("value < 100", a => a < 100));
 
 	[Fact]
-	[DocContent("- Can be made to return `ushort?` using the `.Nullable()` combinator.")]
 	public void Nullable()
 		=> CheckIf.GeneratesNullAndNotNull(Fuzzr.UShort().Nullable());
 
 	[Fact]
-	[DocContent("- `ushort` is automatically detected and generated for object properties.")]
 	public void Property()
 		=> CheckIf.GeneratedValuesShouldAllSatisfy(Fuzzr.One<PrimitivesBag<ushort>>(),
 			("value != 0", a => a.Value != 0));
 
 	[Fact]
-	[DocContent("- `ushort?` is automatically detected and generated for object properties.")]
 	public void NullableProperty()
 		=> CheckIf.GeneratesNullAndNotNull(
 			Fuzzr.One<PrimitivesBag<ushort>>().Select(a => a.NullableValue));

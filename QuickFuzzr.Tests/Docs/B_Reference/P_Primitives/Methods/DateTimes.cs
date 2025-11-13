@@ -1,4 +1,5 @@
 ﻿using QuickFuzzr.Tests._Tools;
+using QuickFuzzr.Tests._Tools.Models;
 using QuickPulse.Explains;
 
 namespace QuickFuzzr.Tests.Docs.B_Reference.P_Primitives.Methods;
@@ -54,7 +55,6 @@ public class DateTimes
 	}
 
 	[Fact]
-	[DocContent("- Can be made to return `DateTime?` using the `.Nullable()` combinator.")]
 	public void Nullable()
 	{
 		var fuzzr = Fuzzr.DateTime().Nullable();
@@ -76,26 +76,24 @@ public class DateTimes
 	}
 
 	[Fact]
-	[DocContent("- `DateTime` is automatically detected and generated for object properties.")]
 	public void Property()
 	{
-		var fuzzr = Fuzzr.One<SomeThingToGenerate>();
+		var fuzzr = Fuzzr.One<PrimitivesBag<DateTime>>();
 		for (int i = 0; i < 10; i++)
 		{
-			Assert.NotEqual(new DateTime(), fuzzr.Generate().AProperty);
+			Assert.NotEqual(new DateTime(), fuzzr.Generate().Value);
 		}
 	}
 
 	[Fact]
-	[DocContent("- `DateTime?` is automatically detected and generated for object properties.")]
 	public void NullableProperty()
 	{
-		var fuzzr = Fuzzr.One<SomeThingToGenerate>();
+		var fuzzr = Fuzzr.One<PrimitivesBag<DateTime>>();
 		var isSomeTimesNull = false;
 		var isSomeTimesNotNull = false;
 		for (int i = 0; i < 50; i++)
 		{
-			var value = fuzzr.Generate().ANullableProperty;
+			var value = fuzzr.Generate().NullableValue;
 			if (value.HasValue)
 			{
 				isSomeTimesNotNull = true;
@@ -106,11 +104,5 @@ public class DateTimes
 		}
 		Assert.True(isSomeTimesNull);
 		Assert.True(isSomeTimesNotNull);
-	}
-
-	public class SomeThingToGenerate
-	{
-		public DateTime AProperty { get; set; }
-		public DateTime? ANullableProperty { get; set; }
 	}
 }

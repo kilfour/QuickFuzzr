@@ -55,14 +55,12 @@ public class Chars
 	}
 
 	[Fact]
-	[DocContent("- Can be made to return `char?` using the `.Nullable()` combinator.")]
 	public void Nullable()
 	{
 		CheckIf.GeneratesNullAndNotNull(Fuzzr.Char().Nullable());
 	}
 
 	[Fact]
-	[DocContent("- `char` is automatically detected and generated for object properties.")]
 	public void Property()
 	{
 		var fuzzr = Fuzzr.One<PrimitivesBag<char>>();
@@ -74,7 +72,6 @@ public class Chars
 	}
 
 	[Fact]
-	[DocContent("- `char?` is automatically detected and generated for object properties.")]
 	public void NullableProperty()
 	{
 		CheckIf.GeneratesNullAndNotNull(

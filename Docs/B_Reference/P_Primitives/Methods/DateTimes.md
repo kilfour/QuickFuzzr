@@ -4,6 +4,3 @@ Use `Fuzzr.DateTime()`.
 - Generated values are snapped to whole seconds.  
 - Throws an `ArgumentException` when `min` > `max`.  
 - The default fuzzr is (min = new DateTime(1970, 1, 1), max = new DateTime(2020, 12, 31)) inclusive, snapped to whole seconds.  
-- Can be made to return `DateTime?` using the `.Nullable()` combinator.  
-- `DateTime` is automatically detected and generated for object properties.  
-- `DateTime?` is automatically detected and generated for object properties.  

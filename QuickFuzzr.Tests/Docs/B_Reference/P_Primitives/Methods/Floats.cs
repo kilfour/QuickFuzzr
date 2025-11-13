@@ -39,7 +39,6 @@ public class Floats
 	}
 
 	[Fact]
-	[DocContent("- Can be made to return `float?` using the `.Nullable()` combinator.")]
 	public void Nullable()
 	{
 		var fuzzr = Fuzzr.Float().Nullable();
@@ -61,7 +60,6 @@ public class Floats
 	}
 
 	[Fact]
-	[DocContent("- `float` is automatically detected and generated for object properties.")]
 	public void Property()
 	{
 		var fuzzr = Fuzzr.One<SomeThingToGenerate>();
@@ -72,7 +70,6 @@ public class Floats
 	}
 
 	[Fact]
-	[DocContent("- `float?` is automatically detected and generated for object properties.")]
 	public void NullableProperty()
 	{
 		var fuzzr = Fuzzr.One<SomeThingToGenerate>();

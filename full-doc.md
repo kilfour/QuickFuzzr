@@ -1353,6 +1353,10 @@ QuickFuzzr includes built-in fuzzrs for all common primitive types.
 These cover the usual suspects: numbers, booleans, characters, strings, dates, times, ...  
 All with sensible defaults and range-based overloads.
 They form the foundation on which more complex fuzzrs are composed, and are used automatically when generating object properties.
+
+> *All primitive fuzzrs automatically drive object property generation.
+> Nullable and non-nullable variants are both supported.
+> Each fuzzr also supports `.Nullable(...)` / `.NullableRef(...)` as appropriate.*
   
 | Fuzzr| Description |
 | -| - |
@@ -1378,10 +1382,7 @@ They form the foundation on which more complex fuzzrs are composed, and are used
 | [UShorts](#ushorts)| Produces unsigned 16-bit integers (default 1-100). |
 #### Booleans
 Use `Fuzzr.Bool()`.  
-- The default fuzzr generates True or False.  
-- Can be made to return `bool?` using the `.Nullable()` combinator.  
-- `bool` is automatically detected and generated for object properties.  
-- `bool?` is automatically detected and generated for object properties.  
+- Generates True or False.  
 #### Bytes
 Use `Fuzzr.Byte()`.  
 - The default fuzzr produces a `byte` in the full range (`0`-`255`).  
@@ -1391,34 +1392,22 @@ Use `Fuzzr.Byte()`.
 - Throws an `ArgumentOutOfRangeException` when `max` > `byte.MaxValue` (i.e. `> 255`).  
 - When `min == max`, the fuzzr always returns that exact value.  
 - Boundary coverage: over time, values at both ends of the interval should appear.  
-- Can be made to return `byte?` using the `.Nullable()` combinator.  
-- `byte` is automatically detected and generated for object properties.  
-- `byte?` is automatically detected and generated for object properties.  
 #### Chars
 Use `Fuzzr.Char()`.  
 - The overload `Fuzzr.Char(char min, char max)` generates a char greater than or equal to `min` and less than or equal to `max`.  
 - Throws an `ArgumentException` when `min` > `max`.  
 - The default fuzzr always generates a char between lower case 'a' and lower case 'z'.  
-- Can be made to return `char?` using the `.Nullable()` combinator.  
-- `char` is automatically detected and generated for object properties.  
-- `char?` is automatically detected and generated for object properties.  
 #### DateOnlys
 Use `Fuzzr.DateOnly()`.  
 - The overload `Fuzzr.DateOnly(DateOnly min, DateOnly max)` generates a DateOnly greater than or equal to `min` and less than or equal to `max`.  
 - Throws an `ArgumentException` when `min` > `max`.  
 - The default fuzzr is (min = new DateOnly(1970, 1, 1), max = new DateOnly(2020, 12, 31)).  
-- Can be made to return `DateOnly?` using the `.Nullable()` combinator.  
-- `DateOnly` is automatically detected and generated for object properties.  
-- `DateOnly?` is automatically detected and generated for object properties.  
 #### DateTimes
 Use `Fuzzr.DateTime()`.  
 - The overload `Fuzzr.DateTime(DateTime min, DateTime max)` generates a `DateTime` in the inclusive range [min, max], snapped to whole seconds.  
 - Generated values are snapped to whole seconds.  
 - Throws an `ArgumentException` when `min` > `max`.  
 - The default fuzzr is (min = new DateTime(1970, 1, 1), max = new DateTime(2020, 12, 31)) inclusive, snapped to whole seconds.  
-- Can be made to return `DateTime?` using the `.Nullable()` combinator.  
-- `DateTime` is automatically detected and generated for object properties.  
-- `DateTime?` is automatically detected and generated for object properties.  
 #### Decimals
 Use `Fuzzr.Decimal()`.  
 
@@ -1428,39 +1417,25 @@ Use `Fuzzr.Decimal()`.
 - When `min == max`, the fuzzr always returns that exact value.  
 - Throws an `ArgumentException` when `min` > `max`.  
 - The default fuzzr is (min = 1, max = 100, precision = 2).  
-- Can be made to return `decimal?` using the `.Nullable()` combinator.  
-- `decimal` is automatically detected and generated for object properties.  
-- `decimal?` is automatically detected and generated for object properties.  
 #### Doubles
 Use `Fuzzr.Double()`.  
 - The overload `Fuzzr.Double(double min, double max)` generates a double greater than or equal to `min` and less than `max`.  
 - Throws an `ArgumentException` when `min` > `max`.  
 - The default fuzzr is (min = 1, max = 100).  
-- Can be made to return `double?` using the `.Nullable()` combinator.  
-- `double` is automatically detected and generated for object properties.  
-- `double?` is automatically detected and generated for object properties.  
 #### Enums
 Use `Fuzzr.Enum<T>()`, where T is the type of Enum you want to generate.  
 > Enums are included here for convenience. While not numeric primitives themselves, they are generated as atomic values from their defined members.  
 - The default fuzzr just picks a random value from all enumeration values.  
-- An Enumeration is automatically detected and generated for object properties.  
-- A nullable enumeration is automatically detected and generated for object properties.  
 - Passing in a non Enum type for T throws an ArgumentException.  
 #### Floats
 Use `Fuzzr.Float()`.  
 - The overload `Fuzzr.Float(float min, float max)` generates a float greater than or equal to `min` and less than `max`.  
 - Throws an `ArgumentException` when `min` > `max`.  
 - The default fuzzr is (min = 1, max = 100).  
-- Can be made to return `float?` using the `.Nullable()` combinator.  
-- `float` is automatically detected and generated for object properties.  
-- `float?` is automatically detected and generated for object properties.  
 #### Guids
 Use `Fuzzr.Guid()`. *There is no overload.*  
 - The default fuzzr never generates Guid.Empty.  
 - `Fuzzr.Guid()` is deterministic when seeded.  
-- Can be made to return `Guid?` using the `.Nullable()` combinator.  
-- `Guid` is automatically detected and generated for object properties.  
-- `Guid?` is automatically detected and generated for object properties.  
 #### Halfs
 Use `Fuzzr.Half()`.  
 
@@ -1468,33 +1443,21 @@ Use `Fuzzr.Half()`.
   *Note:* Due to floating-point rounding, max may occasionally be produced.  
 - Throws an `ArgumentException` when `min` > `max`.  
 - The default fuzzr is (min = (Half)1, max = (Half)100).  
-- Can be made to return `Half?` using the `.Nullable()` combinator.  
-- `Half` is automatically detected and generated for object properties.  
-- `Half?` is automatically detected and generated for object properties.  
 #### Ints
 Use `Fuzzr.Int()`.  
 - The overload `Fuzzr.Int(int min, int max)` generates an int greater than or equal to `min` and less than `max`.  
 - Throws an `ArgumentException` when `min` > `max`.  
 - The default fuzzr is (min = 1, max = 100).  
-- Can be made to return `int?` using the `.Nullable()` combinator.  
-- `int` is automatically detected and generated for object properties.  
-- `int?` is automatically detected and generated for object properties.  
 #### Longs
 Use `Fuzzr.Long()`.  
 - The overload `Fuzzr.Long(long min, long max)` generates a long greater than or equal to `min` and less than `max`.  
 - Throws an `ArgumentException` when `min` > `max`.  
 - The default fuzzr is (min = 1, max = 100).  
-- Can be made to return `long?` using the `.Nullable()` combinator.  
-- `long` is automatically detected and generated for object properties.  
-- `long?` is automatically detected and generated for object properties.  
 #### Shorts
 Use `Fuzzr.Short()`.  
 - The overload `Fuzzr.Short(short min, short max)` generates a short greater than or equal to `min` and less than `max`.  
 - Throws an `ArgumentException` when `min` > `max`.  
 - The default fuzzr is (min = 1, max = 100).  
-- Can be made to return `short?` using the `.Nullable()` combinator.  
-- `short` is automatically detected and generated for object properties.  
-- `short?` is automatically detected and generated for object properties.  
 #### Strings
 Use `Fuzzr.String()`.  
 - The Default fuzzr generates a string of length greater than or equal to 1 and less than or equal to 10.  
@@ -1504,47 +1467,29 @@ Use `Fuzzr.String()`.
 - Throws an `ArgumentOutOfRangeException` when `length` < 0.  
 - The default fuzzr always generates every char element of the string to be between lower case 'a' and lower case 'z'.  
 - A version exists for all methods mentioned above that takes a `FuzzrOf<char>` as parameter and then this one will be used to build up the resulting string.  
-- Can be made to return `string?` using the `.NullableRef()` combinator.  
-- `string` is automatically detected and generated for object properties.  
-- `string?` is automatically detected and generated for object properties.  
 #### TimeOnlys
 Use `Fuzzr.TimeOnly()`.  
 - The overload `Fuzzr.TimeOnly(TimeOnly min, TimeOnly max)` generates a TimeOnly greater than or equal to `min` and less than `max`.  
 - The default fuzzr is (min = 00:00:00, max = 23:59:59.9999999).  
-- Can be made to return `TimeOnly?` using the `.Nullable()` combinator.  
-- `TimeOnly` is automatically detected and generated for object properties.  
-- `TimeOnly?` is automatically detected and generated for object properties.  
 #### TimeSpans
 Use `Fuzzr.TimeSpan()`.  
 - The overload `Fuzzr.TimeSpan(int max)` generates a TimeSpan with Ticks higher or equal than 1 and lower than max.  
 - The default fuzzr is (max = 1000).  
-- Can be made to return `TimeSpan?` using the `.Nullable()` combinator.  
-- `TimeSpan` is automatically detected and generated for object properties.  
-- `TimeSpan?` is automatically detected and generated for object properties.  
 #### UInts
 Use `Fuzzr.UInt()`.  
 - The overload `Fuzzr.UInt(uint min, uint max)` generates an uint greater than or equal to `min` and less than `max`.  
 - Throws an `ArgumentException` when `min` > `max`.  
 - The default fuzzr is (min = 1, max = 100).  
-- Can be made to return `uint?` using the `.Nullable()` combinator.  
-- `uint` is automatically detected and generated for object properties.  
-- `uint?` is automatically detected and generated for object properties.  
 #### ULongs
 Use `Fuzzr.ULong()`.  
 - The overload `Fuzzr.ULong(ulong min, ulong max)` generates a ulong greater than or equal to `min` and less than `max`.  
 - Throws an `ArgumentException` when `min` > `max`.  
 - The default fuzzr is (min = 1, max = 100).  
-- Can be made to return `ulong?` using the `.Nullable()` combinator.  
-- `ulong` is automatically detected and generated for object properties.  
-- `ulong?` is automatically detected and generated for object properties.  
 #### UShorts
 Use `Fuzzr.UShort()`.  
 - The overload `Fuzzr.UShort(ushort min, ushort max)` generates a ushort greater than or equal to `min` and less than `max`.  
 - Throws an `ArgumentException` when `min` > `max`.  
 - The default fuzzr is (min = 1, max = 100).  
-- Can be made to return `ushort?` using the `.Nullable()` combinator.  
-- `ushort` is automatically detected and generated for object properties.  
-- `ushort?` is automatically detected and generated for object properties.  
 ## Cooking Up a Fuzzr
 ### Contents
 

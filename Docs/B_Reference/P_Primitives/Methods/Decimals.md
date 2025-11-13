@@ -7,6 +7,3 @@ Use `Fuzzr.Decimal()`.
 - When `min == max`, the fuzzr always returns that exact value.  
 - Throws an `ArgumentException` when `min` > `max`.  
 - The default fuzzr is (min = 1, max = 100, precision = 2).  
-- Can be made to return `decimal?` using the `.Nullable()` combinator.  
-- `decimal` is automatically detected and generated for object properties.  
-- `decimal?` is automatically detected and generated for object properties.  

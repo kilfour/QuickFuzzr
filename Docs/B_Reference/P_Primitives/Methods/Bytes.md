@@ -7,6 +7,3 @@ Use `Fuzzr.Byte()`.
 - Throws an `ArgumentOutOfRangeException` when `max` > `byte.MaxValue` (i.e. `> 255`).  
 - When `min == max`, the fuzzr always returns that exact value.  
 - Boundary coverage: over time, values at both ends of the interval should appear.  
-- Can be made to return `byte?` using the `.Nullable()` combinator.  
-- `byte` is automatically detected and generated for object properties.  
-- `byte?` is automatically detected and generated for object properties.  

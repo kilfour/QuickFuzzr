@@ -35,7 +35,6 @@ public class TimeOnlys
 	}
 
 	[Fact]
-	[DocContent("- Can be made to return `TimeOnly?` using the `.Nullable()` combinator.")]
 	public void Nullable()
 	{
 		var fuzzr = Fuzzr.TimeOnly().Nullable();
@@ -57,7 +56,6 @@ public class TimeOnlys
 	}
 
 	[Fact]
-	[DocContent("- `TimeOnly` is automatically detected and generated for object properties.")]
 	public void Property()
 	{
 		var fuzzr = Fuzzr.One<SomeThingToGenerate>();
@@ -68,7 +66,6 @@ public class TimeOnlys
 	}
 
 	[Fact]
-	[DocContent("- `TimeOnly?` is automatically detected and generated for object properties.")]
 	public void NullableProperty()
 	{
 		var fuzzr = Fuzzr.One<SomeThingToGenerate>();
