@@ -11,7 +11,7 @@ Useful for records or classes without parameterless constructors or when `T` has
 and you want to control which one is used during fuzzing.  
 ")] // Check: check multiple constructors random selection
 
-public class ConfigrConstructT
+public class G_ConfigrConstructT
 {
 
 	[CodeSnippet]
@@ -33,7 +33,7 @@ public class ConfigrConstructT
 
 	[Fact]
 	[DocUsage]
-	[DocExample(typeof(ConfigrConstructT), nameof(GetConfig))]
+	[DocExample(typeof(G_ConfigrConstructT), nameof(GetConfig))]
 	public void Works() =>
 		Assert.Equal(42, Generate(GetConfig()).AnInt1);
 
@@ -121,7 +121,7 @@ public class ConfigrConstructT
 	}
 
 	private static string No_Such_Ctor_Message() =>
-@"No constructor found on QuickFuzzr.Tests.Docs.B_Reference.D_Configuration.Methods.ConfigrConstructT+SomeThing with args (String).";
+@"No constructor found on SomeThing with args (String)."; // Check: Update Message
 
 	public class SomeThing
 	{

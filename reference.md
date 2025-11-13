@@ -4,13 +4,12 @@ It lists all available fuzzrs, configuration points, and extension methods, orga
 Each entry includes a concise description of its purpose and behavior,
 serving as a quick lookup for day-to-day use or library integration.
 
-If you're looking for examples or background explanations, see the guide or cookbook.
-
 All examples and summaries are real, verified through executable tests, ensuring what you see here is exactly what QuickFuzzr does.
 
-QuickFuzzr exposes three kinds of building blocks: `FuzzrOf<T>` for value production, `Configr` for generation behavior, and extension methods for modifying fuzzrs. 
-
+QuickFuzzr exposes three kinds of building blocks: `FuzzrOf<T>` for value production, `Configr` for generation behavior, and extension methods for modifying fuzzrs.  
 Everything in this reference fits into one of these three roles.
+
+If you're looking for examples or background explanations, see the guide or cookbook.
   
 ## Contents
 
@@ -140,6 +139,141 @@ Fuzzr.Constant(41);
 Use it to set global defaults, customize properties, control recursion depth,
 select derived types, or wire dynamic behaviors that apply when calling `Fuzzr.One<T>()`.
   
+### Contents
+| Configr| Description |
+| -| - |
+| [Configr&lt;T&gt;.Ignore(...)](#configrtignore)|   |
+| [Configr.Ignore(Func&lt;PropertyInfo, bool&gt; predicate)](#configrignorefuncpropertyinfo-bool-predicate)|   |
+| [Configr&lt;T&gt;.IgnoreAll()](#configrtignoreall)|   |
+| [Configr.IgnoreAll()](#configrignoreall)|   |
+| [Configr&lt;T&gt;.Property(...)](#configrtproperty)|   |
+| [ConfigrProperty&lt;TProperty&gt;(Func&lt;PropertyInfo, bool&gt; predicate, FuzzrOf&lt;TProperty&gt; fuzzr)](#configrpropertytpropertyfuncpropertyinfo-bool-predicate-fuzzroftproperty-fuzzr)|   |
+| [Configr&lt;T&gt;.Construct(FuzzrOf&lt;T1&gt; arg1)](#configrtconstructfuzzroft1-arg1)|   |
+| [Configr&lt;T&gt;AsOneOf(params Type[] types)](#configrtasoneofparams-type-types)|   |
+| [Configr&lt;T&gt;.EndOn&lt;TEnd&gt;()](#configrtendontend)|   |
+| [Configr&lt;T&gt;.Depth(int min, int max)](#configrtdepthint-min-int-max)|   |
+| [Configr.RetryLimit(int limit)](#configrretrylimitint-limit)|   |
+| [Configr<T>.With<TValue>(FuzzrOf<TValue> fuzzr, Func<TValue, FuzzrOf<Intent>> configrFactory)](#configrtwithtvaluefuzzroftvalue-fuzzr-functvalue-fuzzrofintent-configrfactory)|   |
+| [Configr.Primitive&lt;T&gt;(this FuzzrOf&lt;T&gt; fuzzr)](#configrprimitivetthis-fuzzroft-fuzzr)|   |
+| [Configr.EnablePropertyAccessFor(PropertyAccess propertyAccess) / Configr.DisablePropertyAccessFor(PropertyAccess propertyAccess)](#configrenablepropertyaccessforpropertyaccess-propertyaccess-/-configrdisablepropertyaccessforpropertyaccess-propertyaccess)|   |
+### Configr&lt;T&gt;.Ignore(...)
+
+**Usage:**  
+```csharp
+from ignore in Configr<Person>.Ignore(a => a.Name)
+from person in Fuzzr.One<Person>()
+select person;
+// Results in => 
+// ( Person { Name: "", Age: 0 }, Address { Street: "", City: "" } )
+```
+The property specified will be ignored during generation.  
+Derived classes generated also ignore the base property.  
+### Configr.Ignore(Func&lt;PropertyInfo, bool&gt; predicate)
+Skips all properties matching the predicate across all types during generation.  
+Use to exclude recurring patterns like identifiers, foreign keys, or audit fields.  
+
+**Usage:**  
+```csharp
+from ignore in Configr.Ignore(a => a.Name == "Name")
+from person in Fuzzr.One<Person>()
+from fileEntry in Fuzzr.One<FileEntry>()
+select (person, fileEntry);
+// Results in => 
+// ( Person { Name: "", Age: 67 }, FileEntry { Name: "" } )
+```
+### Configr&lt;T&gt;.IgnoreAll()
+
+**Usage:**  
+```csharp
+from ignore in Configr<Person>.IgnoreAll()
+from person in Fuzzr.One<Person>()
+from address in Fuzzr.One<Address>()
+select (person, address);
+// Results in => 
+// ( Person { Name: "", Age: 0 }, Address { Street: "", City: "" } )
+```
+Ignore all properties while generating an object.  
+`IgnoreAll()`does not cause properties on derived classes to be ignored, even inherited properties.  
+### Configr.IgnoreAll()
+Ignore all properties while generating anything.  
+
+**Usage:**  
+```csharp
+from ignore in Configr.IgnoreAll()
+from person in Fuzzr.One<Person>()
+from address in Fuzzr.One<Address>()
+select (person, address);
+// Results in => 
+// ( Person { Name: "", Age: 0 }, Address { Street: "", City: "" } )
+```
+### Configr&lt;T&gt;.Property(...)
+
+**Usage:**  
+```csharp
+ Configr<Thing>.Property(s => s.Id, Fuzzr.Constant(42));
+```
+- The property specified will be generated using the passed in fuzzr.  
+- An overload exists which allows for passing a value instead of a fuzzr.  
+```csharp
+ Configr<Thing>.Property(s => s.Id, 666);
+```
+- Derived classes generated also use the custom property.  
+- Trying to configure a field throws an exception with the following message:  
+```text
+Cannot configure expression 'a => a.Name'.
+It does not refer to a property.
+Fields and methods are not supported by default.
+Possible solutions:
+- Use a property selector (e.g. a => a.PropertyName).
+- Then pass it to Configr<PersonOutInTheFields>.Property(...) to configure generation.
+```
+### ConfigrProperty&lt;TProperty&gt;(Func&lt;PropertyInfo, bool&gt; predicate, FuzzrOf&lt;TProperty&gt; fuzzr)
+
+**Usage:**  
+```csharp
+ Configr.Property(a => a.Name == "Id", Fuzzr.Constant(42));
+```
+Any property matching the predicate will use the specified Fuzzr during generation.  
+A utility overload exists that allows one to pass in a value instead of a fuzzr.  
+```csharp
+ Configr.Property(a => a.Name == "Id", 42);
+```
+Another overload allows you to create a fuzzr dynamically using a `Func<PropertyInfo, FuzzrOf<T>>` factory method.  
+```csharp
+ Configr.Property(a => a.Name == "Id", a => Fuzzr.Constant(42));
+```
+With the same *pass in a value* conveniance helper.  
+```csharp
+ Configr.Property(a => a.Name == "Id", a => 42);
+```
+### Configr&lt;T&gt;.Construct(FuzzrOf&lt;T1&gt; arg1)
+Configures a custom constructor for type T, used when Fuzzr.One<T>() is called.
+Useful for records or classes without parameterless constructors or when `T` has multiple constructors
+and you want to control which one is used during fuzzing.  
+  
+
+**Usage:**  
+```csharp
+Configr<SomeThing>.Construct(Fuzzr.Constant(42));
+```
+
+**Overloads:**  
+```csharp
+Construct<T1,T2>(FuzzrOf<T1> arg1, FuzzrOf<T2> arg2)
+```
+```csharp
+Construct<T1,T2,T3>(FuzzrOf<T1> arg1, FuzzrOf<T2> arg2, FuzzrOf<T3> arg3)
+```
+```csharp
+Construct<T1,T2,T3,T4>(FuzzrOf<T1> arg1, FuzzrOf<T2> arg2, FuzzrOf<T3> arg3, FuzzrOf<T4> arg4)
+```
+```csharp
+Construct<T1,T2,T3,T4,T5>(FuzzrOf<T1> arg1, FuzzrOf<T2> arg2, FuzzrOf<T3> arg3, FuzzrOf<T4> arg4, FuzzrOf<T5> arg5)
+```
+
+**Exceptions:**  
+- `ArgumentNullException`: If one of the `TArg` parameters is null.  
+- `InvalidOperationException`: If no matching constructor is found on type T.  
 ### Configr&lt;T&gt;AsOneOf(params Type[] types)
 Configures inheritance resolution for BaseType, 
 allowing QuickFuzzr to randomly select one of the specified derived types when generating instances.  
@@ -172,52 +306,6 @@ personFuzzr.Many(2).Generate();
   - `DuplicateDerivedTypesException`: When the list of derived types contains duplicates.  
 - `DerivedTypeNotAssignableException`: If any listed type is not a valid subclass of `BaseType`.  
 - `DerivedTypeIsNullException`: If any listed type is `null`.  
-### Configr&lt;T&gt;.Construct(FuzzrOf&lt;T1&gt; arg1)
-Configures a custom constructor for type T, used when Fuzzr.One<T>() is called.
-Useful for records or classes without parameterless constructors or when `T` has multiple constructors
-and you want to control which one is used during fuzzing.  
-  
-
-**Usage:**  
-```csharp
-Configr<SomeThing>.Construct(Fuzzr.Constant(42));
-```
-
-**Overloads:**  
-```csharp
-Construct<T1,T2>(FuzzrOf<T1> arg1, FuzzrOf<T2> arg2)
-```
-```csharp
-Construct<T1,T2,T3>(FuzzrOf<T1> arg1, FuzzrOf<T2> arg2, FuzzrOf<T3> arg3)
-```
-```csharp
-Construct<T1,T2,T3,T4>(FuzzrOf<T1> arg1, FuzzrOf<T2> arg2, FuzzrOf<T3> arg3, FuzzrOf<T4> arg4)
-```
-```csharp
-Construct<T1,T2,T3,T4,T5>(FuzzrOf<T1> arg1, FuzzrOf<T2> arg2, FuzzrOf<T3> arg3, FuzzrOf<T4> arg4, FuzzrOf<T5> arg5)
-```
-
-**Exceptions:**  
-- `ArgumentNullException`: If one of the `TArg` parameters is null.  
-- `InvalidOperationException`: If no matching constructor is found on type T.  
-### Configr&lt;T&gt;.Depth(int min, int max)
-Configures depth constraints for type `T` to control recursive object graph generation. 
-  
-
-**Usage:**  
-```csharp
-Configr<Turtle>.Depth(2, 5);
-// Results in =>
-// Turtle { Down: { Down: { Down: { Down: null } } } }
-```
-Subsequent calls to `Fuzzr.One<T>()` will generate between 2 and 5 nested levels of `Turtle` instances,
-depending on the random draw and available recursion budget.  
-Depth is per type, not global. Each recursive type manages its own budget.
-  
-
-**Exceptions:**  
-- `ArgumentOutOfRangeException`: When min is negative.  
-- `ArgumentOutOfRangeException`: When max is lesser than min  
 ### Configr&lt;T&gt;.EndOn&lt;TEnd&gt;()
   
 Configures a recursion stop condition for type `T`, instructing QuickFuzzr to generate `TEnd` instances instead of continuing deeper.
@@ -244,56 +332,43 @@ select turtle;
 
 **Exceptions:**  
 - `DerivedTypeNotAssignableException`: When `TEnd` is not assignable to `T`.  
-### Configr.Ignore(Func&lt;PropertyInfo, bool&gt; predicate)
-Skips all properties matching the predicate across all types during generation.  
-Use to exclude recurring patterns like identifiers, foreign keys, or audit fields.  
+### Configr&lt;T&gt;.Depth(int min, int max)
+Configures depth constraints for type `T` to control recursive object graph generation. 
+  
 
 **Usage:**  
 ```csharp
-from ignore in Configr.Ignore(a => a.Name == "Name")
-from person in Fuzzr.One<Person>()
-from fileEntry in Fuzzr.One<FileEntry>()
-select (person, fileEntry);
-// Results in => 
-// ( Person { Name: "", Age: 67 }, FileEntry { Name: "" } )
+Configr<Turtle>.Depth(2, 5);
+// Results in =>
+// Turtle { Down: { Down: { Down: { Down: null } } } }
 ```
-### Configr.IgnoreAll()
-Ignore all properties while generating anything.  
+Subsequent calls to `Fuzzr.One<T>()` will generate between 2 and 5 nested levels of `Turtle` instances,
+depending on the random draw and available recursion budget.  
+Depth is per type, not global. Each recursive type manages its own budget.
+  
+
+**Exceptions:**  
+- `ArgumentOutOfRangeException`: When min is negative.  
+- `ArgumentOutOfRangeException`: When max is lesser than min  
+### Configr.RetryLimit(int limit)
 
 **Usage:**  
 ```csharp
-from ignore in Configr.IgnoreAll()
-from person in Fuzzr.One<Person>()
-from address in Fuzzr.One<Address>()
-select (person, address);
-// Results in => 
-// ( Person { Name: "", Age: 0 }, Address { Street: "", City: "" } )
+ Configr.RetryLimit(256);
 ```
-### Configr&lt;T&gt;.IgnoreAll()
-
-**Usage:**  
-```csharp
-from ignore in Configr<Person>.IgnoreAll()
-from person in Fuzzr.One<Person>()
-from address in Fuzzr.One<Address>()
-select (person, address);
-// Results in => 
-// ( Person { Name: "", Age: 0 }, Address { Street: "", City: "" } )
+- Sets the global retry limit used by fuzzrs.  
+- Throws when trying to set limit to a value lesser than 1.  
+- Throws when trying to set limit to a value greater than 1024.  
+```text
+Invalid retry limit value: 1025
+Allowed range: 1-1024
+Possible solutions:
+- Use a value within the allowed range
+- Check for unintended configuration overrides
+- If you need more, consider revising your fuzzr logic instead of increasing the limit
 ```
-Ignore all properties while generating an object.  
-`IgnoreAll()`does not cause properties on derived classes to be ignored, even inherited properties.  
-### Configr&lt;T&gt;.Ignore(...)
-
-**Usage:**  
-```csharp
-from ignore in Configr<Person>.Ignore(a => a.Name)
-from person in Fuzzr.One<Person>()
-select person;
-// Results in => 
-// ( Person { Name: "", Age: 0 }, Address { Street: "", City: "" } )
-```
-The property specified will be ignored during generation.  
-Derived classes generated also ignore the base property.  
+### Configr<T>.With<TValue>(FuzzrOf<TValue> fuzzr, Func<TValue, FuzzrOf<Intent>> configrFactory)
+Applies configuration for type `T` based on a value generated from another fuzzr.  
 ### Configr.Primitive&lt;T&gt;(this FuzzrOf&lt;T&gt; fuzzr)
 Registers a global default fuzzr for primitive types.
 Use this to override how QuickFuzzr generates built-in types across all automatically created objects.
@@ -332,25 +407,6 @@ select (person, address);
 // Results in => 
 // ( Person { Name: "FIXED", Age: 67 }, Address { Street: "FIXED", City: "FIXED" } )
 ```
-### ConfigrProperty&lt;TProperty&gt;(Func&lt;PropertyInfo, bool&gt; predicate, FuzzrOf&lt;TProperty&gt; fuzzr)
-
-**Usage:**  
-```csharp
- Configr.Property(a => a.Name == "Id", Fuzzr.Constant(42));
-```
-Any property matching the predicate will use the specified Fuzzr during generation.  
-A utility overload exists that allows one to pass in a value instead of a fuzzr.  
-```csharp
- Configr.Property(a => a.Name == "Id", 42);
-```
-Another overload allows you to create a fuzzr dynamically using a `Func<PropertyInfo, FuzzrOf<T>>` factory method.  
-```csharp
- Configr.Property(a => a.Name == "Id", a => Fuzzr.Constant(42));
-```
-With the same *pass in a value* conveniance helper.  
-```csharp
- Configr.Property(a => a.Name == "Id", a => 42);
-```
 ### Configr.EnablePropertyAccessFor(PropertyAccess propertyAccess) / Configr.DisablePropertyAccessFor(PropertyAccess propertyAccess)
 
 **Usage:**  
@@ -364,46 +420,6 @@ select (person1, person2);
 ```
 Enables and then disables generation for init-only properties.  
 Updates state flags using bitwise enable/disable semantics.  
-### Configr&lt;T&gt;.Property(...)
-
-**Usage:**  
-```csharp
- Configr<Thing>.Property(s => s.Id, Fuzzr.Constant(42));
-```
-- The property specified will be generated using the passed in fuzzr.  
-- An overload exists which allows for passing a value instead of a fuzzr.  
-```csharp
- Configr<Thing>.Property(s => s.Id, 666);
-```
-- Derived classes generated also use the custom property.  
-- Trying to configure a field throws an exception with the following message:  
-```text
-Cannot configure expression 'a => a.Name'.
-It does not refer to a property.
-Fields and methods are not supported by default.
-Possible solutions:
-- Use a property selector (e.g. a => a.PropertyName).
-- Then pass it to Configr<PersonOutInTheFields>.Property(...) to configure generation.
-```
-### Configr.RetryLimit(int limit)
-
-**Usage:**  
-```csharp
- Configr.RetryLimit(256);
-```
-- Sets the global retry limit used by fuzzrs.  
-- Throws when trying to set limit to a value lesser than 1.  
-- Throws when trying to set limit to a value greater than 1024.  
-```text
-Invalid retry limit value: 1025
-Allowed range: 1-1024
-Possible solutions:
-- Use a value within the allowed range
-- Check for unintended configuration overrides
-- If you need more, consider revising your fuzzr logic instead of increasing the limit
-```
-### Configr<T>.With<TValue>(FuzzrOf<TValue> fuzzr, Func<TValue, FuzzrOf<Intent>> configrFactory)
-Applies configuration for type `T` based on a value generated from another fuzzr.  
 ## Fuzzr Extension Methods
 QuickFuzzr provides a collection of extension methods that enhance the expressiveness and composability of `FuzzrOf<T>`.
 These methods act as modifiers, they wrap existing fuzzrs to alter behavior, add constraints,

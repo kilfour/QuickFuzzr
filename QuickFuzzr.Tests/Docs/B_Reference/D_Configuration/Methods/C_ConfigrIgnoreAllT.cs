@@ -7,10 +7,10 @@ namespace QuickFuzzr.Tests.Docs.B_Reference.D_Configuration.Methods;
 
 [DocFile]
 [DocFileCodeHeader("Configr<T>.IgnoreAll()")]
-public class ConfigrIgnoreAllT
+public class C_ConfigrIgnoreAllT
 {
     [DocUsage]
-    [DocExample(typeof(ConfigrIgnoreAllT), nameof(GetFuzzr))]
+    [DocExample(typeof(C_ConfigrIgnoreAllT), nameof(GetFuzzr))]
     [CodeSnippet]
     [CodeRemove("return")]
     private static FuzzrOf<(Person, Address)> GetFuzzr()

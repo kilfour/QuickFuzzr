@@ -6,10 +6,10 @@ namespace QuickFuzzr.Tests.Docs.B_Reference.D_Configuration.Methods;
 
 [DocFile]
 [DocFileHeader("ConfigrProperty&lt;TProperty&gt;(Func&lt;PropertyInfo, bool&gt; predicate, FuzzrOf&lt;TProperty&gt; fuzzr)")]
-public class ConfigrProperty
+public class F_ConfigrProperty
 {
     [DocUsage]
-    [DocExample(typeof(ConfigrProperty), nameof(GetConfig))]
+    [DocExample(typeof(F_ConfigrProperty), nameof(GetConfig))]
     [CodeSnippet]
     [CodeRemove("return")]
     private static FuzzrOf<Intent> GetConfig()
@@ -37,7 +37,7 @@ public class ConfigrProperty
 
     [Fact]
     [DocContent("A utility overload exists that allows one to pass in a value instead of a fuzzr.")]
-    [DocExample(typeof(ConfigrProperty), nameof(GetConfigConstant))]
+    [DocExample(typeof(F_ConfigrProperty), nameof(GetConfigConstant))]
     [CodeSnippet]
     public void IsApplied_Constant()
     {
@@ -57,7 +57,7 @@ public class ConfigrProperty
 
     [Fact]
     [DocContent("Another overload allows you to create a fuzzr dynamically using a `Func<PropertyInfo, FuzzrOf<T>>` factory method.")]
-    [DocExample(typeof(ConfigrProperty), nameof(GetConfigFactory))]
+    [DocExample(typeof(F_ConfigrProperty), nameof(GetConfigFactory))]
     public void IsApplied_Factory()
     {
         var fuzzr =
@@ -76,7 +76,7 @@ public class ConfigrProperty
 
     [Fact]
     [DocContent("With the same *pass in a value* conveniance helper.")]
-    [DocExample(typeof(ConfigrProperty), nameof(GetConfigFactory_Constant))]
+    [DocExample(typeof(F_ConfigrProperty), nameof(GetConfigFactory_Constant))]
     public void IsApplied_Factory_Constant()
     {
         var fuzzr =

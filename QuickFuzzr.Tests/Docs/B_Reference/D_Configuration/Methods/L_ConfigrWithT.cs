@@ -8,7 +8,7 @@ namespace QuickFuzzr.Tests.Docs.B_Reference.D_Configuration.Methods;
 [DocFileHeader("Configr<T>.With<TValue>(FuzzrOf<TValue> fuzzr, Func<TValue, FuzzrOf<Intent>> configrFactory)")]
 [DocContent(
 @"Applies configuration for type `T` based on a value generated from another fuzzr.")]
-public class ConfigrWithT
+public class L_ConfigrWithT
 {
     [CodeSnippet]
     [CodeRemove("return ")]

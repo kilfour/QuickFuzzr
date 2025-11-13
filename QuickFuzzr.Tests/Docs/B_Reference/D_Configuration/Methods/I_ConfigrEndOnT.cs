@@ -9,7 +9,7 @@ namespace QuickFuzzr.Tests.Docs.B_Reference.D_Configuration.Methods;
 [DocFileCodeHeader("Configr<T>.EndOn<TEnd>()")]
 [DocContent(
 @"")]
-public class ConfigrEndOnT
+public class I_ConfigrEndOnT
 {
     [CodeSnippet]
     [CodeRemove("return")]
@@ -29,7 +29,7 @@ Useful for defining explicit *end* types in recursive object graphs, preventing 
 
     [Fact]
     [DocUsage]
-    [DocExample(typeof(ConfigrEndOnT), nameof(GetFuzzr))]
+    [DocExample(typeof(I_ConfigrEndOnT), nameof(GetFuzzr))]
     public void Example()
     {
         var result = GetFuzzr().Generate(43);
@@ -53,7 +53,7 @@ Useful for defining explicit *end* types in recursive object graphs, preventing 
 
     [Fact]
     [DocContent("With depth constraints, QuickFuzzr respects the specified min/max depth when applying the `EndOn<TEnd>()` rule.")]
-    [DocExample(typeof(ConfigrEndOnT), nameof(GetDepthFuzzr))]
+    [DocExample(typeof(I_ConfigrEndOnT), nameof(GetDepthFuzzr))]
     public void WithDepth()
     {
         var result = GetDepthFuzzr().Generate(1);

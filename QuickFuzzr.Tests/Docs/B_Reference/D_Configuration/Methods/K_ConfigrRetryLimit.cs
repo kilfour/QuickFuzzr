@@ -8,10 +8,10 @@ namespace QuickFuzzr.Tests.Docs.B_Reference.D_Configuration.Methods;
 
 [DocFile]
 [DocFileHeader("Configr.RetryLimit(int limit)")]
-public class ConfigrRetryLimit
+public class K_ConfigrRetryLimit
 {
     [DocUsage]
-    [DocExample(typeof(ConfigrRetryLimit), nameof(GetConfig))]
+    [DocExample(typeof(K_ConfigrRetryLimit), nameof(GetConfig))]
     [CodeSnippet]
     [CodeRemove("return")]
     private static FuzzrOf<Intent> GetConfig()
@@ -39,7 +39,7 @@ public class ConfigrRetryLimit
 
     [Fact]
     [DocContent("- Throws when trying to set limit to a value greater than 1024.")]
-    [DocExample(typeof(ConfigrRetryLimit), nameof(Maximum_Is_1024_Message), "text")]
+    [DocExample(typeof(K_ConfigrRetryLimit), nameof(Maximum_Is_1024_Message), "text")]
     public void Minimum_Is_1024()
     {
         Configr.RetryLimit(1024).Generate(); // works

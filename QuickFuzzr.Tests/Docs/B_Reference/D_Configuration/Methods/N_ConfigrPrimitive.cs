@@ -10,7 +10,7 @@ namespace QuickFuzzr.Tests.Docs.B_Reference.D_Configuration.Methods;
 @"Registers a global default fuzzr for primitive types.
 Use this to override how QuickFuzzr generates built-in types across all automatically created objects.
 ")]
-public class ConfigrPrimitive
+public class N_ConfigrPrimitive
 {
 
     [CodeSnippet]
@@ -28,7 +28,7 @@ public class ConfigrPrimitive
 
     [Fact]
     [DocUsage]
-    [DocExample(typeof(ConfigrPrimitive), nameof(GetFuzzr))]
+    [DocExample(typeof(N_ConfigrPrimitive), nameof(GetFuzzr))]
     public void IsApplied()
     {
         var (person, timeslot) = GetFuzzr().Generate(42);
@@ -55,7 +55,7 @@ public class ConfigrPrimitive
     [DocOverloads]
     [DocContent("- `Primitive<T>(this FuzzrOf<T?> fuzzr)`:")]
     [DocContent("  Registers a global default fuzzr for nullable primitives `T?`, overriding all nullable values produced across generated objects.")]
-    [DocExample(typeof(ConfigrPrimitive), nameof(GetNullableFuzzr))]
+    [DocExample(typeof(N_ConfigrPrimitive), nameof(GetNullableFuzzr))]
     [DocContent("  Replacing a nullable primitive fuzzr does not impacts it's non-nullable counterpart.")]
     public void Nullable()
     {
@@ -82,7 +82,7 @@ public class ConfigrPrimitive
     [Fact]
     [DocContent("- `Fuzzr.Primitive(this FuzzrOf<string> fuzzr)`:")]
     [DocContent("  Registers a global default fuzzr for strings, overriding all string values produced across generated objects.")]
-    [DocExample(typeof(ConfigrPrimitive), nameof(GetFuzzrString))]
+    [DocExample(typeof(N_ConfigrPrimitive), nameof(GetFuzzrString))]
     public void Strings()
     {
         var (person, address) = GetFuzzrString().Generate(42);

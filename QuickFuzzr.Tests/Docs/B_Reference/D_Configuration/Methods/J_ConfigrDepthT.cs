@@ -10,7 +10,7 @@ namespace QuickFuzzr.Tests.Docs.B_Reference.D_Configuration.Methods;
 [DocContent(
 @"Configures depth constraints for type `T` to control recursive object graph generation. 
 ")]
-public class ConfigrDepthT
+public class J_ConfigrDepthT
 {
     [CodeSnippet]
     [CodeRemove("return ")]
@@ -23,7 +23,7 @@ public class ConfigrDepthT
 
     [Fact]
     [DocUsage]
-    [DocExample(typeof(ConfigrDepthT), nameof(GetConfig))]
+    [DocExample(typeof(J_ConfigrDepthT), nameof(GetConfig))]
     [DocContent(
 @"Subsequent calls to `Fuzzr.One<T>()` will generate between 2 and 5 nested levels of `Turtle` instances,
 depending on the random draw and available recursion budget.  

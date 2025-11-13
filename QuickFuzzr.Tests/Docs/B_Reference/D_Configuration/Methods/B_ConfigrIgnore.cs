@@ -6,7 +6,7 @@ namespace QuickFuzzr.Tests.Docs.B_Reference.D_Configuration.Methods;
 
 [DocFile]
 [DocFileHeader("Configr.Ignore(Func&lt;PropertyInfo, bool&gt; predicate)")]
-public class ConfigrIgnore
+public class B_ConfigrIgnore
 {
 
     [CodeSnippet]
@@ -27,7 +27,7 @@ public class ConfigrIgnore
 @"Skips all properties matching the predicate across all types during generation.  
 Use to exclude recurring patterns like identifiers, foreign keys, or audit fields.")]
     [DocUsage]
-    [DocExample(typeof(ConfigrIgnore), nameof(GetFuzzr))]
+    [DocExample(typeof(B_ConfigrIgnore), nameof(GetFuzzr))]
     public void StaysDefaultValue()
     {
         var (person, fileEntry) = GetFuzzr().Generate(42);

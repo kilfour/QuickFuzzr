@@ -80,7 +80,7 @@ public static partial class Configr<T>
                 var ci = t.GetConstructor(args);
                 if (ci is null)
                     throw new InvalidOperationException(
-                        $"No constructor found on {t} with args ({string.Join(", ", args.Select(a => a.Name))}).");
+                        $"No constructor found on {t.Name} with args ({string.Join(", ", args.Select(a => a.Name))}).");
                 return ci;
             });
     }

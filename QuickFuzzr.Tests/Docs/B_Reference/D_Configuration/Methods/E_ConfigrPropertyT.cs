@@ -8,10 +8,10 @@ namespace QuickFuzzr.Tests.Docs.B_Reference.D_Configuration.Methods;
 
 [DocFile]
 [DocFileCodeHeader("Configr<T>.Property(...)")]
-public class ConfigrPropertyT
+public class E_ConfigrPropertyT
 {
 	[DocUsage]
-	[DocExample(typeof(ConfigrPropertyT), nameof(GetConfig))]
+	[DocExample(typeof(E_ConfigrPropertyT), nameof(GetConfig))]
 	[CodeSnippet]
 	[CodeRemove("return")]
 	private static FuzzrOf<Intent> GetConfig()
@@ -39,7 +39,7 @@ public class ConfigrPropertyT
 
 	[Fact]
 	[DocContent("- An overload exists which allows for passing a value instead of a fuzzr.")]
-	[DocExample(typeof(ConfigrPropertyT), nameof(GetValueConfig))]
+	[DocExample(typeof(E_ConfigrPropertyT), nameof(GetValueConfig))]
 	public void UsingValue()
 	{
 		var fuzzr =
@@ -62,7 +62,7 @@ public class ConfigrPropertyT
 
 	[Fact]
 	[DocContent("- Trying to configure a field throws an exception with the following message:")]
-	[DocExample(typeof(ConfigrPropertyT), nameof(Expression_Points_To_A_Field_Message), "text")]
+	[DocExample(typeof(E_ConfigrPropertyT), nameof(Expression_Points_To_A_Field_Message), "text")]
 	public void Expression_Points_To_A_Field()
 	{
 		var fuzzr =
