@@ -10,8 +10,8 @@ public sealed class NonNullValueExhaustedException(string typeName, int attempts
 $@"Could not produce a non-null value of type {typeName} after {attempts} {(attempts == 1 ? "attempt" : "attempts")}.
 
 Possible solutions:
-• Reduce the null probability: Configr.Primitive<{typeName}?>(Fuzzr.Nullable<{typeName}>(0.05))
-• Provide a fallback: .WithDefault(default({typeName}))
-• Widen the value space (adjust fuzzrs/filters)
-• Increase the retry limit globally: Configr.RetryLimit(256)";
+- Reduce the null probability: Configr.Primitive<{typeName}?>(Fuzzr.Nullable<{typeName}>(0.05))
+- Provide a fallback: .WithDefault(default({typeName}))
+- Widen the value space (adjust fuzzrs/filters)
+- Increase the retry limit globally: Configr.RetryLimit(256)";
 }

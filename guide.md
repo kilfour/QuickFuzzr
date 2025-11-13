@@ -421,10 +421,10 @@ will throw an exception with the following message if used as is:
 ```text
 Cannot generate instance of PersonRecord.
 Possible solutions:
-• Add a parameterless constructor
-• Register a custom constructor: Configr<PersonRecord>.Construct(...)
-• Use explicit generation: from x in Fuzzr.Int() ... select new PersonRecord(x)
-• Use the factory method overload: Fuzzr.One<T>(Func<T> constructor)
+- Add a parameterless constructor
+- Register a custom constructor: Configr<PersonRecord>.Construct(...)
+- Use explicit generation: from x in Fuzzr.Int() ... select new PersonRecord(x)
+- Use the factory method overload: Fuzzr.One<T>(Func<T> constructor)
 ```
 As you can see the error message hints at possible solutions,
 so here are the concrete ones (ignoring the parameterless constructor suggestion) for our current case:

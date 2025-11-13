@@ -12,11 +12,11 @@ public class UniqueValueExhaustedException(string typeName, string key, int atte
 $@"Could not find a unique value of type {typeName} using key ""{key}"", after {attempts} {(attempts == 1 ? "attempt" : "attempts")}.
 
 Possible solutions:
-• Increase the retry limit globally: Configr.RetryLimit(256)
-• Increase it locally: .Unique(""{key}"", 256)
-• Widen the value space (add more options or relax filters)
-• Use a deterministic unique source (Counter for instance)
-• Use a different uniqueness scope key to reset tracking
-• Use a fallback: fuzzr.Unique(values).WithDefault()
+- Increase the retry limit globally: Configr.RetryLimit(256)
+- Increase it locally: .Unique(""{key}"", 256)
+- Widen the value space (add more options or relax filters)
+- Use a deterministic unique source (Counter for instance)
+- Use a different uniqueness scope key to reset tracking
+- Use a fallback: fuzzr.Unique(values).WithDefault()
 ";
 }

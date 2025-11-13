@@ -76,8 +76,8 @@ public class ConfigrAsOneOfT
 @"No derived types were provided to AsOneOf for base type Person.
 
 Possible solutions:
-• Provide at least one derived type in Configr<Person>.AsOneOf(...).
-• Ensure that the derived types array is not empty.
+- Provide at least one derived type in Configr<Person>.AsOneOf(...).
+- Ensure that the derived types array is not empty.
 ";
 
     [Fact]
@@ -98,7 +98,7 @@ Possible solutions:
 @"A duplicate derived type was provided to AsOneOf for base type Person: Employee.
 
 Possible solutions:
-• Ensure Employee only appears once in Configr<Person>.AsOneOf(...).
+- Ensure Employee only appears once in Configr<Person>.AsOneOf(...).
 ";
 
     [Fact]
@@ -115,11 +115,11 @@ Possible solutions:
 
     private static string Duplicates_Multiple_Message() =>
 @"Duplicate derived types were provided to AsOneOf for base type Person:
-• Employee
-• HousedEmployee
+- Employee
+- HousedEmployee
 
 Possible solutions:
-• Ensure each derived type in Configr<Person>.AsOneOf(...) is unique.
+- Ensure each derived type in Configr<Person>.AsOneOf(...) is unique.
 ";
 
     [Fact]
@@ -139,8 +139,8 @@ Possible solutions:
 @"The type Agenda is not assignable to the base type Person.
 
 Possible solutions:
-• Use a compatible type in Configr<Person>.AsOneOf(...).
-• Ensure Agenda inherits from or implements Person.
+- Use a compatible type in Configr<Person>.AsOneOf(...).
+- Ensure Agenda inherits from or implements Person.
 ";
 
     [Fact]
@@ -157,12 +157,12 @@ Possible solutions:
 
     private static string DerivedTypeNotAssignable_Multiple_Message() =>
 @"The following types are not assignable to the base type Person:
-• String
-• Agenda
+- String
+- Agenda
 
 Possible solutions:
-• Use compatible types in Configr<Person>.AsOneOf(...).
-• Ensure all listed types inherit from or implement Person.
+- Use compatible types in Configr<Person>.AsOneOf(...).
+- Ensure all listed types inherit from or implement Person.
 ";
 
     [Fact]
@@ -182,7 +182,7 @@ Possible solutions:
 @"A null derived type was provided to AsOneOf for base type Person.
 
 Possible solutions:
-• Ensure that all derived types in Configr<Person>.AsOneOf(...) are non-null.
+- Ensure that all derived types in Configr<Person>.AsOneOf(...) are non-null.
 ";
 
     [Fact]

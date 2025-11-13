@@ -30,20 +30,20 @@ public class DerivedTypeNotAssignableException(
 $@"The type {derivedType} is not assignable to the base type {baseType}.
 
 Possible solutions:
-• Use a compatible type in Configr<{baseType}>.{method}.
-• Ensure {derivedType} inherits from or implements {baseType}.
+- Use a compatible type in Configr<{baseType}>.{method}.
+- Ensure {derivedType} inherits from or implements {baseType}.
 ";
 
     private static string BuildMessageForMultipleTypes(string baseType, string method, List<Type> nonAssignableTypes)
     {
-        var nonAssignableList = string.Join(Environment.NewLine, nonAssignableTypes.Select(t => $"• {t.Name}"));
+        var nonAssignableList = string.Join(Environment.NewLine, nonAssignableTypes.Select(t => $"- {t.Name}"));
         return
 $@"The following types are not assignable to the base type {baseType}:
 {nonAssignableList}
 
 Possible solutions:
-• Use compatible types in Configr<{baseType}>.{method}.
-• Ensure all listed types inherit from or implement {baseType}.
+- Use compatible types in Configr<{baseType}>.{method}.
+- Ensure all listed types inherit from or implement {baseType}.
 ";
     }
 }

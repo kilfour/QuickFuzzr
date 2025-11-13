@@ -124,9 +124,9 @@ public class B_FuzzrOneOf
 @"Fuzzr.OneOf<Person> cannot select from an empty sequence.
 
 Possible solutions:
-• Provide at least one option (ensure the sequence is non-empty).
-• Use a fallback: Fuzzr.OneOf(values).WithDefault()
-• Guard upstream: values.Any() ? Fuzzr.OneOf(values) : Fuzzr.Constant(default!).
+- Provide at least one option (ensure the sequence is non-empty).
+- Use a fallback: Fuzzr.OneOf(values).WithDefault()
+- Guard upstream: values.Any() ? Fuzzr.OneOf(values) : Fuzzr.Constant(default!).
 ";
 
     // Throws_When_Total_Weight_Not_Positive()
@@ -142,8 +142,8 @@ Possible solutions:
 @"Fuzzr.OneOf<String> cannot have negative weights.
 
 Possible solutions:
-• Ensure all weights are non-negative.
-• Set the weight to 0 to disable a branch without removing it.
+- Ensure all weights are non-negative.
+- Set the weight to 0 to disable a branch without removing it.
 ";
 
 
@@ -159,9 +159,9 @@ Possible solutions:
 @"Fuzzr.OneOf<String> cannot have a total weight of zero or less.
 
 Possible solutions:
-• Ensure at least one option has a positive weight.
-• Use zero weight entries only to disable specific options.
-• Adjust weights to ensure the total is greater than zero.
+- Ensure at least one option has a positive weight.
+- Use zero weight entries only to disable specific options.
+- Adjust weights to ensure the total is greater than zero.
 ";
 
     [Fact]
@@ -177,8 +177,8 @@ Possible solutions:
 @"The sequence passed to Fuzzr.OneOf<String>(...) is null.
 
 Possible solutions:
-• Pass a non-null IEnumerable<T> (e.g. an empty array if you're building it later).
-• If the sequence may be empty, use .WithDefault().
+- Pass a non-null IEnumerable<T> (e.g. an empty array if you're building it later).
+- If the sequence may be empty, use .WithDefault().
  (Parameter 'values')";
 }
 

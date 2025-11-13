@@ -421,10 +421,10 @@ will throw an exception with the following message if used as is:
 ```text
 Cannot generate instance of PersonRecord.
 Possible solutions:
-• Add a parameterless constructor
-• Register a custom constructor: Configr<PersonRecord>.Construct(...)
-• Use explicit generation: from x in Fuzzr.Int() ... select new PersonRecord(x)
-• Use the factory method overload: Fuzzr.One<T>(Func<T> constructor)
+- Add a parameterless constructor
+- Register a custom constructor: Configr<PersonRecord>.Construct(...)
+- Use explicit generation: from x in Fuzzr.Int() ... select new PersonRecord(x)
+- Use the factory method overload: Fuzzr.One<T>(Func<T> constructor)
 ```
 As you can see the error message hints at possible solutions,
 so here are the concrete ones (ignoring the parameterless constructor suggestion) for our current case:
@@ -1239,8 +1239,8 @@ Cannot configure expression 'a => a.Name'.
 It does not refer to a property.
 Fields and methods are not supported by default.
 Possible solutions:
-• Use a property selector (e.g. a => a.PropertyName).
-• Then pass it to Configr<PersonOutInTheFields>.Property(...) to configure generation.
+- Use a property selector (e.g. a => a.PropertyName).
+- Then pass it to Configr<PersonOutInTheFields>.Property(...) to configure generation.
 ```
 #### Configr.RetryLimit(int limit)
 
@@ -1255,9 +1255,9 @@ Possible solutions:
 Invalid retry limit value: 1025
 Allowed range: 1-1024
 Possible solutions:
-• Use a value within the allowed range
-• Check for unintended configuration overrides
-• If you need more, consider revising your fuzzr logic instead of increasing the limit
+- Use a value within the allowed range
+- Check for unintended configuration overrides
+- If you need more, consider revising your fuzzr logic instead of increasing the limit
 ```
 #### Configr<T>.With<TValue>(FuzzrOf<TValue> fuzzr, Func<TValue, FuzzrOf<Intent>> configrFactory)
 Applies configuration for type `T` based on a value generated from another fuzzr.  

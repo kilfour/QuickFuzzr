@@ -17,18 +17,18 @@ public class DuplicateDerivedTypesException(string baseType, List<Type> duplicat
 $@"A duplicate derived type was provided to AsOneOf for base type {baseType}: {derivedType}.
 
 Possible solutions:
-• Ensure {derivedType} only appears once in Configr<{baseType}>.AsOneOf(...).
+- Ensure {derivedType} only appears once in Configr<{baseType}>.AsOneOf(...).
 ";
 
     private static string BuildMessageForMultipleTypes(string baseType, List<Type> duplicateTypes)
     {
-        var duplicateList = string.Join(Environment.NewLine, duplicateTypes.Select(t => $"• {t.Name}"));
+        var duplicateList = string.Join(Environment.NewLine, duplicateTypes.Select(t => $"- {t.Name}"));
         return
 $@"Duplicate derived types were provided to AsOneOf for base type {baseType}:
 {duplicateList}
 
 Possible solutions:
-• Ensure each derived type in Configr<{baseType}>.AsOneOf(...) is unique.
+- Ensure each derived type in Configr<{baseType}>.AsOneOf(...) is unique.
 ";
     }
 }

@@ -106,10 +106,10 @@ will throw an exception with the following message if used as is:")]
 @"Cannot generate instance of PersonRecord.
 
 Possible solutions:
-• Add a parameterless constructor
-• Register a custom constructor: Configr<PersonRecord>.Construct(...)
-• Use explicit generation: from x in Fuzzr.Int() ... select new PersonRecord(x)
-• Use the factory method overload: Fuzzr.One<T>(Func<T> constructor)
+- Add a parameterless constructor
+- Register a custom constructor: Configr<PersonRecord>.Construct(...)
+- Use explicit generation: from x in Fuzzr.Int() ... select new PersonRecord(x)
+- Use the factory method overload: Fuzzr.One<T>(Func<T> constructor)
 ";
 
 

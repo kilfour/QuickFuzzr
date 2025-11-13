@@ -116,10 +116,10 @@ public class A_FuzzrOne
 @"Cannot generate instance of PersonRecord.
 
 Possible solutions:
-• Add a parameterless constructor
-• Register a custom constructor: Configr<PersonRecord>.Construct(...)
-• Use explicit generation: from x in Fuzzr.Int() ... select new PersonRecord(x)
-• Use the factory method overload: Fuzzr.One<T>(Func<T> constructor)
+- Add a parameterless constructor
+- Register a custom constructor: Configr<PersonRecord>.Construct(...)
+- Use explicit generation: from x in Fuzzr.Int() ... select new PersonRecord(x)
+- Use the factory method overload: Fuzzr.One<T>(Func<T> constructor)
 ";
 
 
@@ -135,7 +135,7 @@ Possible solutions:
 @"Cannot generate an instance of the abstract class AbstractPerson.
 
 Possible solution:
-• Register one or more concrete subtype(s): Configr<AbstractPerson>.AsOneOf(...)
+- Register one or more concrete subtype(s): Configr<AbstractPerson>.AsOneOf(...)
 ";
 
     [Fact]

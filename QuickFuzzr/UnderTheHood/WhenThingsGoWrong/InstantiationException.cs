@@ -11,6 +11,6 @@ public class InstantiationException(string typeName, MemberAccessException inner
 $@"Cannot generate an instance of the abstract class {typeName}.
 
 Possible solution:
-• Register one or more concrete subtype(s): Configr<{typeName}>.AsOneOf(...)
+- Register one or more concrete subtype(s): Configr<{typeName}>.AsOneOf(...)
 ";
 }

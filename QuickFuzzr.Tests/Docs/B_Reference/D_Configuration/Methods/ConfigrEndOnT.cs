@@ -84,8 +84,8 @@ Useful for defining explicit *end* types in recursive object graphs, preventing 
 @"The type String is not assignable to the base type Turtle.
 
 Possible solutions:
-• Use a compatible type in Configr<Turtle>.EndOn<String>().
-• Ensure String inherits from or implements Turtle.
+- Use a compatible type in Configr<Turtle>.EndOn<String>().
+- Ensure String inherits from or implements Turtle.
 ";
 
 }

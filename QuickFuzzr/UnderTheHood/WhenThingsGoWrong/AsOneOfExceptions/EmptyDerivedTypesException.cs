@@ -10,7 +10,7 @@ public class EmptyDerivedTypesException(string baseType)
 $@"No derived types were provided to AsOneOf for base type {baseType}.
 
 Possible solutions:
-• Provide at least one derived type in Configr<{baseType}>.AsOneOf(...).
-• Ensure that the derived types array is not empty.
+- Provide at least one derived type in Configr<{baseType}>.AsOneOf(...).
+- Ensure that the derived types array is not empty.
 ";
 }

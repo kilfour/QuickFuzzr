@@ -112,8 +112,8 @@ public static partial class Fuzzr
 @$"The sequence passed to Fuzzr.OneOf<{typeName}>(...) is null.
 
 Possible solutions:
-• Pass a non-null IEnumerable<T> (e.g. an empty array if you're building it later).
-• If the sequence may be empty, use .WithDefault().
+- Pass a non-null IEnumerable<T> (e.g. an empty array if you're building it later).
+- If the sequence may be empty, use .WithDefault().
 ");
 	}
 }

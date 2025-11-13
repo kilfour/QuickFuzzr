@@ -10,8 +10,8 @@ public class ZeroTotalWeightException(string typeName)
 $@"Fuzzr.OneOf<{typeName}> cannot have a total weight of zero or less.
 
 Possible solutions:
-• Ensure at least one option has a positive weight.
-• Use zero weight entries only to disable specific options.
-• Adjust weights to ensure the total is greater than zero.
+- Ensure at least one option has a positive weight.
+- Use zero weight entries only to disable specific options.
+- Adjust weights to ensure the total is greater than zero.
 ";
 }

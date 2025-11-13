@@ -16,6 +16,6 @@ Cannot configure expression 'a => a.Name'.
 It does not refer to a property.
 Fields and methods are not supported by default.
 Possible solutions:
-• Use a property selector (e.g. a => a.PropertyName).
-• Then pass it to Configr<PersonOutInTheFields>.Property(...) to configure generation.
+- Use a property selector (e.g. a => a.PropertyName).
+- Then pass it to Configr<PersonOutInTheFields>.Property(...) to configure generation.
 ```

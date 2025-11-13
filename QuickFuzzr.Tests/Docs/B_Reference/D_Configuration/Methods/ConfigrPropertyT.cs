@@ -83,7 +83,7 @@ It does not refer to a property.
 Fields and methods are not supported by default.
 
 Possible solutions:
-• Use a property selector (e.g. a => a.PropertyName).
-• Then pass it to Configr<PersonOutInTheFields>.Property(...) to configure generation.
-"; // • If you intended to configure a field, enable field access or use explicit construction.
+- Use a property selector (e.g. a => a.PropertyName).
+- Then pass it to Configr<PersonOutInTheFields>.Property(...) to configure generation.
+"; // - If you intended to configure a field, enable field access or use explicit construction.
 }
