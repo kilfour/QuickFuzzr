@@ -1033,7 +1033,6 @@ personFuzzr.Many(2).Generate();
   - `DuplicateDerivedTypesException`: When the list of derived types contains duplicates.  
 - `DerivedTypeNotAssignableException`: If any listed type is not a valid subclass of `BaseType`.  
 - `DerivedTypeIsNullException`: If any listed type is `null`.  
-- `DerivedTypeIsAbstractException`: When one or more derived types cannot be instantiated.  
 #### Configr&lt;T&gt;.Construct(FuzzrOf&lt;T1&gt; arg1)
 Configures a custom constructor for type T, used when Fuzzr.One<T>() is called.
 Useful for records or classes without parameterless constructors or when `T` has multiple constructors

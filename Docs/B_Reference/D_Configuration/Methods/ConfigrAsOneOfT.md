@@ -30,4 +30,3 @@ personFuzzr.Many(2).Generate();
   - `DuplicateDerivedTypesException`: When the list of derived types contains duplicates.  
 - `DerivedTypeNotAssignableException`: If any listed type is not a valid subclass of `BaseType`.  
 - `DerivedTypeIsNullException`: If any listed type is `null`.  
-- `DerivedTypeIsAbstractException`: When one or more derived types cannot be instantiated.  
