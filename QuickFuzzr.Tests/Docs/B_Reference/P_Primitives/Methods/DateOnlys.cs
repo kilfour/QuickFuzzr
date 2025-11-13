@@ -1,5 +1,6 @@
 ﻿using QuickFuzzr.Tests._Tools;
 using QuickPulse.Explains;
+using WibblyWobbly;
 
 namespace QuickFuzzr.Tests.Docs.B_Reference.P_Primitives.Methods;
 
@@ -15,6 +16,12 @@ public class DateOnlys
 		=> CheckIf.GeneratedValuesShouldAllSatisfy(Fuzzr.DateOnly(new DateOnly(2000, 1, 1), new DateOnly(2000, 1, 5)),
 			("value >= new DateOnly(2000, 1, 1)", a => a >= new DateOnly(2000, 1, 1)),
 			("value <= new DateOnly(2000, 1, 5)", a => a <= new DateOnly(2000, 1, 5)));
+
+	[Fact]
+	public void MinMaxShouldGenerateBounds()
+		=> CheckIf.GeneratedValuesShouldEventuallySatisfyAll(Fuzzr.DateOnly(1.January(2000), 2.January(2000)),
+			("value == 1.January(2000)", a => a == 1.January(2000)),
+			("value == 2.January(2000)", a => a == 2.January(2000)));
 
 	[Fact]
 	[DocContent("- Throws an `ArgumentException` when `min` > `max`.")]
