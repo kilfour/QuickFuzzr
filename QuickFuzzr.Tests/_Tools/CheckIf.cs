@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using QuickAcid;
 using QuickAcid.Bolts;
 using QuickFuzzr;
@@ -11,21 +12,25 @@ public static class CheckIf
     public static (string, Func<T, bool>) Is<T>(T expected) =>
         (expected?.ToString() ?? "null", x => EqualityComparer<T>.Default.Equals(x, expected));
 
+    [StackTraceHidden]
     public static void TheseValuesAreGenerated<T>(FuzzrOf<T> fuzzr, params T[] needsToBeSeen)
     {
         GeneratedValuesShouldEventuallySatisfyAll(fuzzr, [.. needsToBeSeen.Select(Is)]);
     }
 
+    [StackTraceHidden]
     public static void GeneratesNullAndNotNull<T>(FuzzrOf<T> fuzzr)
         => GeneratedValuesShouldEventuallySatisfyAll(fuzzr,
             ("is null", a => a is null),
             ("is not null", a => a is not null));
 
+    [StackTraceHidden]
     public static void GeneratedValuesShouldEventuallySatisfyAll<T>(
         FuzzrOf<T> fuzzr,
         params (string, Func<T, bool>)[] labeledChecks)
             => GeneratedValuesShouldEventuallySatisfyAll(100, fuzzr, labeledChecks);
 
+    [StackTraceHidden]
     public static void GeneratedValuesShouldEventuallySatisfyAll<T>(
         int numberOfExecutions,
         FuzzrOf<T> fuzzr,
@@ -45,6 +50,7 @@ public static class CheckIf
         QState.Run(run).WithOneRun().And(numberOfExecutions.ExecutionsPerRun());
     }
 
+    [StackTraceHidden]
     public static void GeneratedValuesShouldAllSatisfy<T>(
         FuzzrOf<T> fuzzr,
         params (string, Func<T, bool>)[] labeledChecks)
@@ -52,6 +58,7 @@ public static class CheckIf
         GeneratedValuesShouldAllSatisfy(20, fuzzr, labeledChecks);
     }
 
+    [StackTraceHidden]
     public static void GeneratedValuesShouldAllSatisfy<T>(
         int numberOfExecutions,
         FuzzrOf<T> fuzzr,
@@ -59,6 +66,7 @@ public static class CheckIf
     {
         var run =
             from input in "Fuzzr".Input(fuzzr)
+            from t in "input".Trace(() => input.ToString()!)
             from _ in CombineSpecs(input, labeledChecks) // Move this to QuickAcid
             select Acid.Test;
         QState.Run(run).WithOneRun().And(numberOfExecutions.ExecutionsPerRun());

@@ -19,7 +19,7 @@ Generate realistic test data and *fuzz* your domain models using composable LINQ
 [![License: MIT](https://img.shields.io/badge/license-MIT-success?style=flat-square)](https://github.com/kilfour/QuickFuzzr/blob/main/LICENSE)")]
 public class ReadMe
 {
-    private readonly bool ToFile = true;
+    private readonly bool ToFile = false;
     [Fact]
     [DocHeader("Examples")]
     [DocHeader("It Just Works", 1)]
@@ -59,18 +59,18 @@ public class ReadMe
 
         Assert.Equal("Customer-1", result[0].Name);
         Assert.Equal(2, result[0].Orders.Count);
-        Assert.Equal(42.73M, result[0].Orders[0].Total);
-        Assert.Equal(67.25M, result[0].Orders[1].Total);
+        Assert.Equal(42.72M, result[0].Orders[0].Total);
+        Assert.Equal(67.24M, result[0].Orders[1].Total);
         Assert.Single(result[0].Payments);
-        Assert.Equal(109.98M, result[0].Payments[0].Amount);
+        Assert.Equal(109.96M, result[0].Payments[0].Amount);
 
         Assert.Equal("Customer-2", result[1].Name);
         Assert.Equal(3, result[1].Orders.Count);
-        Assert.Equal(10.51M, result[1].Orders[0].Total);
+        Assert.Equal(10.50M, result[1].Orders[0].Total);
         Assert.Equal(14.66M, result[1].Orders[1].Total);
         Assert.Equal(60.86M, result[1].Orders[2].Total);
         Assert.Single(result[1].Payments);
-        Assert.Equal(86.03M, result[1].Payments[0].Amount);
+        Assert.Equal(86.02M, result[1].Payments[0].Amount);
     }
 
     [CodeSnippet]

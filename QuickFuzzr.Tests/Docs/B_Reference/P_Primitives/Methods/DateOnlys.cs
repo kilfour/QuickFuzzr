@@ -1,4 +1,5 @@
-﻿using QuickPulse.Explains;
+﻿using QuickFuzzr.Tests._Tools;
+using QuickPulse.Explains;
 
 namespace QuickFuzzr.Tests.Docs.B_Reference.P_Primitives.Methods;
 
@@ -9,17 +10,11 @@ namespace QuickFuzzr.Tests.Docs.B_Reference.P_Primitives.Methods;
 public class DateOnlys
 {
 	[Fact]
-	[DocContent("- The overload `Fuzzr.DateOnly(DateOnly min, DateOnly max)` generates a DateOnly greater than or equal to `min` and less than `max`.")]
-	public void Zero()
-	{
-		var fuzzr = Fuzzr.DateOnly(new DateOnly(2000, 1, 1), new DateOnly(2000, 1, 5));
-		for (int i = 0; i < 10; i++)
-		{
-			var value = fuzzr.Generate();
-			Assert.True(value >= new DateOnly(2000, 1, 1));
-			Assert.True(value < new DateOnly(2000, 1, 5));
-		}
-	}
+	[DocContent("- The overload `Fuzzr.DateOnly(DateOnly min, DateOnly max)` generates a DateOnly greater than or equal to `min` and less than or equal to `max`.")]
+	public void MinMax()
+		=> CheckIf.GeneratedValuesShouldAllSatisfy(Fuzzr.DateOnly(new DateOnly(2000, 1, 1), new DateOnly(2000, 1, 5)),
+			("value >= new DateOnly(2000, 1, 1)", a => a >= new DateOnly(2000, 1, 1)),
+			("value <= new DateOnly(2000, 1, 5)", a => a <= new DateOnly(2000, 1, 5)));
 
 	[Fact]
 	[DocContent("- Throws an `ArgumentException` when `min` > `max`.")]

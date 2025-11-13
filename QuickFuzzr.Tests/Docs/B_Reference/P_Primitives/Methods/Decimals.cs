@@ -12,11 +12,10 @@ public class Decimals
 	[Fact]
 	[DocContent(
 @"
-- The overload `Fuzzr.Decimal(decimal min, decimal max)` generates a decimal greater than or equal to `min` and less than `max`.
-  *Note:* Due to floating-point rounding, max may occasionally be produced.")]
+- The overload `Fuzzr.Decimal(decimal min, decimal max)` generates a decimal greater than or equal to `min` and less than `max`.")]
 	public void MinMax()
 		=> CheckIf.GeneratedValuesShouldAllSatisfy(Fuzzr.Decimal(1, 5),
-			("value >= 1", a => a >= 1), ("value <= 5", a => a <= 5));
+			("value >= 1", a => a >= 1), ("value < 5", a => a < 5));
 
 	private static int GetPrecision(decimal value) => (decimal.GetBits(value)[3] >> 16) & 0x7F;
 
@@ -24,15 +23,20 @@ public class Decimals
 	[DocContent("- The overload `Decimal(int precision)` generates a decimal with `precision` precision.")]
 	public void Precision()
 		=> CheckIf.GeneratedValuesShouldAllSatisfy(Fuzzr.Decimal(1),
-			("value >= 1", a => a >= 1), ("value <= 100", a => a <= 100),
+			("value >= 1", a => a >= 1), ("value < 100", a => a < 100),
+			("precision <= 1", a => GetPrecision(a) <= 1));
+
+	[Fact]
+	public void PrecisionShouldBeGenerated()
+		=> CheckIf.GeneratedValuesShouldEventuallySatisfyAll(Fuzzr.Decimal(1),
 			("precision == 1", a => GetPrecision(a) == 1));
 
 	[Fact]
 	[DocContent("- The overload `Decimal(decimal min, decimal max, int precision)` generates a decimal greater than or equal to `min` and less than `max`, with `precision` precision.")]
 	public void MinMaxPrecision()
 		=> CheckIf.GeneratedValuesShouldAllSatisfy(Fuzzr.Decimal(1, 5, 1),
-			("value >= 1", a => a >= 1), ("value <= 5", a => a <= 5),
-			("precision == 1", a => GetPrecision(a) == 1));
+			("value >= 1", a => a >= 1), ("value < 5", a => a < 5),
+			("precision <= 1", a => GetPrecision(a) <= 1));
 
 	[Fact]
 	[DocContent("- When `min == max`, the fuzzr always returns that exact value.")]
@@ -48,10 +52,11 @@ public class Decimals
 	}
 
 	[Fact]
-	[DocContent("- The default fuzzr is (min = 1, max = 100).")]
+	[DocContent("- The default fuzzr is (min = 1, max = 100, precision = 2).")]
 	public void DefaultFuzzr()
 		=> CheckIf.GeneratedValuesShouldAllSatisfy(Fuzzr.Decimal(),
-			("value >= 1", a => a >= 1), ("value <= 100", a => a <= 100));
+			("value >= 1", a => a >= 1), ("value < 100", a => a < 100),
+			("precision <= 2", a => GetPrecision(a) <= 2));
 
 	[Fact]
 	[DocContent("- Can be made to return `decimal?` using the `.Nullable()` combinator.")]

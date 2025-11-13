@@ -1404,7 +1404,7 @@ Use `Fuzzr.Char()`.
 - `char?` is automatically detected and generated for object properties.  
 #### DateOnlys
 Use `Fuzzr.DateOnly()`.  
-- The overload `Fuzzr.DateOnly(DateOnly min, DateOnly max)` generates a DateOnly greater than or equal to `min` and less than `max`.  
+- The overload `Fuzzr.DateOnly(DateOnly min, DateOnly max)` generates a DateOnly greater than or equal to `min` and less than or equal to `max`.  
 - Throws an `ArgumentException` when `min` > `max`.  
 - The default fuzzr is (min = new DateOnly(1970, 1, 1), max = new DateOnly(2020, 12, 31)).  
 - Can be made to return `DateOnly?` using the `.Nullable()` combinator.  
@@ -1421,13 +1421,12 @@ Use `Fuzzr.DateTime()`.
 #### Decimals
 Use `Fuzzr.Decimal()`.  
 
-- The overload `Fuzzr.Decimal(decimal min, decimal max)` generates a decimal greater than or equal to `min` and less than `max`.
-  *Note:* Due to floating-point rounding, max may occasionally be produced.  
+- The overload `Fuzzr.Decimal(decimal min, decimal max)` generates a decimal greater than or equal to `min` and less than `max`.  
 - The overload `Decimal(int precision)` generates a decimal with `precision` precision.  
 - The overload `Decimal(decimal min, decimal max, int precision)` generates a decimal greater than or equal to `min` and less than `max`, with `precision` precision.  
 - When `min == max`, the fuzzr always returns that exact value.  
 - Throws an `ArgumentException` when `min` > `max`.  
-- The default fuzzr is (min = 1, max = 100).  
+- The default fuzzr is (min = 1, max = 100, precision = 2).  
 - Can be made to return `decimal?` using the `.Nullable()` combinator.  
 - `decimal` is automatically detected and generated for object properties.  
 - `decimal?` is automatically detected and generated for object properties.  

@@ -37,6 +37,12 @@ public static partial class Fuzzr
 	/// financial reporting, measurement data, or formatted numeric output.
 	/// </summary>
 	public static FuzzrOf<decimal> Decimal(decimal min, decimal max, int precision)
-		=> Decimal(min, max).Apply(d => Math.Round(d, precision));
+		=> Decimal(min, max).Apply(d =>
+		{
+			decimal scale = 1m;
+			for (int i = 0; i < precision; i++) scale *= 10m;
+			var truncated = Math.Floor((d - min) * scale) / scale + min;
+			return Math.Round(truncated, precision);
+		});
 
 }

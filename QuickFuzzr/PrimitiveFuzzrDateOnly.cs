@@ -22,7 +22,7 @@ public static partial class Fuzzr
 		state =>
 			{
 				var minN = min.DayNumber;
-				var maxN = max.DayNumber;
+				var maxN = max.DayNumber + 1;
 				var span = (long)maxN - minN;
 				var offset = state.Random.Next(0, checked((int)span));
 				var value = System.DateOnly.FromDayNumber(minN + offset);
