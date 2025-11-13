@@ -12,7 +12,7 @@ public class Decimals
 	[Fact]
 	[DocContent(
 @"
-- The overload `Fuzzr.Decimal(decimal min, decimal max)` generates a decimal greater than or equal to `min` and less than `max`.")]
+- The overload `Fuzzr.Decimal(decimal min, decimal max)` generates a decimal in the range [min, max) (min inclusive, max exclusive).")]
 	public void MinMax()
 		=> CheckIf.GeneratedValuesShouldAllSatisfy(Fuzzr.Decimal(1, 5),
 			("value >= 1", a => a >= 1), ("value < 5", a => a < 5));
@@ -20,7 +20,7 @@ public class Decimals
 	private static int GetPrecision(decimal value) => (decimal.GetBits(value)[3] >> 16) & 0x7F;
 
 	[Fact]
-	[DocContent("- The overload `Decimal(int precision)` generates a decimal with `precision` precision.")]
+	[DocContent("- The overload `Decimal(int precision)` generates a decimal with up to `precision` decimal places.")]
 	public void Precision()
 		=> CheckIf.GeneratedValuesShouldAllSatisfy(Fuzzr.Decimal(1),
 			("value >= 1", a => a >= 1), ("value < 100", a => a < 100),
@@ -32,7 +32,7 @@ public class Decimals
 			("precision == 1", a => GetPrecision(a) == 1));
 
 	[Fact]
-	[DocContent("- The overload `Decimal(decimal min, decimal max, int precision)` generates a decimal greater than or equal to `min` and less than `max`, with `precision` precision.")]
+	[DocContent("- The overload `Decimal(decimal min, decimal max, int precision)` generates a decimal in the range [min, max) (min inclusive, max exclusive), with up to `precision` decimal places.")]
 	public void MinMaxPrecision()
 		=> CheckIf.GeneratedValuesShouldAllSatisfy(Fuzzr.Decimal(1, 5, 1),
 			("value >= 1", a => a >= 1), ("value < 5", a => a < 5),
