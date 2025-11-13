@@ -12,7 +12,6 @@ public static class MinMax
     {
         if (min.CompareTo(max) > 0)
             throw new ArgumentException($"Invalid range: min ({min}) > max ({max})");
-        return fuzzr; //remove use Chain.It
+        return fuzzr;
     }
-    //	=> MinMax.Check(min, max, ---- );
 }

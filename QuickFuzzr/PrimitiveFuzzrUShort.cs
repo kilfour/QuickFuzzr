@@ -16,8 +16,7 @@ public static partial class Fuzzr
 	/// </summary>
 	public static FuzzrOf<ushort> UShort(ushort min, ushort max)
 	{
-		if (min > max)
-			throw new ArgumentException($"Invalid range: min ({min}) > max ({max})");
+		MinMax.Check(min, max);
 		return s => new Result<ushort>((ushort)s.Random.Next(min, max), s);
 	}
 }

@@ -16,11 +16,11 @@ public static partial class Fuzzr
 	/// <summary>
 	/// Creates a fuzzr that produces random integer values in the range [min, max) (min inclusive, max exclusive).
 	/// Use when you need integer values constrained to specific bounds for boundary testing, loop iterations, or range validation.
+	/// If min equals max, this behaves as a constant fuzzr of that value.
 	/// </summary>
 	public static FuzzrOf<int> Int(int min, int max)
 	{
-		if (min > max)
-			throw new ArgumentException($"Invalid range: min ({min}) > max ({max})");
+		MinMax.Check(min, max);
 		return s => new Result<int>(s.Random.Next(min, max), s);
 	}
 }

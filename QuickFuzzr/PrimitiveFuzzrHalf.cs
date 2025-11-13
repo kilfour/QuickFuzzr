@@ -20,9 +20,7 @@ public static partial class Fuzzr
 	/// </summary>
 	public static FuzzrOf<Half> Half(Half min, Half max)
 	{
-		if (min > max)
-			throw new ArgumentException($"Invalid range: min ({min}) > max ({max})");
-
+		MinMax.Check(min, max);
 		return s => new Result<Half>(((Half)s.Random.NextDouble() * (max - min)) + min, s);
 	}
 }

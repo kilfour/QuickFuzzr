@@ -23,9 +23,7 @@ public static partial class Fuzzr
 		if (max > byte.MaxValue)
 			throw new ArgumentOutOfRangeException(nameof(max), $"Must be ≤ {byte.MaxValue}.");
 
-		if (min > max)
-			throw new ArgumentException($"Invalid range: min ({min}) > max ({max})");
-
+		MinMax.Check(min, max);
 		return s =>
 		{
 			var value = (byte)s.Random.Next(min, max + 1);

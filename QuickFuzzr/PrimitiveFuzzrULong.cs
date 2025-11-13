@@ -19,9 +19,7 @@ public static partial class Fuzzr
 	/// </summary>
 	public static FuzzrOf<ulong> ULong(ulong min, ulong max)
 	{
-		if (min > max)
-			throw new ArgumentException($"Invalid range: min ({min}) > max ({max})");
-
+		MinMax.Check(min, max);
 		return s =>
 		{
 			ulong span = max - min;

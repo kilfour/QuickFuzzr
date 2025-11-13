@@ -19,8 +19,7 @@ public static partial class Fuzzr
 	/// </summary>
 	public static FuzzrOf<uint> UInt(uint min, uint max)
 	{
-		if (min > max)
-			throw new ArgumentException($"Invalid range: min ({min}) > max ({max})");
+		MinMax.Check(min, max);
 		return s =>
 		{
 			var span = (ulong)(max - min);

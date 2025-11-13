@@ -21,7 +21,7 @@ public static partial class ExtFuzzr
 
 	/// <summary>
 	/// Creates a fuzzr that transforms each generated value using the provided function.
-	/// Use for modifying, enriching, or converting generated data while maintaining the generation context and state.
+	/// Use for modifying or enriching generated data while maintaining the generation context and state.
 	/// </summary>
 	public static FuzzrOf<T> Apply<T>(this FuzzrOf<T> fuzzr, Func<T, T> func)
 	{
