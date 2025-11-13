@@ -2,4 +2,4 @@
 Use `Fuzzr.Float()`.  
 - The overload `Fuzzr.Float(float min, float max)` generates a float greater than or equal to `min` and less than `max`.  
 - Throws an `ArgumentException` when `min` > `max`.  
-- The default fuzzr is (min = 1, max = 100).  
+- **Default:** min = 1, max = 100).  

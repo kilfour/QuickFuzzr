@@ -6,4 +6,4 @@ Use `Fuzzr.Decimal()`.
 - The overload `Decimal(decimal min, decimal max, int precision)` generates a decimal in the range [min, max) (min inclusive, max exclusive), with up to `precision` decimal places.  
 - When `min == max`, the fuzzr always returns that exact value.  
 - Throws an `ArgumentException` when `min` > `max`.  
-- The default fuzzr is (min = 1, max = 100, precision = 2).  
+- **Default:** min = 1, max = 100, precision = 2).  

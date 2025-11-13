@@ -26,7 +26,7 @@ public class Floats
 	}
 
 	[Fact]
-	[DocContent("- The default fuzzr is (min = 1, max = 100).")]
+	[DocContent("- **Default:** min = 1, max = 100).")]
 	public void DefaultFuzzrBetweenOneAndHundred()
 	{
 		var fuzzr = Fuzzr.Float();

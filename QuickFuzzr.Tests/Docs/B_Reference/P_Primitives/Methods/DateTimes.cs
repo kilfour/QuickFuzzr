@@ -42,7 +42,7 @@ public class DateTimes
 		=> Assert.Throws<ArgumentException>(() => Fuzzr.DateTime(new DateTime(2000, 1, 5), new DateTime(2000, 1, 1)).Generate());
 
 	[Fact]
-	[DocContent("- The default fuzzr is (min = new DateTime(1970, 1, 1), max = new DateTime(2020, 12, 31)) inclusive, snapped to whole seconds.")]
+	[DocContent("- **Default:** min = new DateTime(1970, 1, 1), max = new DateTime(2020, 12, 31)) inclusive, snapped to whole seconds.")]
 	public void DefaultFuzzrNeverGeneratesZero()
 	{
 		var fuzzr = Fuzzr.DateTime();

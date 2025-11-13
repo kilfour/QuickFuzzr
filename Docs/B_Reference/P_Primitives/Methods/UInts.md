@@ -2,4 +2,4 @@
 Use `Fuzzr.UInt()`.  
 - The overload `Fuzzr.UInt(uint min, uint max)` generates an uint greater than or equal to `min` and less than `max`.  
 - Throws an `ArgumentException` when `min` > `max`.  
-- The default fuzzr is (min = 1, max = 100).  
+- **Default:** min = 1, max = 100).  

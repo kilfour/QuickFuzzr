@@ -24,7 +24,7 @@ public class Halfs
         => Assert.Throws<ArgumentException>(() => Fuzzr.Half((Half)1, (Half)0).Generate());
 
     [Fact]
-    [DocContent("- The default fuzzr is (min = (Half)1, max = (Half)100).")]
+    [DocContent("- **Default:** min = (Half)1, max = (Half)100).")]
     public void DefaultFuzzr()
         => CheckIf.GeneratedValuesShouldAllSatisfy(Fuzzr.Half(),
             ("value >= 1", a => a >= (Half)1), ("value <= 100", a => a <= (Half)100));

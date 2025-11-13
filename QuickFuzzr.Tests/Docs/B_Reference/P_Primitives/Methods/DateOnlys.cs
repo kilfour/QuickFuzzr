@@ -30,7 +30,7 @@ public class DateOnlys
 
 
 	[Fact]
-	[DocContent("- The default fuzzr is (min = new DateOnly(1970, 1, 1), max = new DateOnly(2020, 12, 31)).")]
+	[DocContent("- **Default:** min = new DateOnly(1970, 1, 1), max = new DateOnly(2020, 12, 31)).")]
 	public void DefaultFuzzrNeverGeneratesZero()
 	{
 		var fuzzr = Fuzzr.DateOnly();

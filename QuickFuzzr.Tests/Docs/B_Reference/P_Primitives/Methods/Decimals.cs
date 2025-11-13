@@ -52,7 +52,7 @@ public class Decimals
 	}
 
 	[Fact]
-	[DocContent("- The default fuzzr is (min = 1, max = 100, precision = 2).")]
+	[DocContent("- **Default:** min = 1, max = 100, precision = 2).")]
 	public void DefaultFuzzr()
 		=> CheckIf.GeneratedValuesShouldAllSatisfy(Fuzzr.Decimal(),
 			("value >= 1", a => a >= 1), ("value < 100", a => a < 100),

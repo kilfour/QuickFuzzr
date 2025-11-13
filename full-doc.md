@@ -867,7 +867,12 @@ serving as a quick lookup for day-to-day use or library integration.
 
 If you're looking for examples or background explanations, see the guide or cookbook.
 
-All examples and summaries are real, verified through executable tests, ensuring what you see here is exactly what QuickFuzzr does.  
+All examples and summaries are real, verified through executable tests, ensuring what you see here is exactly what QuickFuzzr does.
+
+QuickFuzzr exposes three kinds of building blocks: `FuzzrOf<T>` for value production, `Configr` for generation behavior, and extension methods for modifying fuzzrs. 
+
+Everything in this reference fits into one of these three roles.
+  
 ### Contents
 
 - [Fuzzing][Fuzzing]
@@ -1401,13 +1406,13 @@ Use `Fuzzr.Char()`.
 Use `Fuzzr.DateOnly()`.  
 - The overload `Fuzzr.DateOnly(DateOnly min, DateOnly max)` generates a DateOnly greater than or equal to `min` and less than or equal to `max`.  
 - Throws an `ArgumentException` when `min` > `max`.  
-- The default fuzzr is (min = new DateOnly(1970, 1, 1), max = new DateOnly(2020, 12, 31)).  
+- **Default:** min = new DateOnly(1970, 1, 1), max = new DateOnly(2020, 12, 31)).  
 #### DateTimes
 Use `Fuzzr.DateTime()`.  
 - The overload `Fuzzr.DateTime(DateTime min, DateTime max)` generates a `DateTime` in the inclusive range [min, max], snapped to whole seconds.  
 - Generated values are snapped to whole seconds.  
 - Throws an `ArgumentException` when `min` > `max`.  
-- The default fuzzr is (min = new DateTime(1970, 1, 1), max = new DateTime(2020, 12, 31)) inclusive, snapped to whole seconds.  
+- **Default:** min = new DateTime(1970, 1, 1), max = new DateTime(2020, 12, 31)) inclusive, snapped to whole seconds.  
 #### Decimals
 Use `Fuzzr.Decimal()`.  
 
@@ -1416,12 +1421,12 @@ Use `Fuzzr.Decimal()`.
 - The overload `Decimal(decimal min, decimal max, int precision)` generates a decimal in the range [min, max) (min inclusive, max exclusive), with up to `precision` decimal places.  
 - When `min == max`, the fuzzr always returns that exact value.  
 - Throws an `ArgumentException` when `min` > `max`.  
-- The default fuzzr is (min = 1, max = 100, precision = 2).  
+- **Default:** min = 1, max = 100, precision = 2).  
 #### Doubles
 Use `Fuzzr.Double()`.  
 - The overload `Fuzzr.Double(double min, double max)` generates a double greater than or equal to `min` and less than `max`.  
 - Throws an `ArgumentException` when `min` > `max`.  
-- The default fuzzr is (min = 1, max = 100).  
+- **Default:** min = 1, max = 100).  
 #### Enums
 Use `Fuzzr.Enum<T>()`, where T is the type of Enum you want to generate.  
 > Enums are included here for convenience. While not numeric primitives themselves, they are generated as atomic values from their defined members.  
@@ -1431,7 +1436,7 @@ Use `Fuzzr.Enum<T>()`, where T is the type of Enum you want to generate.
 Use `Fuzzr.Float()`.  
 - The overload `Fuzzr.Float(float min, float max)` generates a float greater than or equal to `min` and less than `max`.  
 - Throws an `ArgumentException` when `min` > `max`.  
-- The default fuzzr is (min = 1, max = 100).  
+- **Default:** min = 1, max = 100).  
 #### Guids
 Use `Fuzzr.Guid()`. *There is no overload.*  
 - The default fuzzr never generates Guid.Empty.  
@@ -1442,22 +1447,22 @@ Use `Fuzzr.Half()`.
 - The overload Fuzzr.Half(Half min, Half max) generates a half-precision floating-point number greater than or equal to `min` and less than `max`.
   *Note:* Due to floating-point rounding, max may occasionally be produced.  
 - Throws an `ArgumentException` when `min` > `max`.  
-- The default fuzzr is (min = (Half)1, max = (Half)100).  
+- **Default:** min = (Half)1, max = (Half)100).  
 #### Ints
 Use `Fuzzr.Int()`.  
 - The overload `Fuzzr.Int(int min, int max)` generates an int greater than or equal to `min` and less than `max`.  
 - Throws an `ArgumentException` when `min` > `max`.  
-- The default fuzzr is (min = 1, max = 100).  
+- **Default:** min = 1, max = 100).  
 #### Longs
 Use `Fuzzr.Long()`.  
 - The overload `Fuzzr.Long(long min, long max)` generates a long greater than or equal to `min` and less than `max`.  
 - Throws an `ArgumentException` when `min` > `max`.  
-- The default fuzzr is (min = 1, max = 100).  
+- **Default:** min = 1, max = 100).  
 #### Shorts
 Use `Fuzzr.Short()`.  
 - The overload `Fuzzr.Short(short min, short max)` generates a short greater than or equal to `min` and less than `max`.  
 - Throws an `ArgumentException` when `min` > `max`.  
-- The default fuzzr is (min = 1, max = 100).  
+- **Default:** min = 1, max = 100).  
 #### Strings
 Use `Fuzzr.String()`.  
 - The Default fuzzr generates a string of length greater than or equal to 1 and less than or equal to 10.  
@@ -1470,26 +1475,26 @@ Use `Fuzzr.String()`.
 #### TimeOnlys
 Use `Fuzzr.TimeOnly()`.  
 - The overload `Fuzzr.TimeOnly(TimeOnly min, TimeOnly max)` generates a TimeOnly greater than or equal to `min` and less than `max`.  
-- The default fuzzr is (min = 00:00:00, max = 23:59:59.9999999).  
+- **Default:** min = 00:00:00, max = 23:59:59.9999999).  
 #### TimeSpans
 Use `Fuzzr.TimeSpan()`.  
 - The overload `Fuzzr.TimeSpan(int max)` generates a TimeSpan with Ticks higher or equal than 1 and lower than max.  
-- The default fuzzr is (max = 1000).  
+- **Default:** max = 1000).  
 #### UInts
 Use `Fuzzr.UInt()`.  
 - The overload `Fuzzr.UInt(uint min, uint max)` generates an uint greater than or equal to `min` and less than `max`.  
 - Throws an `ArgumentException` when `min` > `max`.  
-- The default fuzzr is (min = 1, max = 100).  
+- **Default:** min = 1, max = 100).  
 #### ULongs
 Use `Fuzzr.ULong()`.  
 - The overload `Fuzzr.ULong(ulong min, ulong max)` generates a ulong greater than or equal to `min` and less than `max`.  
 - Throws an `ArgumentException` when `min` > `max`.  
-- The default fuzzr is (min = 1, max = 100).  
+- **Default:** min = 1, max = 100).  
 #### UShorts
 Use `Fuzzr.UShort()`.  
 - The overload `Fuzzr.UShort(ushort min, ushort max)` generates a ushort greater than or equal to `min` and less than `max`.  
 - Throws an `ArgumentException` when `min` > `max`.  
-- The default fuzzr is (min = 1, max = 100).  
+- **Default:** min = 1, max = 100).  
 ## Cooking Up a Fuzzr
 ### Contents
 

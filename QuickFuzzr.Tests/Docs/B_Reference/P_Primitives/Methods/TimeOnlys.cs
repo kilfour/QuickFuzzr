@@ -22,7 +22,7 @@ public class TimeOnlys
 	}
 
 	[Fact]
-	[DocContent("- The default fuzzr is (min = 00:00:00, max = 23:59:59.9999999).")]
+	[DocContent("- **Default:** min = 00:00:00, max = 23:59:59.9999999).")]
 	public void DefaultFuzzrNeverGeneratesZero()
 	{
 		var fuzzr = Fuzzr.TimeOnly();

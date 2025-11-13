@@ -21,7 +21,7 @@ public class ULongs
 	public void Throws() => Assert.Throws<ArgumentException>(() => Fuzzr.ULong(1, 0).Generate());
 
 	[Fact]
-	[DocContent("- The default fuzzr is (min = 1, max = 100).")]
+	[DocContent("- **Default:** min = 1, max = 100).")]
 	public void DefaultFuzzr()
 		=> CheckIf.GeneratedValuesShouldAllSatisfy(Fuzzr.ULong(),
 			("value >= 1", a => a >= 1), ("value < 100", a => a < 100));
