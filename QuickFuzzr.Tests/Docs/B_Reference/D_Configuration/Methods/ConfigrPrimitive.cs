@@ -59,7 +59,7 @@ public class ConfigrPrimitive
     [DocContent("  Replacing a nullable primitive fuzzr does not impacts it's non-nullable counterpart.")]
     public void Nullable()
     {
-        var (person, nullablePerson) = GetNullableFuzzr().Generate(1).PulseToQuickLog();
+        var (person, nullablePerson) = GetNullableFuzzr().Generate(1);
         Assert.Equal("cmu", person.Name);
         Assert.Equal(66, person.Age);
         Assert.Equal("ycqa", nullablePerson.Name);

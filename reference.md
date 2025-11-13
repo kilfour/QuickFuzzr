@@ -535,7 +535,7 @@ Use `Fuzzr.Byte()`.
 - `byte?` is automatically detected and generated for object properties.  
 ### Chars
 Use `Fuzzr.Char()`.  
-- The overload `Fuzzr.Char(char min, char max)` generates a char greater than or equal to `min` and less than or equal to `maxs`.  
+- The overload `Fuzzr.Char(char min, char max)` generates a char greater than or equal to `min` and less than or equal to `max`.  
 - Throws an `ArgumentException` when `min` > `max`.  
 - The default fuzzr always generates a char between lower case 'a' and lower case 'z'.  
 - Can be made to return `char?` using the `.Nullable()` combinator.  
@@ -560,6 +560,9 @@ Use `Fuzzr.DateTime()`.
 ### Decimals
 Use `Fuzzr.Decimal()`.  
 - The overload `Fuzzr.Decimal(decimal min, decimal max)` generates a decimal greater than or equal to `min` and less than `max`.  
+- The overload `Decimal(int precision)` generates a decimal with `precision` precision.  
+- The overload `Decimal(decimal min, decimal max, int precision)` generates a decimal greater than or equal to `min` and less than `max`, with `precision` precision.  
+- When `min == max`, the fuzzr always returns that exact value.  
 - Throws an `ArgumentException` when `min` > `max`.  
 - The default fuzzr is (min = 1, max = 100).  
 - Can be made to return `decimal?` using the `.Nullable()` combinator.  
@@ -597,7 +600,9 @@ Use `Fuzzr.Guid()`. *There is no overload.*
 - `Guid?` is automatically detected and generated for object properties.  
 ### Halfs
 Use `Fuzzr.Half()`.  
-- The overload Fuzzr.Half(Half min, Half max) generates a half-precision floating-point number greater than or equal to `min` and less than `max`.  
+
+- The overload Fuzzr.Half(Half min, Half max) generates a half-precision floating-point number greater than or equal to `min` and less than `max`.
+  *Note:* Due to floating-point rounding, max may occasionally be produced.  
 - Throws an `ArgumentException` when `min` > `max`.  
 - The default fuzzr is (min = (Half)1, max = (Half)100).  
 - Can be made to return `Half?` using the `.Nullable()` combinator.  

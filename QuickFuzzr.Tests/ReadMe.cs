@@ -19,7 +19,7 @@ Generate realistic test data and *fuzz* your domain models using composable LINQ
 [![License: MIT](https://img.shields.io/badge/license-MIT-success?style=flat-square)](https://github.com/kilfour/QuickFuzzr/blob/main/LICENSE)")]
 public class ReadMe
 {
-    private readonly bool ToFile = false;
+    private readonly bool ToFile = true;
     [Fact]
     [DocHeader("Examples")]
     [DocHeader("It Just Works", 1)]
@@ -84,7 +84,7 @@ public class ReadMe
             from customer in Fuzzr.One(() => new Customer($"Customer-{counter}"))
             from orders in Fuzzr.One<Order>()
                 .Apply(customer.PlaceOrder) // <= add order to customer
-                .Many(1, 4) // <= add between 1 and 4 random orders
+                .Many(1, 3) // <= add between 1 and 3 random orders
             from payment in Fuzzr.One<Payment>()
                 .Apply(p => p.Amount = orders.Sum(o => o.Total)) // <= calculate total from orders
                 .Apply(customer.MakePayment) // <= add payment to customer

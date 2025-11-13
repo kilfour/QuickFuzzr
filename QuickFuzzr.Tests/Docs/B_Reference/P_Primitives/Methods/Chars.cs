@@ -1,4 +1,5 @@
 ﻿using QuickFuzzr.Tests._Tools;
+using QuickFuzzr.Tests._Tools.Models;
 using QuickPulse.Explains;
 
 namespace QuickFuzzr.Tests.Docs.B_Reference.P_Primitives.Methods;
@@ -11,7 +12,7 @@ public class Chars
 	private readonly char[] valid = "abcdefghijklmnopqrstuvwxyz".ToCharArray();
 
 	[Fact]
-	[DocContent("- The overload `Fuzzr.Char(char min, char max)` generates a char greater than or equal to `min` and less than or equal to `maxs`.")]
+	[DocContent("- The overload `Fuzzr.Char(char min, char max)` generates a char greater than or equal to `min` and less than or equal to `max`.")]
 	public void MinMax()
 		=> CheckIf.GeneratedValuesShouldAllSatisfy(Fuzzr.Char('0', '9'),
 			("value >= '0", a => a >= '0'), ("value <= '9'", a => a <= '9'));
@@ -64,10 +65,10 @@ public class Chars
 	[DocContent("- `char` is automatically detected and generated for object properties.")]
 	public void Property()
 	{
-		var fuzzr = Fuzzr.One<SomeThingToGenerate>();
+		var fuzzr = Fuzzr.One<PrimitivesBag<char>>();
 		for (int i = 0; i < 10; i++)
 		{
-			var value = fuzzr.Generate().AProperty;
+			var value = fuzzr.Generate().Value;
 			Assert.True(valid.Any(c => c == value), value.ToString());
 		}
 	}
@@ -77,13 +78,6 @@ public class Chars
 	public void NullableProperty()
 	{
 		CheckIf.GeneratesNullAndNotNull(
-			Fuzzr.One<SomeThingToGenerate>().Select(x => x.ANullableProperty));
-	}
-
-	public class SomeThingToGenerate
-	{
-		public char AProperty { get; set; }
-		public Char ACharProperty { get; set; }
-		public char? ANullableProperty { get; set; }
+			Fuzzr.One<PrimitivesBag<char>>().Select(x => x.NullableValue));
 	}
 }

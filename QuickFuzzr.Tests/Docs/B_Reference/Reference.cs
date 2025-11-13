@@ -23,13 +23,13 @@ All examples and summaries are real, verified through executable tests, ensuring
 
 public class Reference
 {
-    [DocHeader("Contents")]
-    [DocContent(
+  [DocHeader("Contents")]
+  [DocContent(
 @"
 - [Fuzzing][Fuzzing]
 - [Configuration][Configuring]
 - [Fuzzr Extension Methods][FuzzrExtensionMethods]
 - [Primitive Fuzzrs][PrimitiveFuzzrs]
 ")]
-    public static void Contents() { }
+  public static void Contents() { }
 }

@@ -1,4 +1,5 @@
 using QuickFuzzr.Tests._Tools;
+using QuickFuzzr.Tests._Tools.Models;
 using QuickPulse.Explains;
 
 namespace QuickFuzzr.Tests.Docs.B_Reference.P_Primitives.Methods;
@@ -58,19 +59,13 @@ public class Bytes
     [Fact]
     [DocContent("- `byte` is automatically detected and generated for object properties.")]
     public void Property()
-        => CheckIf.GeneratedValuesShouldAllSatisfy(Fuzzr.One<ByteBag>(),
+        => CheckIf.GeneratedValuesShouldAllSatisfy(Fuzzr.One<PrimitivesBag<byte>>(),
             ("Value in range", a => a.Value >= byte.MinValue && a.Value <= byte.MaxValue));
 
     [Fact]
     [DocContent("- `byte?` is automatically detected and generated for object properties.")]
     public void NullableProperty()
         => CheckIf.GeneratesNullAndNotNull(
-            Fuzzr.One<ByteBag>().Select(a => a.NullableValue));
+            Fuzzr.One<PrimitivesBag<byte>>().Select(a => a.NullableValue));
 
-    // Local model mirroring the style used in the string tests.
-    public class ByteBag
-    {
-        public byte Value { get; set; }
-        public byte? NullableValue { get; set; }
-    }
 }

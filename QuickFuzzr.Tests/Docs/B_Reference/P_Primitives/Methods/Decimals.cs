@@ -1,4 +1,6 @@
-﻿using QuickPulse.Explains;
+﻿using QuickFuzzr.Tests._Tools;
+using QuickFuzzr.Tests._Tools.Models;
+using QuickPulse.Explains;
 
 namespace QuickFuzzr.Tests.Docs.B_Reference.P_Primitives.Methods;
 
@@ -9,14 +11,32 @@ public class Decimals
 {
 	[Fact]
 	[DocContent("- The overload `Fuzzr.Decimal(decimal min, decimal max)` generates a decimal greater than or equal to `min` and less than `max`.")]
-	public void Zero()
-	{
-		var fuzzr = Fuzzr.Decimal(0, 0);
-		for (int i = 0; i < 10; i++)
-		{
-			Assert.Equal(0, fuzzr.Generate());
-		}
-	}
+	public void MinMax()
+		=> CheckIf.GeneratedValuesShouldAllSatisfy(Fuzzr.Decimal(1, 5),
+			("value >= 1", a => a >= 1), ("value < 5", a => a < 5));
+
+	private static int GetPrecision(decimal value) => (decimal.GetBits(value)[3] >> 16) & 0x7F;
+
+	[Fact]
+	[DocContent("- The overload `Decimal(int precision)` generates a decimal with `precision` precision.")]
+	public void Precision()
+		=> CheckIf.GeneratedValuesShouldAllSatisfy(Fuzzr.Decimal(1),
+			("value >= 1", a => a >= 1), ("value < 100", a => a < 100),
+			("precision == 1", a => GetPrecision(a) == 1));
+
+	[Fact]
+	[DocContent("- The overload `Decimal(decimal min, decimal max, int precision)` generates a decimal greater than or equal to `min` and less than `max`, with `precision` precision.")]
+	public void MinMaxPrecision()
+		=> CheckIf.GeneratedValuesShouldAllSatisfy(Fuzzr.Decimal(1, 5, 1),
+			("value >= 1", a => a >= 1), ("value < 5", a => a < 5),
+			("precision == 1", a => GetPrecision(a) == 1));
+
+	[Fact]
+	[DocContent("- When `min == max`, the fuzzr always returns that exact value.")]
+	public void MinMaxEqual()
+		=> CheckIf.GeneratedValuesShouldAllSatisfy(Fuzzr.Decimal(42, 42),
+			("== 42", a => a == 42));
+
 	[Fact]
 	[DocContent("- Throws an `ArgumentException` when `min` > `max`.")]
 	public void Throws()
@@ -26,75 +46,24 @@ public class Decimals
 
 	[Fact]
 	[DocContent("- The default fuzzr is (min = 1, max = 100).")]
-	public void DefaultFuzzrBetweenOneAndHundred()
-	{
-		var fuzzr = Fuzzr.Decimal();
-		for (int i = 0; i < 10; i++)
-		{
-			var val = fuzzr.Generate();
-			Assert.True(val >= 1);
-			Assert.True(val < 100);
-		}
-	}
+	public void DefaultFuzzr()
+		=> CheckIf.GeneratedValuesShouldAllSatisfy(Fuzzr.Decimal(),
+			("value >= 1", a => a >= 1), ("value < 100", a => a < 100));
 
 	[Fact]
 	[DocContent("- Can be made to return `decimal?` using the `.Nullable()` combinator.")]
 	public void Nullable()
-	{
-		var fuzzr = Fuzzr.Decimal().Nullable();
-		var isSomeTimesNull = false;
-		var isSomeTimesNotNull = false;
-		for (int i = 0; i < 50; i++)
-		{
-			var value = fuzzr.Generate();
-			if (value.HasValue)
-			{
-				isSomeTimesNotNull = true;
-				Assert.NotEqual(0, value.Value);
-			}
-			else
-				isSomeTimesNull = true;
-		}
-		Assert.True(isSomeTimesNull);
-		Assert.True(isSomeTimesNotNull);
-	}
+		=> CheckIf.GeneratesNullAndNotNull(Fuzzr.Decimal().Nullable());
 
 	[Fact]
 	[DocContent("- `decimal` is automatically detected and generated for object properties.")]
 	public void Property()
-	{
-		var fuzzr = Fuzzr.One<SomeThingToGenerate>();
-		for (int i = 0; i < 10; i++)
-		{
-			Assert.NotEqual(0, fuzzr.Generate().AProperty);
-		}
-	}
+		=> CheckIf.GeneratedValuesShouldAllSatisfy(Fuzzr.One<PrimitivesBag<decimal>>(),
+			("value != 0", a => a.Value != 0));
 
 	[Fact]
 	[DocContent("- `decimal?` is automatically detected and generated for object properties.")]
 	public void NullableProperty()
-	{
-		var fuzzr = Fuzzr.One<SomeThingToGenerate>();
-		var isSomeTimesNull = false;
-		var isSomeTimesNotNull = false;
-		for (int i = 0; i < 50; i++)
-		{
-			var value = fuzzr.Generate().ANullableProperty;
-			if (value.HasValue)
-			{
-				isSomeTimesNotNull = true;
-				Assert.NotEqual(0, value.Value);
-			}
-			else
-				isSomeTimesNull = true;
-		}
-		Assert.True(isSomeTimesNull);
-		Assert.True(isSomeTimesNotNull);
-	}
-
-	public class SomeThingToGenerate
-	{
-		public decimal AProperty { get; set; }
-		public decimal? ANullableProperty { get; set; }
-	}
+		=> CheckIf.GeneratesNullAndNotNull(
+			Fuzzr.One<PrimitivesBag<decimal>>().Select(a => a.NullableValue));
 }

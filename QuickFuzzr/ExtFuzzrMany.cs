@@ -16,7 +16,7 @@ public static partial class ExtFuzzr
 	/// Use for generating lists of varying sizes to test collection handling, pagination, or dynamic data sets.
 	/// </summary>
 	public static FuzzrOf<IEnumerable<T>> Many<T>(this FuzzrOf<T> fuzzr, int min, int max)
-		=> state => new Result<IEnumerable<T>>(GetEnumerable(Fuzzr.Int(min, max)(state).Value, fuzzr, state), state);
+		=> state => new Result<IEnumerable<T>>(GetEnumerable(Fuzzr.Int(min, max + 1)(state).Value, fuzzr, state), state);
 
 	private static List<T> GetEnumerable<T>(int number, FuzzrOf<T> fuzzr, State state)
 	{

@@ -10,7 +10,10 @@ namespace QuickFuzzr.Tests.Docs.B_Reference.P_Primitives.Methods;
 public class Halfs
 {
     [Fact]
-    [DocContent("- The overload Fuzzr.Half(Half min, Half max) generates a half-precision floating-point number greater than or equal to `min` and less than `max`.")]
+    [DocContent(
+@"
+- The overload Fuzzr.Half(Half min, Half max) generates a half-precision floating-point number greater than or equal to `min` and less than `max`.
+  *Note:* Due to floating-point rounding, max may occasionally be produced.")]
     public void MinMax()
         => CheckIf.GeneratedValuesShouldAllSatisfy(Fuzzr.Half((Half)1, (Half)5),
             ("value >= 1", a => a >= (Half)1), ("value <= 5", a => a <= (Half)5));

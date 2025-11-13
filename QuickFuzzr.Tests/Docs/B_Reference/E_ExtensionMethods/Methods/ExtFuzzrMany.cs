@@ -38,7 +38,7 @@ public class ExtFuzzrMany
 
         CheckIf.GeneratedValuesShouldEventuallySatisfyAll(Fuzzr.Int().Many(1, 3),
             ("Count == 1", numbers => numbers.Count() == 1),
-            ("Count == 2", numbers => numbers.Count() == 2));//,
-                                                             //("Count == 3", numbers => numbers.Count() == 3));
+            ("Count == 2", numbers => numbers.Count() == 2),
+            ("Count == 3", numbers => numbers.Count() == 3));
     }
 }
