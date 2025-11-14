@@ -5,7 +5,7 @@
 - [On Composition][OnComposition]
 - [Beautifully Carved Objects][BeautifullyCarvedObjects]
 - [Through the Looking Glass][ThroughTheLookingGlass]
-- [TheFinalShowcase][TheFinalShowcase]
+- [The Final Showcase][TheFinalShowcase]
   
 
 [YourFirstFuzzr]: #your-first-fuzzr
