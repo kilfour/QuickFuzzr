@@ -39,12 +39,15 @@ public static partial class ExtFuzzr
 		var (_, max) = state.GetDepthConstraint(typeof(T));
 		if (currentDepth >= max)
 			return values;
-		state.Collecting.Push(true);
-		for (int i = 0; i < number; i++)
+		try
 		{
-			values.Add(fuzzr(state).Value);
+			state.Collecting.Push(true);
+			for (int i = 0; i < number; i++)
+			{
+				values.Add(fuzzr(state).Value);
+			}
 		}
-		state.Collecting.Pop();
+		finally { state.Collecting.Pop(); }
 		return values;
 	}
 }
