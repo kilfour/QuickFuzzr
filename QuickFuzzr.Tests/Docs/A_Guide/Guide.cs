@@ -13,10 +13,8 @@ namespace QuickFuzzr.Tests.Docs.A_Guide;
 [DocLink(typeof(BeautifullyCarvedObjects), "BeautifullyCarvedObjects")]
 [DocLink(typeof(ThroughTheLookingGlass), "ThroughTheLookingGlass")]
 [DocLink(typeof(TheFinalShowcase), "TheFinalShowcase")]
-public class Guide
-{
-    [DocHeader("Contents")]
-    [DocContent(
+[DocHeader("Contents")]
+[DocContent(
 @"
 - [Your First Fuzzr][YourFirstFuzzr]
 - [On Composition][OnComposition]
@@ -24,5 +22,4 @@ public class Guide
 - [Through the Looking Glass][ThroughTheLookingGlass]
 - [TheFinalShowcase][TheFinalShowcase]
 ")]
-    public static void Contents() { }
-}
+public class Guide { }
