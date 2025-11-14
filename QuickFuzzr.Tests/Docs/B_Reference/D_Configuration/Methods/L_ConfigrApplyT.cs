@@ -1,8 +1,5 @@
-using HorsesForCourses.Abstractions;
-using HorsesForCourses.Domain.Coaches;
 using QuickFuzzr.Tests._Tools;
 using QuickFuzzr.Tests._Tools.Models;
-using QuickFuzzr.UnderTheHood;
 using QuickPulse.Explains;
 
 namespace QuickFuzzr.Tests.Docs.B_Reference.D_Configuration.Methods;
@@ -26,7 +23,7 @@ public class L_ConfigrApplyT
             from person in Fuzzr.One<Person>()
             from employee in Fuzzr.One<Employee>()
             select (person, employee);
-        var value = fuzzr.Generate(42).PulseToQuickLog();
+        var value = fuzzr.Generate(42);
         // seen now equals 
         // [ ( 
         //     Person { Name: "ddnegsn", Age: 18 },
@@ -59,5 +56,18 @@ public class L_ConfigrApplyT
             select person;
         var ex = Assert.Throws<NullReferenceException>(() => fuzzr.Generate());
         Assert.Equal("Object reference not set to an instance of an object.", ex.Message);
+    }
+
+    [Fact]
+    public void Check_For_Too_Many_Applies()
+    {
+        var seen = new List<Person>();
+        var fuzzr =
+            from look in Configr<Person>.Apply(seen.Add)
+            from person in Fuzzr.One<Person>()
+            from employee in Fuzzr.One<Employee>()
+            select (person, employee);
+        var value = fuzzr.Many(2).Generate(42);
+        Assert.Equal(4, seen.Count);
     }
 }
