@@ -36,6 +36,8 @@ public class DateTimes
 			("value.Millisecond == 0", a => a.Millisecond == 0),
 			("value.Nanosecond == 0", a => a.Nanosecond == 0));
 
+	// TODO Check whether snapping to whole seconds makes the *final* second of the max date unreachable.
+
 	[Fact]
 	[DocContent("- Throws an `ArgumentException` when `min` > `max`.")]
 	public void Throws()

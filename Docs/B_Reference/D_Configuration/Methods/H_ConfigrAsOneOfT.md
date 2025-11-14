@@ -33,6 +33,5 @@ personFuzzr.Many(2).Generate();
 **Exceptions:**  
 - `EmptyDerivedTypesException`: When no types are provided.  
 - `DuplicateDerivedTypesException`: When the list of derived types contains duplicates.  
-  - `DuplicateDerivedTypesException`: When the list of derived types contains duplicates.  
 - `DerivedTypeNotAssignableException`: If any listed type is not a valid subclass of `BaseType`.  
 - `DerivedTypeIsNullException`: If any listed type is `null`.  

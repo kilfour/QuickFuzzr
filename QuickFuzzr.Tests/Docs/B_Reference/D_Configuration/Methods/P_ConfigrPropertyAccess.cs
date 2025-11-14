@@ -101,10 +101,11 @@ public class P_ConfigrPropertyAccess
 
     private static FuzzrOf<PropertyShowcase> GetFuzzrEnabledFor(PropertyAccess propertyAccess)
     {
-        return from stringDefault in Configr.Primitive(Fuzzr.Constant("FUZZED"))
-               from cfg in Configr.EnablePropertyAccessFor(propertyAccess)
-               from showCase in Fuzzr.One<PropertyShowcase>()
-               select showCase;
+        return
+            from stringDefault in Configr.Primitive(Fuzzr.Constant("FUZZED"))
+            from cfg in Configr.EnablePropertyAccessFor(propertyAccess)
+            from showCase in Fuzzr.One<PropertyShowcase>()
+            select showCase;
     }
 
     [Fact]
@@ -136,8 +137,8 @@ public class P_ConfigrPropertyAccess
     }
 
     [Fact]
-    [DocContent("- `ReadOnly` only applies to get-only **auto-properties** (with a compiler-generated backing field).")]
-    [DocContent("- Getter-only properties without a backing field (calculated or custom-backed) are never auto-generated.")]
+    [DocContent("- `ReadOnly` only applies to get-only **auto-properties**.")]
+    [DocContent("- Getter-only properties *without* a compiler-generated backing field (i.e.: calculated or manually-backed) are never auto-generated.")]
     public void PropertyAccess_ReadOnly()
     {
         var result = GetFuzzrEnabledFor(PropertyAccess.ReadOnly).Generate();

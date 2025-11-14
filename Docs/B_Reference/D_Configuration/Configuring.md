@@ -17,7 +17,7 @@ select derived types, or wire dynamic behaviors that apply when calling `Fuzzr.O
 | [Configr&lt;T&gt;.EndOn](Methods/I_ConfigrEndOnT.md)| Replaces deeper recursion with the specified end type. |
 | [Configr&lt;T&gt;.Depth](Methods/J_ConfigrDepthT.md)| Sets min and max recursion depth for type T. |
 | [Configr.RetryLimit](Methods/K_ConfigrRetryLimit.md)| Sets the global retry limit for retry-based fuzzrs. |
-| [Configr.Apply](Methods/L_ConfigrApplyT.md)| Creates a fuzzr that executes a side-effect action on each generated value. |
+| [Configr&lt;T&gt;.Apply](Methods/L_ConfigrApplyT.md)| Registers an action executed for each generated value of type `T`. |
 | [Configr&lt;T&gt;.With](Methods/N_ConfigrWithT.md)| Applies configuration for T based on a generated value. |
 | [Configr.Primitive](Methods/O_ConfigrPrimitiveT.md)| Overrides the default fuzzr for a primitive type. |
 | [Property Access](Methods/P_ConfigrPropertyAccess.md)| Controls auto-generation for specific property access levels. |

@@ -15,7 +15,7 @@ public class E_Constant
     [CodeRemove("return ")]
     private static FuzzrOf<int> Returns_Value_Fuzzr()
     {
-        return Fuzzr.Constant(41);
+        return Fuzzr.Constant(42);
         // Results in => 42
     }
 
@@ -24,6 +24,6 @@ public class E_Constant
     [DocExample(typeof(E_Constant), nameof(Returns_Value_Fuzzr))]
     public void Returns_Value()
     {
-        Assert.Equal(42, Fuzzr.Constant(42).Generate());
+        Assert.Equal(42, Returns_Value_Fuzzr().Generate());
     }
 }

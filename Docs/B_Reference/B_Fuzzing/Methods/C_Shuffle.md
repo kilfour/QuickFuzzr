@@ -14,6 +14,7 @@ Fuzzr.Shuffle(params T[] values)
 Fuzzr.Shuffle("John", "Paul", "George", "Ringo");
 // Results in => ["Paul", "Ringo", "John", "George"]
 ```
+- If the input sequence is empty, the result is also empty.  
 
 **Overloads:**  
 - `Shuffle<T>(IEnumerable<T> values)`:  

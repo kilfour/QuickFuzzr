@@ -10,6 +10,6 @@ Fuzzr.Constant(T value)
 
 **Usage:**  
 ```csharp
-Fuzzr.Constant(41);
+Fuzzr.Constant(42);
 // Results in => 42
 ```

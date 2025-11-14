@@ -12,6 +12,7 @@ Fuzzr.OneOf(params T[] values)
  Fuzzr.OneOf("a", "b", "c");
 ```
 - Selection is uniform unless weights are specified (see below).  
+- **null items** are allowed in `params T[] values`.  
 
 **Overloads:**  
 - `Fuzzr.OneOf(IEnumerable<T> values)`:  

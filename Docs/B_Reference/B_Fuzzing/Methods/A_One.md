@@ -12,7 +12,7 @@ Fuzzr.One<T>()
 Fuzzr.One<Person>();
 // Results in => { Name: "ddnegsn", Age: 18 }
 ```
- - Uses `T`'s public parameterless constructor. Parameterized ctors aren't auto-filled.  
+ - Uses `T`'s public parameterless constructor. Parameterized ctors aren't auto-filled unless configured.  
 - Primitive properties are generated using their default `Fuzzr` equivalents.  
 - Enumerations are filled using `Fuzzr.Enum<T>()`.  
 - Object properties are generated where possible.  

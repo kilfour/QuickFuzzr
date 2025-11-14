@@ -914,7 +914,7 @@ Fuzzr.One<T>()
 Fuzzr.One<Person>();
 // Results in => { Name: "ddnegsn", Age: 18 }
 ```
- - Uses `T`'s public parameterless constructor. Parameterized ctors aren't auto-filled.  
+ - Uses `T`'s public parameterless constructor. Parameterized ctors aren't auto-filled unless configured.  
 - Primitive properties are generated using their default `Fuzzr` equivalents.  
 - Enumerations are filled using `Fuzzr.Enum<T>()`.  
 - Object properties are generated where possible.  
@@ -947,6 +947,7 @@ Fuzzr.OneOf(params T[] values)
  Fuzzr.OneOf("a", "b", "c");
 ```
 - Selection is uniform unless weights are specified (see below).  
+- **null items** are allowed in `params T[] values`.  
 
 **Overloads:**  
 - `Fuzzr.OneOf(IEnumerable<T> values)`:  
@@ -982,6 +983,7 @@ Fuzzr.Shuffle(params T[] values)
 Fuzzr.Shuffle("John", "Paul", "George", "Ringo");
 // Results in => ["Paul", "Ringo", "John", "George"]
 ```
+- If the input sequence is empty, the result is also empty.  
 
 **Overloads:**  
 - `Shuffle<T>(IEnumerable<T> values)`:  
@@ -1023,7 +1025,7 @@ Fuzzr.Constant(T value)
 
 **Usage:**  
 ```csharp
-Fuzzr.Constant(41);
+Fuzzr.Constant(42);
 // Results in => 42
 ```
 ### Configuring
@@ -1045,7 +1047,7 @@ select derived types, or wire dynamic behaviors that apply when calling `Fuzzr.O
 | [Configr&lt;T&gt;.EndOn](#configrtendon)| Replaces deeper recursion with the specified end type. |
 | [Configr&lt;T&gt;.Depth](#configrtdepth)| Sets min and max recursion depth for type T. |
 | [Configr.RetryLimit](#configrretrylimit)| Sets the global retry limit for retry-based fuzzrs. |
-| [Configr.Apply](#configrapply)| Creates a fuzzr that executes a side-effect action on each generated value. |
+| [Configr&lt;T&gt;.Apply](#configrtapply)| Registers an action executed for each generated value of type `T`. |
 | [Configr&lt;T&gt;.With](#configrtwith)| Applies configuration for T based on a generated value. |
 | [Configr.Primitive](#configrprimitive)| Overrides the default fuzzr for a primitive type. |
 | [Property Access](#property-access)| Controls auto-generation for specific property access levels. |
@@ -1244,7 +1246,6 @@ personFuzzr.Many(2).Generate();
 **Exceptions:**  
 - `EmptyDerivedTypesException`: When no types are provided.  
 - `DuplicateDerivedTypesException`: When the list of derived types contains duplicates.  
-  - `DuplicateDerivedTypesException`: When the list of derived types contains duplicates.  
 - `DerivedTypeNotAssignableException`: If any listed type is not a valid subclass of `BaseType`.  
 - `DerivedTypeIsNullException`: If any listed type is `null`.  
 #### Configr&lt;T&gt;.EndOn
@@ -1324,8 +1325,8 @@ Possible solutions:
 - Check for unintended configuration overrides
 - If you need more, consider revising your fuzzr logic instead of increasing the limit
 ```
-#### Configr.Apply
-Creates a fuzzr that executes a side-effect action on each generated value without modifying the value itself. Use for performing operations like logging, adding to collections, or calling methods that have side effects but don't transform the data.  
+#### Configr&lt;T&gt;.Apply
+Registers an action executed for each generated value of type `T` without modifying the value itself. Use for performing operations like logging, adding to collections, or calling methods that have side effects but don't transform the data.  
 
 **Signature:**  
 ```csharp
@@ -1425,8 +1426,8 @@ select (person1, person2);
 ```
 - Updates state flags using bitwise enable/disable semantics.  
 - The default value is `PropertyAccess.PublicSetters`.  
-- `ReadOnly` only applies to get-only **auto-properties** (with a compiler-generated backing field).  
-- Getter-only properties without a backing field (calculated or custom-backed) are never auto-generated.  
+- `ReadOnly` only applies to get-only **auto-properties**.  
+- Getter-only properties *without* a compiler-generated backing field (i.e.: calculated or manually-backed) are never auto-generated.  
 ### Fuzzr Extension Methods
 QuickFuzzr provides a collection of extension methods that enhance the expressiveness and composability of `FuzzrOf<T>`.
 These methods act as modifiers, they wrap existing fuzzrs to alter behavior, add constraints,
@@ -1509,7 +1510,7 @@ Filters out nulls from a nullable fuzzr, retrying up to the retry limit.
 
 **Signature:**  
 ```csharp
-ExtFuzzr.NeverReturnNull<T>(this FuzzrOf<T?> fuzzr)0
+ExtFuzzr.NeverReturnNull<T>(this FuzzrOf<T?> fuzzr)
 ```
   
 
@@ -1554,10 +1555,12 @@ Makes sure that every generated value is unique.
 ExtFuzzr.Unique<T>(this FuzzrOf<T> fuzzr, object key)
 ```
   
-- When asking for more unique values than the fuzzr can supply, an exception is thrown.  
 - Multiple unique fuzzrs can be defined in one 'composed' fuzzr, without interfering with eachother by using a different key.  
 - When using the same key for multiple unique fuzzrs all values across these fuzzrs are unique.  
 - An overload exist taking a function as an argument allowing for a dynamic key.  
+
+**Exceptions:**  
+- `UniqueValueExhaustedException`: When the fuzzr cannot find enough unique values within the retry limit.   
 #### Where
 
 **Signature:**  

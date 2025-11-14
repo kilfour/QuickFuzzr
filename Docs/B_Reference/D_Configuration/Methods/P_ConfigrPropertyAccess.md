@@ -18,5 +18,5 @@ select (person1, person2);
 ```
 - Updates state flags using bitwise enable/disable semantics.  
 - The default value is `PropertyAccess.PublicSetters`.  
-- `ReadOnly` only applies to get-only **auto-properties** (with a compiler-generated backing field).  
-- Getter-only properties without a backing field (calculated or custom-backed) are never auto-generated.  
+- `ReadOnly` only applies to get-only **auto-properties**.  
+- Getter-only properties *without* a compiler-generated backing field (i.e.: calculated or manually-backed) are never auto-generated.  

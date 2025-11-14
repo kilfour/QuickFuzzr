@@ -23,30 +23,6 @@ public class ExtFuzzrUnique
     }
 
     [Fact]
-    [DocContent("- When asking for more unique values than the fuzzr can supply, an exception is thrown.")]
-    public void Not_Enough_Values()
-    {
-        var fuzzr = Fuzzr.Constant(1).Unique("TheKey").Many(2);
-        var ex = Assert.Throws<UniqueValueExhaustedException>(() => fuzzr.Generate().ToArray());
-        Assert.Equal(Not_Enough_Values_Message(), ex.Message);
-    }
-
-    [CodeSnippet]
-    [CodeRemove("@\"")]
-    [CodeRemove("\";")]
-    private static string Not_Enough_Values_Message() =>
-@"Could not find a unique value of type Int32 using key ""TheKey"", after 64 attempts.
-
-Possible solutions:
-- Increase the retry limit globally: Configr.RetryLimit(256)
-- Increase it locally: .Unique(""TheKey"", 256)
-- Widen the value space (add more options or relax filters)
-- Use a deterministic unique source (Counter for instance)
-- Use a different uniqueness scope key to reset tracking
-- Use a fallback: fuzzr.Unique(values).WithDefault()
-";
-
-    [Fact]
     [DocContent("- Multiple unique fuzzrs can be defined in one 'composed' fuzzr, without interfering with eachother by using a different key.")]
     public void Multiple()
     {
@@ -96,4 +72,29 @@ Possible solutions:
             Assert.Equal(valueOne[0] == 1 ? 2 : 1, valueOne[1]);
         }
     }
+
+    [Fact]
+    [DocExceptions]
+    [DocException("UniqueValueExhaustedException", "When the fuzzr cannot find enough unique values within the retry limit. ")]
+    public void Not_Enough_Values()
+    {
+        var fuzzr = Fuzzr.Constant(1).Unique("TheKey").Many(2);
+        var ex = Assert.Throws<UniqueValueExhaustedException>(() => fuzzr.Generate().ToArray());
+        Assert.Equal(Not_Enough_Values_Message(), ex.Message);
+    }
+
+    [CodeSnippet]
+    [CodeRemove("@\"")]
+    [CodeRemove("\";")]
+    private static string Not_Enough_Values_Message() =>
+@"Could not find a unique value of type Int32 using key ""TheKey"", after 64 attempts.
+
+Possible solutions:
+- Increase the retry limit globally: Configr.RetryLimit(256)
+- Increase it locally: .Unique(""TheKey"", 256)
+- Widen the value space (add more options or relax filters)
+- Use a deterministic unique source (Counter for instance)
+- Use a different uniqueness scope key to reset tracking
+- Use a fallback: fuzzr.Unique(values).WithDefault()
+";
 }

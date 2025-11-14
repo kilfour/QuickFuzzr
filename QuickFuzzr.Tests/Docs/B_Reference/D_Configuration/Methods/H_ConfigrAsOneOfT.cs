@@ -79,7 +79,6 @@ Possible solutions:
 
     [Fact]
     [DocException("DuplicateDerivedTypesException", "When the list of derived types contains duplicates.")]
-    [DocContent("  - `DuplicateDerivedTypesException`: When the list of derived types contains duplicates.")]
     public void ConfigrAsOneOf_Duplicates_Throws()
     {
         var ex = Assert.Throws<DuplicateDerivedTypesException>(() => Configr<Person>.AsOneOf(typeof(Employee), typeof(Employee)));

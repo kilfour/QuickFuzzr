@@ -32,6 +32,14 @@ public class C_Shuffle
     }
 
     [Fact]
+    [DocContent("- If the input sequence is empty, the result is also empty.")]
+    public void Shuffle_Empty()
+    {
+        var result = Fuzzr.Shuffle<int>([]).Generate(42).ToArray();
+        Assert.Equal([], result);
+    }
+
+    [Fact]
     [DocOverloads]
     [DocContent("- `Shuffle<T>(IEnumerable<T> values)`:")]
     [DocContent("  Same as above, but accepts any enumerable source.")]

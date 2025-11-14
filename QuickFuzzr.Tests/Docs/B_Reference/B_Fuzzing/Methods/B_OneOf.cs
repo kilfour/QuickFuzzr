@@ -43,6 +43,16 @@ public class B_OneOf
     }
 
     [Fact]
+    [DocContent("- **null items** are allowed in `params T[] values`.")]
+    public void NullItems()
+    {
+        var result = Fuzzr.OneOf<int?>(1, null).Generate(42);
+        Assert.Null(result);
+    }
+
+    //Clarify whether **null items** inside `IEnumerable<T>` are allowed.
+
+    [Fact]
     [DocOverloads]
     [DocContent("- `Fuzzr.OneOf(IEnumerable<T> values)`:")]
     [DocContent("  Same as above, but accepts any enumerable source.")]

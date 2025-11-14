@@ -1,5 +1,5 @@
-# Configr.Apply
-Creates a fuzzr that executes a side-effect action on each generated value without modifying the value itself. Use for performing operations like logging, adding to collections, or calling methods that have side effects but don't transform the data.  
+# Configr&lt;T&gt;.Apply
+Registers an action executed for each generated value of type `T` without modifying the value itself. Use for performing operations like logging, adding to collections, or calling methods that have side effects but don't transform the data.  
 
 **Signature:**  
 ```csharp

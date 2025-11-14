@@ -6,9 +6,9 @@ namespace QuickFuzzr.Tests.Docs.B_Reference.D_Configuration.Methods;
 
 
 [DocFile]
-[DocFileHeader("Configr.Apply")]
-[DocColumn(Configuring.Columns.Description, "Creates a fuzzr that executes a side-effect action on each generated value.")]
-[DocContent("Creates a fuzzr that executes a side-effect action on each generated value without modifying the value itself. Use for performing operations like logging, adding to collections, or calling methods that have side effects but don't transform the data.")]
+[DocFileCodeHeader("Configr<T>.Apply")]
+[DocColumn(Configuring.Columns.Description, "Registers an action executed for each generated value of type `T`.")]
+[DocContent("Registers an action executed for each generated value of type `T` without modifying the value itself. Use for performing operations like logging, adding to collections, or calling methods that have side effects but don't transform the data.")]
 [DocSignature("Configr<T>.Apply(Action<T> action)")]
 public class L_ConfigrApplyT
 {

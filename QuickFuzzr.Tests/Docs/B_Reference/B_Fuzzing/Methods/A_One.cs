@@ -23,7 +23,7 @@ public class A_One
     [Fact]
     [DocUsage]
     [DocExample(typeof(A_One), nameof(Person_Example_Fuzzr))]
-    [DocContent(" - Uses `T`'s public parameterless constructor. Parameterized ctors aren't auto-filled.")]
+    [DocContent(" - Uses `T`'s public parameterless constructor. Parameterized ctors aren't auto-filled unless configured.")]
     public void Person_Example()
     {
         var result = Person_Example_Fuzzr().Generate(42);
