@@ -1,4 +1,3 @@
-using QuickFuzzr.Instruments;
 using QuickFuzzr.UnderTheHood;
 
 namespace QuickFuzzr;
@@ -10,6 +9,10 @@ public static partial class Configr
     /// value productions before succeeding, such as those created with <c>.Unique(...)</c>.
     /// Use to control how many times fuzzrs retry before giving up.
     /// </summary>
-    public static FuzzrOf<Intent> RetryLimit(int limit)
-        => state => Chain.It(() => state.SetRetryLimit(limit), Result.Unit(state));
+    public static FuzzrOf<Intent> RetryLimit(int limit) =>
+        state =>
+        {
+            state.SetRetryLimit(limit);
+            return Result.Unit(state);
+        };
 }

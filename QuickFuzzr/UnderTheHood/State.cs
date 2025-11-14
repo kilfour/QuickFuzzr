@@ -1,6 +1,5 @@
 ﻿using System.Reflection;
 using System.Security.Cryptography;
-using QuickFuzzr.Instruments;
 using QuickFuzzr.UnderTheHood.WhenThingsGoWrong;
 
 namespace QuickFuzzr.UnderTheHood;
@@ -107,7 +106,10 @@ public class State
 	}
 
 	public T Set<T>(object key, T value)
-		=> Chain.It(() => fuzzrMemory[key] = value!, value);
+	{
+		fuzzrMemory[key] = value!;
+		return value;
+	}
 
 	// ---------------------------------------------------------------------
 	// Property Customizations
