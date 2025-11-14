@@ -32,7 +32,6 @@ public class L_ConfigrApplyT
         return seen;
     }
 
-
     [Fact]
     [DocUsage]
     [DocExample(typeof(L_ConfigrApplyT), nameof(ExampleGetResult))]
