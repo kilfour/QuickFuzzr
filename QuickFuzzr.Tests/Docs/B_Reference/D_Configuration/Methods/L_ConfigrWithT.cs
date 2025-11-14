@@ -9,7 +9,15 @@ namespace QuickFuzzr.Tests.Docs.B_Reference.D_Configuration.Methods;
 [DocSignature("Configr<T>.With<TValue>(FuzzrOf<TValue> fuzzr, Func<TValue, FuzzrOf<Intent>> configrFactory)")]
 [DocContent(
 @"Applies configuration for type `T` based on a value produced by another fuzzr,
-allowing dynamic, data-dependent configuration inside LINQ chains..")]
+allowing dynamic, data-dependent configuration inside LINQ chains.
+")]
+// [DocContent(
+// @"This is a niche feature, but it can be necessary in some cases.  
+// It is useful for solving the classic 'captured variable in closure' problem that trips people up with LINQ and functional composition,
+// but you should reach for other solutions first.  
+
+// The usage example shown here is a bit contrived, but it explains the basic idea. 
+// ")]
 public class L_ConfigrWithT
 {
     [CodeSnippet]
