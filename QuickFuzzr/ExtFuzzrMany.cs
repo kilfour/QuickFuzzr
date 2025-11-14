@@ -34,11 +34,11 @@ public static partial class ExtFuzzr
 
 	private static List<T> GetEnumerable<T>(int number, FuzzrOf<T> fuzzr, State state)
 	{
-		List<T> values = [];
 		var currentDepth = state.GetDepth(typeof(T));
 		var (_, max) = state.GetDepthConstraint(typeof(T));
 		if (currentDepth >= max)
-			return values;
+			return [];
+		List<T> values = new(number);
 		try
 		{
 			state.Collecting.Push(true);

@@ -2,30 +2,20 @@ namespace QuickFuzzr.Tests._Tools.Models;
 
 public class PropertyShowcase
 {
-    // The usual suspect
     public string PublicSetter { get; set; } = string.Empty;
-
-    // Common patterns
     public string PrivateSetter { get; private set; } = string.Empty;
     public string InitOnly { get; init; } = string.Empty;
     public string ReadOnly { get; } = "fixed";
-
-    // Less common but important
     public string ProtectedSetter { get; protected set; } = string.Empty;
     public string InternalSetter { get; internal set; } = string.Empty;
-
-    // The edge cases
     private string _privateProperty = "hidden";
     public string PrivateProperty => _privateProperty;
-
-    // Calculated properties
     public string Calculated => $"{ReadOnly} {PrivateProperty}";
-
-    // // Fields (if you support them)
-    // public string PublicField = "field";
-    // private string _privateField = "private";
 }
 
+// // Fields (if you support them)
+// public string PublicField = "field";
+// private string _privateField = "private";
 
 // // Record with mixed accessibility - correct syntax
 // public record EmployeeRecord(string Name, int Age)

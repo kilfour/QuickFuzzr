@@ -66,8 +66,10 @@ public class State
 
 	private readonly Stack<DepthFrame> depthFrames = new();
 
+	private static readonly DepthConstraint DefaultDepth = new(1, 1);
+
 	public DepthConstraint GetDepthConstraint(Type type) =>
-		DepthConstraints.TryGetValue(type, out var c) ? c : new(1, 1);
+		DepthConstraints.TryGetValue(type, out var constraint) ? constraint : DefaultDepth;
 
 	public int GetDepth(Type type) =>
 		depthFrames.FirstOrDefault(f => f.Type == type)?.Depth ?? 0;

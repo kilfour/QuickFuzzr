@@ -42,7 +42,7 @@ public static partial class ExtFuzzr
 			state =>
 				{
 					var limit = attempts ?? state.RetryLimit;
-					var allreadyGenerated = state.Get(key(), new List<T>());
+					var allreadyGenerated = state.Get(key(), new HashSet<T>());
 					for (int i = 0; i < limit; i++)
 					{
 						var result = fuzzr(state);

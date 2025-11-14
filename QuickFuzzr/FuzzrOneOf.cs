@@ -49,14 +49,16 @@ public static partial class Fuzzr
 	/// </summary>
 	public static FuzzrOf<T> OneOf<T>(IEnumerable<T> values)
 	{
+
 		CheckIfValuesIsNull(values, typeof(T).Name);
+		var options = values as IReadOnlyList<T> ?? [.. values];
 		return
 			s =>
 			{
-				if (!values.Any())
+				if (!options.Any())
 					throw new OneOfEmptyOptionsException(typeof(T).Name);
-				var index = Int(0, values.Count())(s).Value;
-				return new Result<T>(values.ElementAt(index), s);
+				var index = Int(0, options.Count())(s).Value;
+				return new Result<T>(options.ElementAt(index), s);
 			};
 	}
 

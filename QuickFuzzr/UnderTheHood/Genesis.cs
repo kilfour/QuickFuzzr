@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Concurrent;
 using System.Reflection;
 using System.Runtime.CompilerServices;
 using QuickFuzzr.UnderTheHood.WhenThingsGoWrong;
@@ -127,13 +128,23 @@ public class Genesis : ICreationEngine
         return instance;
     }
 
+    private static readonly ConcurrentDictionary<Type, PropertyInfo[]> PropertyCache = new();
+
+    private static PropertyInfo[] GetCachedProperties(Type type) =>
+        PropertyCache.GetOrAdd(type, t => t.GetProperties(MyBinding.Flags));
+
     private void FillProperties(object instance, State state)
     {
-        _ = state.WithCustomizations
-            .Where(a => a.Key.Item1.IsAssignableFrom(instance.GetType()))
-            .Select(a => a.Value.Item2(a.Value.Item1(state).Value)(state))
-            .ToList();
-        foreach (var propertyInfo in instance.GetType().GetProperties(MyBinding.Flags))
+        var instanceType = instance.GetType();
+        foreach (var customization in state.WithCustomizations)
+        {
+            if (!customization.Key.Item1.IsAssignableFrom(instanceType))
+                continue;
+            var (fuzzr, applier) = customization.Value;
+            applier(fuzzr(state).Value)(state);
+        }
+
+        foreach (var propertyInfo in GetCachedProperties(instanceType))
         {
             HandleProperty(instance, state, propertyInfo);
         }
