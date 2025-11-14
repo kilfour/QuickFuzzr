@@ -36,6 +36,12 @@ public class State
 	}
 
 	// ---------------------------------------------------------------------
+	// Inheriting
+	public readonly Dictionary<Type, List<Type>> InheritanceInfo = [];
+
+	public Dictionary<Type, Type> Endings = [];
+
+	// ---------------------------------------------------------------------
 	// Depth Control
 	public Stack<bool> Collecting { get; set; } = new Stack<bool>([false]);
 
@@ -96,12 +102,6 @@ public class State
 
 	public T Set<T>(object key, T value)
 		=> Chain.It(() => fuzzrMemory[key] = value!, value);
-
-	// ---------------------------------------------------------------------
-	// Inheriting
-	public readonly Dictionary<Type, List<Type>> InheritanceInfo = [];
-
-	public Dictionary<Type, Type> Endings = [];
 
 	// ---------------------------------------------------------------------
 	// Property Customizations
