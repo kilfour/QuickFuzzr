@@ -17,7 +17,7 @@ Calling `Fuzzr.One<Folder>().Generate()` results in:
 {  Name: "ljduv", SubFolder: null }
 ```
 You can however influence how deep the rabbit hole goes,
-by adding call to `Configr<Folder>.Depth(min, max)`:  
+by adding a call to `Configr<Folder>.Depth(min, max)`:  
 ```csharp
 from name in Configr<Folder>.Property(a => a.Name,
     from cnt in Fuzzr.Counter("folder") select $"Folder-{cnt}")

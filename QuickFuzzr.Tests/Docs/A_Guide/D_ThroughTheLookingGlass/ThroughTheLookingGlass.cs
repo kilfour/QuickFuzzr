@@ -29,7 +29,7 @@ public class ThroughTheLookingGlass
     [Fact]
     [DocContent(
 @"You can however influence how deep the rabbit hole goes,
-by adding call to `Configr<Folder>.Depth(min, max)`:")]
+by adding a call to `Configr<Folder>.Depth(min, max)`:")]
     [DocExample(typeof(ThroughTheLookingGlass), nameof(GoingDeeper_Example))]
     [DocOutput]
     [DocCodeFile("GoingDeeper.txt", "text")]
