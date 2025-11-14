@@ -178,6 +178,4 @@ public class P_ConfigrPropertyAccess
         Assert.Equal("hidden", result.PrivateProperty);
         Assert.Equal("fixed hidden", result.Calculated);
     }
-
-
 }
