@@ -185,7 +185,6 @@ public class Genesis : ICreationEngine
         if (NeedsToBeGenerallyIgnored(state, propertyInfo))
             return;
 
-
         if (IsAKnownPrimitive(state, propertyInfo))
         {
             SetPrimitive(instance, propertyInfo, state);
