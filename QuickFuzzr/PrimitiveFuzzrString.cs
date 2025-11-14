@@ -41,11 +41,12 @@ public static partial class Fuzzr
 	/// </summary>
 	public static FuzzrOf<string> String(FuzzrOf<char> charFuzzr, int min, int max) => StringInternal(charFuzzr, min, max);
 
-	private static FuzzrOf<string> StringInternal(FuzzrOf<char> charFuzzr, int min, int max) =>
-		state =>
+	private static FuzzrOf<string> StringInternal(FuzzrOf<char> charFuzzr, int min, int max)
+	{
+		ArgumentOutOfRangeException.ThrowIfNegative(min);
+		MinMax.Check(min, max);
+		return state =>
 			{
-				ArgumentOutOfRangeException.ThrowIfNegative(min);
-				MinMax.Check(min, max);
 				int numberOfChars = state.Random.Next(min, max + 1);
 				var sb = new StringBuilder(numberOfChars);
 				for (int i = 0; i < numberOfChars; i++)
@@ -54,4 +55,5 @@ public static partial class Fuzzr
 				}
 				return new Result<string>(sb.ToString(), state);
 			};
+	}
 }
