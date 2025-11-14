@@ -7,7 +7,9 @@ namespace QuickFuzzr.Tests.Docs.B_Reference.D_Configuration.Methods;
 
 
 [DocFile]
-[DocFileHeader("Configr.RetryLimit(int limit)")]
+[DocFileHeader("Configr.RetryLimit")]
+[DocContent("Sets the global retry limit used by fuzzrs.")]
+[DocSignature("Configr.RetryLimit(int limit)")]
 public class K_ConfigrRetryLimit
 {
     [DocUsage]
@@ -20,7 +22,6 @@ public class K_ConfigrRetryLimit
     }
 
     [Fact]
-    [DocContent("- Sets the global retry limit used by fuzzrs.")]
     public void SetsPropertyOnState()
     {
         var state = new State();

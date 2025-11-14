@@ -1,4 +1,11 @@
-# Configr&lt;T&gt;.Ignore(Expression&lt;Func&lt;T, TProperty&gt;&gt; expr)
+# Configr&lt;T&gt;.Ignore
+The property specified will be ignored during generation.  
+
+**Signature:**  
+```csharp
+Configr<T>.Ignore(Expression<Func<T, TProperty>> expr)
+```
+  
 
 **Usage:**  
 ```csharp
@@ -8,5 +15,4 @@ select person;
 // Results in => 
 // ( Person { Name: "", Age: 0 }, Address { Street: "", City: "" } )
 ```
-The property specified will be ignored during generation.  
 Derived classes generated also ignore the base property.  

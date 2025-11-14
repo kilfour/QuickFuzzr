@@ -1,6 +1,11 @@
-# Configr&lt;T&gt;.Depth(int min, int max)
-Configures depth constraints for type `T` to control recursive object graph generation. 
+# Configr&lt;T&gt;.Depth
+
+**Signature:**  
+```csharp
+Configr<T>.Depth(int min, int max)
+```
   
+Configures depth constraints for type `T` to control recursive object graph generation.  
 
 **Usage:**  
 ```csharp

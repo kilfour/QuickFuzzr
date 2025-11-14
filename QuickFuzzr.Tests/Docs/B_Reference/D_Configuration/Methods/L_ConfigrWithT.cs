@@ -5,9 +5,9 @@ using QuickPulse.Explains;
 namespace QuickFuzzr.Tests.Docs.B_Reference.D_Configuration.Methods;
 
 [DocFile]
-[DocFileHeader("Configr<T>.With<TValue>(FuzzrOf<TValue> fuzzr, Func<TValue, FuzzrOf<Intent>> configrFactory)")]
-[DocContent(
-@"Applies configuration for type `T` based on a value generated from another fuzzr.")]
+[DocFileHeader("Configr<T>.With")]
+[DocContent("Applies configuration for type `T` based on a value generated from another fuzzr.")]
+[DocSignature("Configr<T>.With<TValue>(FuzzrOf<TValue> fuzzr, Func<TValue, FuzzrOf<Intent>> configrFactory)")]
 public class L_ConfigrWithT
 {
     [CodeSnippet]

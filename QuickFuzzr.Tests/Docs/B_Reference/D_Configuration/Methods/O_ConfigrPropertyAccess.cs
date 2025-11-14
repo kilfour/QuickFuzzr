@@ -6,7 +6,14 @@ using QuickPulse.Explains;
 namespace QuickFuzzr.Tests.Docs.B_Reference.D_Configuration.Methods;
 
 [DocFile]
-[DocFileHeader("Configr.EnablePropertyAccessFor(PropertyAccess propertyAccess) / Configr.DisablePropertyAccessFor(PropertyAccess propertyAccess)")]
+[DocFileHeader("Property Access")]
+[DocContent("Control which type of properties QuickFuzzr generates.")]
+[DocContent(
+@"\n**Signature:**
+```csharp
+Configr.EnablePropertyAccessFor(PropertyAccess propertyAccess) 
+Configr.DisablePropertyAccessFor(PropertyAccess propertyAccess)
+```")]
 public class O_ConfigrPropertyAccess
 {
     [DocUsage]
@@ -25,7 +32,6 @@ public class O_ConfigrPropertyAccess
     }
 
     [Fact]
-    [DocContent("Enables and then disables generation for init-only properties.")]
     public void Example()
     {
         var (person1, person2) = GetFuzzr().Generate(1234);

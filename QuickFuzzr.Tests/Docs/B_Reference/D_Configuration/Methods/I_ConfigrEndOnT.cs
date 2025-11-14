@@ -6,17 +6,17 @@ using QuickPulse.Explains;
 namespace QuickFuzzr.Tests.Docs.B_Reference.D_Configuration.Methods;
 
 [DocFile]
-[DocFileCodeHeader("Configr<T>.EndOn<TEnd>()")]
+[DocFileCodeHeader("Configr<T>.EndOn")]
+[DocContent(
+@"Configures a recursion stop condition for type `T`,
+instructing QuickFuzzr to generate `TEnd` instances instead of continuing deeper.")]
+[DocSignature("Configr<T>.EndOn<TEnd>()")]
 [DocContent(
 @"")]
 public class I_ConfigrEndOnT
 {
     [CodeSnippet]
     [CodeRemove("return")]
-    [DocContent(
-@"Configures a recursion stop condition for type `T`, instructing QuickFuzzr to generate `TEnd` instances instead of continuing deeper.
-Useful for defining explicit *end* types in recursive object graphs, preventing infinite nesting and keeping structure depth under control.
-")]
     private static FuzzrOf<Turtle> GetFuzzr()
     {
         return

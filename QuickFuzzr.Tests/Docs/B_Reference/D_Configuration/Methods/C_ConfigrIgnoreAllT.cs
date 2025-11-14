@@ -6,7 +6,9 @@ namespace QuickFuzzr.Tests.Docs.B_Reference.D_Configuration.Methods;
 
 
 [DocFile]
-[DocFileCodeHeader("Configr<T>.IgnoreAll()")]
+[DocFileCodeHeader("Configr<T>.IgnoreAll")]
+[DocContent("Ignore all properties while generating an object.")]
+[DocSignature("Configr<T>.IgnoreAll()")]
 public class C_ConfigrIgnoreAllT
 {
     [DocUsage]
@@ -25,7 +27,6 @@ public class C_ConfigrIgnoreAllT
     }
 
     [Fact]
-    [DocContent("Ignore all properties while generating an object.")]
     public void StaysDefaultValue()
     {
         var (person, address) = GetFuzzr().Generate(42);

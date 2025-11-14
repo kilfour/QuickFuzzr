@@ -1,7 +1,12 @@
-# Configr&lt;T&gt;.EndOn&lt;TEnd&gt;()
+# Configr&lt;T&gt;.EndOn
+Configures a recursion stop condition for type `T`,
+instructing QuickFuzzr to generate `TEnd` instances instead of continuing deeper.  
+
+**Signature:**  
+```csharp
+Configr<T>.EndOn<TEnd>()
+```
   
-Configures a recursion stop condition for type `T`, instructing QuickFuzzr to generate `TEnd` instances instead of continuing deeper.
-Useful for defining explicit *end* types in recursive object graphs, preventing infinite nesting and keeping structure depth under control.
   
 
 **Usage:**  

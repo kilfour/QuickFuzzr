@@ -4,13 +4,13 @@ using QuickPulse.Explains;
 namespace QuickFuzzr.Tests.Docs.B_Reference.D_Configuration.Methods;
 
 [DocFile]
-[DocFileCodeHeader("Configr<T>.Construct(FuzzrOf<T1> arg1)")]
+[DocFileCodeHeader("Configr<T>.Construct")]
 [DocContent(
 @"Configures a custom constructor for type T, used when Fuzzr.One<T>() is called.
 Useful for records or classes without parameterless constructors or when `T` has multiple constructors
 and you want to control which one is used during fuzzing.  
 ")] // Check: check multiple constructors random selection
-
+[DocSignature("Configr<T>.Construct(FuzzrOf<T1> arg1);")]
 public class G_ConfigrConstructT
 {
 

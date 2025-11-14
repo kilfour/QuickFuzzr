@@ -1,10 +1,16 @@
-# Configr&lt;T&gt;.Property(...)
+# Configr&lt;T&gt;.Property
+The property specified will be generated using the passed in fuzzr.  
+
+**Signature:**  
+```csharp
+Configr<T>.Property<TProperty>(Func<PropertyInfo, bool> predicate, FuzzrOf<TProperty> fuzzr)
+```
+  
 
 **Usage:**  
 ```csharp
  Configr<Thing>.Property(s => s.Id, Fuzzr.Constant(42));
 ```
-- The property specified will be generated using the passed in fuzzr.  
 - An overload exists which allows for passing a value instead of a fuzzr.  
 ```csharp
  Configr<Thing>.Property(s => s.Id, 666);

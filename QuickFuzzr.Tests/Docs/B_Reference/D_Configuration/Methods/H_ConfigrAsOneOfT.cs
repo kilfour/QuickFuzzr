@@ -1,19 +1,19 @@
 using QuickFuzzr.Tests._Tools;
 using QuickFuzzr.Tests._Tools.Models;
-using QuickFuzzr.UnderTheHood.WhenThingsGoWrong;
 using QuickFuzzr.UnderTheHood.WhenThingsGoWrong.AsOneOfExceptions;
 using QuickPulse.Explains;
 
 namespace QuickFuzzr.Tests.Docs.B_Reference.D_Configuration.Methods;
 
 [DocFile]
-[DocFileCodeHeader("Configr<T>AsOneOf(params Type[] types)")]
+[DocFileCodeHeader("Configr<T>AsOneOf")]
 [DocContent(
 @"Configures inheritance resolution for BaseType, 
 allowing QuickFuzzr to randomly select one of the specified derived types when generating instances.  
 
 Useful when generating domain hierarchies where multiple concrete subtypes exist.  
 ")]
+[DocSignature("Configr<T>AsOneOf(params Type[] types)")]
 public class H_ConfigrAsOneOfT
 {
     [CodeSnippet]

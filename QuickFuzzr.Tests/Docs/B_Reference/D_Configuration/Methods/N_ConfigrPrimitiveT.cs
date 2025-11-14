@@ -5,12 +5,13 @@ using QuickPulse.Explains;
 namespace QuickFuzzr.Tests.Docs.B_Reference.D_Configuration.Methods;
 
 [DocFile]
-[DocFileCodeHeader("Configr.Primitive<T>(this FuzzrOf<T> fuzzr)")]
+[DocFileCodeHeader("Configr.Primitive<T>")]
 [DocContent(
 @"Registers a global default fuzzr for primitive types.
 Use this to override how QuickFuzzr generates built-in types across all automatically created objects.
 ")]
-public class N_ConfigrPrimitive
+[DocSignature("Configr.Primitive<T>(this FuzzrOf<T> fuzzr)")]
+public class N_ConfigrPrimitiveT
 {
 
     [CodeSnippet]
@@ -28,7 +29,7 @@ public class N_ConfigrPrimitive
 
     [Fact]
     [DocUsage]
-    [DocExample(typeof(N_ConfigrPrimitive), nameof(GetFuzzr))]
+    [DocExample(typeof(N_ConfigrPrimitiveT), nameof(GetFuzzr))]
     public void IsApplied()
     {
         var (person, timeslot) = GetFuzzr().Generate(42);
@@ -39,7 +40,7 @@ public class N_ConfigrPrimitive
     }
 
     [Fact]
-    [DocContent("Replacing a primitive fuzzr automatically impacts its nullable counterpart.")]
+    [DocContent("- Replacing a primitive fuzzr automatically impacts its nullable counterpart.")]
     public void NullableIsApplied()
     {
         var fuzzr =
@@ -55,8 +56,8 @@ public class N_ConfigrPrimitive
     [DocOverloads]
     [DocContent("- `Primitive<T>(this FuzzrOf<T?> fuzzr)`:")]
     [DocContent("  Registers a global default fuzzr for nullable primitives `T?`, overriding all nullable values produced across generated objects.")]
-    [DocExample(typeof(N_ConfigrPrimitive), nameof(GetNullableFuzzr))]
     [DocContent("  Replacing a nullable primitive fuzzr does not impacts it's non-nullable counterpart.")]
+    [DocExample(typeof(N_ConfigrPrimitiveT), nameof(GetNullableFuzzr))]
     public void Nullable()
     {
         var (person, nullablePerson) = GetNullableFuzzr().Generate(1);
@@ -82,7 +83,7 @@ public class N_ConfigrPrimitive
     [Fact]
     [DocContent("- `Fuzzr.Primitive(this FuzzrOf<string> fuzzr)`:")]
     [DocContent("  Registers a global default fuzzr for strings, overriding all string values produced across generated objects.")]
-    [DocExample(typeof(N_ConfigrPrimitive), nameof(GetFuzzrString))]
+    [DocExample(typeof(N_ConfigrPrimitiveT), nameof(GetFuzzrString))]
     public void Strings()
     {
         var (person, address) = GetFuzzrString().Generate(42);

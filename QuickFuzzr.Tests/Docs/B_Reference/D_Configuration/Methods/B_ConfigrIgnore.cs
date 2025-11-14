@@ -5,7 +5,11 @@ using QuickPulse.Explains;
 namespace QuickFuzzr.Tests.Docs.B_Reference.D_Configuration.Methods;
 
 [DocFile]
-[DocFileCodeHeader("Configr.Ignore(Func<PropertyInfo, bool> predicate)")]
+[DocFileHeader("Configr.Ignore")]
+[DocContent(
+@"Skips all properties matching the predicate across all types during generation.  
+Use to exclude recurring patterns like identifiers, foreign keys, or audit fields.")]
+[DocSignature("Configr.Ignore(Func<PropertyInfo, bool> predicate)")]
 public class B_ConfigrIgnore
 {
 
@@ -23,9 +27,6 @@ public class B_ConfigrIgnore
     }
 
     [Fact]
-    [DocContent(
-@"Skips all properties matching the predicate across all types during generation.  
-Use to exclude recurring patterns like identifiers, foreign keys, or audit fields.")]
     [DocUsage]
     [DocExample(typeof(B_ConfigrIgnore), nameof(GetFuzzr))]
     public void StaysDefaultValue()

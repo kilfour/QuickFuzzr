@@ -1,10 +1,16 @@
-# Configr.Property<TProperty>(Func<PropertyInfo, bool> predicate, FuzzrOf<TProperty> fuzzr)
+# Configr.Property
+Any property matching the predicate will use the specified Fuzzr during generation.  
+
+**Signature:**  
+```csharp
+Configr.Property<TProperty>(Func<PropertyInfo, bool> predicate, FuzzrOf<TProperty> fuzzr)
+```
+  
 
 **Usage:**  
 ```csharp
  Configr.Property(a => a.Name == "Id", Fuzzr.Constant(42));
 ```
-Any property matching the predicate will use the specified Fuzzr during generation.  
 A utility overload exists that allows one to pass in a value instead of a fuzzr.  
 ```csharp
  Configr.Property(a => a.Name == "Id", 42);

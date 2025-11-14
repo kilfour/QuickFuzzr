@@ -5,7 +5,9 @@ using QuickPulse.Explains;
 namespace QuickFuzzr.Tests.Docs.B_Reference.D_Configuration.Methods;
 
 [DocFile]
-[DocFileHeader("Configr.Property<TProperty>(Func<PropertyInfo, bool> predicate, FuzzrOf<TProperty> fuzzr)")]
+[DocFileHeader("Configr.Property")]
+[DocContent("Any property matching the predicate will use the specified Fuzzr during generation.")]
+[DocSignature("Configr.Property<TProperty>(Func<PropertyInfo, bool> predicate, FuzzrOf<TProperty> fuzzr)")]
 public class F_ConfigrProperty
 {
     [DocUsage]
@@ -18,7 +20,6 @@ public class F_ConfigrProperty
     }
 
     [Fact]
-    [DocContent("Any property matching the predicate will use the specified Fuzzr during generation.")]
     public void IsApplied()
     {
         var fuzzr =

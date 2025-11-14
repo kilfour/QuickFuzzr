@@ -6,11 +6,11 @@ namespace QuickFuzzr.Tests.Docs.B_Reference.D_Configuration.Methods;
 
 
 [DocFile]
-[DocFileCodeHeader("Configr<T>.Ignore(Expression<Func<T, TProperty>> expr)")]
+[DocFileCodeHeader("Configr<T>.Ignore")]
+[DocContent("The property specified will be ignored during generation.")]
+[DocSignature("Configr<T>.Ignore(Expression<Func<T, TProperty>> expr)")]
 public class A_ConfigrIgnoreT
 {
-    [DocUsage]
-    [DocExample(typeof(A_ConfigrIgnoreT), nameof(GetFuzzr))]
     [CodeSnippet]
     [CodeRemove("return")]
     private static FuzzrOf<Person> GetFuzzr()
@@ -24,7 +24,8 @@ public class A_ConfigrIgnoreT
     }
 
     [Fact]
-    [DocContent("The property specified will be ignored during generation.")]
+    [DocUsage]
+    [DocExample(typeof(A_ConfigrIgnoreT), nameof(GetFuzzr))]
     public void StaysDefaultValue()
     {
         var result = GetFuzzr().Generate(42);

@@ -1,5 +1,11 @@
-# Configr.IgnoreAll()
+# Configr.IgnoreAll
 Ignore all properties while generating anything.  
+
+**Signature:**  
+```csharp
+Configr.IgnoreAll()
+```
+  
 
 **Usage:**  
 ```csharp

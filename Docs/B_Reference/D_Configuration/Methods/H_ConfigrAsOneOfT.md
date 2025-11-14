@@ -1,8 +1,14 @@
-# Configr&lt;T&gt;AsOneOf(params Type[] types)
+# Configr&lt;T&gt;AsOneOf
 Configures inheritance resolution for BaseType, 
 allowing QuickFuzzr to randomly select one of the specified derived types when generating instances.  
 
 Useful when generating domain hierarchies where multiple concrete subtypes exist.  
+  
+
+**Signature:**  
+```csharp
+Configr<T>AsOneOf(params Type[] types)
+```
   
 
 **Usage:**  

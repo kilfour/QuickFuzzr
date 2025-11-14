@@ -1,4 +1,10 @@
-# Configr.EnablePropertyAccessFor(PropertyAccess propertyAccess) / Configr.DisablePropertyAccessFor(PropertyAccess propertyAccess)
+# Property Access
+Control which type of properties QuickFuzzr generates.  
+\n**Signature:**
+```csharp
+Configr.EnablePropertyAccessFor(PropertyAccess propertyAccess) 
+Configr.DisablePropertyAccessFor(PropertyAccess propertyAccess)
+```  
 
 **Usage:**  
 ```csharp
@@ -9,5 +15,4 @@ from person2 in Fuzzr.One<PrivatePerson>()
 select (person1, person2);
 // Results in => ( { Name: "xiyi", Age: 94 }, { Name: "", Age: 0 } )
 ```
-Enables and then disables generation for init-only properties.  
 Updates state flags using bitwise enable/disable semantics.  
