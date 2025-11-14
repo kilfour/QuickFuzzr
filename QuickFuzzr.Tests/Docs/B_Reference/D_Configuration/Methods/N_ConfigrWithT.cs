@@ -19,7 +19,7 @@ allowing dynamic, data-dependent configuration inside LINQ chains.
 
 // The usage example shown here is a bit contrived, but it explains the basic idea. 
 // ")]
-public class L_ConfigrWithT
+public class N_ConfigrWithT
 {
     [CodeSnippet]
     [CodeRemove("return ")]

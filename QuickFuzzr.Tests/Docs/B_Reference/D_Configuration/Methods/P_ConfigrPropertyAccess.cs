@@ -15,10 +15,10 @@ namespace QuickFuzzr.Tests.Docs.B_Reference.D_Configuration.Methods;
 Configr.EnablePropertyAccessFor(PropertyAccess propertyAccess) 
 Configr.DisablePropertyAccessFor(PropertyAccess propertyAccess)
 ```")]
-public class O_ConfigrPropertyAccess
+public class P_ConfigrPropertyAccess
 {
     [DocUsage]
-    [DocExample(typeof(O_ConfigrPropertyAccess), nameof(GetFuzzr))]
+    [DocExample(typeof(P_ConfigrPropertyAccess), nameof(GetFuzzr))]
     [CodeSnippet]
     [CodeRemove("return")]
     private static FuzzrOf<(PrivatePerson person1, PrivatePerson person2)> GetFuzzr()

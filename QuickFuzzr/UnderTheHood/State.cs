@@ -85,6 +85,10 @@ public class State
 
 	// ---------------------------------------------------------------------
 	// Ignoring Stuff
+	public readonly Dictionary<Type, Action<object>> StuffToApply = [];
+
+	// ---------------------------------------------------------------------
+	// Ignoring Stuff
 	public readonly HashSet<Func<PropertyInfo, bool>> GeneralStuffToIgnore = [];
 	public readonly HashSet<Type> StuffToIgnoreAll = [];
 	public readonly HashSet<PropertyInfo> StuffToIgnore = [];
