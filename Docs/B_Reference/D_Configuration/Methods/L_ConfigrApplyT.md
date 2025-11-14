@@ -15,7 +15,7 @@ var fuzzr =
     from person in Fuzzr.One<Person>()
     from employee in Fuzzr.One<Employee>()
     select (person, employee);
-var value = fuzzr.Generate().PulseToQuickLog();
+var value = fuzzr.Generate();
 // seen now equals 
 // [ ( 
 //     Person { Name: "ddnegsn", Age: 18 },

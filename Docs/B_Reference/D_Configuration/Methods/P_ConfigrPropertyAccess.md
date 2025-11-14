@@ -1,6 +1,7 @@
 # Property Access
-Control which type of properties QuickFuzzr generates.  
-\n**Signature:**
+Control which kinds of properties QuickFuzzr is allowed to populate.  
+
+**Signature:**
 ```csharp
 Configr.EnablePropertyAccessFor(PropertyAccess propertyAccess) 
 Configr.DisablePropertyAccessFor(PropertyAccess propertyAccess)
@@ -15,4 +16,7 @@ from person2 in Fuzzr.One<PrivatePerson>()
 select (person1, person2);
 // Results in => ( { Name: "xiyi", Age: 94 }, { Name: "", Age: 0 } )
 ```
-Updates state flags using bitwise enable/disable semantics.  
+- Updates state flags using bitwise enable/disable semantics.  
+- The default value is `PropertyAccess.PublicSetters`.  
+- `ReadOnly` only applies to get-only **auto-properties** (with a compiler-generated backing field).  
+- Getter-only properties without a backing field (calculated or custom-backed) are never auto-generated.  

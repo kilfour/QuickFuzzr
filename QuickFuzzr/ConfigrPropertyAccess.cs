@@ -23,14 +23,12 @@ public enum PropertyAccess
     InitOnly = 16,
     /// <summary>Includes read-only properties (getters only).</summary>
     ReadOnly = 32,
-    /// <summary>Includes calculated properties (no backing field).</summary>
-    Calculated = 64,
     /// <summary>Includes all properties with any setter accessibility.</summary>
     AllSetters = PublicSetters | InternalSetters | ProtectedSetters | PrivateSetters,
     /// <summary>Includes all writable properties including init-only.</summary>
     AllWritable = AllSetters | InitOnly,
     /// <summary>Includes all properties regardless of accessibility.</summary>
-    All = AllWritable | ReadOnly | Calculated
+    All = AllWritable | ReadOnly
 }
 
 public static partial class Configr
