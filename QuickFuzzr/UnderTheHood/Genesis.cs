@@ -117,6 +117,12 @@ public class Genesis : ICreationEngine
         state.Collecting.Push(false);
         if (!state.StuffToIgnoreAll.Contains(declaringType))
             FillProperties(instance, state);
+
+        if (state.StuffToApply.Any(a => a.Key.IsAssignableFrom(declaringType)))
+        {
+            state.StuffToApply.Single(a => a.Key.IsAssignableFrom(declaringType)).Value(instance);
+        }
+
         state.Collecting.Pop();
         return instance;
     }

@@ -184,6 +184,7 @@ select derived types, or wire dynamic behaviors that apply when calling `Fuzzr.O
 | [Configr&lt;T&gt;.EndOn](#configrtendon)| Replaces deeper recursion with the specified end type. |
 | [Configr&lt;T&gt;.Depth](#configrtdepth)| Sets min and max recursion depth for type T. |
 | [Configr.RetryLimit](#configrretrylimit)| Sets the global retry limit for retry-based fuzzrs. |
+| [Configr.Apply](#configrapply)| Creates a fuzzr that executes a side-effect action on each generated value. |
 | [Configr&lt;T&gt;.With](#configrtwith)| Applies configuration for T based on a generated value. |
 | [Configr.Primitive](#configrprimitive)| Overrides the default fuzzr for a primitive type. |
 | [Property Access](#property-access)| Controls auto-generation for specific property access levels. |
@@ -462,6 +463,33 @@ Possible solutions:
 - Check for unintended configuration overrides
 - If you need more, consider revising your fuzzr logic instead of increasing the limit
 ```
+### Configr.Apply
+Creates a fuzzr that executes a side-effect action on each generated value without modifying the value itself. Use for performing operations like logging, adding to collections, or calling methods that have side effects but don't transform the data.  
+
+**Signature:**  
+```csharp
+Configr<T>.Apply(Action<T> action)
+```
+  
+
+**Usage:**  
+```csharp
+var seen = new List<Person>();
+var fuzzr =
+    from look in Configr<Person>.Apply(seen.Add)
+    from person in Fuzzr.One<Person>()
+    from employee in Fuzzr.One<Employee>()
+    select (person, employee);
+var value = fuzzr.Generate().PulseToQuickLog();
+// seen now equals 
+// [ ( 
+//     Person { Name: "ddnegsn", Age: 18 },
+//     Employee { Email: "ggnijgna", SocialSecurityNumber: "pkdcsvobs", Name: "xs", Age: 52 }
+//) ]
+```
+
+**Exceptions:**  
+- `NullReferenceException`: When the provided Action is null and later invoked.  
 ### Configr&lt;T&gt;.With
 
 **Signature:**  
