@@ -5,9 +5,11 @@ using QuickPulse.Explains;
 namespace QuickFuzzr.Tests.Docs.B_Reference.D_Configuration.Methods;
 
 [DocFile]
-[DocFileHeader("Configr<T>.With")]
-[DocContent("Applies configuration for type `T` based on a value generated from another fuzzr.")]
+[DocFileCodeHeader("Configr<T>.With")]
 [DocSignature("Configr<T>.With<TValue>(FuzzrOf<TValue> fuzzr, Func<TValue, FuzzrOf<Intent>> configrFactory)")]
+[DocContent(
+@"Applies configuration for type `T` based on a value produced by another fuzzr,
+allowing dynamic, data-dependent configuration inside LINQ chains..")]
 public class L_ConfigrWithT
 {
     [CodeSnippet]

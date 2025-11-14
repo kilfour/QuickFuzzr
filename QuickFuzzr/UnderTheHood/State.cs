@@ -7,7 +7,6 @@ namespace QuickFuzzr.UnderTheHood;
 
 public class State
 {
-
 	public ICreationEngine CreationEngine { get; set; } = new Genesis();
 	public int Seed { get; }
 	public MoreRandom Random { get; }
@@ -35,6 +34,7 @@ public class State
 			throw new RetryLimitOutOfRangeException(limit);
 		RetryLimit = limit;
 	}
+
 	// ---------------------------------------------------------------------
 	// Depth Control
 	public Stack<bool> Collecting { get; set; } = new Stack<bool>([false]);
@@ -76,11 +76,15 @@ public class State
 		PushDepthFrame(type);
 		return new DisposableAction(PopDepthFrame);
 	}
-	// ---------------------------------------------------------------------
 
+	// ---------------------------------------------------------------------
+	// Ignoring Stuff
 	public readonly HashSet<Func<PropertyInfo, bool>> GeneralStuffToIgnore = [];
 	public readonly HashSet<Type> StuffToIgnoreAll = [];
 	public readonly HashSet<PropertyInfo> StuffToIgnore = [];
+
+	// ---------------------------------------------------------------------
+	// Memory for counters and uniques
 	private readonly Dictionary<object, object> fuzzrMemory = [];
 
 	public T Get<T>(object key, T newValue)
@@ -93,15 +97,24 @@ public class State
 	public T Set<T>(object key, T value)
 		=> Chain.It(() => fuzzrMemory[key] = value!, value);
 
+	// ---------------------------------------------------------------------
+	// Inheriting
 	public readonly Dictionary<Type, List<Type>> InheritanceInfo = [];
 
 	public Dictionary<Type, Type> Endings = [];
 
+	// ---------------------------------------------------------------------
+	// Property Customizations
 	public readonly Dictionary<Func<PropertyInfo, bool>, Func<PropertyInfo, FuzzrOf<object>>> GeneralCustomizations = [];
 	public readonly Dictionary<(PropertyInfo, Type), FuzzrOf<object>> Customizations = [];
 	public readonly Dictionary<(Type, Type), (FuzzrOf<object>, Func<object, FuzzrOf<Intent>>)> WithCustomizations = [];
+
+	// ---------------------------------------------------------------------
+	// Constructors
 	public readonly Dictionary<Type, Func<State, object>> Constructors = [];
 
+	// ---------------------------------------------------------------------
+	// Primitive Fuzzr Registry
 	public readonly Dictionary<Type, FuzzrOf<object>> PrimitiveFuzzrs
 		= new()
 			{

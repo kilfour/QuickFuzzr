@@ -228,7 +228,7 @@ public class Genesis : ICreationEngine
 
     private static void GenerallyCustomizeProperty(object target, PropertyInfo propertyInfo, State state)
     {
-        var key = state.GeneralCustomizations.Keys.First(info => info(propertyInfo));
+        var key = state.GeneralCustomizations.Keys.Last(info => info(propertyInfo)); // TODO: get rid of .Last
         var fuzzr = state.GeneralCustomizations[key](propertyInfo);
         SetPropertyValue(propertyInfo, target, fuzzr(state).Value);
     }
@@ -241,7 +241,7 @@ public class Genesis : ICreationEngine
     private static void CustomizeProperty(object target, PropertyInfo propertyInfo, State state)
     {
         var key =
-            state.Customizations.Keys.First(info =>
+            state.Customizations.Keys.Last(info =>  // TODO: get rid of .Last
                 info.Item2.IsAssignableFrom(propertyInfo.ReflectedType)
                 && info.Item1.Name == propertyInfo.Name);
         var fuzzr = state.Customizations[key];

@@ -7,7 +7,5 @@ ExtFuzzr.NeverReturnNull<T>(this FuzzrOf<T?> fuzzr)0
 ```
   
 
-**Usage:**  
-
 **Exceptions:**  
 - `NonNullValueExhaustedException`: When all attempts result in null.  

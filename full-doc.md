@@ -1045,7 +1045,7 @@ select derived types, or wire dynamic behaviors that apply when calling `Fuzzr.O
 | [Configr&lt;T&gt;.EndOn](#configrtendon)|   |
 | [Configr&lt;T&gt;.Depth](#configrtdepth)|   |
 | [Configr.RetryLimit](#configrretrylimit)|   |
-| [Configr<T>.With](#configrtwith)|   |
+| [Configr&lt;T&gt;.With](#configrtwith)|   |
 | [Configr.Primitive](#configrprimitive)|   |
 | [Property Access](#property-access)|   |
 #### Configr&lt;T&gt;.Ignore
@@ -1323,14 +1323,15 @@ Possible solutions:
 - Check for unintended configuration overrides
 - If you need more, consider revising your fuzzr logic instead of increasing the limit
 ```
-#### Configr<T>.With
-Applies configuration for type `T` based on a value generated from another fuzzr.  
+#### Configr&lt;T&gt;.With
 
 **Signature:**  
 ```csharp
 Configr<T>.With<TValue>(FuzzrOf<TValue> fuzzr, Func<TValue, FuzzrOf<Intent>> configrFactory)
 ```
   
+Applies configuration for type `T` based on a value produced by another fuzzr,
+allowing dynamic, data-dependent configuration inside LINQ chains..  
 #### Configr.Primitive
 Registers a global default fuzzr for primitive types.
 Use this to override how QuickFuzzr generates built-in types across all automatically created objects.
@@ -1479,8 +1480,6 @@ ExtFuzzr.NeverReturnNull<T>(this FuzzrOf<T?> fuzzr)0
 ```
   
 
-**Usage:**  
-
 **Exceptions:**  
 - `NonNullValueExhaustedException`: When all attempts result in null.  
 #### Nullable
@@ -1491,8 +1490,6 @@ Wraps a value type fuzzr to sometimes yield null values.
 ExtFuzzr.Nullable(this FuzzrOf<T> fuzzr)
 ```
   
-
-**Usage:**  
 #### NullableRef
 Wraps a reference type fuzzr to sometimes yield null values.  
 

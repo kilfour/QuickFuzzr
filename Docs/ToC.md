@@ -23,7 +23,7 @@
       - [Configr&lt;T&gt;.EndOn](B_Reference/D_Configuration/Methods/I_ConfigrEndOnT.md)
       - [Configr&lt;T&gt;.Depth](B_Reference/D_Configuration/Methods/J_ConfigrDepthT.md)
       - [Configr.RetryLimit](B_Reference/D_Configuration/Methods/K_ConfigrRetryLimit.md)
-      - [Configr<T>.With](B_Reference/D_Configuration/Methods/L_ConfigrWithT.md)
+      - [Configr&lt;T&gt;.With](B_Reference/D_Configuration/Methods/L_ConfigrWithT.md)
       - [Configr.Primitive](B_Reference/D_Configuration/Methods/N_ConfigrPrimitiveT.md)
       - [Property Access](B_Reference/D_Configuration/Methods/O_ConfigrPropertyAccess.md)
     - [Fuzzr Extension Methods](B_Reference/E_ExtensionMethods/FuzzrExtensionMethods.md)

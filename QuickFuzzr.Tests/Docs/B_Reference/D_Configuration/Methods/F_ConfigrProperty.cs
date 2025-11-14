@@ -1,3 +1,4 @@
+using System.Diagnostics.Metrics;
 using QuickFuzzr.Tests._Tools;
 using QuickFuzzr.Tests._Tools.Models;
 using QuickPulse.Explains;
@@ -85,5 +86,35 @@ public class F_ConfigrProperty
            from result in Fuzzr.One<Thing>()
            select result;
         Assert.Equal(42, fuzzr.Generate().Id);
+    }
+
+    [Fact]
+    public void Multiple()
+    {
+        var fuzzr =
+            from n1 in Configr.Property(a => a.Name == "Name", "One")
+            from n2 in Configr.Property(a => a.Name == "Name", "Two")
+            from age in Configr.Property(a => a.Name == "Age", Fuzzr.Counter("age"))
+            from person in Fuzzr.One<Person>()
+            select person;
+        var result = fuzzr.Many(2).Generate().ToArray();
+        Assert.Equal("Two", result[0].Name);
+        Assert.Equal(1, result[0].Age);
+        Assert.Equal("Two", result[1].Name);
+        Assert.Equal(2, result[1].Age);
+    }
+
+    [Fact]
+    public void Overriding()
+    {
+        var fuzzr =
+            from n1 in Configr.Property(a => a.Name == "Name", "One")
+            from p1 in Fuzzr.One<Person>()
+            from n2 in Configr.Property(a => a.Name == "Name", "Two")
+            from p2 in Fuzzr.One<Person>()
+            select (p1, p2);
+        var (person1, person2) = fuzzr.Generate();
+        Assert.Equal("One", person1.Name);
+        Assert.Equal("Two", person2.Name);
     }
 }
