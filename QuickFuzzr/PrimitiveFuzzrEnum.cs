@@ -13,10 +13,7 @@ public static partial class Fuzzr
 		where T : struct, IConvertible
 	{
 		if (!typeof(T).IsEnum)
-		{
 			throw new ArgumentException("T must be an enumerated type");
-		}
-
 		return s => new Result<T>((T)GetEnumValue(typeof(T), s), s);
 	}
 
@@ -27,11 +24,7 @@ public static partial class Fuzzr
 		return values.ElementAt(index);
 	}
 
-	private static IEnumerable<object> GetEnumValues(IReflect type)
-	{
-		return
-			type
-				.GetFields(BindingFlags.Public | BindingFlags.Static)
-				.Select(i => i.GetRawConstantValue())!;
-	}
+	private static IEnumerable<object> GetEnumValues(Type type)
+		=> type.GetFields(BindingFlags.Public | BindingFlags.Static)
+			.Select(i => i.GetRawConstantValue())!;
 }
