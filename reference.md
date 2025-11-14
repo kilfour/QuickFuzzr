@@ -168,7 +168,7 @@ Fuzzr.Constant(42);
 // Results in => 42
 ```
 ## Configuring
-`Configr` provides a fluent API to influence how QuickFuzzr builds objects.
+`Configr` provides a configuration pipeline to influence how QuickFuzzr builds objects.
 Use it to set global defaults, customize properties, control recursion depth,
 select derived types, or wire dynamic behaviors that apply when calling `Fuzzr.One<T>()`.
   
