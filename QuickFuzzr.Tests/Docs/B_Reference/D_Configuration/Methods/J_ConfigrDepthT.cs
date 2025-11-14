@@ -7,6 +7,7 @@ namespace QuickFuzzr.Tests.Docs.B_Reference.D_Configuration.Methods;
 
 [DocFile]
 [DocFileCodeHeader("Configr<T>.Depth")]
+[DocColumn(Configuring.Columns.Description, "Sets min and max recursion depth for type T.")]
 [DocSignature("Configr<T>.Depth(int min, int max)")]
 [DocContent("Configures depth constraints for type `T` to control recursive object graph generation.")]
 public class J_ConfigrDepthT

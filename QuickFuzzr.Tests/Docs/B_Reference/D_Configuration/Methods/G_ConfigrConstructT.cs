@@ -5,6 +5,7 @@ namespace QuickFuzzr.Tests.Docs.B_Reference.D_Configuration.Methods;
 
 [DocFile]
 [DocFileCodeHeader("Configr<T>.Construct")]
+[DocColumn(Configuring.Columns.Description, "Registers which constructor QuickFuzzr should use for type T.")]
 [DocContent(
 @"Configures a custom constructor for type T, used when Fuzzr.One<T>() is called.
 Useful for records or classes without parameterless constructors or when `T` has multiple constructors

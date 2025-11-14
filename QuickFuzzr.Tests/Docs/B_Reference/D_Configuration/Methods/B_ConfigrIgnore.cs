@@ -6,6 +6,7 @@ namespace QuickFuzzr.Tests.Docs.B_Reference.D_Configuration.Methods;
 
 [DocFile]
 [DocFileHeader("Configr.Ignore")]
+[DocColumn(Configuring.Columns.Description, "Globally ignores all properties matching the predicate.")]
 [DocContent(
 @"Skips all properties matching the predicate across all types during generation.  
 Use to exclude recurring patterns like identifiers, foreign keys, or audit fields.")]

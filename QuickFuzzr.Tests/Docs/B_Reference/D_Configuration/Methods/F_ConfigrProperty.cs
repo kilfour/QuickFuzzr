@@ -1,4 +1,3 @@
-using System.Diagnostics.Metrics;
 using QuickFuzzr.Tests._Tools;
 using QuickFuzzr.Tests._Tools.Models;
 using QuickPulse.Explains;
@@ -7,6 +6,7 @@ namespace QuickFuzzr.Tests.Docs.B_Reference.D_Configuration.Methods;
 
 [DocFile]
 [DocFileHeader("Configr.Property")]
+[DocColumn(Configuring.Columns.Description, "Applies a custom fuzzr or value to all matching properties across all types.")]
 [DocContent("Any property matching the predicate will use the specified Fuzzr during generation.")]
 [DocSignature("Configr.Property<TProperty>(Func<PropertyInfo, bool> predicate, FuzzrOf<TProperty> fuzzr)")]
 public class F_ConfigrProperty

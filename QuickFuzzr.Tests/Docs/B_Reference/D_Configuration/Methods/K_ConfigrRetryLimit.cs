@@ -8,6 +8,7 @@ namespace QuickFuzzr.Tests.Docs.B_Reference.D_Configuration.Methods;
 
 [DocFile]
 [DocFileHeader("Configr.RetryLimit")]
+[DocColumn(Configuring.Columns.Description, "Sets the global retry limit for retry-based fuzzrs.")]
 [DocContent("Sets the global retry limit used by fuzzrs.")]
 [DocSignature("Configr.RetryLimit(int limit)")]
 public class K_ConfigrRetryLimit

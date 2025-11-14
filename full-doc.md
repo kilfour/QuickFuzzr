@@ -1034,20 +1034,20 @@ select derived types, or wire dynamic behaviors that apply when calling `Fuzzr.O
 #### Contents
 | Configr| Description |
 | -| - |
-| [Configr&lt;T&gt;.Ignore](#configrtignore)|   |
-| [Configr.Ignore](#configrignore)|   |
-| [Configr&lt;T&gt;.IgnoreAll](#configrtignoreall)|   |
-| [Configr.IgnoreAll](#configrignoreall)|   |
-| [Configr&lt;T&gt;.Property](#configrtproperty)|   |
-| [Configr.Property](#configrproperty)|   |
-| [Configr&lt;T&gt;.Construct](#configrtconstruct)|   |
-| [Configr&lt;T&gt;AsOneOf](#configrtasoneof)|   |
-| [Configr&lt;T&gt;.EndOn](#configrtendon)|   |
-| [Configr&lt;T&gt;.Depth](#configrtdepth)|   |
-| [Configr.RetryLimit](#configrretrylimit)|   |
-| [Configr&lt;T&gt;.With](#configrtwith)|   |
-| [Configr.Primitive](#configrprimitive)|   |
-| [Property Access](#property-access)|   |
+| [Configr&lt;T&gt;.Ignore](#configrtignore)| Ignores one specific property on type T during generation. |
+| [Configr.Ignore](#configrignore)| Globally ignores all properties matching the predicate. |
+| [Configr&lt;T&gt;.IgnoreAll](#configrtignoreall)| Ignores all properties of type T. |
+| [Configr.IgnoreAll](#configrignoreall)| Disables auto-generation for all properties on all types. |
+| [Configr&lt;T&gt;.Property](#configrtproperty)| Sets a custom fuzzr or value for one property on type T. |
+| [Configr.Property](#configrproperty)| Applies a custom fuzzr or value to all matching properties across all types. |
+| [Configr&lt;T&gt;.Construct](#configrtconstruct)| Registers which constructor QuickFuzzr should use for type T. |
+| [Configr&lt;T&gt;AsOneOf](#configrtasoneof)| Chooses randomly between the given derived types when generating T. |
+| [Configr&lt;T&gt;.EndOn](#configrtendon)| Replaces deeper recursion with the specified end type. |
+| [Configr&lt;T&gt;.Depth](#configrtdepth)| Sets min and max recursion depth for type T. |
+| [Configr.RetryLimit](#configrretrylimit)| Sets the global retry limit for retry-based fuzzrs. |
+| [Configr&lt;T&gt;.With](#configrtwith)| Applies configuration for T based on a generated value. |
+| [Configr.Primitive](#configrprimitive)| Overrides the default fuzzr for a primitive type. |
+| [Property Access](#property-access)| Controls auto-generation for specific property access levels. |
 #### Configr&lt;T&gt;.Ignore
 The property specified will be ignored during generation.  
 
@@ -1331,7 +1331,8 @@ Configr<T>.With<TValue>(FuzzrOf<TValue> fuzzr, Func<TValue, FuzzrOf<Intent>> con
 ```
   
 Applies configuration for type `T` based on a value produced by another fuzzr,
-allowing dynamic, data-dependent configuration inside LINQ chains..  
+allowing dynamic, data-dependent configuration inside LINQ chains.
+  
 #### Configr.Primitive
 Registers a global default fuzzr for primitive types.
 Use this to override how QuickFuzzr generates built-in types across all automatically created objects.

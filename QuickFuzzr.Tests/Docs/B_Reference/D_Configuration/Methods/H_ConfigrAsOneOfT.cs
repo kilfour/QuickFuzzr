@@ -7,6 +7,7 @@ namespace QuickFuzzr.Tests.Docs.B_Reference.D_Configuration.Methods;
 
 [DocFile]
 [DocFileCodeHeader("Configr<T>AsOneOf")]
+[DocColumn(Configuring.Columns.Description, "Chooses randomly between the given derived types when generating T.")]
 [DocContent(
 @"Configures inheritance resolution for BaseType, 
 allowing QuickFuzzr to randomly select one of the specified derived types when generating instances.  

@@ -7,6 +7,7 @@ namespace QuickFuzzr.Tests.Docs.B_Reference.D_Configuration.Methods;
 
 [DocFile]
 [DocFileCodeHeader("Configr<T>.EndOn")]
+[DocColumn(Configuring.Columns.Description, "Replaces deeper recursion with the specified end type.")]
 [DocContent(
 @"Configures a recursion stop condition for type `T`,
 instructing QuickFuzzr to generate `TEnd` instances instead of continuing deeper.")]

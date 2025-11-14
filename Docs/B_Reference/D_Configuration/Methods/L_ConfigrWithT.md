@@ -6,4 +6,5 @@ Configr<T>.With<TValue>(FuzzrOf<TValue> fuzzr, Func<TValue, FuzzrOf<Intent>> con
 ```
   
 Applies configuration for type `T` based on a value produced by another fuzzr,
-allowing dynamic, data-dependent configuration inside LINQ chains..  
+allowing dynamic, data-dependent configuration inside LINQ chains.
+  

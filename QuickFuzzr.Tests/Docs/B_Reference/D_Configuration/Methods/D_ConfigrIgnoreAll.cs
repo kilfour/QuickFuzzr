@@ -7,6 +7,7 @@ namespace QuickFuzzr.Tests.Docs.B_Reference.D_Configuration.Methods;
 
 [DocFile]
 [DocFileHeader("Configr.IgnoreAll")]
+[DocColumn(Configuring.Columns.Description, "Disables auto-generation for all properties on all types.")]
 [DocContent("Ignore all properties while generating anything.")]
 [DocSignature("Configr.IgnoreAll()")]
 public class D_ConfigrIgnoreAll

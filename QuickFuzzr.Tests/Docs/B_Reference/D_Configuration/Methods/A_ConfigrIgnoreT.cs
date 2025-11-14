@@ -7,6 +7,7 @@ namespace QuickFuzzr.Tests.Docs.B_Reference.D_Configuration.Methods;
 
 [DocFile]
 [DocFileCodeHeader("Configr<T>.Ignore")]
+[DocColumn(Configuring.Columns.Description, "Ignores one specific property on type T during generation.")]
 [DocContent("The property specified will be ignored during generation.")]
 [DocSignature("Configr<T>.Ignore(Expression<Func<T, TProperty>> expr)")]
 public class A_ConfigrIgnoreT

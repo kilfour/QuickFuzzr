@@ -7,6 +7,7 @@ namespace QuickFuzzr.Tests.Docs.B_Reference.D_Configuration.Methods;
 
 [DocFile]
 [DocFileCodeHeader("Configr<T>.IgnoreAll")]
+[DocColumn(Configuring.Columns.Description, "Ignores all properties of type T.")]
 [DocContent("Ignore all properties while generating an object.")]
 [DocSignature("Configr<T>.IgnoreAll()")]
 public class C_ConfigrIgnoreAllT

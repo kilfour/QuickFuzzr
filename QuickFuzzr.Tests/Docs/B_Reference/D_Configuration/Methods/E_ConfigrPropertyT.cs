@@ -8,6 +8,7 @@ namespace QuickFuzzr.Tests.Docs.B_Reference.D_Configuration.Methods;
 
 [DocFile]
 [DocFileCodeHeader("Configr<T>.Property")]
+[DocColumn(Configuring.Columns.Description, "Sets a custom fuzzr or value for one property on type T.")]
 [DocContent("The property specified will be generated using the passed in fuzzr.")]
 [DocSignature("Configr<T>.Property<TProperty>(Func<PropertyInfo, bool> predicate, FuzzrOf<TProperty> fuzzr)")]
 public class E_ConfigrPropertyT

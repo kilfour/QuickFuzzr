@@ -8,6 +8,7 @@ namespace QuickFuzzr.Tests.Docs.B_Reference.D_Configuration.Methods;
 [DocFile]
 [DocFileHeader("Property Access")]
 [DocContent("Control which type of properties QuickFuzzr generates.")]
+[DocColumn(Configuring.Columns.Description, "Controls auto-generation for specific property access levels.")]
 [DocContent(
 @"\n**Signature:**
 ```csharp
