@@ -5,14 +5,16 @@ using QuickPulse.Explains;
 namespace QuickFuzzr.Tests.Docs.B_Reference.E_ExtensionMethods.Methods;
 
 [DocFile]
-[DocFileCodeHeader("NeverReturnNull(this FuzzrOf<T?> fuzzr)")]
-[DocColumn(FuzzrExtensionMethods.Columns.Description, "Filters out null values, retrying until a non-null value is produced or the retry limit is exceeded.")]
+[DocFileHeader("NeverReturnNull")]
+[DocColumn(FuzzrExtensionMethods.Columns.Description,
+"Filters out null values, retrying until a non-null value is produced or the retry limit is exceeded.")]
+[DocContent("Filters out nulls from a nullable fuzzr, retrying up to the retry limit.")]
+[DocSignature("ExtFuzzr.NeverReturnNull<T>(this FuzzrOf<T?> fuzzr)0")]
 public class ExtFuzzrNeverReturnNull
 {
 
     [Fact]
-    [DocContent("Filters out nulls from a nullable fuzzr, retrying up to the retry limit.")]
-    [DocUsage]
+    //[DocUsage]
     public void Produces_NonNulls()
     {
         var fuzzr = Fuzzr.Int().Nullable(0.5).NeverReturnNull();

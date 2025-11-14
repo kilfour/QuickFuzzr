@@ -1,5 +1,11 @@
-# AsObject(this FuzzrOf&lt;T&gt; fuzzr)
+# AsObject
 Boxes generated values as object without altering them.  
+
+**Signature:**  
+```csharp
+ExtFuzzr.AsObject<T>(this FuzzrOf<T> fuzzr)
+```
+  
 
 **Usage:**  
 ```csharp

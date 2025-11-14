@@ -4,12 +4,14 @@ using QuickPulse.Explains;
 namespace QuickFuzzr.Tests.Docs.B_Reference.E_ExtensionMethods.Methods;
 
 [DocFile]
-[DocFileCodeHeader("ExtFuzzr.WithDefault(this FuzzrOf<T> fuzzr, T def = default)")]
-[DocColumn(FuzzrExtensionMethods.Columns.Description, "Returns a default value when the underlying fuzzr fails due to empty choices.")]
+[DocFileHeader("WithDefault")]
+[DocColumn(FuzzrExtensionMethods.Columns.Description,
+"Returns a default value when the underlying fuzzr fails due to empty choices.")]
+[DocContent("Returns the (optionally) provided default value instead of throwing when the underlying fuzzr fails due to empty choices.")]
+[DocSignature("ExtFuzzr.WithDefault(this FuzzrOf<T> fuzzr, T def = default)")]
 public class ExtFuzzrWithDefault
 {
     [Fact]
-    [DocContent("Returns the (optionally) provided default value instead of throwing when the underlying fuzzr fails due to empty choices.")]
     public void Uses_Default_On_Empty_Choices()
     {
         var fuzzr = Fuzzr.OneOf(Array.Empty<int>()).WithDefault(42);

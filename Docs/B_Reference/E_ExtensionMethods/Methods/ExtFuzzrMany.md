@@ -1,5 +1,11 @@
-# Many(this FuzzrOf&lt;T&gt; fuzzr, int number)
+# Many
 Produces a fixed number of values from a fuzzr.  
+
+**Signature:**  
+```csharp
+ExtFuzzr.Many(this FuzzrOf<T> fuzzr, int number)
+```
+  
 
 **Usage:**  
 ```csharp

@@ -1,4 +1,10 @@
-# Where(this FuzzrOf&lt;T&gt; fuzzr, Func&lt;T,bool&gt; predicate)
+# Where
+
+**Signature:**  
+```csharp
+ExtFuzzr.Where(this FuzzrOf<T> fuzzr, Func<T,bool> predicate)
+```
+  
 Filters generated values to those satisfying the predicate.  
 
 **Exceptions:**  

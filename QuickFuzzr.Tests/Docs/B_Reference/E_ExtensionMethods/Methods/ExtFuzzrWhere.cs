@@ -5,12 +5,14 @@ using QuickPulse.Explains;
 namespace QuickFuzzr.Tests.Docs.B_Reference.E_ExtensionMethods.Methods;
 
 [DocFile]
-[DocFileCodeHeader("Where(this FuzzrOf<T> fuzzr, Func<T,bool> predicate)")]
-[DocColumn(FuzzrExtensionMethods.Columns.Description, "Filters generated values so only values satisfying the predicate are returned.")]
+[DocFileHeader("Where")]
+[DocColumn(FuzzrExtensionMethods.Columns.Description,
+"Filters generated values so only values satisfying the predicate are returned.")]
+[DocSignature("ExtFuzzr.Where(this FuzzrOf<T> fuzzr, Func<T,bool> predicate)")]
+[DocContent("Filters generated values to those satisfying the predicate.")]
 public class ExtFuzzrWhere
 {
     [Fact]
-    [DocContent("Filters generated values to those satisfying the predicate.")]
     public void Filters_By_Predicate()
     {
         var evens = Fuzzr.Int().Where(i => i % 2 == 0).Many(16).Generate(42).ToArray();

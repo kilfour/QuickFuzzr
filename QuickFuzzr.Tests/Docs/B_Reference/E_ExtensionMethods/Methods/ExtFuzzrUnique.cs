@@ -5,13 +5,13 @@ using QuickPulse.Explains;
 namespace QuickFuzzr.Tests.Docs.B_Reference.E_ExtensionMethods.Methods;
 
 [DocFile]
-[DocFileCodeHeader("Unique<T>(this FuzzrOf<T> fuzzr, object key)")]
+[DocFileHeader("Unique")]
 [DocColumn(FuzzrExtensionMethods.Columns.Description, "Ensures all generated values are unique within the given key scope.")]
-[DocContent("Using the `.Unique(object key)` extension method.")]
+[DocContent("Makes sure that every generated value is unique.")]
+[DocSignature("ExtFuzzr.Unique<T>(this FuzzrOf<T> fuzzr, object key)")]
 public class ExtFuzzrUnique
 {
     [Fact]
-    [DocContent("- Makes sure that every generated value is unique.")]
     public void IsUnique()
     {
         var fuzzr = Fuzzr.OneOf(1, 2).Unique("TheKey").Many(2);

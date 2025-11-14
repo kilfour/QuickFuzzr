@@ -1,5 +1,11 @@
-# Apply(this FuzzrOf&lt;T&gt; fuzzr, Action&lt;T&gt; action)
+# Apply
 Executes a side-effect per generated value without altering it.  
+
+**Signature:**  
+```csharp
+ExtFuzzr.Apply(this FuzzrOf<T> fuzzr, Action<T> action)
+```
+  
 
 **Usage:**  
 ```csharp

@@ -4,8 +4,10 @@ using QuickPulse.Explains;
 namespace QuickFuzzr.Tests.Docs.B_Reference.E_ExtensionMethods.Methods;
 
 [DocFile]
-[DocFileCodeHeader("AsObject(this FuzzrOf<T> fuzzr)")]
+[DocFileCodeHeader("AsObject")]
 [DocColumn(FuzzrExtensionMethods.Columns.Description, "Boxes generated values as `object` without modifying them.")]
+[DocContent("Boxes generated values as object without altering them.")]
+[DocSignature("ExtFuzzr.AsObject<T>(this FuzzrOf<T> fuzzr)")]
 public class ExtFuzzrAsObject
 {
     [CodeSnippet]
@@ -17,7 +19,6 @@ public class ExtFuzzrAsObject
     }
 
     [Fact]
-    [DocContent("Boxes generated values as object without altering them.")]
     [DocUsage]
     [DocExample(typeof(ExtFuzzrAsObject), nameof(Boxes_Value_Fuzzr))]
     public void Boxes_Value()

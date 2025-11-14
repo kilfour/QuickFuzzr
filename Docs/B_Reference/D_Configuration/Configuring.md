@@ -18,5 +18,5 @@ select derived types, or wire dynamic behaviors that apply when calling `Fuzzr.O
 | [Configr&lt;T&gt;.Depth](Methods/J_ConfigrDepthT.md)|   |
 | [Configr.RetryLimit](Methods/K_ConfigrRetryLimit.md)|   |
 | [Configr<T>.With](Methods/L_ConfigrWithT.md)|   |
-| [Configr.Primitive&lt;T&gt;](Methods/N_ConfigrPrimitiveT.md)|   |
+| [Configr.Primitive](Methods/N_ConfigrPrimitiveT.md)|   |
 | [Property Access](Methods/O_ConfigrPropertyAccess.md)|   |

@@ -4,8 +4,10 @@ using QuickPulse.Explains;
 namespace QuickFuzzr.Tests.Docs.B_Reference.E_ExtensionMethods.Methods;
 
 [DocFile]
-[DocFileCodeHeader("Many(this FuzzrOf<T> fuzzr, int number)")]
+[DocFileCodeHeader("Many")]
 [DocColumn(FuzzrExtensionMethods.Columns.Description, "Produces a number of values from the wrapped fuzzr.")]
+[DocContent("Produces a fixed number of values from a fuzzr.")]
+[DocSignature("ExtFuzzr.Many(this FuzzrOf<T> fuzzr, int number)")]
 public class ExtFuzzrMany
 {
     [CodeSnippet]
@@ -17,7 +19,6 @@ public class ExtFuzzrMany
     }
 
     [Fact]
-    [DocContent("Produces a fixed number of values from a fuzzr.")]
     [DocUsage]
     [DocExample(typeof(ExtFuzzrMany), nameof(Fixed_Count_Fuzzr))]
     public void Fixed_Count()

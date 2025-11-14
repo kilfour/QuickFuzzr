@@ -1,4 +1,4 @@
-# Configr.Primitive&lt;T&gt;
+# Configr.Primitive
 Registers a global default fuzzr for primitive types.
 Use this to override how QuickFuzzr generates built-in types across all automatically created objects.
   
