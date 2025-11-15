@@ -130,7 +130,8 @@ dotnet add package QuickFuzzr
 
     [DocHeader("Documentation")]
     [DocContent(@"
-QuickFuzzr is fully documented, with real, executable examples for each combinator and concept.
+QuickFuzzr is fully documented, with real, executable examples for every feature,
+and every statement in the docs is backed by a test.
 
 You can explore it here:
 * **[Table of Contents](https://github.com/kilfour/QuickFuzzr/blob/main/Docs/ToC.md)**
