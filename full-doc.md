@@ -1178,11 +1178,11 @@ Configr.Property<TProperty>(Func<PropertyInfo, bool> predicate, FuzzrOf<TPropert
 
 **Overloads:**  
 - `Configr.Property<TProperty>(Func<PropertyInfo, bool> predicate, FuzzrOf<TProperty> fuzzr)`  
-- Allows you to pass in a value instead of a Fuzzr.  
+  Allows you to pass in a value instead of a Fuzzr.  
 - `Configr.Property<TProperty>(Func<PropertyInfo, bool> predicate, Func<PropertyInfo, FuzzrOf<TProperty>> factory)`  
-- Allows you to create a Fuzzr dynamically using a factory method.  
+  Allows you to create a Fuzzr dynamically using a factory method.  
 - `Configr.Property<TProperty>(Func<PropertyInfo, bool> predicate, Func<PropertyInfo, TProperty> factory)`  
-With the same *pass in a value* conveniance helper.  
+  Allows you to create a value dynamically using a factory method.  
 
 **Exceptions:**  
 - `ArgumentNullException`: When the predicate is `null`.  
@@ -1206,18 +1206,10 @@ Configr<SomeThing>.Construct(Fuzzr.Constant(42));
 ```
 
 **Overloads:**  
-```csharp
-Construct<T1,T2>(FuzzrOf<T1> arg1, FuzzrOf<T2> arg2)
-```
-```csharp
-Construct<T1,T2,T3>(FuzzrOf<T1> arg1, FuzzrOf<T2> arg2, FuzzrOf<T3> arg3)
-```
-```csharp
-Construct<T1,T2,T3,T4>(FuzzrOf<T1> arg1, FuzzrOf<T2> arg2, FuzzrOf<T3> arg3, FuzzrOf<T4> arg4)
-```
-```csharp
-Construct<T1,T2,T3,T4,T5>(FuzzrOf<T1> arg1, FuzzrOf<T2> arg2, FuzzrOf<T3> arg3, FuzzrOf<T4> arg4, FuzzrOf<T5> arg5)
-```
+- `Construct<T1, T2>(FuzzrOf<T1> arg1, FuzzrOf<T2> arg2)`  
+- `Construct<T1, T2, T3>(FuzzrOf<T1> arg1, FuzzrOf<T2> arg2, FuzzrOf<T3> arg3)`  
+- `Construct<T1, T2, T3, T4>(FuzzrOf<T1> arg1, FuzzrOf<T2> arg2, FuzzrOf<T3> arg3, FuzzrOf<T4> arg4)`  
+- `Construct<T1, T2, T3, T4, T5>(FuzzrOf<T1> arg1, FuzzrOf<T2> arg2, FuzzrOf<T3> arg3, FuzzrOf<T4> arg4, FuzzrOf<T5> arg5)`  
 
 **Exceptions:**  
 - `ArgumentNullException`: If one of the `TArg` parameters is null.  

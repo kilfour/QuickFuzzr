@@ -34,7 +34,7 @@ public class F_ConfigrProperty
     [Fact]
     [DocOverloads]
     [DocOverload("Configr.Property<TProperty>(Func<PropertyInfo, bool> predicate, FuzzrOf<TProperty> fuzzr)")]
-    [DocContent("- Allows you to pass in a value instead of a Fuzzr.")]
+    [DocContent("  Allows you to pass in a value instead of a Fuzzr.")]
     [CodeSnippet]
     public void IsApplied_Constant()
     {
@@ -47,7 +47,7 @@ public class F_ConfigrProperty
 
     [Fact]
     [DocOverload("Configr.Property<TProperty>(Func<PropertyInfo, bool> predicate, Func<PropertyInfo, FuzzrOf<TProperty>> factory)")]
-    [DocContent("- Allows you to create a Fuzzr dynamically using a factory method.")]
+    [DocContent("  Allows you to create a Fuzzr dynamically using a factory method.")]
     public void IsApplied_Factory()
     {
         var fuzzr =
@@ -59,7 +59,7 @@ public class F_ConfigrProperty
 
     [Fact]
     [DocOverload("Configr.Property<TProperty>(Func<PropertyInfo, bool> predicate, Func<PropertyInfo, TProperty> factory)")]
-    [DocContent("With the same *pass in a value* conveniance helper.")]
+    [DocContent("  Allows you to create a value dynamically using a factory method.")]
     public void IsApplied_Factory_Constant()
     {
         var fuzzr =

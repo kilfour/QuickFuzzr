@@ -40,7 +40,7 @@ public class G_ConfigrConstructT
 
 	[Fact]
 	[DocOverloads]
-	[DocCode("Construct<T1,T2>(FuzzrOf<T1> arg1, FuzzrOf<T2> arg2)")]
+	[DocOverload("Construct<T1, T2>(FuzzrOf<T1> arg1, FuzzrOf<T2> arg2)")]
 	public void TwoArgs()
 	{
 		var cfg = Configr<SomeThing>.Construct(
@@ -52,7 +52,7 @@ public class G_ConfigrConstructT
 	}
 
 	[Fact]
-	[DocCode("Construct<T1,T2,T3>(FuzzrOf<T1> arg1, FuzzrOf<T2> arg2, FuzzrOf<T3> arg3)")]
+	[DocOverload("Construct<T1, T2, T3>(FuzzrOf<T1> arg1, FuzzrOf<T2> arg2, FuzzrOf<T3> arg3)")]
 	public void ThreeArgs()
 	{
 		var cfg = Configr<SomeThing>.Construct(
@@ -66,7 +66,7 @@ public class G_ConfigrConstructT
 	}
 
 	[Fact]
-	[DocCode("Construct<T1,T2,T3,T4>(FuzzrOf<T1> arg1, FuzzrOf<T2> arg2, FuzzrOf<T3> arg3, FuzzrOf<T4> arg4)")]
+	[DocOverload("Construct<T1, T2, T3, T4>(FuzzrOf<T1> arg1, FuzzrOf<T2> arg2, FuzzrOf<T3> arg3, FuzzrOf<T4> arg4)")]
 	public void FourArgs()
 	{
 		var cfg = Configr<SomeThing>.Construct(
@@ -82,7 +82,7 @@ public class G_ConfigrConstructT
 	}
 
 	[Fact]
-	[DocCode("Construct<T1,T2,T3,T4,T5>(FuzzrOf<T1> arg1, FuzzrOf<T2> arg2, FuzzrOf<T3> arg3, FuzzrOf<T4> arg4, FuzzrOf<T5> arg5)")]
+	[DocOverload("Construct<T1, T2, T3, T4, T5>(FuzzrOf<T1> arg1, FuzzrOf<T2> arg2, FuzzrOf<T3> arg3, FuzzrOf<T4> arg4, FuzzrOf<T5> arg5)")]
 	public void FiveArgs()
 	{
 		var cfg = Configr<SomeThing>.Construct(
@@ -102,15 +102,13 @@ public class G_ConfigrConstructT
 	[Fact]
 	[DocExceptions]
 	[DocException("ArgumentNullException", "If one of the `TArg` parameters is null.")]
-	public void Null_Arg()
+	public void Null_Arg() // TODO : test all versions
 	{
-		var cfg = Configr<SomeThing>.Construct<int>(null!);
-		var ex = Assert.Throws<NullReferenceException>(() => Generate(cfg));
+		var ex = Assert.Throws<ArgumentNullException>(() => Configr<SomeThing>.Construct<int>(null!));
 		Assert.Equal(Null_Arg_Message(), ex.Message);
 	}
 
-	private static string Null_Arg_Message() =>
-@"Object reference not set to an instance of an object."; // Check: Update Message
+	private static string Null_Arg_Message() => "Value cannot be null. (Parameter 'fuzzr')";
 
 	[Fact]
 	[DocException("InvalidOperationException", "If no matching constructor is found on type T.")]
