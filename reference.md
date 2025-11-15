@@ -92,14 +92,14 @@ Fuzzr.OneOf(params T[] values)
 - `Fuzzr.OneOf(IEnumerable<T> values)`:  
   Same as above, but accepts any enumerable source.  
 - `Fuzzr.OneOf(params FuzzrOf<T>[] fuzzrs)`:  
-  Randomly selects and executes one of the provided fuzzrs.  
+  Randomly selects and executes one of the provided Fuzzrs.  
 - `Fuzzr.OneOf(params (int Weight, T Value)[] weightedValues)`:  
   Selects a value using weighted probability. The higher the weight, the more likely the value is to be chosen.  
 ```csharp
  Fuzzr.OneOf((1, "a"), (2, "b"), (3, "c"));
 ```
 - `Fuzzr.OneOf(params (int Weight, FuzzrOf<T> fuzzr)[] weightedFuzzrs)`:  
-  Like the weighted values overload, but applies weights to fuzzrs.  
+  Like the weighted values overload, but applies weights to Fuzzrs.  
 
 **Exceptions:**  
   - `OneOfEmptyOptionsException`: When trying to choose from an empty collection.  
@@ -314,22 +314,19 @@ Configr.Property<TProperty>(Func<PropertyInfo, bool> predicate, FuzzrOf<TPropert
 ```csharp
  Configr.Property(a => a.Name == "Id", Fuzzr.Constant(42));
 ```
-A utility overload exists that allows one to pass in a value instead of a Fuzzr.  
-```csharp
- Configr.Property(a => a.Name == "Id", 42);
-```
-Another overload allows you to create a Fuzzr dynamically using a `Func<PropertyInfo, FuzzrOf<T>>` factory method.  
-```csharp
- Configr.Property(a => a.Name == "Id", a => Fuzzr.Constant(42));
-```
+
+**Overloads:**  
+- `Configr.Property<TProperty>(Func<PropertyInfo, bool> predicate, FuzzrOf<TProperty> fuzzr)`  
+- Allows you to pass in a value instead of a Fuzzr.  
+- `Configr.Property<TProperty>(Func<PropertyInfo, bool> predicate, Func<PropertyInfo, FuzzrOf<TProperty>> factory)`  
+- Allows you to create a Fuzzr dynamically using a factory method.  
+- `Configr.Property<TProperty>(Func<PropertyInfo, bool> predicate, Func<PropertyInfo, TProperty> factory)`  
 With the same *pass in a value* conveniance helper.  
-```csharp
- Configr.Property(a => a.Name == "Id", a => 42);
-```
 
 **Exceptions:**  
-- `ArgumentNullException`: When the expression is `null`.  
+- `ArgumentNullException`: When the predicate is `null`.  
 - `ArgumentNullException`: When the Fuzzr is `null`.  
+- `ArgumentNullException`: When the factory function is `null`.  
 ### Configr&lt;T&gt;.Construct
 Configures a custom constructor for type T, used when Fuzzr.One<T>() is called.
 Useful for records or classes without parameterless constructors or when `T` has multiple constructors

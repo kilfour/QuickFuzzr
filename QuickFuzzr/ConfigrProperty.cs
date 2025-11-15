@@ -26,14 +26,15 @@ public static partial class Configr
     /// Creates a Fuzzr that configures custom property generation using a factory function that receives property metadata.
     /// Use when property generation logic depends on property characteristics like name, type, or custom attributes.
     /// </summary>
-    public static FuzzrOf<Intent> Property<TProperty>(Func<PropertyInfo, bool> predicate,
-        Func<PropertyInfo, FuzzrOf<TProperty>> factoryFunc)
+    public static FuzzrOf<Intent> Property<TProperty>(
+        Func<PropertyInfo, bool> predicate,
+        Func<PropertyInfo, FuzzrOf<TProperty>> factory)
     {
         ArgumentNullException.ThrowIfNull(predicate);
-        ArgumentNullException.ThrowIfNull(factoryFunc);
+        ArgumentNullException.ThrowIfNull(factory);
         return state =>
                 {
-                    state.GeneralCustomizations[predicate] = a => factoryFunc(a).AsObject();
+                    state.GeneralCustomizations[predicate] = a => factory(a).AsObject();
                     return new Result<Intent>(Intent.Fixed, state);
                 };
     }
@@ -60,13 +61,13 @@ public static partial class Configr
     /// </summary>
     public static FuzzrOf<Intent> Property<TProperty>(
         Func<PropertyInfo, bool> predicate,
-        Func<PropertyInfo, TProperty> factoryFunction)
+        Func<PropertyInfo, TProperty> factory)
     {
         ArgumentNullException.ThrowIfNull(predicate);
-        ArgumentNullException.ThrowIfNull(factoryFunction);
+        ArgumentNullException.ThrowIfNull(factory);
         return state =>
         {
-            state.GeneralCustomizations[predicate] = a => Fuzzr.Constant(factoryFunction(a)).AsObject();
+            state.GeneralCustomizations[predicate] = a => Fuzzr.Constant(factory(a)).AsObject();
             return new Result<Intent>(Intent.Fixed, state);
         };
     }

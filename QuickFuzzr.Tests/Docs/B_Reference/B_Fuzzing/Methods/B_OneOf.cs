@@ -65,7 +65,7 @@ public class B_OneOf
 
     [Fact]
     [DocContent("- `Fuzzr.OneOf(params FuzzrOf<T>[] fuzzrs)`:")]
-    [DocContent("  Randomly selects and executes one of the provided fuzzrs.")]
+    [DocContent("  Randomly selects and executes one of the provided Fuzzrs.")]
     public void Fuzzrs_Example()
     {
         var result = Fuzzr.OneOf(Fuzzr.Constant("a"), Fuzzr.Constant("b"), Fuzzr.Constant("c")).Generate(42);
@@ -100,7 +100,7 @@ public class B_OneOf
 
     [Fact]
     [DocContent("- `Fuzzr.OneOf(params (int Weight, FuzzrOf<T> fuzzr)[] weightedFuzzrs)`:")]
-    [DocContent("  Like the weighted values overload, but applies weights to fuzzrs.")]
+    [DocContent("  Like the weighted values overload, but applies weights to Fuzzrs.")]
     public void Weights_Fuzzrs()
     {
         var fuzzr =

@@ -18,14 +18,14 @@ Fuzzr.OneOf(params T[] values)
 - `Fuzzr.OneOf(IEnumerable<T> values)`:  
   Same as above, but accepts any enumerable source.  
 - `Fuzzr.OneOf(params FuzzrOf<T>[] fuzzrs)`:  
-  Randomly selects and executes one of the provided fuzzrs.  
+  Randomly selects and executes one of the provided Fuzzrs.  
 - `Fuzzr.OneOf(params (int Weight, T Value)[] weightedValues)`:  
   Selects a value using weighted probability. The higher the weight, the more likely the value is to be chosen.  
 ```csharp
  Fuzzr.OneOf((1, "a"), (2, "b"), (3, "c"));
 ```
 - `Fuzzr.OneOf(params (int Weight, FuzzrOf<T> fuzzr)[] weightedFuzzrs)`:  
-  Like the weighted values overload, but applies weights to fuzzrs.  
+  Like the weighted values overload, but applies weights to Fuzzrs.  
 
 **Exceptions:**  
   - `OneOfEmptyOptionsException`: When trying to choose from an empty collection.  

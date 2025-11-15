@@ -14,7 +14,7 @@ public static partial class Configr<T>
         state => Add(state, MakeCtorFunc(typeof(T), [typeof(TArg)], s => fuzzr(s).Value!));
 
     /// <summary>
-    /// Creates a Fuzzr that configures a two-parameter constructor for type T using the specified parameter fuzzrs.
+    /// Creates a Fuzzr that configures a two-parameter constructor for type T using the specified parameter Fuzzrs.
     /// Use for types that require two constructor arguments, ensuring both parameters are generated according to their respective rules.
     /// </summary>
     public static FuzzrOf<Intent> Construct<T1, T2>(FuzzrOf<T1> fuzzr1, FuzzrOf<T2> fuzzr2) =>
