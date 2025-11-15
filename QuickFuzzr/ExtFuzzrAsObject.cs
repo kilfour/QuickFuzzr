@@ -10,6 +10,6 @@ public static partial class ExtFuzzr
 	/// </summary>
 	public static FuzzrOf<object> AsObject<T>(this FuzzrOf<T> fuzzr)
 	{
-		return s => new Result<object>(fuzzr(s).Value!, s);
+		return state => new Result<object>(fuzzr(state).Value!, state);
 	}
 }

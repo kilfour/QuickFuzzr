@@ -18,11 +18,10 @@ public static partial class Configr<T>
                 baseType.Name!,
                 DerivedTypeNotAssignableException.Method.EndOn,
                 [endingType]);
-        return
-            s =>
-                {
-                    s.Endings[baseType] = endingType;
-                    return new Result<Intent>(Intent.Fixed, s);
-                };
+        return state =>
+        {
+            state.Endings[baseType] = endingType;
+            return new Result<Intent>(Intent.Fixed, state);
+        };
     }
 }

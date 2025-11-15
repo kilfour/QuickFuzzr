@@ -16,10 +16,10 @@ public static partial class Configr
         ArgumentNullException.ThrowIfNull(predicate);
         ArgumentNullException.ThrowIfNull(fuzzr);
         return state =>
-                {
-                    state.GeneralCustomizations[predicate] = _ => fuzzr.AsObject();
-                    return new Result<Intent>(Intent.Fixed, state);
-                };
+        {
+            state.GeneralCustomizations[predicate] = _ => fuzzr.AsObject();
+            return new Result<Intent>(Intent.Fixed, state);
+        };
     }
 
     /// <summary>
@@ -33,10 +33,10 @@ public static partial class Configr
         ArgumentNullException.ThrowIfNull(predicate);
         ArgumentNullException.ThrowIfNull(factory);
         return state =>
-                {
-                    state.GeneralCustomizations[predicate] = a => factory(a).AsObject();
-                    return new Result<Intent>(Intent.Fixed, state);
-                };
+        {
+            state.GeneralCustomizations[predicate] = a => factory(a).AsObject();
+            return new Result<Intent>(Intent.Fixed, state);
+        };
     }
 
     /// <summary>
@@ -49,10 +49,10 @@ public static partial class Configr
     {
         ArgumentNullException.ThrowIfNull(predicate);
         return state =>
-                {
-                    state.GeneralCustomizations[predicate] = _ => Fuzzr.Constant(value).AsObject();
-                    return new Result<Intent>(Intent.Fixed, state);
-                };
+        {
+            state.GeneralCustomizations[predicate] = _ => Fuzzr.Constant(value).AsObject();
+            return new Result<Intent>(Intent.Fixed, state);
+        };
     }
 
     /// <summary>

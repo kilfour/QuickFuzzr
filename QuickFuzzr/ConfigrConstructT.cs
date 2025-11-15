@@ -60,7 +60,6 @@ public static partial class Configr<T>
         ArgumentNullException.ThrowIfNull(fuzzr2, nameof(fuzzr2));
         ArgumentNullException.ThrowIfNull(fuzzr3, nameof(fuzzr3));
         ArgumentNullException.ThrowIfNull(fuzzr4, nameof(fuzzr4));
-
         return state => Add(state,
             MakeCtorFunc(typeof(T), [typeof(T1), typeof(T2), typeof(T3), typeof(T4)],
             s => fuzzr1(s).Value!,

@@ -15,9 +15,9 @@ public static partial class Configr<T>
         if (min > max)
             throw new ArgumentOutOfRangeException(nameof(max), $"Maximum depth must be greater than or equal to minimum depth for type {typeof(T).Name}.");
         return state =>
-            {
-                state.DepthConstraints[typeof(T)] = new(min, max);
-                return Result.Unit(state);
-            };
+        {
+            state.DepthConstraints[typeof(T)] = new(min, max);
+            return Result.Unit(state);
+        };
     }
 }

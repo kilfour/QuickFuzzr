@@ -29,11 +29,10 @@ public static partial class Configr<T>
     public static FuzzrOf<Intent> Property<TProperty>(Expression<Func<T, TProperty>> predicate, TProperty value)
     {
         ArgumentNullException.ThrowIfNull(predicate);
-        return
-            state =>
-            {
-                state.Customizations[(predicate.AsPropertyInfo(), typeof(T))] = Fuzzr.Constant(value).AsObject();
-                return new Result<Intent>(Intent.Fixed, state);
-            };
+        return state =>
+        {
+            state.Customizations[(predicate.AsPropertyInfo(), typeof(T))] = Fuzzr.Constant(value).AsObject();
+            return new Result<Intent>(Intent.Fixed, state);
+        };
     }
 }

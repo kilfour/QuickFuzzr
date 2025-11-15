@@ -10,13 +10,12 @@ public static partial class ExtFuzzr
 	/// </summary>
 	public static FuzzrOf<T> Apply<T>(this FuzzrOf<T> fuzzr, Action<T> action)
 	{
-		return
-			s =>
-				{
-					var result = fuzzr(s);
-					action(result.Value);
-					return result;
-				};
+		return state =>
+		{
+			var result = fuzzr(state);
+			action(result.Value);
+			return result;
+		};
 	}
 
 	/// <summary>
@@ -25,11 +24,10 @@ public static partial class ExtFuzzr
 	/// </summary>
 	public static FuzzrOf<T> Apply<T>(this FuzzrOf<T> fuzzr, Func<T, T> func)
 	{
-		return
-			s =>
-			{
-				var result = fuzzr(s);
-				return new Result<T>(func(result.Value), s);
-			};
+		return state =>
+		{
+			var result = fuzzr(state);
+			return new Result<T>(func(result.Value), state);
+		};
 	}
 }
