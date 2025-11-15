@@ -46,12 +46,12 @@ fuzzr.Many(2).Generate();
 ## Highlights
 
 * **Zero-config generation:** `Fuzzr.One<T>()` works out of the box.
-* **LINQ-composable:** Build complex Fuzzrs from simple parts.
-* **Property-based testing ready:** Great for fuzzing and edge case discovery.  
+* **LINQ-composable:** Build complex fuzzrs from simple parts.
 * **Configurable defaults:** Fine-tune generation with `Configr`.
 * **Recursive object graphs:** Automatic depth-controlled nesting.
-* **Seed-based reproducibility:** Deterministic generation for reliable tests.
-* **Handles real-world domains:** Aggregates, value objects, and complex relationships.  
+* **Seed-based reproducibility:** Deterministic results for reliable tests.
+* **Built for Devs:** Clean LINQ workflows and Elm-style errors that guide you to the fix.
+  
 ## Installation
 
 QuickFuzzr is available on NuGet:
@@ -69,15 +69,11 @@ QuickFuzzr is fully documented, with real, executable examples for each combinat
 You can explore it here:
 * **[Table of Contents](https://github.com/kilfour/QuickFuzzr/blob/main/Docs/ToC.md)**
 * **[One File Guide](https://github.com/kilfour/QuickFuzzr/blob/main/guide.md)**
-
-*Note:* A full [API reference](https://github.com/kilfour/QuickFuzzr/blob/main/reference.md) is currently being worked on.  
-For now all public methods have xml summary comments.
-
+* **[One File Reference](https://github.com/kilfour/QuickFuzzr/blob/main/reference.md)**
   
 ## Roadmap
 
-- Complete API reference documentation.
-- More Elm-style error messages.
+- Documentation: add Elm-style error messages to reference.
 - [Cookbook](https://github.com/kilfour/QuickFuzzr/blob/main/cookbook.md)
 - More Primitives: DateTimeOffset, NInt, NUint, ...
 - QuickFuzzr.Reactor: Convention based generation, reusable patterns.
