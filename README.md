@@ -73,11 +73,12 @@ You can explore it here:
   
 ## Roadmap
 
-- Documentation: add Elm-style error messages to reference.
-- [Cookbook](https://github.com/kilfour/QuickFuzzr/blob/main/cookbook.md)
-- More Primitives: DateTimeOffset, NInt, NUint, ...
-- QuickFuzzr.Reactor: Convention based generation, reusable patterns.
-- QuickFuzzr.Evil: For all your property based testing needs.
+* Add the 'When Things Go Wrong' chapter to reference.
+* Benchmarks: Only believe the *measured* hype.
+* Add more Primitives: DateTimeOffset, NInt, NUint, ...
+* Expand the [Cookbook](https://github.com/kilfour/QuickFuzzr/blob/main/cookbook.md) with more real-world recipes
+* QuickFuzzr.Reactor: Convention-based generation and reusable patterns.
+* QuickFuzzr.Evil: For all your property-based testing needs.
   
 ## License
 
