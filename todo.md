@@ -3,7 +3,7 @@
 ### Testing:
 - check all possible exceptions : current bookmark N_ConfigrWithT
 - Add a configr can be set during a LINQ chain test for each option
-- Primitive fuzzrs use CheckIt
+- Primitive fuzzrs use CheckIt in tests MinMax in impl.
 - test depthcontrol many interaction (lists mainly)
 - remove all 'Check:'s, and/or search for
   - "Value cannot be null. (Parameter 'source')"
@@ -30,6 +30,10 @@ per category ? construction problems, value exhausted ...
   * NegativeWeightException
 * OneOf / combinator misuses
   * OneOfEmptyOptionsException
+
+## For 0.2.0
+* Benchmarks
+* Add the missing Primitives
 
 ## QuickFuzzr.Evil 
 Configr.EnableFieldAccess() 

@@ -55,10 +55,12 @@ public class ExtFuzzrApply
     [Fact]
     [DocExceptions]
     [DocException("NullReferenceException", "When the provided `Action` or `Func` is null.")]
-    public void Counter_Null_Key() // Check: change message
+    public void Counter_Null_Key()
     {
-        var ex = Assert.Throws<NullReferenceException>(() => Fuzzr.Constant(42).Apply(null!).Generate());
-        Assert.Equal("Object reference not set to an instance of an object.", ex.Message);
+        var ex = Assert.Throws<ArgumentNullException>(() => Fuzzr.Constant(42).Apply((Action<int>)null!));
+        Assert.Equal("Value cannot be null. (Parameter 'action')", ex.Message);
+        ex = Assert.Throws<ArgumentNullException>(() => Fuzzr.Constant(42).Apply(null!));
+        Assert.Equal("Value cannot be null. (Parameter 'func')", ex.Message);
     }
 }
 

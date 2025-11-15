@@ -10,6 +10,7 @@ public static partial class ExtFuzzr
 	/// </summary>
 	public static FuzzrOf<T> Apply<T>(this FuzzrOf<T> fuzzr, Action<T> action)
 	{
+		ArgumentNullException.ThrowIfNull(action);
 		return state =>
 		{
 			var result = fuzzr(state);
@@ -24,6 +25,7 @@ public static partial class ExtFuzzr
 	/// </summary>
 	public static FuzzrOf<T> Apply<T>(this FuzzrOf<T> fuzzr, Func<T, T> func)
 	{
+		ArgumentNullException.ThrowIfNull(func);
 		return state =>
 		{
 			var result = fuzzr(state);
