@@ -73,9 +73,9 @@ You can explore it here:
   
 ## Roadmap
 
-* Add the 'When Things Go Wrong' chapter to reference.
+* Add a 'When Things Go Wrong' chapter to reference.
 * Benchmarks: Only believe the *measured* hype.
-* Add more Primitives: DateTimeOffset, NInt, NUint, ...
+* Add the missing Primitives: DateTimeOffset, NInt, NUint, ...
 * Expand the [Cookbook](https://github.com/kilfour/QuickFuzzr/blob/main/cookbook.md) with more real-world recipes
 * QuickFuzzr.Reactor: Convention-based generation and reusable patterns.
 * QuickFuzzr.Evil: For all your property-based testing needs.
