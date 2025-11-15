@@ -5,8 +5,8 @@ namespace QuickFuzzr;
 public static partial class Configr<T>
 {
     /// <summary>
-    /// Creates a fuzzr that applies configuration based on a generated value from another fuzzr.
-    /// Use for complex configuration scenarios where generation parameters depend on values produced by other fuzzrs.
+    /// Creates a Fuzzr that applies configuration based on a generated value from another Fuzzr.
+    /// Use for complex configuration scenarios where generation parameters depend on values produced by other Fuzzrs.
     /// </summary>
     public static FuzzrOf<Intent> With<TValue>(FuzzrOf<TValue> fuzzr, Func<TValue, FuzzrOf<Intent>> configrFactory)
         => state =>

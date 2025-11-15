@@ -8,7 +8,7 @@ namespace QuickFuzzr.Tests.Docs.B_Reference.P_Primitives.Methods;
 public class Guids
 {
 	[Fact]
-	[DocContent("- The default fuzzr never generates Guid.Empty.")]
+	[DocContent("- The default Fuzzr never generates Guid.Empty.")]
 	public void NeverGuidEmpty()
 	{
 		var fuzzr = Fuzzr.Guid();

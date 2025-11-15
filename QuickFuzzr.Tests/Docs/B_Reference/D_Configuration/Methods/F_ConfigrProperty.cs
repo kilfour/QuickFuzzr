@@ -6,7 +6,7 @@ namespace QuickFuzzr.Tests.Docs.B_Reference.D_Configuration.Methods;
 
 [DocFile]
 [DocFileHeader("Configr.Property")]
-[DocColumn(Configuring.Columns.Description, "Applies a custom fuzzr or value to all matching properties across all types.")]
+[DocColumn(Configuring.Columns.Description, "Applies a custom Fuzzr or value to all matching properties across all types.")]
 [DocContent("Any property matching the predicate will use the specified Fuzzr during generation.")]
 [DocSignature("Configr.Property<TProperty>(Func<PropertyInfo, bool> predicate, FuzzrOf<TProperty> fuzzr)")]
 public class F_ConfigrProperty
@@ -37,8 +37,14 @@ public class F_ConfigrProperty
         return Configr.Property(a => a.Name == "Id", 42);
     }
 
+    //[Fact]
+    public void BookMark()
+    {
+        Assert.Fail("Start here, OVERLOADS.");
+    }
+
     [Fact]
-    [DocContent("A utility overload exists that allows one to pass in a value instead of a fuzzr.")]
+    [DocContent("A utility overload exists that allows one to pass in a value instead of a Fuzzr.")]
     [DocExample(typeof(F_ConfigrProperty), nameof(GetConfigConstant))]
     [CodeSnippet]
     public void IsApplied_Constant()
@@ -58,7 +64,7 @@ public class F_ConfigrProperty
     }
 
     [Fact]
-    [DocContent("Another overload allows you to create a fuzzr dynamically using a `Func<PropertyInfo, FuzzrOf<T>>` factory method.")]
+    [DocContent("Another overload allows you to create a Fuzzr dynamically using a `Func<PropertyInfo, FuzzrOf<T>>` factory method.")]
     [DocExample(typeof(F_ConfigrProperty), nameof(GetConfigFactory))]
     public void IsApplied_Factory()
     {
@@ -116,5 +122,28 @@ public class F_ConfigrProperty
         var (person1, person2) = fuzzr.Generate();
         Assert.Equal("One", person1.Name);
         Assert.Equal("Two", person2.Name);
+    }
+
+    [Fact]
+    [DocExceptions]
+    [DocException("ArgumentNullException", "When the expression is `null`.")]
+    public void Null_Expression()
+    {
+        var ex = Assert.Throws<ArgumentNullException>(
+            () => Configr.Property(null!, "FIXED"));
+        Assert.Equal("Value cannot be null. (Parameter 'predicate')", ex.Message);
+
+        ex = Assert.Throws<ArgumentNullException>(
+            () => Configr.Property(null!, Fuzzr.Constant(42)));
+        Assert.Equal("Value cannot be null. (Parameter 'predicate')", ex.Message);
+    }
+
+    [Fact]
+    [DocException("ArgumentNullException", "When the Fuzzr is `null`.")]
+    public void Null_Fuzzr()
+    {
+        var ex = Assert.Throws<ArgumentNullException>(
+            () => Configr.Property(a => a.Name == "Name", (FuzzrOf<int>)null!));
+        Assert.Equal("Value cannot be null. (Parameter 'fuzzr')", ex.Message);
     }
 }

@@ -39,7 +39,7 @@ public class C_ConfigrIgnoreAllT
 
 
     [Fact]
-    [DocContent("`IgnoreAll()`does not cause properties on derived classes to be ignored, even inherited properties.")]
+    [DocContent("- `IgnoreAll()`does not cause properties on derived classes to be ignored, even inherited properties.")]
     public void Derived()
     {
         var fuzzr =

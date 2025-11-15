@@ -1,5 +1,5 @@
 # Shuffle
-Creates a fuzzr that produces a random permutation of the provided sequence.  
+Creates a Fuzzr that produces a random permutation of the provided sequence.  
 Use for randomized ordering, unbiased sampling without replacement.
   
 

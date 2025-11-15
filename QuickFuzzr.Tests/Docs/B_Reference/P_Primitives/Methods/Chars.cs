@@ -33,7 +33,7 @@ public class Chars
 		=> Assert.Throws<ArgumentException>(() => Fuzzr.Char('2', '1').Generate());
 
 	[Fact]
-	[DocContent("- The default fuzzr always generates a char between lower case 'a' and lower case 'z'.")]
+	[DocContent("- The default Fuzzr always generates a char between lower case 'a' and lower case 'z'.")]
 	public void DefaultFuzzrAlwaysBetweenLowerCaseAAndLowerCaseZ()
 	{
 		CheckIf.GeneratedValuesShouldAllSatisfy(Fuzzr.Char(),

@@ -6,7 +6,7 @@ namespace QuickFuzzr;
 public static partial class ExtFuzzr
 {
 	/// <summary>
-	/// Creates a fuzzr that substitutes a default value when the source fuzzr
+	/// Creates a Fuzzr that substitutes a default value when the source Fuzzr
 	/// fails due to an <see cref="OneOfEmptyOptionsException"/>.
 	/// Use for safe fallback generation when working with potentially empty choice
 	/// collections or dynamic data sources.

@@ -6,7 +6,7 @@ namespace QuickFuzzr.Tests.Docs.B_Reference.B_Fuzzing.Methods;
 [DocFile]
 [DocColumn(Fuzzing.Columns.Description, "Generates a sequential integer per key, starting at 1.")]
 [DocContent(
-@"This fuzzr returns an `int` starting at 1, and incrementing by 1 on each call.  
+@"This Fuzzr returns an `int` starting at 1, and incrementing by 1 on each call.  
 Useful for generating unique sequential IDs or counters.  
 ")]
 [DocSignature("Fuzzr.Counter(object key)")]

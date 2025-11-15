@@ -1,5 +1,5 @@
 # Nullable
-Wraps a value type fuzzr to sometimes yield null values.  
+Wraps a value type Fuzzr to sometimes yield null values.  
 
 **Signature:**  
 ```csharp

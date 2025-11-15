@@ -3,7 +3,7 @@ The property specified will be ignored during generation.
 
 **Signature:**  
 ```csharp
-Configr<T>.Ignore(Expression<Func<T, TProperty>> expr)
+Configr<T>.Ignore(Expression<Func<T, TProperty>> expression)
 ```
   
 
@@ -15,4 +15,7 @@ select person;
 // Results in => 
 // ( Person { Name: "", Age: 0 }, Address { Street: "", City: "" } )
 ```
-Derived classes generated also ignore the base property.  
+- Derived classes generated also ignore the base property.  
+
+**Exceptions:**  
+  - `ArgumentNullException`: When the expression is `null`.  

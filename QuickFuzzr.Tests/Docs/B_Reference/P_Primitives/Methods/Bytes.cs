@@ -10,7 +10,7 @@ namespace QuickFuzzr.Tests.Docs.B_Reference.P_Primitives.Methods;
 public class Bytes
 {
     [Fact]
-    [DocContent("- The default fuzzr produces a `byte` in the full range (`0`-`255`).")]
+    [DocContent("- The default Fuzzr produces a `byte` in the full range (`0`-`255`).")]
     public void DefaultRange()
         => CheckIf.GeneratedValuesShouldAllSatisfy(Fuzzr.Byte(),
             (">= byte.MinValue", a => a >= byte.MinValue),
@@ -39,7 +39,7 @@ public class Bytes
         => Assert.Throws<ArgumentOutOfRangeException>(() => Fuzzr.Byte(0, 256).Generate());
 
     [Fact]
-    [DocContent("- When `min == max`, the fuzzr always returns that exact value.")]
+    [DocContent("- When `min == max`, the Fuzzr always returns that exact value.")]
     public void MinMaxEqual()
         => CheckIf.GeneratedValuesShouldAllSatisfy(Fuzzr.Byte(42, 42),
             ("== 42", a => a == 42));

@@ -23,7 +23,7 @@ public class ExtFuzzrUnique
     }
 
     [Fact]
-    [DocContent("- Multiple unique fuzzrs can be defined in one 'composed' fuzzr, without interfering with eachother by using a different key.")]
+    [DocContent("- Multiple unique Fuzzrs can be defined in one 'composed' Fuzzr, without interfering with eachother by using a different key.")]
     public void Multiple()
     {
         for (int i = 0; i < 100; i++)
@@ -42,7 +42,7 @@ public class ExtFuzzrUnique
     }
 
     [Fact]
-    [DocContent("- When using the same key for multiple unique fuzzrs all values across these fuzzrs are unique.")]
+    [DocContent("- When using the same key for multiple unique Fuzzrs all values across these Fuzzrs are unique.")]
     public void MultipleSameKey()
     {
         for (int i = 0; i < 100; i++)
@@ -75,7 +75,7 @@ public class ExtFuzzrUnique
 
     [Fact]
     [DocExceptions]
-    [DocException("UniqueValueExhaustedException", "When the fuzzr cannot find enough unique values within the retry limit. ")]
+    [DocException("UniqueValueExhaustedException", "When the Fuzzr cannot find enough unique values within the retry limit. ")]
     public void Not_Enough_Values()
     {
         var fuzzr = Fuzzr.Constant(1).Unique("TheKey").Many(2);

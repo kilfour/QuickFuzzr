@@ -138,7 +138,7 @@ and made sense of collections nested inside collections, with controlled recursi
 
 Each type involved carries its own depth constraint, and every recursive property or list of child elements
 simply burns through that budget one level at a time.
-When the counter hits zero, the fuzzr yields null (or an empty list), and the story ends right there.
+When the counter hits zero, the Fuzzr yields null (or an empty list), and the story ends right there.
 
 It also means you can mix these with inheritance and collection combinators.  
 And depth is local, not global: one deep branch does not force all others to go equally deep.  

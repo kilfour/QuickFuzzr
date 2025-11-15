@@ -6,7 +6,7 @@ namespace QuickFuzzr;
 public static partial class Fuzzr
 {
 	/// <summary>
-	/// Creates a fuzzr that randomly selects one value from the provided options.
+	/// Creates a Fuzzr that randomly selects one value from the provided options.
 	/// Use for constrained choice scenarios like names, categories, or predefined enumerations.
 	/// </summary>
 	public static FuzzrOf<T> OneOf<T>(params T[] values)
@@ -15,7 +15,7 @@ public static partial class Fuzzr
 	}
 
 	/// <summary>
-	/// Creates a fuzzr that randomly selects one value from the provided weighted options.
+	/// Creates a Fuzzr that randomly selects one value from the provided weighted options.
 	/// Use when different options should appear with varying frequency, proportional to their weights.
 	/// </summary>
 	public static FuzzrOf<T> OneOf<T>(params (int Weight, T Value)[] values)
@@ -44,7 +44,7 @@ public static partial class Fuzzr
 	}
 
 	/// <summary>
-	/// Creates a fuzzr that randomly selects one value from the provided collection.
+	/// Creates a Fuzzr that randomly selects one value from the provided collection.
 	/// Use when your choice data comes from lists, arrays, or other enumerable sources.
 	/// </summary>
 	public static FuzzrOf<T> OneOf<T>(IEnumerable<T> values)
@@ -63,7 +63,7 @@ public static partial class Fuzzr
 	}
 
 	/// <summary>
-	/// Creates a fuzzr that randomly selects and executes one of the provided fuzzrs.
+	/// Creates a Fuzzr that randomly selects and executes one of the provided Fuzzrs.
 	/// Use for conditional generation strategies or when different value types require different generation logic.
 	/// </summary>
 	public static FuzzrOf<T> OneOf<T>(params FuzzrOf<T>[] values)
@@ -80,7 +80,7 @@ public static partial class Fuzzr
 	}
 
 	/// <summary>
-	/// Creates a fuzzr that randomly selects and executes one of the provided weighted fuzzrs.
+	/// Creates a Fuzzr that randomly selects and executes one of the provided weighted Fuzzrs.
 	/// Use when different generation strategies should occur with varying frequency, proportional to their weights.
 	/// </summary>
 	public static FuzzrOf<T> OneOf<T>(params (int Weight, FuzzrOf<T> fuzzr)[] values)

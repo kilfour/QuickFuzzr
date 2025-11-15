@@ -46,7 +46,7 @@ fuzzr.Many(2).Generate();
 ## Highlights
 
 * **Zero-config generation:** `Fuzzr.One<T>()` works out of the box.
-* **LINQ-composable:** Build complex fuzzrs from simple parts.
+* **LINQ-composable:** Build complex Fuzzrs from simple parts.
 * **Property-based testing ready:** Great for fuzzing and edge case discovery.  
 * **Configurable defaults:** Fine-tune generation with `Configr`.
 * **Recursive object graphs:** Automatic depth-controlled nesting.

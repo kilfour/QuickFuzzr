@@ -6,8 +6,8 @@ namespace QuickFuzzr.Tests.Docs.B_Reference.E_ExtensionMethods.Methods;
 [DocFile]
 [DocFileHeader("NullableRef")]
 [DocColumn(FuzzrExtensionMethods.Columns.Description,
-"Wraps a reference-type fuzzr to sometimes return null (default 20% chance).")]
-[DocContent("Wraps a reference type fuzzr to sometimes yield null values.")]
+"Wraps a reference-type Fuzzr to sometimes return null (default 20% chance).")]
+[DocContent("Wraps a reference type Fuzzr to sometimes yield null values.")]
 [DocSignature("ExtFuzzr.NullableRef(this FuzzrOf<T> fuzzr)")]
 public class ExtFuzzrNullableRef
 {

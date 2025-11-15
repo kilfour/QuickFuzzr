@@ -17,3 +17,6 @@ select (person, fileEntry);
 // Results in => 
 // ( Person { Name: "", Age: 67 }, FileEntry { Name: "" } )
 ```
+
+**Exceptions:**  
+  - `ArgumentNullException`: When the expression is `null`.  

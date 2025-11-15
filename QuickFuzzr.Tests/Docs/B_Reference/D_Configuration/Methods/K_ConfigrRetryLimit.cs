@@ -8,8 +8,8 @@ namespace QuickFuzzr.Tests.Docs.B_Reference.D_Configuration.Methods;
 
 [DocFile]
 [DocFileHeader("Configr.RetryLimit")]
-[DocColumn(Configuring.Columns.Description, "Sets the global retry limit for retry-based fuzzrs.")]
-[DocContent("Sets the global retry limit used by fuzzrs.")]
+[DocColumn(Configuring.Columns.Description, "Sets the global retry limit for retry-based Fuzzrs.")]
+[DocContent("Sets the global retry limit used by Fuzzrs.")]
 [DocSignature("Configr.RetryLimit(int limit)")]
 public class K_ConfigrRetryLimit
 {
@@ -60,6 +60,6 @@ Allowed range: 1-1024
 Possible solutions:
 - Use a value within the allowed range
 - Check for unintended configuration overrides
-- If you need more, consider revising your fuzzr logic instead of increasing the limit
+- If you need more, consider revising your Fuzzr logic instead of increasing the limit
 ";
 }

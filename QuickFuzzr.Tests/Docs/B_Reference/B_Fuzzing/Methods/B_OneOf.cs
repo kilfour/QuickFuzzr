@@ -8,7 +8,7 @@ namespace QuickFuzzr.Tests.Docs.B_Reference.B_Fuzzing.Methods;
 [DocFile]
 [DocFileHeader("OneOf")]
 [DocColumn(Fuzzing.Columns.Description, "Randomly selects one of the provided values.")]
-[DocContent("Creates a fuzzr that randomly selects one value or fuzzr from the provided options.")]
+[DocContent("Creates a Fuzzr that randomly selects one value or Fuzzr from the provided options.")]
 [DocSignature("Fuzzr.OneOf(params T[] values)")]
 public class B_OneOf
 {

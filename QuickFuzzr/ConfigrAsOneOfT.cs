@@ -6,7 +6,7 @@ namespace QuickFuzzr;
 public static partial class Configr<T>
 {
     /// <summary>
-    /// Creates a fuzzr that configures inheritance resolution for type T to randomly select from the specified derived types.
+    /// Creates a Fuzzr that configures inheritance resolution for type T to randomly select from the specified derived types.
     /// Randomly choose which subtype to instantiate when calling <see cref="Fuzzr.One{T}()"/>.
     /// </summary>
     public static FuzzrOf<Intent> AsOneOf(params Type[] derivedTypes)

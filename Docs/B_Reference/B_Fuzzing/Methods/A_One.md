@@ -1,5 +1,5 @@
 # One
-Creates a fuzzr that produces complete instances of type `T` using QuickFuzzr's automatic construction rules.  
+Creates a Fuzzr that produces complete instances of type `T` using QuickFuzzr's automatic construction rules.  
 
 **Signature:**  
 ```csharp
@@ -23,7 +23,7 @@ Fuzzr.One<Person>();
 
 **Overloads:**  
 - `Fuzzr.One<T>(Func<T> constructor)`:  
-  Creates a fuzzr that produces instances of T by invoking the supplied factory on each generation.  
+  Creates a Fuzzr that produces instances of T by invoking the supplied factory on each generation.  
 
 **Exceptions:**  
 - `ConstructionException`: When type T cannot be constructed due to missing default constructor.  

@@ -1,5 +1,5 @@
 # NullableRef
-Wraps a reference type fuzzr to sometimes yield null values.  
+Wraps a reference type Fuzzr to sometimes yield null values.  
 
 **Signature:**  
 ```csharp

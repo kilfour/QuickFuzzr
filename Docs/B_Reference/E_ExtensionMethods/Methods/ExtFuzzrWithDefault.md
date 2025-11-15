@@ -1,5 +1,5 @@
 # WithDefault
-Returns the (optionally) provided default value instead of throwing when the underlying fuzzr fails due to empty choices.  
+Returns the (optionally) provided default value instead of throwing when the underlying Fuzzr fails due to empty choices.  
 
 **Signature:**  
 ```csharp

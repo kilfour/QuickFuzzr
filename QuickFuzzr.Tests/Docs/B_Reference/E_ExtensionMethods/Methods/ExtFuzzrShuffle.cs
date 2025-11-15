@@ -5,8 +5,8 @@ namespace QuickFuzzr.Tests.Docs.B_Reference.E_ExtensionMethods.Methods;
 
 [DocFile]
 [DocFileCodeHeader("Shuffle")]
-[DocColumn(FuzzrExtensionMethods.Columns.Description, "Randomly shuffles the sequence produced by the source fuzzr.")]
-[DocContent("Randomly shuffles the sequence produced by the source fuzzr.")]
+[DocColumn(FuzzrExtensionMethods.Columns.Description, "Randomly shuffles the sequence produced by the source Fuzzr.")]
+[DocContent("Randomly shuffles the sequence produced by the source Fuzzr.")]
 [DocSignature("ExFuzzr.Shuffle<T>(this FuzzrOf<IEnumerable<T>> source)")]
 public class ExtFuzzrShuffle
 {

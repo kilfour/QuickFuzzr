@@ -6,8 +6,8 @@ using QuickPulse.Explains;
 namespace QuickFuzzr.Tests.Docs.B_Reference.B_Fuzzing.Methods;
 
 [DocFile]
-[DocColumn(Fuzzing.Columns.Description, "Creates a fuzzr that produces an instances of type `T`.")]
-[DocContent("Creates a fuzzr that produces complete instances of type `T` using QuickFuzzr's automatic construction rules.")]
+[DocColumn(Fuzzing.Columns.Description, "Creates a Fuzzr that produces an instances of type `T`.")]
+[DocContent("Creates a Fuzzr that produces complete instances of type `T` using QuickFuzzr's automatic construction rules.")]
 [DocSignature("Fuzzr.One<T>()")]
 public class A_One
 {
@@ -90,7 +90,7 @@ public class A_One
     [Fact]
     [DocOverloads]
     [DocContent("- `Fuzzr.One<T>(Func<T> constructor)`:")]
-    [DocContent("  Creates a fuzzr that produces instances of T by invoking the supplied factory on each generation.")]
+    [DocContent("  Creates a Fuzzr that produces instances of T by invoking the supplied factory on each generation.")]
     public void FuzzrOne_No_Default_Ctor_Construction_Options()
     {
         var fuzzr =

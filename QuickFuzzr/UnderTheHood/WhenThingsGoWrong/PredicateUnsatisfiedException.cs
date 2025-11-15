@@ -1,7 +1,7 @@
 namespace QuickFuzzr.UnderTheHood.WhenThingsGoWrong;
 
 /// <summary>
-/// Thrown when a filtered fuzzr cannot satisfy its predicate within the allowed retry limit.
+/// Thrown when a filtered Fuzzr cannot satisfy its predicate within the allowed retry limit.
 /// </summary>
 public sealed class PredicateUnsatisfiedException(string typeName, int attempts)
     : QuickFuzzrException(BuildMessage(typeName, attempts))
@@ -11,7 +11,7 @@ $@"Could not find a value of type {typeName} that satisfies the predicate after 
 
 Possible solutions:
 - Relax or fix the predicate
-- Widen the fuzzr's value space
+- Widen the Fuzzr's value space
 - Provide a fallback: .WithDefault(...)
 - Increase the retry limit globally: Configr.RetryLimit(256)";
 }

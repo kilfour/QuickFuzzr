@@ -36,7 +36,7 @@ Person { Name = "ddnegsn", Age = 18 }
 ```
 And that's it, ... no configuration required.  
 QuickFuzzr walks the `Person` type, detects its properties,
-and fills them in using the default fuzzrs.  
+and fills them in using the default Fuzzrs.  
 #### Your First Customization
 QuickFuzzr is primarily designed to generate inputs for **fuzz-testing**, 
  so the default settings are mainly aimed towards that goal.  
@@ -102,7 +102,7 @@ var employeeFuzzr =
     Age: 69
 }
 ```
-In this example the lists used by `OneOf` are declared outside of the fuzzr.
+In this example the lists used by `OneOf` are declared outside of the Fuzzr.
 I just used `string[]`'s but the data could easily be loaded from a file for instance.  
 #### Please, Sir, I Want Some More.
 For MORE!, ..., oh well then.  
@@ -315,7 +315,7 @@ The `select` then combines those using string interpolation, meaning that the wh
 
 
 *Sidenote:* There's usually more than one way to get things done in QuickFuzzr.
-As an example of that, here is another social security fuzzr, this time using `char`'s and `string`'s:  
+As an example of that, here is another social security Fuzzr, this time using `char`'s and `string`'s:  
 ```csharp
 var digit = Fuzzr.Char('0', '9');
 var ssnFuzzr =
@@ -664,7 +664,7 @@ and made sense of collections nested inside collections, with controlled recursi
 
 Each type involved carries its own depth constraint, and every recursive property or list of child elements
 simply burns through that budget one level at a time.
-When the counter hits zero, the fuzzr yields null (or an empty list), and the story ends right there.
+When the counter hits zero, the Fuzzr yields null (or an empty list), and the story ends right there.
 
 It also means you can mix these with inheritance and collection combinators.  
 And depth is local, not global: one deep branch does not force all others to go equally deep.  
@@ -861,13 +861,13 @@ This showcase demonstrates how QuickFuzzr can:
 - Work with real-world domain patterns (entities, value objects, aggregates)  
 ## Reference
 This reference provides a **complete, factual overview** of QuickFuzzr's public API.
-It lists all available fuzzrs, configuration points, and extension methods, organized by category.  
+It lists all available Fuzzrs, configuration points, and extension methods, organized by category.  
 Each entry includes a concise description of its purpose and behavior,
 serving as a quick lookup for day-to-day use or library integration.
 
 All examples and summaries are real, verified through executable tests, ensuring what you see here is exactly what QuickFuzzr does.
 
-QuickFuzzr exposes three kinds of building blocks: `FuzzrOf<T>` for value production, `Configr` for generation behavior, and extension methods for modifying fuzzrs.  
+QuickFuzzr exposes three kinds of building blocks: `FuzzrOf<T>` for value production, `Configr` for generation behavior, and extension methods for modifying Fuzzrs.  
 Everything in this reference fits into one of these three roles.
 
 If you're looking for examples or background explanations, see the guide or cookbook.
@@ -888,20 +888,20 @@ If you're looking for examples or background explanations, see the guide or cook
 
 [Configuring]: #configuring
 ### Fuzzing
-This section lists the core fuzzrs responsible for object creation and composition.  
+This section lists the core Fuzzrs responsible for object creation and composition.  
 They provide controlled randomization, sequencing, and structural assembly beyond primitive value generation.  
 Use these methods to instantiate objects, select values, define constants, or maintain counters during generation.  
 All entries return a `FuzzrOf<T>` and can be composed using standard LINQ syntax.  
 #### Contents
 | Fuzzr| Description |
 | -| - |
-| [One](#one)| Creates a fuzzr that produces an instances of type `T`. |
+| [One](#one)| Creates a Fuzzr that produces an instances of type `T`. |
 | [OneOf](#oneof)| Randomly selects one of the provided values. |
-| [Shuffle](#shuffle)| Creates a fuzzr that randomly shuffles an input sequence. |
+| [Shuffle](#shuffle)| Creates a Fuzzr that randomly shuffles an input sequence. |
 | [Counter](#counter)| Generates a sequential integer per key, starting at 1. |
-| [Constant](#constant)| Wraps a fixed value in a fuzzr, producing the same result every time. |
+| [Constant](#constant)| Wraps a fixed value in a Fuzzr, producing the same result every time. |
 #### One
-Creates a fuzzr that produces complete instances of type `T` using QuickFuzzr's automatic construction rules.  
+Creates a Fuzzr that produces complete instances of type `T` using QuickFuzzr's automatic construction rules.  
 
 **Signature:**  
 ```csharp
@@ -925,7 +925,7 @@ Fuzzr.One<Person>();
 
 **Overloads:**  
 - `Fuzzr.One<T>(Func<T> constructor)`:  
-  Creates a fuzzr that produces instances of T by invoking the supplied factory on each generation.  
+  Creates a Fuzzr that produces instances of T by invoking the supplied factory on each generation.  
 
 **Exceptions:**  
 - `ConstructionException`: When type T cannot be constructed due to missing default constructor.  
@@ -934,7 +934,7 @@ Fuzzr.One<Person>();
   - When the factory method returns null.  
   - When the factory method is null.  
 #### OneOf
-Creates a fuzzr that randomly selects one value or fuzzr from the provided options.  
+Creates a Fuzzr that randomly selects one value or Fuzzr from the provided options.  
 
 **Signature:**  
 ```csharp
@@ -968,7 +968,7 @@ Fuzzr.OneOf(params T[] values)
   - `ZeroTotalWeightException`: When the total of all weights is zero or negative.  
   - `ArgumentNullException`: When the provided sequence is null.  
 #### Shuffle
-Creates a fuzzr that produces a random permutation of the provided sequence.  
+Creates a Fuzzr that produces a random permutation of the provided sequence.  
 Use for randomized ordering, unbiased sampling without replacement.
   
 
@@ -992,7 +992,7 @@ Fuzzr.Shuffle("John", "Paul", "George", "Ringo");
 **Exceptions:**  
   - `ArgumentNullException`: When the input collection is `null`.  
 #### Counter
-This fuzzr returns an `int` starting at 1, and incrementing by 1 on each call.  
+This Fuzzr returns an `int` starting at 1, and incrementing by 1 on each call.  
 Useful for generating unique sequential IDs or counters.  
   
 
@@ -1014,8 +1014,8 @@ Fuzzr.Counter("the-key").Many(5).Generate();
 **Exceptions:**  
 - `ArgumentNullException`: When the provided key is null.  
 #### Constant
-This fuzzr wraps the value provided of type `T` in a `FuzzrOf<T>`.
-It is most useful in combination with others and is often used to inject constants into combined fuzzrs.  
+This Fuzzr wraps the value provided of type `T` in a `FuzzrOf<T>`.
+It is most useful in combination with others and is often used to inject constants into combined Fuzzrs.  
 
 **Signature:**  
 ```csharp
@@ -1040,23 +1040,23 @@ select derived types, or wire dynamic behaviors that apply when calling `Fuzzr.O
 | [Configr.Ignore](#configrignore)| Globally ignores all properties matching the predicate. |
 | [Configr&lt;T&gt;.IgnoreAll](#configrtignoreall)| Ignores all properties of type T. |
 | [Configr.IgnoreAll](#configrignoreall)| Disables auto-generation for all properties on all types. |
-| [Configr&lt;T&gt;.Property](#configrtproperty)| Sets a custom fuzzr or value for one property on type T. |
-| [Configr.Property](#configrproperty)| Applies a custom fuzzr or value to all matching properties across all types. |
+| [Configr&lt;T&gt;.Property](#configrtproperty)| Sets a custom Fuzzr or value for one property on type T. |
+| [Configr.Property](#configrproperty)| Applies a custom Fuzzr or value to all matching properties across all types. |
 | [Configr&lt;T&gt;.Construct](#configrtconstruct)| Registers which constructor QuickFuzzr should use for type T. |
 | [Configr&lt;T&gt;AsOneOf](#configrtasoneof)| Chooses randomly between the given derived types when generating T. |
 | [Configr&lt;T&gt;.EndOn](#configrtendon)| Replaces deeper recursion with the specified end type. |
 | [Configr&lt;T&gt;.Depth](#configrtdepth)| Sets min and max recursion depth for type T. |
-| [Configr.RetryLimit](#configrretrylimit)| Sets the global retry limit for retry-based fuzzrs. |
+| [Configr.RetryLimit](#configrretrylimit)| Sets the global retry limit for retry-based Fuzzrs. |
 | [Configr&lt;T&gt;.Apply](#configrtapply)| Registers an action executed for each generated value of type `T`. |
 | [Configr&lt;T&gt;.With](#configrtwith)| Applies configuration for T based on a generated value. |
-| [Configr.Primitive](#configrprimitive)| Overrides the default fuzzr for a primitive type. |
+| [Configr.Primitive](#configrprimitive)| Overrides the default Fuzzr for a primitive type. |
 | [Property Access](#property-access)| Controls auto-generation for specific property access levels. |
 #### Configr&lt;T&gt;.Ignore
 The property specified will be ignored during generation.  
 
 **Signature:**  
 ```csharp
-Configr<T>.Ignore(Expression<Func<T, TProperty>> expr)
+Configr<T>.Ignore(Expression<Func<T, TProperty>> expression)
 ```
   
 
@@ -1068,7 +1068,10 @@ select person;
 // Results in => 
 // ( Person { Name: "", Age: 0 }, Address { Street: "", City: "" } )
 ```
-Derived classes generated also ignore the base property.  
+- Derived classes generated also ignore the base property.  
+
+**Exceptions:**  
+  - `ArgumentNullException`: When the expression is `null`.  
 #### Configr.Ignore
 Skips all properties matching the predicate across all types during generation.  
 Use to exclude recurring patterns like identifiers, foreign keys, or audit fields.  
@@ -1088,6 +1091,9 @@ select (person, fileEntry);
 // Results in => 
 // ( Person { Name: "", Age: 67 }, FileEntry { Name: "" } )
 ```
+
+**Exceptions:**  
+  - `ArgumentNullException`: When the expression is `null`.  
 #### Configr&lt;T&gt;.IgnoreAll
 Ignore all properties while generating an object.  
 
@@ -1106,7 +1112,7 @@ select (person, address);
 // Results in => 
 // ( Person { Name: "", Age: 0 }, Address { Street: "", City: "" } )
 ```
-`IgnoreAll()`does not cause properties on derived classes to be ignored, even inherited properties.  
+- `IgnoreAll()`does not cause properties on derived classes to be ignored, even inherited properties.  
 #### Configr.IgnoreAll
 Ignore all properties while generating anything.  
 
@@ -1126,7 +1132,7 @@ select (person, address);
 // ( Person { Name: "", Age: 0 }, Address { Street: "", City: "" } )
 ```
 #### Configr&lt;T&gt;.Property
-The property specified will be generated using the passed in fuzzr.  
+The property specified will be generated using the passed in Fuzzr.  
 
 **Signature:**  
 ```csharp
@@ -1136,14 +1142,18 @@ Configr<T>.Property<TProperty>(Func<PropertyInfo, bool> predicate, FuzzrOf<TProp
 
 **Usage:**  
 ```csharp
- Configr<Thing>.Property(s => s.Id, Fuzzr.Constant(42));
-```
-- An overload exists which allows for passing a value instead of a fuzzr.  
-```csharp
- Configr<Thing>.Property(s => s.Id, 666);
+ Configr<Person>.Property(s => s.Age, Fuzzr.Constant(42));
 ```
 - Derived classes generated also use the custom property.  
-- Trying to configure a field throws an exception with the following message:  
+
+**Overloads:**  
+- `Configr<T>.Property<TProperty>(Func<PropertyInfo, bool> predicate, TProperty value)`  
+  Allows for passing a value instead of a Fuzzr.  
+
+**Exceptions:**  
+- `ArgumentNullException`: When the expression is `null`.  
+- `ArgumentNullException`: When the Fuzzr is `null`.  
+- `PropertyConfigurationException`: When the expression points to a field instead of a property.  
 ```text
 Cannot configure expression 'a => a.Name'.
 It does not refer to a property.
@@ -1165,11 +1175,11 @@ Configr.Property<TProperty>(Func<PropertyInfo, bool> predicate, FuzzrOf<TPropert
 ```csharp
  Configr.Property(a => a.Name == "Id", Fuzzr.Constant(42));
 ```
-A utility overload exists that allows one to pass in a value instead of a fuzzr.  
+A utility overload exists that allows one to pass in a value instead of a Fuzzr.  
 ```csharp
  Configr.Property(a => a.Name == "Id", 42);
 ```
-Another overload allows you to create a fuzzr dynamically using a `Func<PropertyInfo, FuzzrOf<T>>` factory method.  
+Another overload allows you to create a Fuzzr dynamically using a `Func<PropertyInfo, FuzzrOf<T>>` factory method.  
 ```csharp
  Configr.Property(a => a.Name == "Id", a => Fuzzr.Constant(42));
 ```
@@ -1177,6 +1187,10 @@ With the same *pass in a value* conveniance helper.
 ```csharp
  Configr.Property(a => a.Name == "Id", a => 42);
 ```
+
+**Exceptions:**  
+- `ArgumentNullException`: When the expression is `null`.  
+- `ArgumentNullException`: When the Fuzzr is `null`.  
 #### Configr&lt;T&gt;.Construct
 Configures a custom constructor for type T, used when Fuzzr.One<T>() is called.
 Useful for records or classes without parameterless constructors or when `T` has multiple constructors
@@ -1303,7 +1317,7 @@ Depth is per type, not global. Each recursive type manages its own budget.
 - `ArgumentOutOfRangeException`: When min is negative.  
 - `ArgumentOutOfRangeException`: When max is lesser than min  
 #### Configr.RetryLimit
-Sets the global retry limit used by fuzzrs.  
+Sets the global retry limit used by Fuzzrs.  
 
 **Signature:**  
 ```csharp
@@ -1323,7 +1337,7 @@ Allowed range: 1-1024
 Possible solutions:
 - Use a value within the allowed range
 - Check for unintended configuration overrides
-- If you need more, consider revising your fuzzr logic instead of increasing the limit
+- If you need more, consider revising your Fuzzr logic instead of increasing the limit
 ```
 #### Configr&lt;T&gt;.Apply
 Registers an action executed for each generated value of type `T` without modifying the value itself. Use for performing operations like logging, adding to collections, or calling methods that have side effects but don't transform the data.  
@@ -1359,11 +1373,11 @@ var value = fuzzr.Generate();
 Configr<T>.With<TValue>(FuzzrOf<TValue> fuzzr, Func<TValue, FuzzrOf<Intent>> configrFactory)
 ```
   
-Applies configuration for type `T` based on a value produced by another fuzzr,
+Applies configuration for type `T` based on a value produced by another Fuzzr,
 allowing dynamic, data-dependent configuration inside LINQ chains.
   
 #### Configr.Primitive
-Registers a global default fuzzr for primitive types.
+Registers a global default Fuzzr for primitive types.
 Use this to override how QuickFuzzr generates built-in types across all automatically created objects.
   
 
@@ -1382,12 +1396,12 @@ select (person, timeslot);
 // Results in => 
 // ( Person { Name: "ddnegsn", Age: 42 }, TimeSlot { Day: Monday, Time: 42 } )
 ```
-- Replacing a primitive fuzzr automatically impacts its nullable counterpart.  
+- Replacing a primitive Fuzzr automatically impacts its nullable counterpart.  
 
 **Overloads:**  
 - `Primitive<T>(this FuzzrOf<T?> fuzzr)`:  
-  Registers a global default fuzzr for nullable primitives `T?`, overriding all nullable values produced across generated objects.  
-  Replacing a nullable primitive fuzzr does not impacts it's non-nullable counterpart.  
+  Registers a global default Fuzzr for nullable primitives `T?`, overriding all nullable values produced across generated objects.  
+  Replacing a nullable primitive Fuzzr does not impacts it's non-nullable counterpart.  
 ```csharp
 from cfgString in Configr.Primitive(Fuzzr.Constant<int?>(42))
 from person in Fuzzr.One<Person>()
@@ -1397,7 +1411,7 @@ select (person, nullablePerson);
 // ( Person { Name: "cmu", Age: 66 }, NullablePerson { Name: "ycqa", Age: 42 } )
 ```
 - `Fuzzr.Primitive(this FuzzrOf<string> fuzzr)`:  
-  Registers a global default fuzzr for strings, overriding all string values produced across generated objects.  
+  Registers a global default Fuzzr for strings, overriding all string values produced across generated objects.  
 ```csharp
 from cfgString in Configr.Primitive(Fuzzr.Constant("FIXED"))
 from person in Fuzzr.One<Person>()
@@ -1430,7 +1444,7 @@ select (person1, person2);
 - Getter-only properties *without* a compiler-generated backing field (i.e.: calculated or manually-backed) are never auto-generated.  
 ### Fuzzr Extension Methods
 QuickFuzzr provides a collection of extension methods that enhance the expressiveness and composability of `FuzzrOf<T>`.
-These methods act as modifiers, they wrap existing fuzzrs to alter behavior, add constraints,
+These methods act as modifiers, they wrap existing Fuzzrs to alter behavior, add constraints,
 or chain side-effects without changing the underlying LINQ-based model.
   
 #### Contents
@@ -1438,14 +1452,14 @@ or chain side-effects without changing the underlying LINQ-based model.
 | -| - |
 | [Apply](#apply)| Executes a side-effect for, or transform each value generated by the wrapped fuzzr. |
 | [AsObject](#asobject)| Boxes generated values as `object` without modifying them. |
-| [Many](#many)| Produces a number of values from the wrapped fuzzr. |
+| [Many](#many)| Produces a number of values from the wrapped Fuzzr. |
 | [NeverReturnNull](#neverreturnnull)| Filters out null values, retrying until a non-null value is produced or the retry limit is exceeded. |
-| [Nullable](#nullable)| Converts a non-nullable value-type fuzzr into a nullable one with a default 20% null probability. |
-| [NullableRef](#nullableref)| Wraps a reference-type fuzzr to sometimes return null (default 20% chance). |
-| [Shuffle](#shuffle)| Randomly shuffles the sequence produced by the source fuzzr. |
+| [Nullable](#nullable)| Converts a non-nullable value-type Fuzzr into a nullable one with a default 20% null probability. |
+| [NullableRef](#nullableref)| Wraps a reference-type Fuzzr to sometimes return null (default 20% chance). |
+| [Shuffle](#shuffle)| Randomly shuffles the sequence produced by the source Fuzzr. |
 | [Unique](#unique)| Ensures all generated values are unique within the given key scope. |
 | [Where](#where)| Filters generated values so only values satisfying the predicate are returned. |
-| [WithDefault](#withdefault)| Returns a default value when the underlying fuzzr fails due to empty choices. |
+| [WithDefault](#withdefault)| Returns a default value when the underlying Fuzzr fails due to empty choices. |
 #### Apply
 Executes a side-effect per generated value without altering it.  
 
@@ -1488,7 +1502,7 @@ Fuzzr.Constant(42).AsObject();
 // Results in => 42
 ```
 #### Many
-Produces a fixed number of values from a fuzzr.  
+Produces a fixed number of values from a Fuzzr.  
 
 **Signature:**  
 ```csharp
@@ -1506,7 +1520,7 @@ Fuzzr.Constant(6).Many(3);
 - `Many(this FuzzrOf<T> fuzzr, int min, int max)`  
   Produces a variable number of values within bounds.  
 #### NeverReturnNull
-Filters out nulls from a nullable fuzzr, retrying up to the retry limit.  
+Filters out nulls from a nullable Fuzzr, retrying up to the retry limit.  
 
 **Signature:**  
 ```csharp
@@ -1517,7 +1531,7 @@ ExtFuzzr.NeverReturnNull<T>(this FuzzrOf<T?> fuzzr)
 **Exceptions:**  
 - `NonNullValueExhaustedException`: When all attempts result in null.  
 #### Nullable
-Wraps a value type fuzzr to sometimes yield null values.  
+Wraps a value type Fuzzr to sometimes yield null values.  
 
 **Signature:**  
 ```csharp
@@ -1525,7 +1539,7 @@ ExtFuzzr.Nullable(this FuzzrOf<T> fuzzr)
 ```
   
 #### NullableRef
-Wraps a reference type fuzzr to sometimes yield null values.  
+Wraps a reference type Fuzzr to sometimes yield null values.  
 
 **Signature:**  
 ```csharp
@@ -1533,7 +1547,7 @@ ExtFuzzr.NullableRef(this FuzzrOf<T> fuzzr)
 ```
   
 #### Shuffle
-Randomly shuffles the sequence produced by the source fuzzr.  
+Randomly shuffles the sequence produced by the source Fuzzr.  
 
 **Signature:**  
 ```csharp
@@ -1555,12 +1569,12 @@ Makes sure that every generated value is unique.
 ExtFuzzr.Unique<T>(this FuzzrOf<T> fuzzr, object key)
 ```
   
-- Multiple unique fuzzrs can be defined in one 'composed' fuzzr, without interfering with eachother by using a different key.  
-- When using the same key for multiple unique fuzzrs all values across these fuzzrs are unique.  
+- Multiple unique Fuzzrs can be defined in one 'composed' Fuzzr, without interfering with eachother by using a different key.  
+- When using the same key for multiple unique Fuzzrs all values across these Fuzzrs are unique.  
 - An overload exist taking a function as an argument allowing for a dynamic key.  
 
 **Exceptions:**  
-- `UniqueValueExhaustedException`: When the fuzzr cannot find enough unique values within the retry limit.   
+- `UniqueValueExhaustedException`: When the Fuzzr cannot find enough unique values within the retry limit.   
 #### Where
 
 **Signature:**  
@@ -1573,7 +1587,7 @@ Filters generated values to those satisfying the predicate.
 **Exceptions:**  
 - `PredicateUnsatisfiedException`: When no value satisfies the predicate within the retry limit.  
 #### WithDefault
-Returns the (optionally) provided default value instead of throwing when the underlying fuzzr fails due to empty choices.  
+Returns the (optionally) provided default value instead of throwing when the underlying Fuzzr fails due to empty choices.  
 
 **Signature:**  
 ```csharp
@@ -1581,14 +1595,14 @@ ExtFuzzr.WithDefault(this FuzzrOf<T> fuzzr, T def = default)
 ```
   
 ### Primitive Fuzzrs
-QuickFuzzr includes built-in fuzzrs for all common primitive types.
+QuickFuzzr includes built-in Fuzzrs for all common primitive types.
 These cover the usual suspects: numbers, booleans, characters, strings, dates, times, ...  
 All with sensible defaults and range-based overloads.
-They form the foundation on which more complex fuzzrs are composed, and are used automatically when generating object properties.
+They form the foundation on which more complex Fuzzrs are composed, and are used automatically when generating object properties.
 
-> *All primitive fuzzrs automatically drive object property generation.
+> *All primitive Fuzzrs automatically drive object property generation.
 > Nullable and non-nullable variants are both supported.
-> Each fuzzr also supports `.Nullable(...)` / `.NullableRef(...)` as appropriate.*
+> Each Fuzzr also supports `.Nullable(...)` / `.NullableRef(...)` as appropriate.*
   
 | Fuzzr| Description |
 | -| - |
@@ -1617,18 +1631,18 @@ Use `Fuzzr.Bool()`.
 - Generates True or False.  
 #### Bytes
 Use `Fuzzr.Byte()`.  
-- The default fuzzr produces a `byte` in the full range (`0`-`255`).  
+- The default Fuzzr produces a `byte` in the full range (`0`-`255`).  
 - The overload `Fuzzr.Byte(int min, int max)` generates a value greater than or equal to `min` and less than or equal to `max`.  
 - Throws an `ArgumentException` when `min` > `max`.  
 - Throws an `ArgumentOutOfRangeException` when `min` < `byte.MinValue` (i.e. `< 0`).  
 - Throws an `ArgumentOutOfRangeException` when `max` > `byte.MaxValue` (i.e. `> 255`).  
-- When `min == max`, the fuzzr always returns that exact value.  
+- When `min == max`, the Fuzzr always returns that exact value.  
 - Boundary coverage: over time, values at both ends of the interval should appear.  
 #### Chars
 Use `Fuzzr.Char()`.  
 - The overload `Fuzzr.Char(char min, char max)` generates a char greater than or equal to `min` and less than or equal to `max`.  
 - Throws an `ArgumentException` when `min` > `max`.  
-- The default fuzzr always generates a char between lower case 'a' and lower case 'z'.  
+- The default Fuzzr always generates a char between lower case 'a' and lower case 'z'.  
 #### DateOnlys
 Use `Fuzzr.DateOnly()`.  
 - The overload `Fuzzr.DateOnly(DateOnly min, DateOnly max)` generates a DateOnly greater than or equal to `min` and less than or equal to `max`.  
@@ -1646,7 +1660,7 @@ Use `Fuzzr.Decimal()`.
 - The overload `Fuzzr.Decimal(decimal min, decimal max)` generates a decimal in the range [min, max) (min inclusive, max exclusive).  
 - The overload `Decimal(int precision)` generates a decimal with up to `precision` decimal places.  
 - The overload `Decimal(decimal min, decimal max, int precision)` generates a decimal in the range [min, max) (min inclusive, max exclusive), with up to `precision` decimal places.  
-- When `min == max`, the fuzzr always returns that exact value.  
+- When `min == max`, the Fuzzr always returns that exact value.  
 - Throws an `ArgumentException` when `min` > `max`.  
 - **Default:** min = 1, max = 100, precision = 2).  
 #### Doubles
@@ -1657,7 +1671,7 @@ Use `Fuzzr.Double()`.
 #### Enums
 Use `Fuzzr.Enum<T>()`, where T is the type of Enum you want to generate.  
 > Enums are included here for convenience. While not numeric primitives themselves, they are generated as atomic values from their defined members.  
-- The default fuzzr just picks a random value from all enumeration values.  
+- The default Fuzzr just picks a random value from all enumeration values.  
 - Passing in a non Enum type for T throws an ArgumentException.  
 #### Floats
 Use `Fuzzr.Float()`.  
@@ -1666,7 +1680,7 @@ Use `Fuzzr.Float()`.
 - **Default:** min = 1, max = 100).  
 #### Guids
 Use `Fuzzr.Guid()`. *There is no overload.*  
-- The default fuzzr never generates Guid.Empty.  
+- The default Fuzzr never generates Guid.Empty.  
 - `Fuzzr.Guid()` is deterministic when seeded.  
 #### Halfs
 Use `Fuzzr.Half()`.  
@@ -1692,12 +1706,12 @@ Use `Fuzzr.Short()`.
 - **Default:** min = 1, max = 100).  
 #### Strings
 Use `Fuzzr.String()`.  
-- The Default fuzzr generates a string of length greater than or equal to 1 and less than or equal to 10.  
+- The Default Fuzzr generates a string of length greater than or equal to 1 and less than or equal to 10.  
 - The overload `Fuzzr.String(int min, int max)` generates a string of length greater than or equal to `min` and less than or equal to `max`.  
 - Throws an `ArgumentException` when `min` > `max`.  
 - The overload `Fuzzr.String(int length)` generates a string of exactly `length` ... erm ... length.  
 - Throws an `ArgumentOutOfRangeException` when `length` < 0.  
-- The default fuzzr always generates every char element of the string to be between lower case 'a' and lower case 'z'.  
+- The default Fuzzr always generates every char element of the string to be between lower case 'a' and lower case 'z'.  
 - A version exists for all methods mentioned above that takes a `FuzzrOf<char>` as parameter and then this one will be used to build up the resulting string.  
 #### TimeOnlys
 Use `Fuzzr.TimeOnly()`.  

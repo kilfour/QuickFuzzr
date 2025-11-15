@@ -6,9 +6,9 @@ namespace QuickFuzzr.Tests.Docs.B_Reference.D_Configuration.Methods;
 
 [DocFile]
 [DocFileCodeHeader("Configr.Primitive")]
-[DocColumn(Configuring.Columns.Description, "Overrides the default fuzzr for a primitive type.")]
+[DocColumn(Configuring.Columns.Description, "Overrides the default Fuzzr for a primitive type.")]
 [DocContent(
-@"Registers a global default fuzzr for primitive types.
+@"Registers a global default Fuzzr for primitive types.
 Use this to override how QuickFuzzr generates built-in types across all automatically created objects.
 ")]
 [DocSignature("Configr.Primitive<T>(this FuzzrOf<T> fuzzr)")]
@@ -41,7 +41,7 @@ public class O_ConfigrPrimitiveT
     }
 
     [Fact]
-    [DocContent("- Replacing a primitive fuzzr automatically impacts its nullable counterpart.")]
+    [DocContent("- Replacing a primitive Fuzzr automatically impacts its nullable counterpart.")]
     public void NullableIsApplied()
     {
         var fuzzr =
@@ -56,8 +56,8 @@ public class O_ConfigrPrimitiveT
     [Fact]
     [DocOverloads]
     [DocContent("- `Primitive<T>(this FuzzrOf<T?> fuzzr)`:")]
-    [DocContent("  Registers a global default fuzzr for nullable primitives `T?`, overriding all nullable values produced across generated objects.")]
-    [DocContent("  Replacing a nullable primitive fuzzr does not impacts it's non-nullable counterpart.")]
+    [DocContent("  Registers a global default Fuzzr for nullable primitives `T?`, overriding all nullable values produced across generated objects.")]
+    [DocContent("  Replacing a nullable primitive Fuzzr does not impacts it's non-nullable counterpart.")]
     [DocExample(typeof(O_ConfigrPrimitiveT), nameof(GetNullableFuzzr))]
     public void Nullable()
     {
@@ -83,7 +83,7 @@ public class O_ConfigrPrimitiveT
 
     [Fact]
     [DocContent("- `Fuzzr.Primitive(this FuzzrOf<string> fuzzr)`:")]
-    [DocContent("  Registers a global default fuzzr for strings, overriding all string values produced across generated objects.")]
+    [DocContent("  Registers a global default Fuzzr for strings, overriding all string values produced across generated objects.")]
     [DocExample(typeof(O_ConfigrPrimitiveT), nameof(GetFuzzrString))]
     public void Strings()
     {

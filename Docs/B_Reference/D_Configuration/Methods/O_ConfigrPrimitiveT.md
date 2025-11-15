@@ -1,5 +1,5 @@
 # Configr.Primitive
-Registers a global default fuzzr for primitive types.
+Registers a global default Fuzzr for primitive types.
 Use this to override how QuickFuzzr generates built-in types across all automatically created objects.
   
 
@@ -18,12 +18,12 @@ select (person, timeslot);
 // Results in => 
 // ( Person { Name: "ddnegsn", Age: 42 }, TimeSlot { Day: Monday, Time: 42 } )
 ```
-- Replacing a primitive fuzzr automatically impacts its nullable counterpart.  
+- Replacing a primitive Fuzzr automatically impacts its nullable counterpart.  
 
 **Overloads:**  
 - `Primitive<T>(this FuzzrOf<T?> fuzzr)`:  
-  Registers a global default fuzzr for nullable primitives `T?`, overriding all nullable values produced across generated objects.  
-  Replacing a nullable primitive fuzzr does not impacts it's non-nullable counterpart.  
+  Registers a global default Fuzzr for nullable primitives `T?`, overriding all nullable values produced across generated objects.  
+  Replacing a nullable primitive Fuzzr does not impacts it's non-nullable counterpart.  
 ```csharp
 from cfgString in Configr.Primitive(Fuzzr.Constant<int?>(42))
 from person in Fuzzr.One<Person>()
@@ -33,7 +33,7 @@ select (person, nullablePerson);
 // ( Person { Name: "cmu", Age: 66 }, NullablePerson { Name: "ycqa", Age: 42 } )
 ```
 - `Fuzzr.Primitive(this FuzzrOf<string> fuzzr)`:  
-  Registers a global default fuzzr for strings, overriding all string values produced across generated objects.  
+  Registers a global default Fuzzr for strings, overriding all string values produced across generated objects.  
 ```csharp
 from cfgString in Configr.Primitive(Fuzzr.Constant("FIXED"))
 from person in Fuzzr.One<Person>()

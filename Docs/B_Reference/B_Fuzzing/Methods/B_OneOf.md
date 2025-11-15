@@ -1,5 +1,5 @@
 # OneOf
-Creates a fuzzr that randomly selects one value or fuzzr from the provided options.  
+Creates a Fuzzr that randomly selects one value or Fuzzr from the provided options.  
 
 **Signature:**  
 ```csharp

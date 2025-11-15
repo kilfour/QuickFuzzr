@@ -37,4 +37,14 @@ public class B_ConfigrIgnore
         Assert.Equal(67, person.Age);
         Assert.Equal(string.Empty, fileEntry.Name);
     }
+
+    [Fact]
+    [DocExceptions]
+    [DocContent("  - `ArgumentNullException`: When the expression is `null`.")]
+    public void Null()
+    {
+        var ex = Assert.Throws<ArgumentNullException>(
+            () => Configr.Ignore(null!));
+        Assert.Equal("Value cannot be null. (Parameter 'predicate')", ex.Message);
+    }
 }

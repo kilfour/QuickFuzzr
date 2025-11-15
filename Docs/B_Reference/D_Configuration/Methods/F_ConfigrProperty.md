@@ -11,11 +11,11 @@ Configr.Property<TProperty>(Func<PropertyInfo, bool> predicate, FuzzrOf<TPropert
 ```csharp
  Configr.Property(a => a.Name == "Id", Fuzzr.Constant(42));
 ```
-A utility overload exists that allows one to pass in a value instead of a fuzzr.  
+A utility overload exists that allows one to pass in a value instead of a Fuzzr.  
 ```csharp
  Configr.Property(a => a.Name == "Id", 42);
 ```
-Another overload allows you to create a fuzzr dynamically using a `Func<PropertyInfo, FuzzrOf<T>>` factory method.  
+Another overload allows you to create a Fuzzr dynamically using a `Func<PropertyInfo, FuzzrOf<T>>` factory method.  
 ```csharp
  Configr.Property(a => a.Name == "Id", a => Fuzzr.Constant(42));
 ```
@@ -23,3 +23,7 @@ With the same *pass in a value* conveniance helper.
 ```csharp
  Configr.Property(a => a.Name == "Id", a => 42);
 ```
+
+**Exceptions:**  
+- `ArgumentNullException`: When the expression is `null`.  
+- `ArgumentNullException`: When the Fuzzr is `null`.  

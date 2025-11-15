@@ -6,7 +6,7 @@ namespace QuickFuzzr;
 public static partial class ExtFuzzr
 {
 	/// <summary>
-	/// Creates a fuzzr that filters out null values from a nullable fuzzr, ensuring only non-null values are produced.
+	/// Creates a Fuzzr that filters out null values from a nullable Fuzzr, ensuring only non-null values are produced.
 	/// Use when you need guaranteed non-null values for testing code paths that require valid data or cannot handle null inputs.
 	/// </summary>
 	public static FuzzrOf<T?> NeverReturnNull<T>(this FuzzrOf<T?> fuzzr) where T : struct

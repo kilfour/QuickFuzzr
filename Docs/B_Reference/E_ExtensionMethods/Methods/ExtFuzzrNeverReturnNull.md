@@ -1,5 +1,5 @@
 # NeverReturnNull
-Filters out nulls from a nullable fuzzr, retrying up to the retry limit.  
+Filters out nulls from a nullable Fuzzr, retrying up to the retry limit.  
 
 **Signature:**  
 ```csharp

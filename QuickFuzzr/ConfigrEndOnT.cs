@@ -6,7 +6,7 @@ namespace QuickFuzzr;
 public static partial class Configr<T>
 {
     /// <summary>
-    /// Creates a fuzzr that configures type T to terminate recursion by generating TEnd instances instead of further recursion.
+    /// Creates a Fuzzr that configures type T to terminate recursion by generating TEnd instances instead of further recursion.
     /// Use for controlling complex object graphs by specifying End types that should stop further depth expansion in recursive structures.
     /// </summary>
     public static FuzzrOf<Intent> EndOn<TEnd>()

@@ -6,7 +6,7 @@ public static partial class Configr
 {
 
     /// <summary>
-	/// Registers a fuzzr as the default for a value type and its nullable counterpart.
+	/// Registers a Fuzzr as the default for a value type and its nullable counterpart.
 	/// Use for customizing primitive value generation across all auto-generated properties of the specified type.
 	/// </summary>
 	public static FuzzrOf<Intent> Primitive<T>(this FuzzrOf<T> fuzzr)
@@ -21,7 +21,7 @@ public static partial class Configr
     }
 
     /// <summary>
-    /// Registers a fuzzr as the default for a nullable value type.
+    /// Registers a Fuzzr as the default for a nullable value type.
     /// Use for customizing nullable value type generation with specific null probability or value ranges.
     /// </summary>
     public static FuzzrOf<Intent> Primitive<T>(this FuzzrOf<T?> fuzzr)
@@ -35,7 +35,7 @@ public static partial class Configr
     }
 
     /// <summary>
-    /// Registers a fuzzr as the default string fuzzr.
+    /// Registers a Fuzzr as the default string Fuzzr.
     /// Use for customizing string generation with specific patterns, lengths, or character sets across all auto-generated string properties.
     /// </summary>
     public static FuzzrOf<Intent> Primitive(this FuzzrOf<string> fuzzr)

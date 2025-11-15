@@ -5,7 +5,7 @@ namespace QuickFuzzr;
 public static partial class ExtFuzzr
 {
 	/// <summary>
-	/// Creates a fuzzr that filters values from the source fuzzr, only producing values that satisfy the predicate.
+	/// Creates a Fuzzr that filters values from the source Fuzzr, only producing values that satisfy the predicate.
 	/// Use for constraining generated data to specific conditions, business rules, or validation criteria within your test scenarios.
 	/// </summary>
 	public static FuzzrOf<T> Where<T>(this FuzzrOf<T> fuzzr, Func<T, bool> predicate)

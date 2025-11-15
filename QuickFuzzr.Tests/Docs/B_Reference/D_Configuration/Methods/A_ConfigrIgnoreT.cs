@@ -9,7 +9,7 @@ namespace QuickFuzzr.Tests.Docs.B_Reference.D_Configuration.Methods;
 [DocFileCodeHeader("Configr<T>.Ignore")]
 [DocColumn(Configuring.Columns.Description, "Ignores one specific property on type T during generation.")]
 [DocContent("The property specified will be ignored during generation.")]
-[DocSignature("Configr<T>.Ignore(Expression<Func<T, TProperty>> expr)")]
+[DocSignature("Configr<T>.Ignore(Expression<Func<T, TProperty>> expression)")]
 public class A_ConfigrIgnoreT
 {
     [CodeSnippet]
@@ -36,7 +36,7 @@ public class A_ConfigrIgnoreT
 
 
     [Fact]
-    [DocContent("Derived classes generated also ignore the base property.")]
+    [DocContent("- Derived classes generated also ignore the base property.")]
     public void WorksForDerived()
     {
         var fuzzr =
@@ -48,5 +48,15 @@ public class A_ConfigrIgnoreT
         Assert.Equal(26, result.Age);
         Assert.Equal("ddnegsn", result.Email);
         Assert.Equal("tg", result.SocialSecurityNumber);
+    }
+
+    [Fact]
+    [DocExceptions]
+    [DocContent("  - `ArgumentNullException`: When the expression is `null`.")]
+    public void Null()
+    {
+        var ex = Assert.Throws<ArgumentNullException>(
+            () => Configr<Person>.Ignore<string>(null!));
+        Assert.Equal("Value cannot be null. (Parameter 'expression')", ex.Message);
     }
 }

@@ -1,5 +1,5 @@
 # Configr&lt;T&gt;.Property
-The property specified will be generated using the passed in fuzzr.  
+The property specified will be generated using the passed in Fuzzr.  
 
 **Signature:**  
 ```csharp
@@ -9,14 +9,18 @@ Configr<T>.Property<TProperty>(Func<PropertyInfo, bool> predicate, FuzzrOf<TProp
 
 **Usage:**  
 ```csharp
- Configr<Thing>.Property(s => s.Id, Fuzzr.Constant(42));
-```
-- An overload exists which allows for passing a value instead of a fuzzr.  
-```csharp
- Configr<Thing>.Property(s => s.Id, 666);
+ Configr<Person>.Property(s => s.Age, Fuzzr.Constant(42));
 ```
 - Derived classes generated also use the custom property.  
-- Trying to configure a field throws an exception with the following message:  
+
+**Overloads:**  
+- `Configr<T>.Property<TProperty>(Func<PropertyInfo, bool> predicate, TProperty value)`  
+  Allows for passing a value instead of a Fuzzr.  
+
+**Exceptions:**  
+- `ArgumentNullException`: When the expression is `null`.  
+- `ArgumentNullException`: When the Fuzzr is `null`.  
+- `PropertyConfigurationException`: When the expression points to a field instead of a property.  
 ```text
 Cannot configure expression 'a => a.Name'.
 It does not refer to a property.

@@ -5,8 +5,8 @@ namespace QuickFuzzr.Tests.Docs.B_Reference.E_ExtensionMethods.Methods;
 
 [DocFile]
 [DocFileCodeHeader("Many")]
-[DocColumn(FuzzrExtensionMethods.Columns.Description, "Produces a number of values from the wrapped fuzzr.")]
-[DocContent("Produces a fixed number of values from a fuzzr.")]
+[DocColumn(FuzzrExtensionMethods.Columns.Description, "Produces a number of values from the wrapped Fuzzr.")]
+[DocContent("Produces a fixed number of values from a Fuzzr.")]
 [DocSignature("ExtFuzzr.Many(this FuzzrOf<T> fuzzr, int number)")]
 public class ExtFuzzrMany
 {

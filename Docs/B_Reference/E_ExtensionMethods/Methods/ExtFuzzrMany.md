@@ -1,5 +1,5 @@
 # Many
-Produces a fixed number of values from a fuzzr.  
+Produces a fixed number of values from a Fuzzr.  
 
 **Signature:**  
 ```csharp

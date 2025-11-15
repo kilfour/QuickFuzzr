@@ -39,7 +39,7 @@ public class Decimals
 			("precision <= 1", a => GetPrecision(a) <= 1));
 
 	[Fact]
-	[DocContent("- When `min == max`, the fuzzr always returns that exact value.")]
+	[DocContent("- When `min == max`, the Fuzzr always returns that exact value.")]
 	public void MinMaxEqual()
 		=> CheckIf.GeneratedValuesShouldAllSatisfy(Fuzzr.Decimal(42, 42),
 			("== 42", a => a == 42));

@@ -5,7 +5,7 @@ namespace QuickFuzzr;
 public static partial class ExtFuzzr
 {
 	/// <summary>
-	/// Creates a fuzzr that produces nullable values from the source fuzzr, with 20% chance of returning null.
+	/// Creates a Fuzzr that produces nullable values from the source Fuzzr, with 20% chance of returning null.
 	/// Use for testing nullable value type handling, optional parameters, or scenarios where missing data needs to be simulated.
 	/// </summary>
 	public static FuzzrOf<T?> Nullable<T>(this FuzzrOf<T> fuzzr)
@@ -15,7 +15,7 @@ public static partial class ExtFuzzr
 	}
 
 	/// <summary>
-	/// Creates a fuzzr that produces nullable values from the source fuzzr with configurable null probability.
+	/// Creates a Fuzzr that produces nullable values from the source Fuzzr with configurable null probability.
 	/// Use when you need precise control over null frequency for testing specific edge cases or realistic data distributions.
 	/// </summary>
 	public static FuzzrOf<T?> Nullable<T>(this FuzzrOf<T> fuzzr, double percentageOfNulls)

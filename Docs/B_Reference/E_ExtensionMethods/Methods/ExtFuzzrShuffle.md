@@ -1,5 +1,5 @@
 # Shuffle
-Randomly shuffles the sequence produced by the source fuzzr.  
+Randomly shuffles the sequence produced by the source Fuzzr.  
 
 **Signature:**  
 ```csharp

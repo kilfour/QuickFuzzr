@@ -16,4 +16,4 @@ select (person, address);
 // Results in => 
 // ( Person { Name: "", Age: 0 }, Address { Street: "", City: "" } )
 ```
-`IgnoreAll()`does not cause properties on derived classes to be ignored, even inherited properties.  
+- `IgnoreAll()`does not cause properties on derived classes to be ignored, even inherited properties.  

@@ -6,8 +6,8 @@ namespace QuickFuzzr.Tests.Docs.B_Reference.E_ExtensionMethods.Methods;
 [DocFile]
 [DocFileHeader("Nullable")]
 [DocColumn(FuzzrExtensionMethods.Columns.Description,
-"Converts a non-nullable value-type fuzzr into a nullable one with a default 20% null probability.")]
-[DocContent("Wraps a value type fuzzr to sometimes yield null values.")]
+"Converts a non-nullable value-type Fuzzr into a nullable one with a default 20% null probability.")]
+[DocContent("Wraps a value type Fuzzr to sometimes yield null values.")]
 [DocSignature("ExtFuzzr.Nullable(this FuzzrOf<T> fuzzr)")]
 public class ExtFuzzrNullable
 {

@@ -1,12 +1,12 @@
 # Primitive Fuzzrs
-QuickFuzzr includes built-in fuzzrs for all common primitive types.
+QuickFuzzr includes built-in Fuzzrs for all common primitive types.
 These cover the usual suspects: numbers, booleans, characters, strings, dates, times, ...  
 All with sensible defaults and range-based overloads.
-They form the foundation on which more complex fuzzrs are composed, and are used automatically when generating object properties.
+They form the foundation on which more complex Fuzzrs are composed, and are used automatically when generating object properties.
 
-> *All primitive fuzzrs automatically drive object property generation.
+> *All primitive Fuzzrs automatically drive object property generation.
 > Nullable and non-nullable variants are both supported.
-> Each fuzzr also supports `.Nullable(...)` / `.NullableRef(...)` as appropriate.*
+> Each Fuzzr also supports `.Nullable(...)` / `.NullableRef(...)` as appropriate.*
   
 | Fuzzr| Description |
 | -| - |

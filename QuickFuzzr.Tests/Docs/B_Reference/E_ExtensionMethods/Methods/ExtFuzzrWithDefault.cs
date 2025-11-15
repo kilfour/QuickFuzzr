@@ -6,8 +6,8 @@ namespace QuickFuzzr.Tests.Docs.B_Reference.E_ExtensionMethods.Methods;
 [DocFile]
 [DocFileHeader("WithDefault")]
 [DocColumn(FuzzrExtensionMethods.Columns.Description,
-"Returns a default value when the underlying fuzzr fails due to empty choices.")]
-[DocContent("Returns the (optionally) provided default value instead of throwing when the underlying fuzzr fails due to empty choices.")]
+"Returns a default value when the underlying Fuzzr fails due to empty choices.")]
+[DocContent("Returns the (optionally) provided default value instead of throwing when the underlying Fuzzr fails due to empty choices.")]
 [DocSignature("ExtFuzzr.WithDefault(this FuzzrOf<T> fuzzr, T def = default)")]
 public class ExtFuzzrWithDefault
 {
