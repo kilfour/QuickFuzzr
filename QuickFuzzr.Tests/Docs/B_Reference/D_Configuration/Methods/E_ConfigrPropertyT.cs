@@ -1,5 +1,6 @@
 ﻿using QuickFuzzr.Tests._Tools;
 using QuickFuzzr.Tests._Tools.Models;
+using QuickFuzzr.UnderTheHood;
 using QuickFuzzr.UnderTheHood.WhenThingsGoWrong;
 using QuickPulse.Explains;
 
@@ -115,4 +116,15 @@ Possible solutions:
 - Then pass it to Configr<PersonOutInTheFields>.Property(...) to configure generation.
 "; // - If you intended to configure a field, enable field access or use explicit construction.
 
+	[Fact]
+	public void Configr_DoesNotMultiply()
+	{
+		var fuzzr =
+			from _1 in Configr<Person>.Property(s => s.Age, 666)
+			from i in Fuzzr.Int()
+			select i;
+		var state = new State();
+		fuzzr.Many(2)(state);
+		Assert.Single(state.Customizations);
+	}
 }
