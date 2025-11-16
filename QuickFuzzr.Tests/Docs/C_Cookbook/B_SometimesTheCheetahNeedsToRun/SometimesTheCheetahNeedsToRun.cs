@@ -28,7 +28,7 @@ we can optimize the `LINQ` chain a bit by **preloading** the config:")]
 [DocContent(@"
 Not bad, considering this example tree model has no properties at all.
 
-For more complex types, where property customization and recursion are heavier, the gains are noticeably larger.")]
+For more complex types, where property customization is heavier, the gains are noticeably larger.")]
 [DocHeader("Summary:")]
 [DocContent(@"
 QuickFuzzr's dynamic configuration is usually fast enough, and you rarely need to optimize.  
