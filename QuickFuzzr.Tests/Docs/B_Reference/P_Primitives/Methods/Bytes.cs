@@ -75,7 +75,6 @@ Actual value was -1.";
         => @"max ('256') must be less than or equal to '255'. (Parameter 'max')
 Actual value was 256.";
 
-
     [Fact]
     public void Nullable()
         => CheckIf.GeneratesNullAndNotNull(Fuzzr.Byte().Nullable());
