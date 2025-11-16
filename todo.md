@@ -1,16 +1,14 @@
 # TODO's 
-## For 0.1.6
+## For 0.1.7
 ### Testing:
-- check all possible exceptions : current bookmark N_ConfigrWithT
+- check all possible exceptions : current bookmark primitives
 - Add a configr can be set during a LINQ chain test for each option
 - Primitive fuzzrs use CheckIt in tests MinMax in impl.
 - test depthcontrol many interaction (lists mainly)
-- remove all 'Check:'s, and/or search for
-  - "Value cannot be null. (Parameter 'source')"
-  - @"Object reference not set to an instance of an object.";
-  - InvalidOperationException
+- check Congigr explosion: see F_ConfigrProperty.Configr_DoesNotMultiply
+- Genesis TODO: get rid of .Last
 
-## After 0.1.6
+## After 0.1.7
 Error section: a single table listing all QuickFuzzr exceptions with one-liners 
 per category ? construction problems, value exhausted ...
 * Construction / instantiation

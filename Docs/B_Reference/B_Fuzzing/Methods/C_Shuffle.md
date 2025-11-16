@@ -21,4 +21,4 @@ Fuzzr.Shuffle("John", "Paul", "George", "Ringo");
   Same as above, but accepts any enumerable source.  
 
 **Exceptions:**  
-  - `ArgumentNullException`: When the input collection is `null`.  
+- `ArgumentNullException`: When the input collection is `null`.  

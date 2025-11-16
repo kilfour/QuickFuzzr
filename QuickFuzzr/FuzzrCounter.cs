@@ -10,6 +10,7 @@ public static partial class Fuzzr
 	/// </summary>
 	public static FuzzrOf<int> Counter(object key)
 	{
+		ArgumentNullException.ThrowIfNull(key);
 		return state =>
 		{
 			var cnt = state.Get(key, 0) + 1;

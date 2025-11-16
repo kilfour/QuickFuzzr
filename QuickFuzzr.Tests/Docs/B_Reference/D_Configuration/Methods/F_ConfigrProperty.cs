@@ -1,6 +1,7 @@
 using System.Reflection;
 using QuickFuzzr.Tests._Tools;
 using QuickFuzzr.Tests._Tools.Models;
+using QuickFuzzr.UnderTheHood;
 using QuickPulse.Explains;
 
 namespace QuickFuzzr.Tests.Docs.B_Reference.D_Configuration.Methods;
@@ -141,5 +142,17 @@ public class F_ConfigrProperty
         ex = Assert.Throws<ArgumentNullException>(
             () => Configr.Property(a => a.Name == "Name", (Func<PropertyInfo, string>)null!));
         Assert.Equal("Value cannot be null. (Parameter 'factory')", ex.Message);
+    }
+
+    [Fact]
+    public void Configr_DoesNotMultiply()
+    {
+        var fuzzr =
+            from _1 in Configr.Property(p => p.Name == "X", Fuzzr.Int())
+            from i in Fuzzr.Int()
+            select i;
+        var state = new State();
+        fuzzr.Many(2)(state);
+        Assert.Single(state.GeneralCustomizations);
     }
 }

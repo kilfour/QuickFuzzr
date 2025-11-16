@@ -69,9 +69,8 @@ Fuzzr.One<Person>();
 **Exceptions:**  
 - `ConstructionException`: When type T cannot be constructed due to missing default constructor.  
 - `InstantiationException`: When type T is an interface and cannot be instantiated.  
-- `NullReferenceException`:  
-  - When the factory method returns null.  
-  - When the factory method is null.  
+- `FactoryConstructionException`: When the factory method returns `null`.  
+- `ArgumentNullException`: When the factory method is `null`.  
 ### OneOf
 Creates a Fuzzr that randomly selects one value or Fuzzr from the provided options.  
 
@@ -129,7 +128,7 @@ Fuzzr.Shuffle("John", "Paul", "George", "Ringo");
   Same as above, but accepts any enumerable source.  
 
 **Exceptions:**  
-  - `ArgumentNullException`: When the input collection is `null`.  
+- `ArgumentNullException`: When the input collection is `null`.  
 ### Counter
 This Fuzzr returns an `int` starting at 1, and incrementing by 1 on each call.  
 Useful for generating unique sequential IDs or counters.  
@@ -293,14 +292,6 @@ Configr<T>.Property<TProperty>(Func<PropertyInfo, bool> predicate, FuzzrOf<TProp
 - `ArgumentNullException`: When the expression is `null`.  
 - `ArgumentNullException`: When the Fuzzr is `null`.  
 - `PropertyConfigurationException`: When the expression points to a field instead of a property.  
-```text
-Cannot configure expression 'a => a.Name'.
-It does not refer to a property.
-Fields and methods are not supported by default.
-Possible solutions:
-- Use a property selector (e.g. a => a.PropertyName).
-- Then pass it to Configr<PersonOutInTheFields>.Property(...) to configure generation.
-```
 ### Configr.Property
 Any property matching the predicate will use the specified Fuzzr during generation.  
 
@@ -352,7 +343,7 @@ Configr<MultiCtorContainer>.Construct(Fuzzr.Constant(42));
 
 **Exceptions:**  
 - `ArgumentNullException`: If one of the `TArg` parameters is null.  
-- `InvalidOperationException`: If no matching constructor is found on type T.  
+- `ConstructorNotFoundException`: If no matching constructor is found on type T.  
 ### Configr&lt;T&gt;AsOneOf
 Configures inheritance resolution for BaseType, 
 allowing QuickFuzzr to randomly select one of the specified derived types when generating instances.  
@@ -745,6 +736,8 @@ QuickFuzzr includes built-in Fuzzrs for all common primitive types.
 These cover the usual suspects: numbers, booleans, characters, strings, dates, times, ...  
 All with sensible defaults and range-based overloads.
 They form the foundation on which more complex Fuzzrs are composed, and are used automatically when generating object properties.
+
+All range-based numeric fuzzrs follow .NET conventions: the lower bound is inclusive and the upper bound is exclusive, unless explicitly stated otherwise.
 
 > *All primitive Fuzzrs automatically drive object property generation.
 > Nullable and non-nullable variants are both supported.

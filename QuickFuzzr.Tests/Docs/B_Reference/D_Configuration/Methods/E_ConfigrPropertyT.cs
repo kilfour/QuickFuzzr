@@ -82,7 +82,6 @@ public class E_ConfigrPropertyT
 
 	[Fact]
 	[DocException("PropertyConfigurationException", "When the expression points to a field instead of a property.")]
-	[DocExample(typeof(E_ConfigrPropertyT), nameof(Expression_Points_To_A_Field_Message), "text")]
 	public void Expression_Points_To_A_Field()
 	{
 		var fuzzr =
@@ -93,9 +92,6 @@ public class E_ConfigrPropertyT
 		Assert.Equal(Expression_Points_To_A_Field_Message(), ex.Message);
 	}
 
-	[CodeSnippet]
-	[CodeRemove("@\"")]
-	[CodeRemove("\";")]
 	private static string Expression_Points_To_A_Field_Message() =>
 @"Cannot configure expression 'a => a.Name'.
 

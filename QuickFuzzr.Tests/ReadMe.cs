@@ -10,7 +10,7 @@ namespace QuickFuzzr.Tests;
 [DocFileHeader("<img src='icon.png' width='40' align='top'/> QuickFuzzr")]
 [DocContent(
 @"
-> **A type-walking cheetah with a hand full of random.**
+> **A type-walking cheetah with a handful of random.**
 
 Generate realistic test data and *fuzz* your domain models using composable LINQ expressions.
 

@@ -23,4 +23,4 @@ Configr<MultiCtorContainer>.Construct(Fuzzr.Constant(42));
 
 **Exceptions:**  
 - `ArgumentNullException`: If one of the `TArg` parameters is null.  
-- `InvalidOperationException`: If no matching constructor is found on type T.  
+- `ConstructorNotFoundException`: If no matching constructor is found on type T.  

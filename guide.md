@@ -45,7 +45,7 @@ QuickFuzzr is primarily designed to generate inputs for **fuzz-testing**,
 ```csharp
 var personFuzzr =
     from firstname in Fuzzr.OneOf("John", "Paul", "George", "Ringo")
-    from lastname in Fuzzr.OneOf("Lennon", "McCartney", "Harrison", "Star")
+    from lastname in Fuzzr.OneOf("Lennon", "McCartney", "Harrison", "Starr")
     from age in Fuzzr.Int(18, 80)
     select new Person { Name = $"{firstname} {lastname}", Age = age };
 personFuzzr.Generate();
@@ -286,9 +286,9 @@ fuzzr.Generate();
             Street: "Kings Road",
             City: "Manchester"
         },
-        Email: "paul.star@company.com",
+        Email: "paul.starr@company.com",
         SocialSecurityNumber: "428-67-7239",
-        Name: "Paul Star",
+        Name: "Paul Starr",
         Age: 11
     }
 )
@@ -747,10 +747,10 @@ from timeslots in TimeslotFuzzrFor(courseId).Many(1, 3)
 let _1 = course.UpdateRequiredSkills(Admin, requiredSkills)
 let _2 = course.UpdateTimeSlots(Admin, [.. timeslots], a => a)
 let _3 = course.Confirm(Admin)
-// look for a coaches that can be assigned to the course
+// look for coaches that can be assigned to the course
 //   - WithDefault results in <null> if the collection is empty
-let elligibleCoaches = coaches.Where(a => a.IsSuitableFor(course) && a.IsAvailableFor(course))
-from coachToAssign in Fuzzr.OneOf(elligibleCoaches).WithDefault()
+let eligibleCoaches = coaches.Where(a => a.IsSuitableFor(course) && a.IsAvailableFor(course))
+from coachToAssign in Fuzzr.OneOf(eligibleCoaches).WithDefault()
     // Assign a Coach if possible
 select coachToAssign == null ? course : course.AssignCoach(Admin, coachToAssign);
 ```

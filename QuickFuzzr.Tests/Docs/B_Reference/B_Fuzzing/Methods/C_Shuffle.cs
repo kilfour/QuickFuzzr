@@ -52,7 +52,7 @@ public class C_Shuffle
 
     [Fact]
     [DocExceptions]
-    [DocContent("  - `ArgumentNullException`: When the input collection is `null`.")]
+    [DocException("ArgumentNullException", "When the input collection is `null`.")]
     public void Null_Values_Throws()
     {
         var ex = Assert.Throws<ArgumentNullException>(() => Fuzzr.Shuffle<int>(null!).Generate());
@@ -60,5 +60,5 @@ public class C_Shuffle
     }
 
     private static string Null_Values_Message() =>
-@"Value cannot be null. (Parameter 'source')"; // Check: Update Message
+@"Value cannot be null. (Parameter 'values')";
 }

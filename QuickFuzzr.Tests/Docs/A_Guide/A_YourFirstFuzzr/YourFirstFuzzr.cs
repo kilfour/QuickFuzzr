@@ -58,7 +58,7 @@ and fills them in using the default Fuzzrs.")]
     {
         var personFuzzr =
             from firstname in Fuzzr.OneOf("John", "Paul", "George", "Ringo")
-            from lastname in Fuzzr.OneOf("Lennon", "McCartney", "Harrison", "Star")
+            from lastname in Fuzzr.OneOf("Lennon", "McCartney", "Harrison", "Starr")
             from age in Fuzzr.Int(18, 80)
             select new Person { Name = $"{firstname} {lastname}", Age = age };
         return personFuzzr.Generate(42);
@@ -91,7 +91,7 @@ I just used `string[]`'s but the data could easily be loaded from a file for ins
     }
 
     private static readonly string[] firstnames = ["John", "Paul", "George", "Ringo"];
-    private static readonly string[] lastnames = ["Lennon", "McCartney", "Harrison", "Star"];
+    private static readonly string[] lastnames = ["Lennon", "McCartney", "Harrison", "Starr"];
     private static readonly string[] emailProviders = ["company.com", "mailings.org", "freemail.net"];
 
     [CodeSnippet]
@@ -189,6 +189,7 @@ and rewrite it like so:
         Assert.Equal("Manchester", result.Address.City);
     }
 
+    // TODO : fix QuickPulse.Explains so this can be included
     public record Info(string Name, string Email);
 
     [CodeSnippet]
@@ -339,9 +340,9 @@ another one that is guaranteed to live in London, and finally an underaged one."
         Assert.Equal("London", londoner.Address.City);
 
         var underaged = result.Item3;
-        Assert.Equal("paul.star@company.com", underaged.Email);
+        Assert.Equal("paul.starr@company.com", underaged.Email);
         Assert.Equal("428-67-7239", underaged.SocialSecurityNumber);
-        Assert.Equal("Paul Star", underaged.Name);
+        Assert.Equal("Paul Starr", underaged.Name);
         Assert.Equal(11, underaged.Age);
         Assert.Equal("Kings Road", underaged.Address.Street);
         Assert.Equal("Manchester", underaged.Address.City);

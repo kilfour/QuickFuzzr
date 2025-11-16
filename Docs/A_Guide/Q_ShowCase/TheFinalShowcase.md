@@ -77,10 +77,10 @@ from timeslots in TimeslotFuzzrFor(courseId).Many(1, 3)
 let _1 = course.UpdateRequiredSkills(Admin, requiredSkills)
 let _2 = course.UpdateTimeSlots(Admin, [.. timeslots], a => a)
 let _3 = course.Confirm(Admin)
-// look for a coaches that can be assigned to the course
+// look for coaches that can be assigned to the course
 //   - WithDefault results in <null> if the collection is empty
-let elligibleCoaches = coaches.Where(a => a.IsSuitableFor(course) && a.IsAvailableFor(course))
-from coachToAssign in Fuzzr.OneOf(elligibleCoaches).WithDefault()
+let eligibleCoaches = coaches.Where(a => a.IsSuitableFor(course) && a.IsAvailableFor(course))
+from coachToAssign in Fuzzr.OneOf(eligibleCoaches).WithDefault()
     // Assign a Coach if possible
 select coachToAssign == null ? course : course.AssignCoach(Admin, coachToAssign);
 ```

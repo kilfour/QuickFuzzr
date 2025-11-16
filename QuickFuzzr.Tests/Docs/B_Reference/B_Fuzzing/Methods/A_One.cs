@@ -139,25 +139,31 @@ Possible solution:
 ";
 
     [Fact]
-    [DocContent("- `NullReferenceException`:")]
-    [DocContent("  - When the factory method returns null.")]
-    public void FactoryMethod_Returning_Null_Throws() // Check: Update message
+    [DocException("FactoryConstructionException", "When the factory method returns `null`.")]
+    public void FactoryMethod_Returning_Null_Throws()
     {
-        var ex = Assert.Throws<NullReferenceException>(() => Fuzzr.One<Person>(() => null!).Generate());
+        var ex = Assert.Throws<FactoryConstructionException>(
+            () => Fuzzr.One<Person>(() => null!).Generate());
         Assert.Equal(FactoryMethod_Returning_Null_Message(), ex.Message);
     }
 
     private static string FactoryMethod_Returning_Null_Message() =>
-@"Object reference not set to an instance of an object.";
+@"Cannot construct instance of Person using the provided factory method.
+The factory returned null.
+
+Possible solutions:
+- Return a non-null instance
+- Ensure the factory does not depend on uninitialized outer values
+";
 
     [Fact]
-    [DocContent("  - When the factory method is null.")]
-    public void FactoryMethod_Is_Null_Throws() // Check: Update message
+    [DocException("ArgumentNullException", "When the factory method is `null`.")]
+    public void FactoryMethod_Is_Null_Throws()
     {
-        var ex = Assert.Throws<NullReferenceException>(() => Fuzzr.One<Person>(null!).Generate());
+        var ex = Assert.Throws<ArgumentNullException>(() => Fuzzr.One<Person>(null!).Generate());
         Assert.Equal(FactoryMethod_Is_Null_Message(), ex.Message);
     }
 
     private static string FactoryMethod_Is_Null_Message() =>
-@"Object reference not set to an instance of an object.";
+@"Value cannot be null. (Parameter 'factory')";
 }

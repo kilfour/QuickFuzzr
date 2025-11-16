@@ -26,7 +26,7 @@ QuickFuzzr is primarily designed to generate inputs for **fuzz-testing**,
 ```csharp
 var personFuzzr =
     from firstname in Fuzzr.OneOf("John", "Paul", "George", "Ringo")
-    from lastname in Fuzzr.OneOf("Lennon", "McCartney", "Harrison", "Star")
+    from lastname in Fuzzr.OneOf("Lennon", "McCartney", "Harrison", "Starr")
     from age in Fuzzr.Int(18, 80)
     select new Person { Name = $"{firstname} {lastname}", Age = age };
 personFuzzr.Generate();
@@ -267,9 +267,9 @@ fuzzr.Generate();
             Street: "Kings Road",
             City: "Manchester"
         },
-        Email: "paul.star@company.com",
+        Email: "paul.starr@company.com",
         SocialSecurityNumber: "428-67-7239",
-        Name: "Paul Star",
+        Name: "Paul Starr",
         Age: 11
     }
 )

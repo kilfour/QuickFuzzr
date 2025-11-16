@@ -15,6 +15,9 @@ public static partial class Fuzzr
 	/// Creates a Fuzzr that produces instances of type T using a custom constructor function.
 	/// Use when you need explicit control over object creation or when working with types that lack parameterless constructors.
 	/// </summary>
-	public static FuzzrOf<T> One<T>(Func<T> constructor) =>
-		state => new Result<T>((T)state.CreationEngine.Create(state, typeof(T), _ => constructor()!), state);
+	public static FuzzrOf<T> One<T>(Func<T> factory)
+	{
+		ArgumentNullException.ThrowIfNull(factory, nameof(factory));
+		return state => new Result<T>((T)state.CreationEngine.Create(state, typeof(T), _ => factory()!), state);
+	}
 }

@@ -28,7 +28,7 @@ public class J_ConfigrDepthT
 @"Subsequent calls to `Fuzzr.One<T>()` will generate between 2 and 5 nested levels of `Turtle` instances,
 depending on the random draw and available recursion budget.  
 Depth is per type, not global. Each recursive type manages its own budget.
-")] // Check: test different types with different depths
+")]
     public void Example()
     {
         var fuzzr =
@@ -60,6 +60,8 @@ Depth is per type, not global. Each recursive type manages its own budget.
             ("no depth 4", d => d != 4)
         );
     }
+
+    // TODO: test different types with different depths
 
     private static int GetTurtleDepth(Turtle turtle)
     {

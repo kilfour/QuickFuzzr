@@ -28,6 +28,5 @@ Fuzzr.One<Person>();
 **Exceptions:**  
 - `ConstructionException`: When type T cannot be constructed due to missing default constructor.  
 - `InstantiationException`: When type T is an interface and cannot be instantiated.  
-- `NullReferenceException`:  
-  - When the factory method returns null.  
-  - When the factory method is null.  
+- `FactoryConstructionException`: When the factory method returns `null`.  
+- `ArgumentNullException`: When the factory method is `null`.  

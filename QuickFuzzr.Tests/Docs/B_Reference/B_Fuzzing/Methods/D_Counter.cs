@@ -58,7 +58,7 @@ public class D_Counter
 	[Fact]
 	[DocExceptions]
 	[DocException("ArgumentNullException", "When the provided key is null.")]
-	public void Counter_Null_Key() // Check: change message
+	public void Counter_Null_Key()
 	{
 		var ex = Assert.Throws<ArgumentNullException>(() => Fuzzr.Counter(null!).Generate());
 		Assert.Equal("Value cannot be null. (Parameter 'key')", ex.Message);

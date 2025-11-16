@@ -24,9 +24,9 @@
             Street: "Kings Road",
             City: "Manchester"
         },
-        Email: "paul.star@company.com",
+        Email: "paul.starr@company.com",
         SocialSecurityNumber: "428-67-7239",
-        Name: "Paul Star",
+        Name: "Paul Starr",
         Age: 11
     }
 )

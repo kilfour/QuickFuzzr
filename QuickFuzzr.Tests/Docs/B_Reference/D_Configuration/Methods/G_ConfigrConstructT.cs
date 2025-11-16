@@ -1,5 +1,6 @@
 ﻿using QuickFuzzr.Tests._Tools;
 using QuickFuzzr.Tests._Tools.Models;
+using QuickFuzzr.UnderTheHood.WhenThingsGoWrong;
 using QuickPulse.Explains;
 
 namespace QuickFuzzr.Tests.Docs.B_Reference.D_Configuration.Methods;
@@ -11,11 +12,10 @@ namespace QuickFuzzr.Tests.Docs.B_Reference.D_Configuration.Methods;
 @"Configures a custom constructor for type T, used when Fuzzr.One<T>() is called.
 Useful for records or classes without parameterless constructors or when `T` has multiple constructors
 and you want to control which one is used during fuzzing.  
-")] // Check: check multiple constructors random selection
+")]
 [DocSignature("Configr<T>.Construct(FuzzrOf<T1> arg1);")]
 public class G_ConfigrConstructT
 {
-
 	[CodeSnippet]
 	[CodeRemove("return ")]
 	private static FuzzrOf<Intent> GetConfig()
@@ -103,23 +103,124 @@ public class G_ConfigrConstructT
 	[Fact]
 	[DocExceptions]
 	[DocException("ArgumentNullException", "If one of the `TArg` parameters is null.")]
-	public void Null_Arg() // TODO : test all versions
+	public void Null_Arg1()
 	{
-		var ex = Assert.Throws<ArgumentNullException>(() => Configr<MultiCtorContainer>.Construct<int>(null!));
+		var ex = Assert.Throws<ArgumentNullException>(
+			() => Configr<MultiCtorContainer>.Construct<int>(null!));
 		Assert.Equal(Null_Arg_Message(), ex.Message);
 	}
 
-	private static string Null_Arg_Message() => "Value cannot be null. (Parameter 'fuzzr')";
+	[Fact]
+	public void Null_Arg2()
+	{
+		var ex = Assert.Throws<ArgumentNullException>(
+			() => Configr<MultiCtorContainer>.Construct<int, int>(
+				null!, Fuzzr.Constant(42)));
+		Assert.Equal(Null_Arg_Message("1"), ex.Message);
+		ex = Assert.Throws<ArgumentNullException>(
+			() => Configr<MultiCtorContainer>.Construct<int, int>(
+				Fuzzr.Constant(42), null!));
+		Assert.Equal(Null_Arg_Message("2"), ex.Message);
+	}
 
 	[Fact]
-	[DocException("InvalidOperationException", "If no matching constructor is found on type T.")]
+	public void Null_Arg3()
+	{
+		var ex = Assert.Throws<ArgumentNullException>(
+			() => Configr<MultiCtorContainer>.Construct<int, int, int>(
+				null!, Fuzzr.Constant(42), Fuzzr.Constant(42)));
+		Assert.Equal(Null_Arg_Message("1"), ex.Message);
+		ex = Assert.Throws<ArgumentNullException>(
+			() => Configr<MultiCtorContainer>.Construct<int, int, int>(
+				Fuzzr.Constant(42), null!, Fuzzr.Constant(42)));
+		Assert.Equal(Null_Arg_Message("2"), ex.Message);
+		ex = Assert.Throws<ArgumentNullException>(
+			() => Configr<MultiCtorContainer>.Construct<int, int, int>(
+				Fuzzr.Constant(42), Fuzzr.Constant(42), null!));
+		Assert.Equal(Null_Arg_Message("3"), ex.Message);
+	}
+
+	[Fact]
+	public void Null_Arg4()
+	{
+		var ex = Assert.Throws<ArgumentNullException>(
+			() => Configr<MultiCtorContainer>.Construct<int, int, int, int>(
+				null!, Fuzzr.Constant(42), Fuzzr.Constant(42), Fuzzr.Constant(42)));
+		Assert.Equal(Null_Arg_Message("1"), ex.Message);
+		ex = Assert.Throws<ArgumentNullException>(
+			() => Configr<MultiCtorContainer>.Construct<int, int, int, int>(
+				Fuzzr.Constant(42), null!, Fuzzr.Constant(42), Fuzzr.Constant(42)));
+		Assert.Equal(Null_Arg_Message("2"), ex.Message);
+		ex = Assert.Throws<ArgumentNullException>(
+			() => Configr<MultiCtorContainer>.Construct<int, int, int, int>(
+				Fuzzr.Constant(42), Fuzzr.Constant(42), null!, Fuzzr.Constant(42)));
+		Assert.Equal(Null_Arg_Message("3"), ex.Message);
+		ex = Assert.Throws<ArgumentNullException>(
+			() => Configr<MultiCtorContainer>.Construct<int, int, int, int>(
+				Fuzzr.Constant(42), Fuzzr.Constant(42), Fuzzr.Constant(42), null!));
+		Assert.Equal(Null_Arg_Message("4"), ex.Message);
+	}
+
+	[Fact]
+	public void Null_Arg5()
+	{
+		var ex = Assert.Throws<ArgumentNullException>(
+			() => Configr<MultiCtorContainer>.Construct<int, int, int, int, string>(
+				null!, Fuzzr.Constant(42), Fuzzr.Constant(42), Fuzzr.Constant(42), Fuzzr.Constant("answer")));
+		Assert.Equal(Null_Arg_Message("1"), ex.Message);
+		ex = Assert.Throws<ArgumentNullException>(
+			() => Configr<MultiCtorContainer>.Construct<int, int, int, int, string>(
+				Fuzzr.Constant(42), null!, Fuzzr.Constant(42), Fuzzr.Constant(42), Fuzzr.Constant("answer")));
+		Assert.Equal(Null_Arg_Message("2"), ex.Message);
+		ex = Assert.Throws<ArgumentNullException>(
+			() => Configr<MultiCtorContainer>.Construct<int, int, int, int, string>(
+				Fuzzr.Constant(42), Fuzzr.Constant(42), null!, Fuzzr.Constant(42), Fuzzr.Constant("answer")));
+		Assert.Equal(Null_Arg_Message("3"), ex.Message);
+		ex = Assert.Throws<ArgumentNullException>(
+			() => Configr<MultiCtorContainer>.Construct<int, int, int, int, string>(
+				Fuzzr.Constant(42), Fuzzr.Constant(42), Fuzzr.Constant(42), null!, Fuzzr.Constant("answer")));
+		Assert.Equal(Null_Arg_Message("4"), ex.Message);
+		ex = Assert.Throws<ArgumentNullException>(
+			() => Configr<MultiCtorContainer>.Construct<int, int, int, int, string>(
+				Fuzzr.Constant(42), Fuzzr.Constant(42), Fuzzr.Constant(42), Fuzzr.Constant(42), null!));
+		Assert.Equal(Null_Arg_Message("5"), ex.Message);
+	}
+
+	private static string Null_Arg_Message(string suffix = "")
+		=> $"Value cannot be null. (Parameter 'fuzzr{suffix}')";
+
+	[Fact]
+	[DocException("ConstructorNotFoundException", "If no matching constructor is found on type T.")]
 	public void No_Such_Ctor()
 	{
 		var cfg = Configr<MultiCtorContainer>.Construct(Fuzzr.Constant("nope"));
-		var ex = Assert.Throws<InvalidOperationException>(() => Generate(cfg));
+		var ex = Assert.Throws<ConstructorNotFoundException>(() => Generate(cfg));
 		Assert.Equal(No_Such_Ctor_Message(), ex.Message);
 	}
 
 	private static string No_Such_Ctor_Message() =>
-@"No constructor found on MultiCtorContainer with args (String)."; // Check: Update Message
+@"Cannot construct instance of MultiCtorContainer.
+No matching constructor found for argument type: (String).
+
+Possible solutions:
+- Add a constructor with the required signature.
+- Verify the argument types order is correct.
+- Update Configr<Person>.Construct(...) to match an existing constructor.
+";
+
+	[Fact]
+	public void Multiple_Configrs()
+	{
+		var fuzzr =
+			from c1 in Configr<MultiCtorContainer>.Construct(Fuzzr.Constant(42))
+			from container1 in Fuzzr.One<MultiCtorContainer>()
+			from c2 in Configr<MultiCtorContainer>.Construct(Fuzzr.Constant(43), Fuzzr.Constant(44))
+			from container2 in Fuzzr.One<MultiCtorContainer>()
+			select (container1, container2);
+		var (first, second) = fuzzr.Generate();
+		Assert.Equal(42, first.AnInt1);
+		Assert.Null(first.AnInt2);
+		Assert.Equal(43, second.AnInt1);
+		Assert.Equal(44, second.AnInt2);
+	}
 }

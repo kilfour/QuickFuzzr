@@ -17,6 +17,7 @@ public static partial class Fuzzr
 	/// </summary>
 	public static FuzzrOf<IEnumerable<T>> Shuffle<T>(IEnumerable<T> values)
 	{
+		ArgumentNullException.ThrowIfNull(values);
 		var snapshot = values.ToArray();
 		return state =>
 		{

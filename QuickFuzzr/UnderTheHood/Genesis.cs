@@ -64,9 +64,7 @@ public class Genesis : ICreationEngine
     {
         if (state.Constructors.TryGetValue(typeToGenerate, out var constructor))
         {
-            var instance = constructor(state);
-            ValidateInstanceType(instance, typeToGenerate);
-            return instance;
+            return constructor(state);
         }
 
         var defaultCtor = typeToGenerate
@@ -81,22 +79,6 @@ public class Genesis : ICreationEngine
         catch (MemberAccessException exception)
         {
             throw new InstantiationException(typeToGenerate.Name, exception);
-        }
-    }
-
-    private static void ValidateInstanceType(object instance, Type declaredType)
-    {
-        var actualType = instance?.GetType();
-        if (actualType is not null &&
-            actualType != declaredType &&
-            !declaredType.IsAssignableFrom(actualType))
-        {
-            throw new InvalidOperationException(
-                $"Fuzz created an instance of type '{actualType}' " +
-                $"but expected a type assignable to '{declaredType}'. " +
-                $"This might be due to an internal framework subclass " +
-                $"like 'JsonValueCustomized<T>'. Consider using IgnoreAll() " +
-                $"on '{actualType.BaseType}' or normalizing the type.");
         }
     }
 
@@ -115,6 +97,10 @@ public class Genesis : ICreationEngine
 
     private object BuildInstance(object instance, State state, Type declaringType)
     {
+        if (instance == null)
+        {
+            throw new FactoryConstructionException(declaringType.Name);
+        }
         state.Collecting.Push(false);
         if (!state.StuffToIgnoreAll.Contains(declaringType))
             FillProperties(instance, state);

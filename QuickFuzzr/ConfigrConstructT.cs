@@ -1,6 +1,7 @@
 using System.Collections.Concurrent;
 using System.Reflection;
 using QuickFuzzr.UnderTheHood;
+using QuickFuzzr.UnderTheHood.WhenThingsGoWrong;
 
 namespace QuickFuzzr;
 
@@ -100,13 +101,13 @@ public static partial class Configr<T>
     private static Func<State, object> MakeCtorFunc(
         Type targetType, Type[] argTypes, params Func<State, object?>[] argFetchers)
     {
-        var ci = GetCtor(targetType, argTypes);
-        return s =>
+        var constructorInfo = GetCtor(targetType, argTypes);
+        return state =>
         {
             var args = new object?[argFetchers.Length];
             for (int i = 0; i < argFetchers.Length; i++)
-                args[i] = argFetchers[i](s);
-            return ci.Invoke(args);
+                args[i] = argFetchers[i](state);
+            return constructorInfo.Invoke(args);
         };
     }
     private static readonly ConcurrentDictionary<(Type Target, Type[] Args), ConstructorInfo> CtorCache = new();
@@ -116,12 +117,11 @@ public static partial class Configr<T>
         return CtorCache.GetOrAdd((targetType, argTypes),
             key =>
             {
-                var (t, args) = key;
-                var ci = t.GetConstructor(args);
-                if (ci is null)
-                    throw new InvalidOperationException(
-                        $"No constructor found on {t.Name} with args ({string.Join(", ", args.Select(a => a.Name))}).");
-                return ci;
+                var (type, args) = key;
+                var constructorInfo = type.GetConstructor(args);
+                if (constructorInfo is null)
+                    throw new ConstructorNotFoundException(targetType.Name, argTypes);
+                return constructorInfo;
             });
     }
 }
