@@ -4,7 +4,7 @@ Sure there's faster out there, and nothing beats a hand-rolled generator, but Qu
 
 And that's fine: it's built for **agility**, not raw speed.
 
-But then again... sometimes the cheetah needs to run.
+But then again... *sometimes the cheetah needs to run*.
   
 ## Example: The Forest of a Thousand Trees
 We could reuse the tree fuzzr from *"A Deep Dark Forest"* and simply do:  

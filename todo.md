@@ -38,3 +38,5 @@ static class name:
 - Breakr 
 - Chaosr *
 - Hexr
+- just use a type per category 
+
