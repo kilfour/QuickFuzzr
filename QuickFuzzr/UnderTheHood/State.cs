@@ -114,7 +114,7 @@ public class State
 	// ---------------------------------------------------------------------
 	// Property Customizations
 	public readonly Dictionary<Func<PropertyInfo, bool>, Func<PropertyInfo, FuzzrOf<object>>> GeneralCustomizations = [];
-	public readonly Dictionary<(PropertyInfo, Type), FuzzrOf<object>> Customizations = [];
+	public readonly Dictionary<(Type TargetType, string PropertyName), FuzzrOf<object>> Customizations = [];
 	public readonly Dictionary<(Type, Type), (FuzzrOf<object>, Func<object, FuzzrOf<Intent>>)> WithCustomizations = [];
 
 	// ---------------------------------------------------------------------

@@ -10,14 +10,16 @@ public static partial class Configr<T>
     /// Use for overriding default generation behavior for individual properties with specialized generation logic.
     /// </summary>
     public static FuzzrOf<Intent> Property<TProperty>(
-        Expression<Func<T, TProperty>> predicate,
+        Expression<Func<T, TProperty>> expression,
         FuzzrOf<TProperty> fuzzr)
     {
-        ArgumentNullException.ThrowIfNull(predicate);
+        ArgumentNullException.ThrowIfNull(expression);
         ArgumentNullException.ThrowIfNull(fuzzr);
+        var propertyName = expression.AsPropertyInfo().Name;
+        var targetType = typeof(T);
         return state =>
         {
-            state.Customizations[(predicate.AsPropertyInfo(), typeof(T))] = fuzzr.AsObject();
+            state.Customizations[(targetType, propertyName)] = fuzzr.AsObject();
             return new Result<Intent>(Intent.Fixed, state);
         };
     }
@@ -26,12 +28,14 @@ public static partial class Configr<T>
     /// Creates a Fuzzr that configures a specific property to always generate the same constant value.
     /// Use for setting fixed values on specific properties that should never vary across generated instances.
     /// </summary>
-    public static FuzzrOf<Intent> Property<TProperty>(Expression<Func<T, TProperty>> predicate, TProperty value)
+    public static FuzzrOf<Intent> Property<TProperty>(Expression<Func<T, TProperty>> expression, TProperty value)
     {
-        ArgumentNullException.ThrowIfNull(predicate);
+        ArgumentNullException.ThrowIfNull(expression);
+        var propertyName = expression.AsPropertyInfo().Name;
+        var targetType = typeof(T);
         return state =>
         {
-            state.Customizations[(predicate.AsPropertyInfo(), typeof(T))] = Fuzzr.Constant(value).AsObject();
+            state.Customizations[(targetType, propertyName)] = Fuzzr.Constant(value).AsObject();
             return new Result<Intent>(Intent.Fixed, state);
         };
     }

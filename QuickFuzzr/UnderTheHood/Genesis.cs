@@ -168,11 +168,7 @@ public class Genesis : ICreationEngine
 
     private void HandleProperty(object instance, State state, PropertyInfo propertyInfo)
     {
-        if (NeedsToBeCustomized(state, propertyInfo))
-        {
-            CustomizeProperty(instance, propertyInfo, state);
-            return;
-        }
+        if (CustomizeProperty(instance, propertyInfo, state)) return;
 
         if (NeedsToBeGenerallyCustomized(state, propertyInfo))
         {
@@ -230,24 +226,35 @@ public class Genesis : ICreationEngine
 
     private static void GenerallyCustomizeProperty(object target, PropertyInfo propertyInfo, State state)
     {
-        var key = state.GeneralCustomizations.Keys.Last(info => info(propertyInfo)); // TODO: get rid of .Last
+        var key = state.GeneralCustomizations.Keys.Last(info => info(propertyInfo));
         var fuzzr = state.GeneralCustomizations[key](propertyInfo);
         SetPropertyValue(propertyInfo, target, fuzzr(state).Value);
     }
 
-    private static bool NeedsToBeCustomized(State state, PropertyInfo propertyInfo)
-        => state.Customizations.Keys
-            .Any(info => info.Item2.IsAssignableFrom(propertyInfo.ReflectedType)
-                && info.Item1.Name == propertyInfo.Name);
-
-    private static void CustomizeProperty(object target, PropertyInfo propertyInfo, State state)
+    private static bool CustomizeProperty(object target, PropertyInfo propertyInfo, State state)
     {
-        var key =
-            state.Customizations.Keys.Last(info =>  // TODO: get rid of .Last
-                info.Item2.IsAssignableFrom(propertyInfo.ReflectedType)
-                && info.Item1.Name == propertyInfo.Name);
-        var fuzzr = state.Customizations[key];
-        SetPropertyValue(propertyInfo, target, fuzzr(state).Value);
+        var fuzzr = FindCustomizationFor(state, propertyInfo);
+        if (fuzzr is not null)
+        {
+            SetPropertyValue(propertyInfo, target, fuzzr(state).Value);
+            return true;
+        }
+        return false;
+    }
+
+    private static FuzzrOf<object>? FindCustomizationFor(
+        State state,
+        PropertyInfo propertyInfo)
+    {
+        var name = propertyInfo.Name;
+        var type = propertyInfo.ReflectedType ?? propertyInfo.DeclaringType;
+        while (type is not null)
+        {
+            if (state.Customizations.TryGetValue((type, name), out var fuzzr))
+                return fuzzr;
+            type = type.BaseType;
+        }
+        return null;
     }
 
     private static bool IsAKnownPrimitive(State state, PropertyInfo propertyInfo)

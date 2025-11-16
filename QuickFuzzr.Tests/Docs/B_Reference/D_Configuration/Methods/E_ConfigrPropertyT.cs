@@ -44,6 +44,22 @@ public class E_ConfigrPropertyT
 	}
 
 	[Fact]
+	public void ComplexDerived()
+	{
+		var fuzzr =
+			from _1 in Configr<Person>.Property(s => s.Age, 42)
+			from _2 in Configr<Employee>.Property(s => s.Age, 43)
+			from p in Fuzzr.One<Person>()
+			from e in Fuzzr.One<Employee>()
+			from he in Fuzzr.One<HousedEmployee>()
+			select (p, e, he);
+		var (person, employee, housedEmployee) = fuzzr.Generate();
+		Assert.Equal(42, person.Age);
+		Assert.Equal(43, employee.Age);
+		Assert.Equal(43, housedEmployee.Age);
+	}
+
+	[Fact]
 	[DocOverloads]
 	[DocOverload("Configr<T>.Property<TProperty>(Func<PropertyInfo, bool> predicate, TProperty value)")]
 	[DocContent("  Allows for passing a value instead of a Fuzzr.")]
@@ -64,11 +80,11 @@ public class E_ConfigrPropertyT
 	{
 		var ex = Assert.Throws<ArgumentNullException>(
 			() => Configr<PersonOutInTheFields>.Property(null!, "FIXED"));
-		Assert.Equal("Value cannot be null. (Parameter 'predicate')", ex.Message);
+		Assert.Equal("Value cannot be null. (Parameter 'expression')", ex.Message);
 
 		ex = Assert.Throws<ArgumentNullException>(
 			() => Configr<PersonOutInTheFields>.Property<int>(null!, Fuzzr.Constant(42)));
-		Assert.Equal("Value cannot be null. (Parameter 'predicate')", ex.Message);
+		Assert.Equal("Value cannot be null. (Parameter 'expression')", ex.Message);
 	}
 
 	[Fact]
@@ -84,11 +100,7 @@ public class E_ConfigrPropertyT
 	[DocException("PropertyConfigurationException", "When the expression points to a field instead of a property.")]
 	public void Expression_Points_To_A_Field()
 	{
-		var fuzzr =
-			from cfg in Configr<PersonOutInTheFields>.Property(a => a.Name, "FIXED")
-			from person in Fuzzr.One<PersonOutInTheFields>()
-			select person;
-		var ex = Assert.Throws<PropertyConfigurationException>(() => fuzzr.Generate());
+		var ex = Assert.Throws<PropertyConfigurationException>(() => Configr<PersonOutInTheFields>.Property(a => a.Name, "FIXED"));
 		Assert.Equal(Expression_Points_To_A_Field_Message(), ex.Message);
 	}
 
