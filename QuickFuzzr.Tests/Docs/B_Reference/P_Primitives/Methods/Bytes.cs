@@ -68,7 +68,7 @@ Actual value was -1.";
     public void MaxAboveByteMax_Throws()
     {
         var ex = Assert.Throws<ArgumentOutOfRangeException>(() => Fuzzr.Byte(0, 256));
-        Assert.Equal(MaxAboveByteMax_Throws_Message(), ex.Message.PulseToQuickLog());
+        Assert.Equal(MaxAboveByteMax_Throws_Message(), ex.Message);
     }
 
     private static string MaxAboveByteMax_Throws_Message()
