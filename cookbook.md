@@ -79,7 +79,60 @@ forestFuzzr.Generate();
 
 Not bad, considering this example tree model has no properties at all.
 
-For more complex types, where property customization is heavier, the gains are noticeably larger.  
+For other types, where property customization is heavier, the gains are noticeably larger.  
+### Property Configurations Example:
+Suppose we have a class that has many properties, and we want to fuzz them all.  
+```csharp
+public class Pseudopolis
+{
+    public string Name { get; set; } = string.Empty;
+    public int NaturalNumber { get; set; }
+    public decimal Money { get; set; }
+    public DateTime Date { get; set; }
+    public bool Boolean { get; set; }
+}
+```
+We could use *auto-fuzzing*:  
+```csharp
+Fuzzr.One<Pseudopolis>().Many(10000).Generate();
+```
+We could define a `Fuzzr` (I'm using the defaults for benchmarking purposes):  
+```csharp
+var fuzzr =
+    from _ in Configr.IgnoreAll()
+    from name in Configr<Pseudopolis>.Property(a => a.Name, Fuzzr.String())
+    from nat in Configr<Pseudopolis>.Property(a => a.NaturalNumber, Fuzzr.Int())
+    from money in Configr<Pseudopolis>.Property(a => a.Money, Fuzzr.Decimal())
+    from date in Configr<Pseudopolis>.Property(a => a.Date, Fuzzr.DateTime())
+    from flag in Configr<Pseudopolis>.Property(a => a.Boolean, Fuzzr.Bool())
+    from pseudopolis in Fuzzr.One<Pseudopolis>()
+    select pseudopolis;
+fuzzr.Many(10000).Generate();
+```
+We could use a preloaded `Configr`:  
+```csharp
+var config =
+    from _ in Configr.IgnoreAll()
+    from name in Configr<Pseudopolis>.Property(a => a.Name, Fuzzr.String())
+    from nat in Configr<Pseudopolis>.Property(a => a.NaturalNumber, Fuzzr.Int())
+    from money in Configr<Pseudopolis>.Property(a => a.Money, Fuzzr.Decimal())
+    from date in Configr<Pseudopolis>.Property(a => a.Date, Fuzzr.DateTime())
+    from flag in Configr<Pseudopolis>.Property(a => a.Boolean, Fuzzr.Bool())
+    select Intent.Fixed;
+var fuzzr =
+    from _ in config
+    from pseudopolis in Fuzzr.One<Pseudopolis>().Many(10000)
+    select pseudopolis;
+fuzzr.Generate();
+```
+**Benchmarks:**  
+```markdown
+| Method               | Mean     | Error    | StdDev   | Gen0      | Gen1      | Gen2      | Allocated |
+|--------------------- |---------:|---------:|---------:|----------:|----------:|----------:|----------:|
+| AutoFuzzr            | 23.24 ms | 0.229 ms | 0.214 ms | 2968.7500 |  656.2500 |  375.0000 |  23.69 MB |
+| ConfigFuzzr          | 48.02 ms | 0.721 ms | 0.675 ms | 8750.0000 | 2000.0000 | 1000.0000 |  70.68 MB |
+| PreloadedConfigFuzzr | 11.39 ms | 0.117 ms | 0.092 ms | 1765.6250 |  812.5000 |  359.3750 |  14.16 MB |
+```
 ### Summary:
 
 QuickFuzzr's dynamic configuration is usually fast enough, and you rarely need to optimize.  

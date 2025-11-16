@@ -1,6 +1,7 @@
 
 using System.Linq.Expressions;
 using BenchmarkDotNet.Attributes;
+using QuickFuzzr.Tests._Tools.Models;
 using QuickFuzzr.UnderTheHood;
 using QuickPulse.Show;
 
@@ -10,44 +11,35 @@ namespace QuickFuzzr.Benchmarks;
 [SimpleJob]
 public class FlatBenchmarks
 {
-    public class Model
-    {
-        public string? Name { get; set; }
-        public int NaturalNumber { get; set; }
-        public decimal Money { get; set; }
-        public DateTime Date { get; set; }
-        public bool Boolean { get; set; }
-    }
-
     private const int Count = 10_000;
 
-    private FuzzrOf<Model> autoFuzzr = default!;
-    private FuzzrOf<Model> configFuzzr = default!;
+    private FuzzrOf<Pseudopolis> autoFuzzr = default!;
+    private FuzzrOf<Pseudopolis> configFuzzr = default!;
     private FuzzrOf<Intent> preloadConfig = default!;
-    private FuzzrOf<Model> factoryFuzzr = default!;
+    private FuzzrOf<Pseudopolis> factoryFuzzr = default!;
 
     [GlobalSetup]
     public void Setup()
     {
-        autoFuzzr = Fuzzr.One<Model>();
+        autoFuzzr = Fuzzr.One<Pseudopolis>();
 
         configFuzzr =
             from _ in Configr.IgnoreAll()
-            from name in Configr<Model>.Property(a => a.Name, Fuzzr.String())
-            from nat in Configr<Model>.Property(a => a.NaturalNumber, Fuzzr.Int())
-            from money in Configr<Model>.Property(a => a.Money, Fuzzr.Decimal())
-            from date in Configr<Model>.Property(a => a.Date, Fuzzr.DateTime())
-            from flag in Configr<Model>.Property(a => a.Boolean, Fuzzr.Bool())
-            from model in Fuzzr.One<Model>()
+            from name in Configr<Pseudopolis>.Property(a => a.Name, Fuzzr.String())
+            from nat in Configr<Pseudopolis>.Property(a => a.NaturalNumber, Fuzzr.Int())
+            from money in Configr<Pseudopolis>.Property(a => a.Money, Fuzzr.Decimal())
+            from date in Configr<Pseudopolis>.Property(a => a.Date, Fuzzr.DateTime())
+            from flag in Configr<Pseudopolis>.Property(a => a.Boolean, Fuzzr.Bool())
+            from model in Fuzzr.One<Pseudopolis>()
             select model;
 
         preloadConfig =
             from _ in Configr.IgnoreAll()
-            from name in Configr<Model>.Property(a => a.Name, Fuzzr.String())
-            from nat in Configr<Model>.Property(a => a.NaturalNumber, Fuzzr.Int())
-            from money in Configr<Model>.Property(a => a.Money, Fuzzr.Decimal())
-            from date in Configr<Model>.Property(a => a.Date, Fuzzr.DateTime())
-            from flag in Configr<Model>.Property(a => a.Boolean, Fuzzr.Bool())
+            from name in Configr<Pseudopolis>.Property(a => a.Name, Fuzzr.String())
+            from nat in Configr<Pseudopolis>.Property(a => a.NaturalNumber, Fuzzr.Int())
+            from money in Configr<Pseudopolis>.Property(a => a.Money, Fuzzr.Decimal())
+            from date in Configr<Pseudopolis>.Property(a => a.Date, Fuzzr.DateTime())
+            from flag in Configr<Pseudopolis>.Property(a => a.Boolean, Fuzzr.Bool())
             select Intent.Fixed;
 
         factoryFuzzr =
@@ -57,8 +49,8 @@ public class FlatBenchmarks
             from money in Fuzzr.Decimal()
             from date in Fuzzr.DateTime()
             from flag in Fuzzr.Bool()
-            from model in Fuzzr.One<Model>()
-            select new Model
+            from model in Fuzzr.One<Pseudopolis>()
+            select new Pseudopolis
             {
                 Name = name,
                 NaturalNumber = nat,
@@ -69,18 +61,18 @@ public class FlatBenchmarks
     }
 
     [Benchmark]
-    public List<Model> AutoFuzzr()
+    public List<Pseudopolis> AutoFuzzr()
         => [.. autoFuzzr.Many(Count).Generate()];
 
     [Benchmark]
-    public List<Model> ConfigFuzzr()
+    public List<Pseudopolis> ConfigFuzzr()
         => [.. configFuzzr.Many(Count).Generate()];
 
     [Benchmark]
-    public List<Model> PreloadedConfigFuzzr()
-        => [.. (from cfg in preloadConfig from models in Fuzzr.One<Model>().Many(Count) select models).Generate()];
+    public List<Pseudopolis> PreloadedConfigFuzzr()
+        => [.. (from cfg in preloadConfig from models in Fuzzr.One<Pseudopolis>().Many(Count) select models).Generate()];
 
     [Benchmark]
-    public List<Model> FactoryFuzzr()
+    public List<Pseudopolis> FactoryFuzzr()
        => [.. factoryFuzzr.Many(Count).Generate()];
 }

@@ -6,5 +6,6 @@ using QuickFuzzr.Benchmarks;
 BenchmarkRunner.Run(
 [
     //typeof(FlatBenchmarks),
-    typeof(Trees)
+    //typeof(Trees),
+    typeof(PseudopolisBenchmarks)
 ]);
