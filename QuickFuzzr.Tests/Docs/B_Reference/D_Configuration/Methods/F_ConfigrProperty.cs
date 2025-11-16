@@ -133,7 +133,7 @@ public class F_ConfigrProperty
 
     [Fact]
     [DocException("ArgumentNullException", "When the factory function is `null`.")]
-    public void Null_Factroy()
+    public void Null_Factory()
     {
         var ex = Assert.Throws<ArgumentNullException>(
             () => Configr.Property(a => a.Name == "Name", (Func<PropertyInfo, FuzzrOf<string>>)null!));

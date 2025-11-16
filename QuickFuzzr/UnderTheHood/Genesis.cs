@@ -169,20 +169,12 @@ public class Genesis : ICreationEngine
     private void HandleProperty(object instance, State state, PropertyInfo propertyInfo)
     {
         if (CustomizeProperty(instance, propertyInfo, state)) return;
+        if (GenerallyCustomizeProperty(instance, propertyInfo, state)) return;
 
-        if (NeedsToBeGenerallyCustomized(state, propertyInfo))
-        {
-            GenerallyCustomizeProperty(instance, propertyInfo, state);
-            return;
-        }
-        if (!ShouldGenerateProperty(propertyInfo, state))
-            return;
+        if (!ShouldGenerateProperty(propertyInfo, state)) return;
 
-        if (NeedsToBeIgnored(state, propertyInfo))
-            return;
-
-        if (NeedsToBeGenerallyIgnored(state, propertyInfo))
-            return;
+        if (NeedsToBeIgnored(state, propertyInfo)) return;
+        if (NeedsToBeGenerallyIgnored(state, propertyInfo)) return;
 
         if (IsAKnownPrimitive(state, propertyInfo))
         {
@@ -221,14 +213,25 @@ public class Genesis : ICreationEngine
     private static bool NeedsToBeGenerallyIgnored(State state, PropertyInfo propertyInfo)
         => state.GeneralStuffToIgnore.Any(info => info(propertyInfo));
 
-    private static bool NeedsToBeGenerallyCustomized(State state, PropertyInfo propertyInfo)
-        => state.GeneralCustomizations.Keys.Any(info => info(propertyInfo));
-
-    private static void GenerallyCustomizeProperty(object target, PropertyInfo propertyInfo, State state)
+    private static bool GenerallyCustomizeProperty(object target, PropertyInfo propertyInfo, State state)
     {
-        var key = state.GeneralCustomizations.Keys.Last(info => info(propertyInfo));
-        var fuzzr = state.GeneralCustomizations[key](propertyInfo);
-        SetPropertyValue(propertyInfo, target, fuzzr(state).Value);
+        Func<PropertyInfo, FuzzrOf<object>>? factory = null;
+        for (var i = state.GeneralCustomizationOrder.Count - 1; i >= 0; i--)
+        {
+            var predicate = state.GeneralCustomizationOrder[i];
+            if (predicate(propertyInfo))
+            {
+                factory = state.GeneralCustomizations[predicate];
+                break;
+            }
+        }
+        if (factory is null)
+            return false;
+
+        var fuzzr = factory(propertyInfo);
+        var value = fuzzr(state).Value;
+        SetPropertyValue(propertyInfo, target, value);
+        return true;
     }
 
     private static bool CustomizeProperty(object target, PropertyInfo propertyInfo, State state)

@@ -113,7 +113,12 @@ public class State
 
 	// ---------------------------------------------------------------------
 	// Property Customizations
+	// public readonly Dictionary<Func<PropertyInfo, bool>, Func<PropertyInfo, FuzzrOf<object>>> GeneralCustomizations = [];
+	public record GeneralCustomizationRule(
+		Func<PropertyInfo, bool> Predicate,
+		Func<PropertyInfo, FuzzrOf<object>> Factory);
 	public readonly Dictionary<Func<PropertyInfo, bool>, Func<PropertyInfo, FuzzrOf<object>>> GeneralCustomizations = [];
+	public readonly List<Func<PropertyInfo, bool>> GeneralCustomizationOrder = [];
 	public readonly Dictionary<(Type TargetType, string PropertyName), FuzzrOf<object>> Customizations = [];
 	public readonly Dictionary<(Type, Type), (FuzzrOf<object>, Func<object, FuzzrOf<Intent>>)> WithCustomizations = [];
 

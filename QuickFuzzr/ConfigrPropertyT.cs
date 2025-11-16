@@ -15,27 +15,32 @@ public static partial class Configr<T>
     {
         ArgumentNullException.ThrowIfNull(expression);
         ArgumentNullException.ThrowIfNull(fuzzr);
-        var propertyName = expression.AsPropertyInfo().Name;
-        var targetType = typeof(T);
-        return state =>
-        {
-            state.Customizations[(targetType, propertyName)] = fuzzr.AsObject();
-            return new Result<Intent>(Intent.Fixed, state);
-        };
+        return PropertyInternal(expression, fuzzr);
     }
 
     /// <summary>
     /// Creates a Fuzzr that configures a specific property to always generate the same constant value.
     /// Use for setting fixed values on specific properties that should never vary across generated instances.
     /// </summary>
-    public static FuzzrOf<Intent> Property<TProperty>(Expression<Func<T, TProperty>> expression, TProperty value)
+    public static FuzzrOf<Intent> Property<TProperty>(
+        Expression<Func<T, TProperty>> expression,
+        TProperty value)
     {
         ArgumentNullException.ThrowIfNull(expression);
         var propertyName = expression.AsPropertyInfo().Name;
         var targetType = typeof(T);
+        return PropertyInternal(expression, Fuzzr.Constant(value));
+    }
+
+    private static FuzzrOf<Intent> PropertyInternal<TProperty>(
+        Expression<Func<T, TProperty>> expression,
+        FuzzrOf<TProperty> fuzzr)
+    {
+        var propertyName = expression.AsPropertyInfo().Name;
+        var targetType = typeof(T);
         return state =>
         {
-            state.Customizations[(targetType, propertyName)] = Fuzzr.Constant(value).AsObject();
+            state.Customizations[(targetType, propertyName)] = fuzzr.AsObject();
             return new Result<Intent>(Intent.Fixed, state);
         };
     }
