@@ -173,8 +173,8 @@ public class Genesis : ICreationEngine
 
         if (!ShouldGenerateProperty(propertyInfo, state)) return;
 
-        if (NeedsToBeIgnored(state, propertyInfo)) return;
         if (NeedsToBeGenerallyIgnored(state, propertyInfo)) return;
+        if (NeedsToBeIgnored(state, propertyInfo)) return;
 
         if (IsAKnownPrimitive(state, propertyInfo))
         {
@@ -263,17 +263,35 @@ public class Genesis : ICreationEngine
     private static bool IsAKnownPrimitive(State state, PropertyInfo propertyInfo)
         => state.PrimitiveFuzzrs.ContainsKey(propertyInfo.PropertyType);
 
+    private static readonly NullabilityInfoContext Nullability = new();
+    private static readonly Dictionary<PropertyInfo, bool> StringNullability = new();
+
+    private static bool StringAllowsNull(PropertyInfo propertyInfo)
+    {
+        if (!StringNullability.TryGetValue(propertyInfo, out var allowsNull))
+        {
+            lock (StringNullability)
+            {
+                if (!StringNullability.TryGetValue(propertyInfo, out allowsNull))
+                {
+                    var info = Nullability.Create(propertyInfo);
+                    allowsNull = info.ReadState == NullabilityState.Nullable;
+                    StringNullability[propertyInfo] = allowsNull;
+                }
+            }
+        }
+        return allowsNull;
+    }
+
     private static void SetPrimitive(object target, PropertyInfo propertyInfo, State state)
     {
         var fuzzr = state.PrimitiveFuzzrs[propertyInfo.PropertyType];
-        if (propertyInfo.PropertyType == typeof(string))
+
+        if (propertyInfo.PropertyType == typeof(string) && StringAllowsNull(propertyInfo))
         {
-            var ctx = new NullabilityInfoContext();
-            var nullabilityInfo = ctx.Create(propertyInfo);
-            bool allowsNull = nullabilityInfo.ReadState == NullabilityState.Nullable;
-            if (allowsNull)
-                fuzzr = fuzzr.NullableRef()!;
+            fuzzr = fuzzr.NullableRef()!;
         }
+
         SetPropertyValue(propertyInfo, target, fuzzr(state).Value);
     }
 

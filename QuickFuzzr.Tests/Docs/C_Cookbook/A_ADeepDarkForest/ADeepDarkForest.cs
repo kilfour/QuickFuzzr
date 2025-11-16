@@ -55,7 +55,7 @@ Branch
 
     [CodeSnippet]
     [CodeRemove("return")]
-    private static FuzzrOf<Tree> TreesTest_Fuzzr()
+    public static FuzzrOf<Tree> TreesTest_Fuzzr()
     {
         return
             from depth in Configr<Tree>.Depth(2, 5)

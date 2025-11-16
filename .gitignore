@@ -8,3 +8,5 @@ temp*.md
 
 *instructions.md
 settings.json
+
+BenchmarkDotNet.Artifacts/

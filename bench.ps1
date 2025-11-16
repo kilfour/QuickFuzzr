@@ -1,0 +1,1 @@
+dotnet run --project .\QuickFuzzr.Benchmarks\QuickFuzzr.Benchmarks.csproj --property:Configuration=Release
