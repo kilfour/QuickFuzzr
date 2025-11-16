@@ -6,7 +6,6 @@
 - Primitive fuzzrs use CheckIt in tests MinMax in impl.
 - test depthcontrol many interaction (lists mainly)
 - check Congigr explosion: see F_ConfigrProperty.Configr_DoesNotMultiply
-- Genesis TODO: get rid of .Last
 
 ## After 0.1.7
 Error section: a single table listing all QuickFuzzr exceptions with one-liners 
