@@ -1,4 +1,5 @@
 ﻿using QuickFuzzr.Tests._Tools;
+using QuickFuzzr.Tests._Tools.Models;
 using QuickPulse.Explains;
 
 namespace QuickFuzzr.Tests.Docs.B_Reference.D_Configuration.Methods;
@@ -19,15 +20,15 @@ public class G_ConfigrConstructT
 	[CodeRemove("return ")]
 	private static FuzzrOf<Intent> GetConfig()
 	{
-		return Configr<SomeThing>.Construct(Fuzzr.Constant(42));
+		return Configr<MultiCtorContainer>.Construct(Fuzzr.Constant(42));
 	}
 
-	private static SomeThing Generate(FuzzrOf<Intent> config)
+	private static MultiCtorContainer Generate(FuzzrOf<Intent> config)
 	{
 		var fuzzr =
 			from ignore in Configr.IgnoreAll()
 			from cfg in config
-			from thing in Fuzzr.One<SomeThing>()
+			from thing in Fuzzr.One<MultiCtorContainer>()
 			select thing;
 		return fuzzr.Generate();
 	}
@@ -43,7 +44,7 @@ public class G_ConfigrConstructT
 	[DocOverload("Construct<T1, T2>(FuzzrOf<T1> arg1, FuzzrOf<T2> arg2)")]
 	public void TwoArgs()
 	{
-		var cfg = Configr<SomeThing>.Construct(
+		var cfg = Configr<MultiCtorContainer>.Construct(
 			Fuzzr.Constant(42),
 			Fuzzr.Constant(43));
 		var result = Generate(cfg);
@@ -55,7 +56,7 @@ public class G_ConfigrConstructT
 	[DocOverload("Construct<T1, T2, T3>(FuzzrOf<T1> arg1, FuzzrOf<T2> arg2, FuzzrOf<T3> arg3)")]
 	public void ThreeArgs()
 	{
-		var cfg = Configr<SomeThing>.Construct(
+		var cfg = Configr<MultiCtorContainer>.Construct(
 			Fuzzr.Constant(42),
 			Fuzzr.Constant(43),
 			Fuzzr.Constant(44));
@@ -69,7 +70,7 @@ public class G_ConfigrConstructT
 	[DocOverload("Construct<T1, T2, T3, T4>(FuzzrOf<T1> arg1, FuzzrOf<T2> arg2, FuzzrOf<T3> arg3, FuzzrOf<T4> arg4)")]
 	public void FourArgs()
 	{
-		var cfg = Configr<SomeThing>.Construct(
+		var cfg = Configr<MultiCtorContainer>.Construct(
 			Fuzzr.Constant(42),
 			Fuzzr.Constant(43),
 			Fuzzr.Constant(44),
@@ -85,7 +86,7 @@ public class G_ConfigrConstructT
 	[DocOverload("Construct<T1, T2, T3, T4, T5>(FuzzrOf<T1> arg1, FuzzrOf<T2> arg2, FuzzrOf<T3> arg3, FuzzrOf<T4> arg4, FuzzrOf<T5> arg5)")]
 	public void FiveArgs()
 	{
-		var cfg = Configr<SomeThing>.Construct(
+		var cfg = Configr<MultiCtorContainer>.Construct(
 			Fuzzr.Constant(42),
 			Fuzzr.Constant(43),
 			Fuzzr.Constant(44),
@@ -104,7 +105,7 @@ public class G_ConfigrConstructT
 	[DocException("ArgumentNullException", "If one of the `TArg` parameters is null.")]
 	public void Null_Arg() // TODO : test all versions
 	{
-		var ex = Assert.Throws<ArgumentNullException>(() => Configr<SomeThing>.Construct<int>(null!));
+		var ex = Assert.Throws<ArgumentNullException>(() => Configr<MultiCtorContainer>.Construct<int>(null!));
 		Assert.Equal(Null_Arg_Message(), ex.Message);
 	}
 
@@ -114,57 +115,11 @@ public class G_ConfigrConstructT
 	[DocException("InvalidOperationException", "If no matching constructor is found on type T.")]
 	public void No_Such_Ctor()
 	{
-		var cfg = Configr<SomeThing>.Construct(Fuzzr.Constant("nope"));
+		var cfg = Configr<MultiCtorContainer>.Construct(Fuzzr.Constant("nope"));
 		var ex = Assert.Throws<InvalidOperationException>(() => Generate(cfg));
 		Assert.Equal(No_Such_Ctor_Message(), ex.Message);
 	}
 
 	private static string No_Such_Ctor_Message() =>
-@"No constructor found on SomeThing with args (String)."; // Check: Update Message
-
-	public class SomeThing
-	{
-		public int? AnInt1 { get; private set; }
-		public int? AnInt2 { get; private set; }
-		public int? AnInt3 { get; private set; }
-		public int? AnInt4 { get; private set; }
-		public string? AString { get; private set; }
-
-		public SomeThing() { }
-
-		public SomeThing(int anInt1)
-		{
-			AnInt1 = anInt1;
-		}
-
-		public SomeThing(int anInt1, int anInt2)
-		{
-			AnInt1 = anInt1;
-			AnInt2 = anInt2;
-		}
-
-		public SomeThing(int anInt1, int anInt2, int anInt3)
-		{
-			AnInt1 = anInt1;
-			AnInt2 = anInt2;
-			AnInt3 = anInt3;
-		}
-
-		public SomeThing(int anInt1, int anInt2, int anInt3, int anInt4)
-		{
-			AnInt1 = anInt1;
-			AnInt2 = anInt2;
-			AnInt3 = anInt3;
-			AnInt4 = anInt4;
-		}
-
-		public SomeThing(int anInt1, int anInt2, int anInt3, int anInt4, string aString)
-		{
-			AnInt1 = anInt1;
-			AnInt2 = anInt2;
-			AnInt3 = anInt3;
-			AnInt4 = anInt4;
-			AString = aString;
-		}
-	}
+@"No constructor found on MultiCtorContainer with args (String)."; // Check: Update Message
 }

@@ -106,4 +106,14 @@ public class O_ConfigrPrimitiveT
         // Results in => 
         // ( Person { Name: "FIXED", Age: 67 }, Address { Street: "FIXED", City: "FIXED" } )
     }
+
+    [Fact]
+    [DocExceptions]
+    [DocException("NullReferenceException", "When the provided `Fuzzr` is null.")]
+    public void Null_Fuzzr()
+    {
+        var ex = Assert.Throws<ArgumentNullException>(
+            () => Configr.Primitive(null!));
+        Assert.Equal("Value cannot be null. (Parameter 'fuzzr')", ex.Message);
+    }
 }

@@ -24,4 +24,4 @@ Fuzzr.Constant(41).Apply(x => x + 1);
 ```
 
 **Exceptions:**  
-- `NullReferenceException`: When the provided `Action` or `Func` is null.  
+- `ArgumentNullException`: When the provided `Action` or `Func` is null.  

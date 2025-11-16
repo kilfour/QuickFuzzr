@@ -10,6 +10,7 @@ public static partial class ExtFuzzr
 	/// </summary>
 	public static FuzzrOf<T> Where<T>(this FuzzrOf<T> fuzzr, Func<T, bool> predicate)
 	{
+		ArgumentNullException.ThrowIfNull(predicate);
 		return s =>
 		{
 			var limit = s.RetryLimit;

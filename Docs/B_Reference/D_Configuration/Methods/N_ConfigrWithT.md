@@ -8,3 +8,7 @@ Configr<T>.With<TValue>(FuzzrOf<TValue> fuzzr, Func<TValue, FuzzrOf<Intent>> con
 Applies configuration for type `T` based on a value produced by another Fuzzr,
 allowing dynamic, data-dependent configuration inside LINQ chains.
   
+
+**Exceptions:**  
+- `NullReferenceException`: When the provided `Fuzzr` is null.  
+- `NullReferenceException`: When the provided `Configr` factory is null.  

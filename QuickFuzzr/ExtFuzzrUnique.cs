@@ -10,7 +10,7 @@ public static partial class ExtFuzzr
 	/// Uses the globally configured retry limit.
 	/// </summary>
 	public static FuzzrOf<T> Unique<T>(this FuzzrOf<T> fuzzr, Func<object> key)
-		=> Unique(fuzzr, key, null);
+		=> UniqueInternal(fuzzr, key, null);
 
 	/// <summary>
 	/// Creates a Fuzzr that produces unique values from the source Fuzzr, ensuring no duplicates within the same generation scope.
@@ -18,7 +18,7 @@ public static partial class ExtFuzzr
 	/// Overrides the global retry limit for this Fuzzr instance.
 	/// </summary>
 	public static FuzzrOf<T> Unique<T>(this FuzzrOf<T> fuzzr, Func<object> key, int maxAttempts)
-		=> Unique(fuzzr, key, maxAttempts);
+		=> UniqueInternal(fuzzr, key, maxAttempts);
 
 	/// <summary>
 	/// Creates a Fuzzr that produces unique values from the source Fuzzr, ensuring no duplicates within the same generation scope.
@@ -26,7 +26,7 @@ public static partial class ExtFuzzr
 	/// Uses the globally configured retry limit.
 	/// </summary>
 	public static FuzzrOf<T> Unique<T>(this FuzzrOf<T> fuzzr, object key)
-		=> Unique(fuzzr, () => key, null);
+		=> UniqueInternal(fuzzr, () => key, null);
 
 	/// <summary>
 	/// Creates a Fuzzr that produces unique values from the source Fuzzr, ensuring no duplicates within the same generation scope.
@@ -34,9 +34,9 @@ public static partial class ExtFuzzr
 	/// Overrides the global retry limit for this Fuzzr instance.
 	/// </summary>
 	public static FuzzrOf<T> Unique<T>(this FuzzrOf<T> fuzzr, object key, int maxAttempts)
-		=> Unique(fuzzr, () => key, maxAttempts);
+		=> UniqueInternal(fuzzr, () => key, maxAttempts);
 
-	private static FuzzrOf<T> Unique<T>(this FuzzrOf<T> fuzzr, Func<object> key, int? attempts = null)
+	private static FuzzrOf<T> UniqueInternal<T>(this FuzzrOf<T> fuzzr, Func<object> key, int? attempts = null)
 	{
 		return
 			state =>

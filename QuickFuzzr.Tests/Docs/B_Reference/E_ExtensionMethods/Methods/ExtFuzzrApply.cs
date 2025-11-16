@@ -54,7 +54,7 @@ public class ExtFuzzrApply
 
     [Fact]
     [DocExceptions]
-    [DocException("NullReferenceException", "When the provided `Action` or `Func` is null.")]
+    [DocException("ArgumentNullException", "When the provided `Action` or `Func` is null.")]
     public void Counter_Null_Key()
     {
         var ex = Assert.Throws<ArgumentNullException>(() => Fuzzr.Constant(42).Apply((Action<int>)null!));

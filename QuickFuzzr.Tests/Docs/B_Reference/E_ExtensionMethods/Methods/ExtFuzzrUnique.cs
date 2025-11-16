@@ -58,7 +58,19 @@ public class ExtFuzzrUnique
     }
 
     [Fact]
-    [DocContent("- An overload exist taking a function as an argument allowing for a dynamic key.")]
+    [DocOverloads]
+    [DocOverload("Unique<T>(this FuzzrOf<T> fuzzr, object key, int maxAttempts)")]
+    [DocContent("  Overwrites the global retry limit with the provided value.")]
+    public void Attempts()
+    {
+        var ex = Assert.Throws<UniqueValueExhaustedException>(
+            () => Fuzzr.Constant(42).Unique("TheKey", 0).Generate());
+        Assert.Contains("0 attempts", ex.Message);
+    }
+
+    [Fact]
+    [DocOverload("Unique<T>(this FuzzrOf<T> fuzzr, Func<object> key)")]
+    [DocContent("  Takes a function as an argument allowing for a dynamic key.")]
     public void Dynamic_Key()
     {
         for (int i = 0; i < 100; i++)
@@ -71,6 +83,17 @@ public class ExtFuzzrUnique
             var valueOne = fuzzr.Generate();
             Assert.Equal(valueOne[0] == 1 ? 2 : 1, valueOne[1]);
         }
+    }
+
+    [Fact]
+    [DocOverloads]
+    [DocOverload("Unique<T>(this FuzzrOf<T> fuzzr, Func<object> key, int maxAttempts)")]
+    [DocContent("  Overwrites the global retry limit with the provided value.")]
+    public void Attempts_Factory()
+    {
+        var ex = Assert.Throws<UniqueValueExhaustedException>(
+            () => Fuzzr.Constant(42).Unique(() => "TheKey", 0).Generate());
+        Assert.Contains("0 attempts", ex.Message);
     }
 
     [Fact]
@@ -97,4 +120,13 @@ Possible solutions:
 - Use a different uniqueness scope key to reset tracking
 - Use a fallback: fuzzr.Unique(values).WithDefault()
 ";
+
+    [Fact]
+    [DocException("NullReferenceException", "When the provided `Fuzzr` is null.")]
+    public void Null_Fuzzr()
+    {
+        var ex = Assert.Throws<ArgumentNullException>(
+            () => Configr.Primitive(null!));
+        Assert.Equal("Value cannot be null. (Parameter 'fuzzr')", ex.Message);
+    }
 }

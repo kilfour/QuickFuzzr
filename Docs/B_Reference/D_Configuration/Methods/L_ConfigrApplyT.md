@@ -24,4 +24,4 @@ var value = fuzzr.Generate();
 ```
 
 **Exceptions:**  
-- `NullReferenceException`: When the provided Action is null and later invoked.  
+- `ArgumentNullException`: When the provided Action is `null`.  

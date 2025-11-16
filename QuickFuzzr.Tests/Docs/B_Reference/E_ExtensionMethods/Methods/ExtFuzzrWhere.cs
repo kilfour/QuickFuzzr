@@ -27,4 +27,13 @@ public class ExtFuzzrWhere
         var fuzzr = Fuzzr.Constant(1).Where(_ => false);
         var ex = Assert.Throws<PredicateUnsatisfiedException>(() => fuzzr.Generate());
     }
+
+    [Fact]
+    [DocException("ArgumentNullException", "When the predicate is `null`.")]
+    public void Null_Expression()
+    {
+        var ex = Assert.Throws<ArgumentNullException>(
+            () => Fuzzr.Constant(1).Where(null!));
+        Assert.Equal("Value cannot be null. (Parameter 'predicate')", ex.Message);
+    }
 }

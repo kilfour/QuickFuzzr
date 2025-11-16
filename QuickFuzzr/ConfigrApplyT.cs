@@ -10,6 +10,7 @@ public static partial class Configr<T>
     /// </summary>
     public static FuzzrOf<Intent> Apply(Action<T> action)
     {
+        ArgumentNullException.ThrowIfNull(action);
         var key = typeof(T);
         return state =>
         {

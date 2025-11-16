@@ -46,4 +46,23 @@ public class N_ConfigrWithT
         var result = fuzzr.Generate(42);
         Assert.Equal(42, result.Age);
     }
+
+    [Fact]
+    [DocExceptions]
+    [DocException("NullReferenceException", "When the provided `Fuzzr` is null.")]
+    public void Null_Fuzzr()
+    {
+        var ex = Assert.Throws<ArgumentNullException>(
+            () => Configr<Person>.With<Person>(null!, a => Configr.IgnoreAll()));
+        Assert.Equal("Value cannot be null. (Parameter 'fuzzr')", ex.Message);
+    }
+
+    [Fact]
+    [DocException("NullReferenceException", "When the provided `Configr` factory is null.")]
+    public void Null_ConfigrFactory()
+    {
+        var ex = Assert.Throws<ArgumentNullException>(
+            () => Configr<Person>.With(Fuzzr.Constant(42), null!));
+        Assert.Equal("Value cannot be null. (Parameter 'configrFactory')", ex.Message);
+    }
 }

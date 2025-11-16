@@ -12,7 +12,7 @@ Configr<T>.Construct(FuzzrOf<T1> arg1);
 
 **Usage:**  
 ```csharp
-Configr<SomeThing>.Construct(Fuzzr.Constant(42));
+Configr<MultiCtorContainer>.Construct(Fuzzr.Constant(42));
 ```
 
 **Overloads:**  

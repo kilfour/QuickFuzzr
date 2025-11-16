@@ -10,11 +10,14 @@ public static partial class Configr<T>
     /// </summary>
     public static FuzzrOf<Intent> With<TValue>(
         FuzzrOf<TValue> fuzzr,
-        Func<TValue, FuzzrOf<Intent>> configrFactory) =>
-            state =>
-            {
-                state.WithCustomizations[(typeof(T), typeof(TValue))] = (fuzzr.AsObject(), a => configrFactory((TValue)a));
-                return new Result<Intent>(Intent.Fixed, state);
-            };
-
+        Func<TValue, FuzzrOf<Intent>> configrFactory)
+    {
+        ArgumentNullException.ThrowIfNull(fuzzr);
+        ArgumentNullException.ThrowIfNull(configrFactory);
+        return state =>
+        {
+            state.WithCustomizations[(typeof(T), typeof(TValue))] = (fuzzr.AsObject(), a => configrFactory((TValue)a));
+            return new Result<Intent>(Intent.Fixed, state);
+        };
+    }
 }

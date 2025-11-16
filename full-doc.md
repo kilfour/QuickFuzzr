@@ -1202,7 +1202,7 @@ Configr<T>.Construct(FuzzrOf<T1> arg1);
 
 **Usage:**  
 ```csharp
-Configr<SomeThing>.Construct(Fuzzr.Constant(42));
+Configr<MultiCtorContainer>.Construct(Fuzzr.Constant(42));
 ```
 
 **Overloads:**  
@@ -1354,7 +1354,7 @@ var value = fuzzr.Generate();
 ```
 
 **Exceptions:**  
-- `NullReferenceException`: When the provided Action is null and later invoked.  
+- `ArgumentNullException`: When the provided Action is `null`.  
 #### Configr&lt;T&gt;.With
 
 **Signature:**  
@@ -1365,6 +1365,10 @@ Configr<T>.With<TValue>(FuzzrOf<TValue> fuzzr, Func<TValue, FuzzrOf<Intent>> con
 Applies configuration for type `T` based on a value produced by another Fuzzr,
 allowing dynamic, data-dependent configuration inside LINQ chains.
   
+
+**Exceptions:**  
+- `NullReferenceException`: When the provided `Fuzzr` is null.  
+- `NullReferenceException`: When the provided `Configr` factory is null.  
 #### Configr.Primitive
 Registers a global default Fuzzr for primitive types.
 Use this to override how QuickFuzzr generates built-in types across all automatically created objects.
@@ -1409,6 +1413,9 @@ select (person, address);
 // Results in => 
 // ( Person { Name: "FIXED", Age: 67 }, Address { Street: "FIXED", City: "FIXED" } )
 ```
+
+**Exceptions:**  
+- `NullReferenceException`: When the provided `Fuzzr` is null.  
 #### Property Access
 Control which kinds of properties QuickFuzzr is allowed to populate.  
 
@@ -1475,7 +1482,7 @@ Fuzzr.Constant(41).Apply(x => x + 1);
 ```
 
 **Exceptions:**  
-- `NullReferenceException`: When the provided `Action` or `Func` is null.  
+- `ArgumentNullException`: When the provided `Action` or `Func` is null.  
 #### AsObject
 Boxes generated values as object without altering them.  
 
@@ -1560,10 +1567,20 @@ ExtFuzzr.Unique<T>(this FuzzrOf<T> fuzzr, object key)
   
 - Multiple unique Fuzzrs can be defined in one 'composed' Fuzzr, without interfering with eachother by using a different key.  
 - When using the same key for multiple unique Fuzzrs all values across these Fuzzrs are unique.  
-- An overload exist taking a function as an argument allowing for a dynamic key.  
+
+**Overloads:**  
+- `Unique<T>(this FuzzrOf<T> fuzzr, object key, int maxAttempts)`  
+  Overwrites the global retry limit with the provided value.  
+- `Unique<T>(this FuzzrOf<T> fuzzr, Func<object> key)`  
+  Takes a function as an argument allowing for a dynamic key.  
+
+**Overloads:**  
+- `Unique<T>(this FuzzrOf<T> fuzzr, Func<object> key, int maxAttempts)`  
+  Overwrites the global retry limit with the provided value.  
 
 **Exceptions:**  
 - `UniqueValueExhaustedException`: When the Fuzzr cannot find enough unique values within the retry limit.   
+- `NullReferenceException`: When the provided `Fuzzr` is null.  
 #### Where
 
 **Signature:**  
@@ -1575,6 +1592,7 @@ Filters generated values to those satisfying the predicate.
 
 **Exceptions:**  
 - `PredicateUnsatisfiedException`: When no value satisfies the predicate within the retry limit.  
+- `ArgumentNullException`: When the predicate is `null`.  
 #### WithDefault
 Returns the (optionally) provided default value instead of throwing when the underlying Fuzzr fails due to empty choices.  
 

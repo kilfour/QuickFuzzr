@@ -46,15 +46,11 @@ public class L_ConfigrApplyT
 
     [Fact]
     [DocExceptions]
-    [DocException("NullReferenceException", "When the provided Action is null and later invoked.")]
+    [DocException("ArgumentNullException", "When the provided Action is `null`.")]
     public void Null_Action_Throws_On_Invocation()
     {
-        var fuzzr =
-            from cfg in Configr<Person>.Apply(null!)
-            from person in Fuzzr.One<Person>()
-            select person;
-        var ex = Assert.Throws<NullReferenceException>(() => fuzzr.Generate());
-        Assert.Equal("Object reference not set to an instance of an object.", ex.Message);
+        var ex = Assert.Throws<ArgumentNullException>(() => Configr<Person>.Apply(null!));
+        Assert.Equal("Value cannot be null. (Parameter 'action')", ex.Message);
     }
 
     [Fact]

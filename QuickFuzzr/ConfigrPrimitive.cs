@@ -38,8 +38,9 @@ public static partial class Configr
     /// Registers a Fuzzr as the default string Fuzzr.
     /// Use for customizing string generation with specific patterns, lengths, or character sets across all auto-generated string properties.
     /// </summary>
-    public static FuzzrOf<Intent> Primitive(this FuzzrOf<string> fuzzr)
+    public static FuzzrOf<Intent> Primitive(this FuzzrOf<string>? fuzzr)
     {
+        ArgumentNullException.ThrowIfNull(fuzzr);
         return state =>
         {
             state.PrimitiveFuzzrs[typeof(string)] = fuzzr.AsObject();

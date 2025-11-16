@@ -42,3 +42,6 @@ select (person, address);
 // Results in => 
 // ( Person { Name: "FIXED", Age: 67 }, Address { Street: "FIXED", City: "FIXED" } )
 ```
+
+**Exceptions:**  
+- `NullReferenceException`: When the provided `Fuzzr` is null.  
