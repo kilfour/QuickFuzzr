@@ -8,7 +8,6 @@ namespace QuickFuzzr.Tests.Docs.B_Reference.P_Primitives.A_Ranged.Discrete.Inclu
 [DocContent("Use `Fuzzr.DateTime()`.")]
 [DocColumn(PrimitiveFuzzrs.Columns.Description, "Produces `DateTime` values between 1970-01-01 and 2020-12-31 (inclusive), snapped to whole seconds.")]
 [DocContent("- **Default:** min = new DateTime(1970, 1, 1), max = new DateTime(2020, 12, 31)) inclusive, snapped to whole seconds.")]
-[DocContent("- The overload `Fuzzr.DateTime(DateTime min, DateTime max)` generates a `DateTime` in the inclusive range [min, max], snapped to whole seconds.")]
 public class DateTimes : RangedPrimitive<DateTime>
 {
 	protected override FuzzrOf<DateTime> CreateFuzzr()

@@ -1649,14 +1649,6 @@ Use `Fuzzr.UShort()`.
 ###### Bytes
 Use `Fuzzr.Byte()`.  
 - The default Fuzzr produces a `byte` in the full range (`0`-`255`).  
-
-**Overloads:**  
-- `Fuzzr.Byte(int min, int max)`  
-  Generates a value greater than or equal to `min` and less than or equal to `max`.  
-  Boundary coverage: over time, values at both ends of the interval should appear.  
-
-**Exceptions:**  
-- `ArgumentOutOfRangeException`: When `min` > `max`.  
 ###### Chars
 Use `Fuzzr.Char()`.  
 - The default Fuzzr always generates a char between lower case 'a' and lower case 'z'.  
@@ -1666,7 +1658,6 @@ Use `Fuzzr.DateOnly()`.
 ###### DateTimes
 Use `Fuzzr.DateTime()`.  
 - **Default:** min = new DateTime(1970, 1, 1), max = new DateTime(2020, 12, 31)) inclusive, snapped to whole seconds.  
-- The overload `Fuzzr.DateTime(DateTime min, DateTime max)` generates a `DateTime` in the inclusive range [min, max], snapped to whole seconds.  
 #### Booleans
 Use `Fuzzr.Bool()`.  
 - Generates `true` or `false`.  
