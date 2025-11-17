@@ -1,4 +1,5 @@
 using QuickFuzzr.Tests._Tools;
+using QuickFuzzr.Tests._Tools.Models;
 using QuickFuzzr.UnderTheHood;
 using QuickFuzzr.UnderTheHood.WhenThingsGoWrong;
 using QuickPulse.Explains;
@@ -62,4 +63,21 @@ Possible solutions:
 - Check for unintended configuration overrides
 - If you need more, consider revising your Fuzzr logic instead of increasing the limit
 ";
+
+    [Fact]
+    public void Configr_InChain()
+    {
+        var state = new State();
+        var check1 = 0;
+        var check2 = 0;
+        var fuzzr =
+            from _1 in Configr.RetryLimit(1)
+            from e1 in Fuzzr.One<Person>().Apply(a => check1 = state.RetryLimit)
+            from _2 in Configr.RetryLimit(2)
+            from e2 in Fuzzr.One<Turtle>().Apply(a => check2 = state.RetryLimit)
+            select (e1, e2);
+        var result = fuzzr(state);
+        Assert.Equal(1, check1);
+        Assert.Equal(2, check2);
+    }
 }

@@ -82,17 +82,40 @@ public class Genesis : ICreationEngine
         }
     }
 
-    private static Type GetTypeToGenerate(State state, Type type, Type? typeToExlude)
+    // private static Type GetTypeToGenerate(State state, Type type, Type? typeToExlude)
+    // {
+    //     var typeToGenerate = type;
+    //     if (state.InheritanceInfo.TryGetValue(typeToGenerate, out List<Type>? derivedTypes))
+    //     {
+    //         if (typeToExlude != null)
+    //             derivedTypes = derivedTypes.Where(a => a != typeToExlude).ToList();
+    //         var index = state.Random.Next(0, derivedTypes.Count);
+    //         typeToGenerate = derivedTypes[index];
+    //     }
+    //     return typeToGenerate;
+    // }
+
+    private static Type GetTypeToGenerate(State state, Type type, Type? typeToExclude)
     {
-        var typeToGenerate = type;
-        if (state.InheritanceInfo.TryGetValue(typeToGenerate, out List<Type>? derivedTypes))
-        {
-            if (typeToExlude != null)
-                derivedTypes = derivedTypes.Where(a => a != typeToExlude).ToList();
-            var index = state.Random.Next(0, derivedTypes.Count);
-            typeToGenerate = derivedTypes[index];
-        }
-        return typeToGenerate;
+        if (!state.InheritanceInfo.TryGetValue(type, out var derivedTypes))
+            return type;
+
+        if (typeToExclude is null)
+            return derivedTypes[state.Random.Next(0, derivedTypes.Count)];
+
+        // fast path: if exclude is not in list → skip filtering
+        int idx = derivedTypes.IndexOf(typeToExclude);
+        if (idx < 0)
+            return derivedTypes[state.Random.Next(0, derivedTypes.Count)];
+
+        int count = derivedTypes.Count - 1;
+        if (count == 0)
+            return type; // only excluded type available → fallback to base type
+
+        int r = state.Random.Next(0, count);
+
+        // If r >= idx, skip over the excluded slot
+        return derivedTypes[r >= idx ? r + 1 : r];
     }
 
     private object BuildInstance(object instance, State state, Type declaringType)
@@ -105,10 +128,8 @@ public class Genesis : ICreationEngine
         if (!state.StuffToIgnoreAll.Contains(declaringType))
             FillProperties(instance, state);
 
-        if (state.StuffToApply.Any(a => a.Key.IsAssignableFrom(declaringType)))
-        {
-            state.StuffToApply.Single(a => a.Key.IsAssignableFrom(declaringType)).Value(instance);
-        }
+        var apply = state.StuffToApply.FirstOrDefault(a => a.Key.IsAssignableFrom(declaringType));
+        if (apply.Key != null) apply.Value(instance);
 
         state.Collecting.Pop();
         return instance;
@@ -162,9 +183,18 @@ public class Genesis : ICreationEngine
         return false;
     }
 
+    private static readonly ConcurrentDictionary<MethodInfo, bool> IsInitOnlyCache = new();
+
     private static bool IsInitOnly(MethodInfo? setter)
-        => setter?.ReturnParameter.GetRequiredCustomModifiers()
-            .Any(m => m == typeof(IsExternalInit)) == true;
+    {
+        if (setter == null) return false;
+        return IsInitOnlyCache.GetOrAdd(setter, s => s.ReturnParameter.GetRequiredCustomModifiers()
+            .Any(m => m == typeof(IsExternalInit)) == true);
+    }
+
+    // private static bool IsInitOnly(MethodInfo? setter)
+    //     => setter?.ReturnParameter.GetRequiredCustomModifiers()
+    //         .Any(m => m == typeof(IsExternalInit)) == true;
 
     private void HandleProperty(object instance, State state, PropertyInfo propertyInfo)
     {
@@ -176,11 +206,8 @@ public class Genesis : ICreationEngine
         if (NeedsToBeGenerallyIgnored(state, propertyInfo)) return;
         if (NeedsToBeIgnored(state, propertyInfo)) return;
 
-        if (IsAKnownPrimitive(state, propertyInfo))
-        {
-            SetPrimitive(instance, propertyInfo, state);
-            return;
-        }
+        if (SetPrimitive(instance, propertyInfo, state)) return;
+
 
         if (propertyInfo.PropertyType.IsEnum)
         {
@@ -260,8 +287,17 @@ public class Genesis : ICreationEngine
         return null;
     }
 
-    private static bool IsAKnownPrimitive(State state, PropertyInfo propertyInfo)
-        => state.PrimitiveFuzzrs.ContainsKey(propertyInfo.PropertyType);
+    private static bool SetPrimitive(object target, PropertyInfo propertyInfo, State state)
+    {
+        if (!state.PrimitiveFuzzrs.TryGetValue(propertyInfo.PropertyType, out FuzzrOf<object>? fuzzr))
+            return false;
+        if (propertyInfo.PropertyType == typeof(string) && StringAllowsNull(propertyInfo))
+        {
+            fuzzr = fuzzr.NullableRef()!;
+        }
+        SetPropertyValue(propertyInfo, target, fuzzr(state).Value);
+        return true;
+    }
 
     private static readonly NullabilityInfoContext Nullability = new();
     private static readonly Dictionary<PropertyInfo, bool> StringNullability = new();
@@ -283,17 +319,7 @@ public class Genesis : ICreationEngine
         return allowsNull;
     }
 
-    private static void SetPrimitive(object target, PropertyInfo propertyInfo, State state)
-    {
-        var fuzzr = state.PrimitiveFuzzrs[propertyInfo.PropertyType];
 
-        if (propertyInfo.PropertyType == typeof(string) && StringAllowsNull(propertyInfo))
-        {
-            fuzzr = fuzzr.NullableRef()!;
-        }
-
-        SetPropertyValue(propertyInfo, target, fuzzr(state).Value);
-    }
 
     private static bool IsObject(PropertyInfo propertyInfo)
     {

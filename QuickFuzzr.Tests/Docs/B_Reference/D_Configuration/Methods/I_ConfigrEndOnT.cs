@@ -1,5 +1,6 @@
 using QuickFuzzr.Tests._Tools;
 using QuickFuzzr.Tests._Tools.Models;
+using QuickFuzzr.UnderTheHood;
 using QuickFuzzr.UnderTheHood.WhenThingsGoWrong.AsOneOfExceptions;
 using QuickPulse.Explains;
 
@@ -89,4 +90,29 @@ Possible solutions:
 - Ensure String inherits from or implements Turtle.
 ";
 
+    [Fact]
+    public void Configr_InChain()
+    {
+        var fuzzr =
+            from _1 in Configr<Turtle>.EndOn<MoreTurtles>()
+            from e1 in Fuzzr.One<Turtle>()
+            from _2 in Configr<Turtle>.EndOn<Turtle>()
+            from e2 in Fuzzr.One<Turtle>()
+            select (e1, e2);
+        var result = fuzzr.Generate(42);
+        Assert.IsType<MoreTurtles>(result.e1);
+        Assert.IsType<Turtle>(result.e2);
+    }
+
+    [Fact]
+    public void Configr_DoesNotMultiply()
+    {
+        var fuzzr =
+            from _1 in Configr<Turtle>.EndOn<MoreTurtles>()
+            from i in Fuzzr.Int()
+            select i;
+        var state = new State();
+        fuzzr.Many(2)(state);
+        Assert.Single(state.Endings);
+    }
 }

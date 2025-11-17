@@ -1,5 +1,6 @@
 using QuickFuzzr.Tests._Tools;
 using QuickFuzzr.Tests._Tools.Models;
+using QuickFuzzr.UnderTheHood;
 using QuickPulse.Explains;
 
 namespace QuickFuzzr.Tests.Docs.B_Reference.D_Configuration.Methods;
@@ -94,4 +95,30 @@ Depth is per type, not global. Each recursive type manages its own budget.
 
     private static string Max_Is_Lesser_Than_Message() =>
 @"Maximum depth must be greater than or equal to minimum depth for type Turtle. (Parameter 'max')";
+
+    [Fact]
+    public void Configr_InChain()
+    {
+        var fuzzr =
+            from _1 in Configr<Turtle>.Depth(1, 1)
+            from e1 in Fuzzr.One<Turtle>()
+            from _2 in Configr<Turtle>.Depth(2, 2)
+            from e2 in Fuzzr.One<Turtle>()
+            select (e1, e2);
+        var result = fuzzr.Generate(42);
+        Assert.Null(result.e1.Down);
+        Assert.Null(result.e2.Down?.Down);
+    }
+
+    [Fact]
+    public void Configr_DoesNotMultiply()
+    {
+        var fuzzr =
+            from _1 in Configr<Turtle>.Depth(2, 5)
+            from i in Fuzzr.Int()
+            select i;
+        var state = new State();
+        fuzzr.Many(2)(state);
+        Assert.Single(state.DepthConstraints);
+    }
 }

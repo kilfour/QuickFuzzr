@@ -2,7 +2,7 @@
 using QuickFuzzr.Tests._Tools.Models;
 using QuickPulse.Explains;
 
-namespace QuickFuzzr.Tests.Docs.B_Reference.P_Primitives.Methods;
+namespace QuickFuzzr.Tests.Docs.B_Reference.P_Primitives.B_Other;
 
 [DocFile]
 [DocContent("Use `Fuzzr.Bool()`.")]

@@ -1,7 +1,7 @@
 using QuickFuzzr.Tests._Tools;
 using QuickPulse.Explains;
 
-namespace QuickFuzzr.Tests.Docs.B_Reference.P_Primitives.Ranged;
+namespace QuickFuzzr.Tests.Docs.B_Reference.P_Primitives.A_Ranged.Discrete.Inclusive;
 
 [DocFile]
 [DocContent("Use `Fuzzr.Byte()`.")]

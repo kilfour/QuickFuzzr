@@ -1,7 +1,7 @@
 ﻿using QuickPulse.Explains;
 using WibblyWobbly;
 
-namespace QuickFuzzr.Tests.Docs.B_Reference.P_Primitives.Ranged;
+namespace QuickFuzzr.Tests.Docs.B_Reference.P_Primitives.A_Ranged.Discrete.Inclusive;
 
 [DocFile]
 [DocFileHeader("DateTimes")]

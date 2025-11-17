@@ -1,5 +1,6 @@
 using QuickFuzzr.Tests._Tools;
 using QuickFuzzr.Tests._Tools.Models;
+using QuickFuzzr.UnderTheHood;
 using QuickFuzzr.UnderTheHood.WhenThingsGoWrong.AsOneOfExceptions;
 using QuickPulse.Explains;
 
@@ -165,4 +166,30 @@ Possible solutions:
 Possible solutions:
 - Ensure that all derived types in Configr<Person>.AsOneOf(...) are non-null.
 ";
+
+    [Fact]
+    public void Configr_InChain()
+    {
+        var fuzzr =
+            from _1 in Configr<Person>.AsOneOf(typeof(Employee))
+            from e1 in Fuzzr.One<Person>()
+            from _2 in Configr<Person>.AsOneOf(typeof(Person))
+            from e2 in Fuzzr.One<Person>()
+            select (e1, e2);
+        var result = fuzzr.Generate(42);
+        Assert.IsType<Employee>(result.e1);
+        Assert.IsType<Person>(result.e2);
+    }
+
+    [Fact]
+    public void Configr_DoesNotMultiply()
+    {
+        var fuzzr =
+            from _1 in Configr<Person>.AsOneOf(typeof(Employee))
+            from i in Fuzzr.Int()
+            select i;
+        var state = new State();
+        fuzzr.Many(2)(state);
+        Assert.Single(state.InheritanceInfo);
+    }
 }

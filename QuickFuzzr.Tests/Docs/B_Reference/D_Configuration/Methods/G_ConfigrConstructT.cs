@@ -1,5 +1,6 @@
 ﻿using QuickFuzzr.Tests._Tools;
 using QuickFuzzr.Tests._Tools.Models;
+using QuickFuzzr.UnderTheHood;
 using QuickFuzzr.UnderTheHood.WhenThingsGoWrong;
 using QuickPulse.Explains;
 
@@ -209,7 +210,7 @@ Possible solutions:
 ";
 
 	[Fact]
-	public void Multiple_Configrs()
+	public void Configr_InChain()
 	{
 		var fuzzr =
 			from c1 in Configr<MultiCtorContainer>.Construct(Fuzzr.Constant(42))
@@ -222,5 +223,17 @@ Possible solutions:
 		Assert.Null(first.AnInt2);
 		Assert.Equal(43, second.AnInt1);
 		Assert.Equal(44, second.AnInt2);
+	}
+
+	[Fact]
+	public void Configr_DoesNotMultiply()
+	{
+		var fuzzr =
+			from _1 in Configr<MultiCtorContainer>.Construct(Fuzzr.Constant(42))
+			from i in Fuzzr.Int()
+			select i;
+		var state = new State();
+		fuzzr.Many(2)(state);
+		Assert.Single(state.Constructors);
 	}
 }

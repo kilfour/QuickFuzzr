@@ -117,6 +117,20 @@ Possible solutions:
 "; // - If you intended to configure a field, enable field access or use explicit construction.
 
 	[Fact]
+	public void Configr_InChain()
+	{
+		var fuzzr =
+			from _1 in Configr<Person>.Property(s => s.Age, 1)
+			from e1 in Fuzzr.One<Person>()
+			from _2 in Configr<Person>.Property(s => s.Age, 2)
+			from e2 in Fuzzr.One<Person>()
+			select (e1, e2);
+		var result = fuzzr.Generate(42);
+		Assert.Equal(1, result.e1.Age);
+		Assert.Equal(2, result.e2.Age);
+	}
+
+	[Fact]
 	public void Configr_DoesNotMultiply()
 	{
 		var fuzzr =

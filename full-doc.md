@@ -1604,30 +1604,69 @@ All range-based numeric fuzzrs follow .NET conventions: the lower bound is inclu
 > Nullable and non-nullable variants are both supported.
 > Each Fuzzr also supports `.Nullable(...)` / `.NullableRef(...)` as appropriate.*
   
-| Fuzzr| Description |
-| -| - |
-| [Booleans](#booleans)| Generates random `true` or `false` values.  |
-| [Enums](#enums)| Randomly selects a defined member of an enum type. |
-| [Guids](#guids)| Produces non-empty random `Guid` values. |
-| [Strings](#strings)| Creates random lowercase strings (default length 1-10). |
-| [TimeSpans](#timespans)| Generates random durations up to 1000 ticks by default. |
-| Fuzzr| Description |
-| -| - |
-| [Bytes](#bytes)| Produces random bytes in the range 0-255 or within a custom range. |
-| [Chars](#chars)| Generates random lowercase letters or characters within a specified range. |
-| [DateOnlys](#dateonlys)| Creates `DateOnly` values between 1970-01-01 and 2020-12-31 (by default). |
-| [DateTimes](#datetimes)| Produces `DateTime` values between 1970-01-01 and 2020-12-31 (inclusive), snapped to whole seconds. |
-| [Decimals](#decimals)| Generates random decimal numbers (default 1-100). |
-| [Doubles](#doubles)| Generates random double-precision numbers (default 1-100). |
-| [Floats](#floats)| Generates random single-precision numbers (default 1-100). |
-| [Halfs](#halfs)| Generates random 16-bit Halfing-point numbers (default 1-100). |
-| [Ints](#ints)| Produces random integers (default 1-100). |
-| [Longs](#longs)| Generates random 64-bit longegers (default 1-100). |
-| [Shorts](#shorts)| Generates random 16-bit integers (default 1-100). |
-| [TimeOnlys](#timeonlys)| Produces random times between midnight and 23:59:59. |
-| [UInts](#uints)| Produces unsigned integers (default 1-100). |
-| [ULongs](#ulongs)| Generates unsigned 64-bit integers (default 1-100). |
-| [UShorts](#ushorts)| Produces unsigned 16-bit integers (default 1-100). |
+##### Decimals
+Use `Fuzzr.Decimal()`.  
+- **Default:** min = 1, max = 100, precision = 2).  
+- The overload `Fuzzr.Decimal(decimal min, decimal max)` generates a decimal in the range [min, max) (min inclusive, max exclusive).  
+- The overload `Decimal(int precision)` generates a decimal with up to `precision` decimal places.  
+- Throws an `ArgumentException` when `precision` < `0`.  
+- The overload `Decimal(decimal min, decimal max, int precision)` generates a decimal in the range [min, max) (min inclusive, max exclusive), with up to `precision` decimal places.  
+- Throws an `ArgumentException` when `precision` < `0`.  
+##### Doubles
+Use `Fuzzr.Double()`.  
+- **Default:** min = 1, max = 100).  
+##### Floats
+Use `Fuzzr.Float()`.  
+- **Default:** min = 1, max = 100).  
+##### Halfs
+Use `Fuzzr.Half()`.  
+- **Default:** min = (Half)1, max = (Half)100).  
+*Note:* Due to floatinging-point rounding, max may occasionally be produced.  
+###### Ints
+Use `Fuzzr.Int()`.  
+- **Default:** min = 1, max = 100).  
+###### Longs
+Use `Fuzzr.Long()`.  
+- **Default:** min = 1, max = 100).  
+###### Shorts
+Use `Fuzzr.Short()`.  
+- **Default:** min = 1, max = 100).  
+###### TimeOnlys
+Use `Fuzzr.TimeOnly()`.  
+- **Default:** min = 00:00:00, max = 23:59:59.9999999).  
+###### TimeSpans
+Use `Fuzzr.TimeSpan()`.  
+- **Default:** max = 1000).  
+###### UInts
+Use `Fuzzr.UInt()`.  
+- **Default:** min = 1, max = 100).  
+###### ULongs
+Use `Fuzzr.ULong()`.  
+- **Default:** min = 1, max = 100).  
+###### UShorts
+Use `Fuzzr.UShort()`.  
+- **Default:** min = 1, max = 100).  
+###### Bytes
+Use `Fuzzr.Byte()`.  
+- The default Fuzzr produces a `byte` in the full range (`0`-`255`).  
+
+**Overloads:**  
+- `Fuzzr.Byte(int min, int max)`  
+  Generates a value greater than or equal to `min` and less than or equal to `max`.  
+  Boundary coverage: over time, values at both ends of the interval should appear.  
+
+**Exceptions:**  
+- `ArgumentOutOfRangeException`: When `min` > `max`.  
+###### Chars
+Use `Fuzzr.Char()`.  
+- The default Fuzzr always generates a char between lower case 'a' and lower case 'z'.  
+###### DateOnlys
+Use `Fuzzr.DateOnly()`.  
+- The default Fuzzr generates `DateOnly`s greater than or equal to `new DateOnly(1970, 1, 1)` and less than or equal to `new DateOnly(2020, 12, 31)`.  
+###### DateTimes
+Use `Fuzzr.DateTime()`.  
+- **Default:** min = new DateTime(1970, 1, 1), max = new DateTime(2020, 12, 31)) inclusive, snapped to whole seconds.  
+- The overload `Fuzzr.DateTime(DateTime min, DateTime max)` generates a `DateTime` in the inclusive range [min, max], snapped to whole seconds.  
 #### Booleans
 Use `Fuzzr.Bool()`.  
 - Generates `true` or `false`.  
@@ -1649,70 +1688,6 @@ Use `Fuzzr.String()`.
 - Throws an `ArgumentOutOfRangeException` when `length` < 0.  
 - The default Fuzzr always generates every char element of the string to be between lower case 'a' and lower case 'z'.  
 - A version exists for all methods mentioned above that takes a `FuzzrOf<char>` as parameter and then this one will be used to build up the resulting string.  
-#### TimeSpans
-Use `Fuzzr.TimeSpan()`.  
-- The overload `Fuzzr.TimeSpan(int max)` generates a TimeSpan with Ticks higher or equal than 1 and lower than max.  
-- **Default:** max = 1000).  
-#### Bytes
-Use `Fuzzr.Byte()`.  
-- The default Fuzzr produces a `byte` in the full range (`0`-`255`).  
-
-**Overloads:**  
-- `Fuzzr.Byte(int min, int max)`  
-  Generates a value greater than or equal to `min` and less than or equal to `max`.  
-  Boundary coverage: over time, values at both ends of the interval should appear.  
-
-**Exceptions:**  
-- `ArgumentOutOfRangeException`: When `min` > `max`.  
-#### Chars
-Use `Fuzzr.Char()`.  
-- The default Fuzzr always generates a char between lower case 'a' and lower case 'z'.  
-#### DateOnlys
-Use `Fuzzr.DateOnly()`.  
-- The default Fuzzr generates `DateOnly`s greater than or equal to `new DateOnly(1970, 1, 1)` and less than or equal to `new DateOnly(2020, 12, 31)`.  
-#### DateTimes
-Use `Fuzzr.DateTime()`.  
-- **Default:** min = new DateTime(1970, 1, 1), max = new DateTime(2020, 12, 31)) inclusive, snapped to whole seconds.  
-- The overload `Fuzzr.DateTime(DateTime min, DateTime max)` generates a `DateTime` in the inclusive range [min, max], snapped to whole seconds.  
-#### Decimals
-Use `Fuzzr.Decimal()`.  
-- **Default:** min = 1, max = 100, precision = 2).  
-- The overload `Fuzzr.Decimal(decimal min, decimal max)` generates a decimal in the range [min, max) (min inclusive, max exclusive).  
-- The overload `Decimal(int precision)` generates a decimal with up to `precision` decimal places.  
-- Throws an `ArgumentException` when `precision` < `0`.  
-- The overload `Decimal(decimal min, decimal max, int precision)` generates a decimal in the range [min, max) (min inclusive, max exclusive), with up to `precision` decimal places.  
-- Throws an `ArgumentException` when `precision` < `0`.  
-#### Doubles
-Use `Fuzzr.Double()`.  
-- **Default:** min = 1, max = 100).  
-#### Floats
-Use `Fuzzr.Float()`.  
-- **Default:** min = 1, max = 100).  
-#### Halfs
-Use `Fuzzr.Half()`.  
-- **Default:** min = (Half)1, max = (Half)100).  
-*Note:* Due to floatinging-point rounding, max may occasionally be produced.  
-#### Ints
-Use `Fuzzr.Int()`.  
-- **Default:** min = 1, max = 100).  
-#### Longs
-Use `Fuzzr.Long()`.  
-- **Default:** min = 1, max = 100).  
-#### Shorts
-Use `Fuzzr.Short()`.  
-- **Default:** min = 1, max = 100).  
-#### TimeOnlys
-Use `Fuzzr.TimeOnly()`.  
-- **Default:** min = 00:00:00, max = 23:59:59.9999999).  
-#### UInts
-Use `Fuzzr.UInt()`.  
-- **Default:** min = 1, max = 100).  
-#### ULongs
-Use `Fuzzr.ULong()`.  
-- **Default:** min = 1, max = 100).  
-#### UShorts
-Use `Fuzzr.UShort()`.  
-- **Default:** min = 1, max = 100).  
 ## Cooking Up a Fuzzr
 ### Contents
 

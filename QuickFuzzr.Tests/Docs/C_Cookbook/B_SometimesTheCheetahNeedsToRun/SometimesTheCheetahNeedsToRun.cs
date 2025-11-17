@@ -87,13 +87,15 @@ public class SometimesTheCheetahNeedsToRun
 
     [CodeSnippet]
     [CodeRemove("return ")]
+    [CodeRemove("42")]
     public static IEnumerable<Pseudopolis> PseudopolisAutoFuzzr()
     {
-        return Fuzzr.One<Pseudopolis>().Many(10000).Generate();
+        return Fuzzr.One<Pseudopolis>().Many(10000).Generate(42);
     }
 
     [CodeSnippet]
     [CodeRemove("return ")]
+    [CodeRemove("42")]
     public static IEnumerable<Pseudopolis> PseudopolisFuzzr()
     {
         var fuzzr =
@@ -105,11 +107,12 @@ public class SometimesTheCheetahNeedsToRun
             from flag in Configr<Pseudopolis>.Property(a => a.Boolean, Fuzzr.Bool())
             from pseudopolis in Fuzzr.One<Pseudopolis>()
             select pseudopolis;
-        return fuzzr.Many(10000).Generate();
+        return fuzzr.Many(10000).Generate(42);
     }
 
     [CodeSnippet]
     [CodeRemove("return ")]
+    [CodeRemove("42")]
     public static IEnumerable<Pseudopolis> PseudopolisConfigr()
     {
         var config =
@@ -124,7 +127,7 @@ public class SometimesTheCheetahNeedsToRun
             from _ in config
             from pseudopolis in Fuzzr.One<Pseudopolis>().Many(10000)
             select pseudopolis;
-        return fuzzr.Generate();
+        return fuzzr.Generate(42);
     }
 
 

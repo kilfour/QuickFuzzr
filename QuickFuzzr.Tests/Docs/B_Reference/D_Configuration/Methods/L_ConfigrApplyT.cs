@@ -1,5 +1,6 @@
 using QuickFuzzr.Tests._Tools;
 using QuickFuzzr.Tests._Tools.Models;
+using QuickFuzzr.UnderTheHood;
 using QuickPulse.Explains;
 
 namespace QuickFuzzr.Tests.Docs.B_Reference.D_Configuration.Methods;
@@ -64,5 +65,31 @@ public class L_ConfigrApplyT
             select (person, employee);
         var value = fuzzr.Many(2).Generate(42);
         Assert.Equal(4, seen.Count);
+    }
+
+    [Fact]
+    public void Configr_InChain()
+    {
+        var fuzzr =
+            from _1 in Configr<Person>.Apply(a => a.Age = 1)
+            from e1 in Fuzzr.One<Person>()
+            from _2 in Configr<Person>.Apply(a => a.Age = 2)
+            from e2 in Fuzzr.One<Person>()
+            select (e1, e2);
+        var result = fuzzr.Generate(42);
+        Assert.Equal(1, result.e1.Age);
+        Assert.Equal(2, result.e2.Age);
+    }
+
+    [Fact]
+    public void Configr_DoesNotMultiply()
+    {
+        var fuzzr =
+            from _1 in Configr<Person>.Apply(a => a.Age = 1)
+            from i in Fuzzr.Int()
+            select i;
+        var state = new State();
+        fuzzr.Many(2)(state);
+        Assert.Single(state.StuffToApply);
     }
 }

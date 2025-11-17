@@ -1,16 +1,7 @@
 # TODO's 
-## For 0.1.7
-### Testing:
-- check all possible exceptions : current bookmark primitives
-- Add a configr can be set during a LINQ chain test for each option
-- Primitive fuzzrs use CheckIt in tests MinMax in impl.
-- test depthcontrol many interaction (lists mainly)
-- check Congigr explosion: see F_ConfigrProperty.Configr_DoesNotMultiply
-
-
-**ArgumentOutOfRangeException.ThrowIfLessThan(min, char.MinValue);**
-
 ## After 0.1.7
+- test depthcontrol many interaction (lists mainly)
+
 Error section: a single table listing all QuickFuzzr exceptions with one-liners 
 per category ? construction problems, value exhausted ...
 * Construction / instantiation

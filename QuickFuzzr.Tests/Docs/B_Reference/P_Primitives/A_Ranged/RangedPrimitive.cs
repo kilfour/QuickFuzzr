@@ -1,7 +1,7 @@
 using QuickFuzzr.Tests._Tools;
 using QuickFuzzr.Tests._Tools.Models;
 
-namespace QuickFuzzr.Tests.Docs.B_Reference.P_Primitives.Ranged;
+namespace QuickFuzzr.Tests.Docs.B_Reference.P_Primitives.A_Ranged;
 
 public abstract class RangedPrimitive<T> : Primitive<T>
     where T : struct, IComparable<T>

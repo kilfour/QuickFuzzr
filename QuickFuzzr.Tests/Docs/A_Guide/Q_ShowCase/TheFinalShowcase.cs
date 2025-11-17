@@ -193,11 +193,19 @@ This example uses the [HorsesForCourses](https://github.com/kilfour/HorsesForCou
 
     [CodeSnippet]
     [CodeRemove("return")]
-    public static FuzzrOf<(Course, IEnumerable<Coach>)> Domain(FuzzrOf<Coach> coachFuzzr)
+    private static FuzzrOf<(Course, IEnumerable<Coach>)> Domain(FuzzrOf<Coach> coachFuzzr)
     {
         return
         from coaches in coachFuzzr.Many(3)
         from course in CourseFuzzr(coaches)
         select (course, coaches);
+    }
+
+    public static (IEnumerable<Course>, IEnumerable<Coach>) Lots()
+    {
+        return
+        (from coaches in CoachFuzzr().Many(250)
+         from courses in CourseFuzzr(coaches).Many(50)
+         select (courses, coaches)).Generate(42);
     }
 }

@@ -1,6 +1,6 @@
 ﻿using QuickPulse.Explains;
 
-namespace QuickFuzzr.Tests.Docs.B_Reference.P_Primitives.Ranged;
+namespace QuickFuzzr.Tests.Docs.B_Reference.P_Primitives.A_Ranged.Discrete.Exclusive;
 
 [DocFile]
 [DocContent("Use `Fuzzr.Short()`.")]
@@ -13,5 +13,5 @@ public class Shorts : RangedPrimitive<short>
 	protected override (short Min, short Max) DefaultRange => (short.MinValue, short.MaxValue);
 	protected override (short Min, short Max) ExampleRange => (5, 7);
 	protected override (short Min, short Max) MinimalRange => (0, 1);
-	protected override bool CheckExactBoundaries => false;
+	protected override short GetUpperBoundarySample(short min, short max) => (short)(max - 1);
 }

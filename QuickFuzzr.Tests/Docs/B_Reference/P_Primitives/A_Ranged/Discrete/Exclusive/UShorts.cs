@@ -1,6 +1,6 @@
 ﻿using QuickPulse.Explains;
 
-namespace QuickFuzzr.Tests.Docs.B_Reference.P_Primitives.Ranged;
+namespace QuickFuzzr.Tests.Docs.B_Reference.P_Primitives.A_Ranged.Discrete.Exclusive;
 
 [DocFile]
 [DocFileHeader("UShorts")]
