@@ -15,5 +15,8 @@ public static partial class Fuzzr
 	/// Use for generating characters from specific ranges like uppercase letters, digits, or custom character sets.
 	/// </summary>
 	public static FuzzrOf<char> Char(char min, char max)
-		=> MinMax.Check(min, max, state => new Result<char>((char)state.Random.Next(min, max + 1), state));
+	{
+		ArgumentOutOfRangeException.ThrowIfGreaterThan(min, max);
+		return state => new Result<char>((char)state.Random.Next(min, max + 1), state);
+	}
 }

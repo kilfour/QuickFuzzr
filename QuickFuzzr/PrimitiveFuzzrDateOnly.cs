@@ -16,10 +16,12 @@ public static partial class Fuzzr
 	/// Use when you need date values constrained to specific time periods for business logic testing.
 	/// </summary>
 	public static FuzzrOf<DateOnly> DateOnly(DateOnly min, DateOnly max)
-		=> MinMax.Check(min, max, DateOnlyInternal(min, max));
+		=> DateOnlyInternal(min, max);
 
-	private static FuzzrOf<DateOnly> DateOnlyInternal(DateOnly min, DateOnly max) =>
-		state =>
+	private static FuzzrOf<DateOnly> DateOnlyInternal(DateOnly min, DateOnly max)
+	{
+		ArgumentOutOfRangeException.ThrowIfGreaterThan(min, max);
+		return state =>
 			{
 				var minN = min.DayNumber;
 				var maxN = max.DayNumber + 1;
@@ -28,4 +30,5 @@ public static partial class Fuzzr
 				var value = System.DateOnly.FromDayNumber(minN + offset);
 				return new Result<DateOnly>(value, state);
 			};
+	}
 }

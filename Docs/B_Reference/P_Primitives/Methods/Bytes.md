@@ -4,7 +4,7 @@ Use `Fuzzr.Byte()`.
 
 **Overloads:**  
 - `Fuzzr.Byte(int min, int max)`  
- Generates a value greater than or equal to `min` and less than or equal to `max`.  
+  Generates a value greater than or equal to `min` and less than or equal to `max`.  
   When `min == max`, the Fuzzr always returns that exact value.  
   Boundary coverage: over time, values at both ends of the interval should appear.  
 

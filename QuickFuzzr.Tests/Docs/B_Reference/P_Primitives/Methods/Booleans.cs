@@ -7,32 +7,22 @@ namespace QuickFuzzr.Tests.Docs.B_Reference.P_Primitives.Methods;
 [DocFile]
 [DocContent("Use `Fuzzr.Bool()`.")]
 [DocColumn(PrimitiveFuzzrs.Columns.Description, "Generates random `true` or `false` values. ")]
-public class Booleans
+public class Booleans : Primitive<bool>
 {
 	[Fact]
-	[DocContent("- Generates True or False.")]
+	[DocContent("- Generates `true` or `false`.")]
 	public void DefaultFuzzrGeneratesTrueOrFalse()
 	{
 		CheckIf.TheseValuesAreGenerated(Fuzzr.Bool(), true, false);
 	}
 
-	[Fact]
-	public void Nullable()
-	{
-		CheckIf.GeneratesNullAndNotNull(Fuzzr.Bool().Nullable());
-	}
+	protected override FuzzrOf<bool> CreateFuzzr() => Fuzzr.Bool();
 
 	[Fact]
-	public void Property()
+	public override void Property()
 	{
 		CheckIf.TheseValuesAreGenerated(
 			Fuzzr.One<PrimitivesBag<bool>>().Select(x => x.Value), true, false);
 	}
 
-	[Fact]
-	public void NullableProperty()
-	{
-		CheckIf.GeneratesNullAndNotNull(
-			Fuzzr.One<PrimitivesBag<bool>>().Select(x => x.NullableValue));
-	}
 }

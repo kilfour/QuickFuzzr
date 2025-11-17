@@ -1,80 +1,17 @@
-﻿using QuickFuzzr.Tests._Tools;
-using QuickFuzzr.Tests._Tools.Models;
-using QuickPulse.Explains;
+﻿using QuickPulse.Explains;
 
 namespace QuickFuzzr.Tests.Docs.B_Reference.P_Primitives.Methods;
 
 [DocFile]
 [DocContent("Use `Fuzzr.Char()`.")]
 [DocColumn(PrimitiveFuzzrs.Columns.Description, "Generates random lowercase letters or characters within a specified range.")]
-public class Chars
+[DocContent("- The default Fuzzr always generates a char between lower case 'a' and lower case 'z'.")]
+public class Chars : RangedPrimitive<char>
 {
-	private readonly char[] valid = "abcdefghijklmnopqrstuvwxyz".ToCharArray();
-
-	[Fact]
-	[DocContent("- The overload `Fuzzr.Char(char min, char max)` generates a char greater than or equal to `min` and less than or equal to `max`.")]
-	public void MinMax()
-		=> CheckIf.GeneratedValuesShouldAllSatisfy(Fuzzr.Char('0', '9'),
-			("value >= '0", a => a >= '0'), ("value <= '9'", a => a <= '9'));
-
-	[Fact]
-	public void Boundaries()
-		=> CheckIf.GeneratedValuesShouldEventuallySatisfyAll(Fuzzr.Char('0', '1'),
-			("a == '0'", a => a == '0'), ("a == '1'", a => a == '1'));
-
-	[Fact]
-	public void Boundaries_Single()
-		=> CheckIf.GeneratedValuesShouldAllSatisfy(Fuzzr.Char('0', '0'),
-			("a == '0'", a => a == '0'));
-
-	[Fact]
-	[DocContent("- Throws an `ArgumentException` when `min` > `max`.")]
-	public void Throws()
-		=> Assert.Throws<ArgumentException>(() => Fuzzr.Char('2', '1').Generate());
-
-	[Fact]
-	[DocContent("- The default Fuzzr always generates a char between lower case 'a' and lower case 'z'.")]
-	public void DefaultFuzzrAlwaysBetweenLowerCaseAAndLowerCaseZ()
-	{
-		CheckIf.GeneratedValuesShouldAllSatisfy(Fuzzr.Char(),
-			("char between lower case 'a' and lower case 'z'", val => valid.Any(c => c == val)));
-	}
-
-	[Fact]
-	public void IsRandom()
-	{
-		var fuzzr = Fuzzr.Char();
-		var val = fuzzr.Generate();
-		var differs = false;
-		for (int i = 0; i < 10; i++)
-		{
-			if (val != fuzzr.Generate())
-				differs = true;
-		}
-		Assert.True(differs);
-	}
-
-	[Fact]
-	public void Nullable()
-	{
-		CheckIf.GeneratesNullAndNotNull(Fuzzr.Char().Nullable());
-	}
-
-	[Fact]
-	public void Property()
-	{
-		var fuzzr = Fuzzr.One<PrimitivesBag<char>>();
-		for (int i = 0; i < 10; i++)
-		{
-			var value = fuzzr.Generate().Value;
-			Assert.True(valid.Any(c => c == value), value.ToString());
-		}
-	}
-
-	[Fact]
-	public void NullableProperty()
-	{
-		CheckIf.GeneratesNullAndNotNull(
-			Fuzzr.One<PrimitivesBag<char>>().Select(x => x.NullableValue));
-	}
+	protected override FuzzrOf<char> CreateFuzzr() => Fuzzr.Char();
+	protected override FuzzrOf<char> CreateRangedFuzzr(char min, char max) => Fuzzr.Char(min, max);
+	protected override (char Min, char Max) DefaultRange => ('a', 'z');
+	protected override (char Min, char Max) ExampleRange => ('5', '7');
+	protected override (char Min, char Max) MinimalRange => ('0', '1');
+	protected override bool UpperBoundExclusive => false;
 }

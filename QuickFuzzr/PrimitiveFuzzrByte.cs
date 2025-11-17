@@ -15,10 +15,8 @@ public static partial class Fuzzr
 	/// Creates a Fuzzr that produces random byte values within the inclusive range [min, max].
 	/// Use when you need constrained byte values for specific scenarios like ports, small counters, or bounded numeric fields.
 	/// </summary>
-	public static FuzzrOf<byte> Byte(int min, int max)
+	public static FuzzrOf<byte> Byte(byte min, byte max)
 	{
-		ArgumentOutOfRangeException.ThrowIfLessThan(min, byte.MinValue);
-		ArgumentOutOfRangeException.ThrowIfGreaterThan(max, byte.MaxValue);
 		ArgumentOutOfRangeException.ThrowIfGreaterThan(min, max);
 		return s =>
 		{

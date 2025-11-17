@@ -1635,7 +1635,7 @@ Use `Fuzzr.Byte()`.
 
 **Overloads:**  
 - `Fuzzr.Byte(int min, int max)`  
- Generates a value greater than or equal to `min` and less than or equal to `max`.  
+  Generates a value greater than or equal to `min` and less than or equal to `max`.  
   When `min == max`, the Fuzzr always returns that exact value.  
   Boundary coverage: over time, values at both ends of the interval should appear.  
 
@@ -1645,9 +1645,16 @@ Use `Fuzzr.Byte()`.
 - `ArgumentOutOfRangeException`: When `max` > `byte.MaxValue` (i.e. `> 255`).  
 #### Chars
 Use `Fuzzr.Char()`.  
-- The overload `Fuzzr.Char(char min, char max)` generates a char greater than or equal to `min` and less than or equal to `max`.  
-- Throws an `ArgumentException` when `min` > `max`.  
 - The default Fuzzr always generates a char between lower case 'a' and lower case 'z'.  
+
+**Overloads:**  
+- `Fuzzr.Char(char min, char max)`  
+ Generates a char greater than or equal to `min` and less than or equal to `max`.  
+  When `min == max`, the Fuzzr always returns that exact value.  
+  Boundary coverage: over time, values at both ends of the interval should appear.  
+
+**Exceptions:**  
+- `ArgumentOutOfRangeException`: When `min` > `max`.  
 #### DateOnlys
 Use `Fuzzr.DateOnly()`.  
 - The overload `Fuzzr.DateOnly(DateOnly min, DateOnly max)` generates a DateOnly greater than or equal to `min` and less than or equal to `max`.  

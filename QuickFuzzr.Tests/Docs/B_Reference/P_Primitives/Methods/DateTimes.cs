@@ -1,6 +1,6 @@
 ﻿using QuickFuzzr.Tests._Tools;
-using QuickFuzzr.Tests._Tools.Models;
 using QuickPulse.Explains;
+using WibblyWobbly;
 
 namespace QuickFuzzr.Tests.Docs.B_Reference.P_Primitives.Methods;
 
@@ -8,103 +8,27 @@ namespace QuickFuzzr.Tests.Docs.B_Reference.P_Primitives.Methods;
 [DocFileHeader("DateTimes")]
 [DocContent("Use `Fuzzr.DateTime()`.")]
 [DocColumn(PrimitiveFuzzrs.Columns.Description, "Produces `DateTime` values between 1970-01-01 and 2020-12-31 (inclusive), snapped to whole seconds.")]
-public class DateTimes
+[DocContent("- **Default:** min = new DateTime(1970, 1, 1), max = new DateTime(2020, 12, 31)) inclusive, snapped to whole seconds.")]
+[DocContent("- The overload `Fuzzr.DateTime(DateTime min, DateTime max)` generates a `DateTime` in the inclusive range [min, max], snapped to whole seconds.")]
+public class DateTimes : RangedPrimitive<DateTime>
 {
-	[Fact]
-	[DocContent("- The overload `Fuzzr.DateTime(DateTime min, DateTime max)` generates a `DateTime` in the inclusive range [min, max], snapped to whole seconds.")]
-	public void MinMax()
-		=> CheckIf.GeneratedValuesShouldAllSatisfy(Fuzzr.DateTime(new DateTime(2000, 1, 1), new DateTime(2000, 1, 5)),
-			("value >= new DateTime(2000, 1, 1)", a => a >= new DateTime(2000, 1, 1)),
-			("value <= new DateTime(2000, 1, 5)", a => a <= new DateTime(2000, 1, 5)));
+	protected override FuzzrOf<DateTime> CreateFuzzr()
+		=> Fuzzr.DateTime();
 
-	[Fact]
-	public void MinMaxShouldGenerateBounds()
-		=> CheckIf.GeneratedValuesShouldEventuallySatisfyAll(Fuzzr.DateTime(new DateTime(1), new DateTime(2)),
-			("value == new DateTime(1)", a => a == new DateTime(1)),
-			("value == new DateTime(2)", a => a == new DateTime(2)));
+	protected override FuzzrOf<DateTime> CreateRangedFuzzr(DateTime min, DateTime max)
+		=> Fuzzr.DateTime(min, max);
 
-	[Fact]
-	public void MinMaxShouldGenerateSecondsBounds()
-		=> CheckIf.GeneratedValuesShouldEventuallySatisfyAll(Fuzzr.DateTime(new DateTime(1, 1, 1, 1, 1, 1), new DateTime(1, 1, 1, 1, 1, 2)),
-			("value == new DateTime(1, 1, 1, 1, 1, 1)", a => a == new DateTime(1, 1, 1, 1, 1, 1)),
-			("value == new DateTime(1, 1, 1, 1, 1, 2)", a => a == new DateTime(1, 1, 1, 1, 1, 2)));
+	protected override (DateTime Min, DateTime Max) DefaultRange
+		=> From(1.January(1970).At(1.OClock()))
+			.To(31.December(2020).At(1.OClock()));
 
-	[Fact]
-	[DocContent("- Generated values are snapped to whole seconds.")]
-	public void MinMaxShouldSnapToSeconds()
-		=> CheckIf.GeneratedValuesShouldAllSatisfy(Fuzzr.DateTime(new DateTime(2000, 1, 1), new DateTime(2000, 1, 5)),
-			("value.Millisecond == 0", a => a.Millisecond == 0),
-			("value.Nanosecond == 0", a => a.Nanosecond == 0));
+	protected override (DateTime Min, DateTime Max) ExampleRange
+		=> From(1.January(2000).At(1.OClock()))
+			.To(5.January(2000).At(1.OClock()));
 
-	// TODO Check whether snapping to whole seconds makes the *final* second of the max date unreachable.
+	protected override (DateTime Min, DateTime Max) MinimalRange
+		=> From(1.January(2000).At(1.OClock().Seconds(0)))
+			.To(1.January(2000).At(1.OClock().Seconds(1)));
 
-	[Fact]
-	[DocContent("- Throws an `ArgumentException` when `min` > `max`.")]
-	public void Throws()
-		=> Assert.Throws<ArgumentException>(() => Fuzzr.DateTime(new DateTime(2000, 1, 5), new DateTime(2000, 1, 1)).Generate());
-
-	[Fact]
-	[DocContent("- **Default:** min = new DateTime(1970, 1, 1), max = new DateTime(2020, 12, 31)) inclusive, snapped to whole seconds.")]
-	public void DefaultFuzzrNeverGeneratesZero()
-	{
-		var fuzzr = Fuzzr.DateTime();
-		for (int i = 0; i < 50; i++)
-		{
-			var val = fuzzr.Generate();
-			Assert.True(val >= new DateTime(1970, 1, 1));
-			Assert.True(val < new DateTime(2020, 12, 31));
-		}
-	}
-
-	[Fact]
-	public void Nullable()
-	{
-		var fuzzr = Fuzzr.DateTime().Nullable();
-		var isSomeTimesNull = false;
-		var isSomeTimesNotNull = false;
-		for (int i = 0; i < 50; i++)
-		{
-			var value = fuzzr.Generate();
-			if (value.HasValue)
-			{
-				isSomeTimesNotNull = true;
-				Assert.NotEqual(new DateTime(), value.Value);
-			}
-			else
-				isSomeTimesNull = true;
-		}
-		Assert.True(isSomeTimesNull);
-		Assert.True(isSomeTimesNotNull);
-	}
-
-	[Fact]
-	public void Property()
-	{
-		var fuzzr = Fuzzr.One<PrimitivesBag<DateTime>>();
-		for (int i = 0; i < 10; i++)
-		{
-			Assert.NotEqual(new DateTime(), fuzzr.Generate().Value);
-		}
-	}
-
-	[Fact]
-	public void NullableProperty()
-	{
-		var fuzzr = Fuzzr.One<PrimitivesBag<DateTime>>();
-		var isSomeTimesNull = false;
-		var isSomeTimesNotNull = false;
-		for (int i = 0; i < 50; i++)
-		{
-			var value = fuzzr.Generate().NullableValue;
-			if (value.HasValue)
-			{
-				isSomeTimesNotNull = true;
-				Assert.NotEqual(new DateTime(), value.Value);
-			}
-			else
-				isSomeTimesNull = true;
-		}
-		Assert.True(isSomeTimesNull);
-		Assert.True(isSomeTimesNotNull);
-	}
+	protected override bool UpperBoundExclusive => false;
 }

@@ -7,6 +7,9 @@
 - test depthcontrol many interaction (lists mainly)
 - check Congigr explosion: see F_ConfigrProperty.Configr_DoesNotMultiply
 
+
+**ArgumentOutOfRangeException.ThrowIfLessThan(min, char.MinValue);**
+
 ## After 0.1.7
 Error section: a single table listing all QuickFuzzr exceptions with one-liners 
 per category ? construction problems, value exhausted ...

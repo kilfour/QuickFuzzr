@@ -1,5 +1,4 @@
 ﻿using QuickFuzzr.Tests._Tools;
-using QuickFuzzr.Tests._Tools.Models;
 using QuickPulse.Explains;
 
 namespace QuickFuzzr.Tests.Docs.B_Reference.P_Primitives.Methods;
@@ -7,7 +6,7 @@ namespace QuickFuzzr.Tests.Docs.B_Reference.P_Primitives.Methods;
 [DocFile]
 [DocContent("Use `Fuzzr.Int()`.")]
 [DocColumn(PrimitiveFuzzrs.Columns.Description, "Produces random integers (default 1-100).")]
-public class Ints
+public class Ints : Primitive<int>
 {
 	[Fact]
 	[DocContent("- The overload `Fuzzr.Int(int min, int max)` generates an int greater than or equal to `min` and less than `max`.")]
@@ -31,17 +30,5 @@ public class Ints
 		=> CheckIf.GeneratedValuesShouldAllSatisfy(Fuzzr.Int(),
 			("value >= 1", a => a >= 1), ("value < 100", a => a < 100));
 
-	[Fact]
-	public void Nullable()
-		=> CheckIf.GeneratesNullAndNotNull(Fuzzr.Int().Nullable());
-
-	[Fact]
-	public void Property()
-		=> CheckIf.GeneratedValuesShouldAllSatisfy(Fuzzr.One<PrimitivesBag<int>>(),
-			("value != 0", a => a.Value != 0));
-
-	[Fact]
-	public void NullableProperty()
-		=> CheckIf.GeneratesNullAndNotNull(
-			Fuzzr.One<PrimitivesBag<int>>().Select(a => a.NullableValue));
+	protected override FuzzrOf<int> CreateFuzzr() => Fuzzr.Int();
 }

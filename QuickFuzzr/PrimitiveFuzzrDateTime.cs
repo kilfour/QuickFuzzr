@@ -18,7 +18,10 @@ public static partial class Fuzzr
 	/// Use when you need timestamp values constrained to specific time periods with simplified second-level precision.
 	/// </summary>
 	public static FuzzrOf<DateTime> DateTime(DateTime min, DateTime max)
-		=> MinMax.Check(min, max, DateTimeInternal(min, max));
+	{
+		ArgumentOutOfRangeException.ThrowIfGreaterThan(min, max);
+		return DateTimeInternal(min, max);
+	}
 
 	private static FuzzrOf<DateTime> DateTimeInternal(DateTime min, DateTime max) =>
 		state =>
