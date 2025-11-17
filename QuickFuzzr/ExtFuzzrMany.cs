@@ -17,7 +17,7 @@ public static partial class ExtFuzzr
 	/// </summary>
 	public static FuzzrOf<IEnumerable<T>> Many<T>(this FuzzrOf<T> fuzzr, int min, int max)
 	{
-		MinMax.Check(min, max);
+		ArgumentOutOfRangeException.ThrowIfGreaterThan(min, max);
 		return state =>
 		{
 			var count = GetNumberOfItems(state, min, max);

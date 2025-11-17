@@ -19,7 +19,7 @@ public static partial class Fuzzr
 	/// </summary>
 	public static FuzzrOf<uint> UInt(uint min, uint max)
 	{
-		MinMax.Check(min, max);
+		ArgumentOutOfRangeException.ThrowIfGreaterThan(min, max);
 		return s =>
 		{
 			var span = (ulong)(max - min);

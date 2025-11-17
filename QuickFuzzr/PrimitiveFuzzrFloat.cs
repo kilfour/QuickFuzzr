@@ -19,7 +19,7 @@ public static partial class Fuzzr
 	/// </summary>
 	public static FuzzrOf<float> Float(float min, float max)
 	{
-		MinMax.Check(min, max);
+		ArgumentOutOfRangeException.ThrowIfGreaterThan(min, max);
 		return s => new Result<float>(((float)s.Random.NextDouble() * (max - min)) + min, s);
 	}
 }

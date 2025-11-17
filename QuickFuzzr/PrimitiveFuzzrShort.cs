@@ -16,7 +16,7 @@ public static partial class Fuzzr
 	/// </summary>
 	public static FuzzrOf<short> Short(short min, short max)
 	{
-		MinMax.Check(min, max);
+		ArgumentOutOfRangeException.ThrowIfGreaterThan(min, max);
 		return state => new Result<short>((short)state.Random.Next(min, max), state);
 	}
 }

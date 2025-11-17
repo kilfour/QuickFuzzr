@@ -24,5 +24,4 @@ public class Booleans : Primitive<bool>
 		CheckIf.TheseValuesAreGenerated(
 			Fuzzr.One<PrimitivesBag<bool>>().Select(x => x.Value), true, false);
 	}
-
 }

@@ -16,14 +16,16 @@ public static partial class Fuzzr
 	/// Use when you need time values constrained to specific periods like business hours, shift times, or time-bound operations.
 	/// </summary>
 	public static FuzzrOf<TimeOnly> TimeOnly(TimeOnly min, TimeOnly max)
-		=> MinMax.Check(min, max,
-			state =>
-			{
-				var minTicks = min.Ticks;
-				var maxTicks = max.Ticks;
-				var span = maxTicks - minTicks;
-				var offset = state.Random.NextInt64(0, span + 1);
-				var value = new TimeOnly(minTicks + offset);
-				return new Result<TimeOnly>(value, state);
-			});
+	{
+		ArgumentOutOfRangeException.ThrowIfGreaterThan(min, max);
+		return state =>
+		{
+			var minTicks = min.Ticks;
+			var maxTicks = max.Ticks;
+			var span = maxTicks - minTicks;
+			var offset = state.Random.NextInt64(0, span + 1);
+			var value = new TimeOnly(minTicks + offset);
+			return new Result<TimeOnly>(value, state);
+		};
+	}
 }

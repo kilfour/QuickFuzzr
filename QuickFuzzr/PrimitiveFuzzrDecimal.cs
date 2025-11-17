@@ -27,8 +27,10 @@ public static partial class Fuzzr
 	/// numeric bounds for financial or scientific testing.
 	/// </summary>
 	public static FuzzrOf<decimal> Decimal(decimal min, decimal max)
-		=> MinMax.Check(min, max,
-			s => new Result<decimal>(((decimal)s.Random.NextDouble() * (max - min)) + min, s));
+	{
+		ArgumentOutOfRangeException.ThrowIfGreaterThan(min, max);
+		return state => new Result<decimal>(((decimal)state.Random.NextDouble() * (max - min)) + min, state);
+	}
 
 	/// <summary>
 	/// Creates a Fuzzr that produces random decimal values in the range [min, max)
@@ -37,12 +39,14 @@ public static partial class Fuzzr
 	/// financial reporting, measurement data, or formatted numeric output.
 	/// </summary>
 	public static FuzzrOf<decimal> Decimal(decimal min, decimal max, int precision)
-		=> Decimal(min, max).Apply(d =>
-		{
-			decimal scale = 1m;
-			for (int i = 0; i < precision; i++) scale *= 10m;
-			var truncated = Math.Floor((d - min) * scale) / scale + min;
-			return Math.Round(truncated, precision);
-		});
-
+	{
+		ArgumentOutOfRangeException.ThrowIfLessThan(precision, 0);
+		return Decimal(min, max).Apply(d =>
+			{
+				decimal scale = 1m;
+				for (int i = 0; i < precision; i++) scale *= 10m;
+				var truncated = Math.Floor((d - min) * scale) / scale + min;
+				return Math.Round(truncated, precision);
+			});
+	}
 }

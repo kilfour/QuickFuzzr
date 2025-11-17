@@ -1,5 +1,4 @@
 using QuickFuzzr.Tests._Tools.Models;
-using QuickFuzzr.Tests.Docs.C_Cookbook.A_ADeepDarkForest;
 using QuickPulse.Explains;
 
 namespace QuickFuzzr.Tests.Docs.C_Cookbook.B_SometimesTheCheetahNeedsToRun;

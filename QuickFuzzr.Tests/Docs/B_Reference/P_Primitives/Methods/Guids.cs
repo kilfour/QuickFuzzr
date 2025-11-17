@@ -5,8 +5,10 @@ namespace QuickFuzzr.Tests.Docs.B_Reference.P_Primitives.Methods;
 [DocFile]
 [DocContent("Use `Fuzzr.Guid()`. *There is no overload.*")]
 [DocColumn(PrimitiveFuzzrs.Columns.Description, "Produces non-empty random `Guid` values.")]
-public class Guids
+public class Guids : Primitive<Guid>
 {
+	protected override FuzzrOf<Guid> CreateFuzzr() => Fuzzr.Guid();
+
 	[Fact]
 	[DocContent("- The default Fuzzr never generates Guid.Empty.")]
 	public void NeverGuidEmpty()
@@ -24,63 +26,5 @@ public class Guids
 	public void DeterministicWithSeed()
 	{
 		Assert.Equal("96ba173e-04ae-3bcd-9986-9e56f0adbf3a", Fuzzr.Guid().Generate(42).ToString().ToLower());
-	}
-
-	[Fact]
-	public void Nullable()
-	{
-		var fuzzr = Fuzzr.Guid().Nullable();
-		var isSomeTimesNull = false;
-		var isSomeTimesNotNull = false;
-		for (int i = 0; i < 50; i++)
-		{
-			var value = fuzzr.Generate();
-			if (value.HasValue)
-			{
-				isSomeTimesNotNull = true;
-				Assert.NotEqual(Guid.Empty, value.Value);
-			}
-			else
-				isSomeTimesNull = true;
-		}
-		Assert.True(isSomeTimesNull);
-		Assert.True(isSomeTimesNotNull);
-	}
-
-	[Fact]
-	public void Property()
-	{
-		var fuzzr = Fuzzr.One<SomeThingToGenerate>();
-		for (int i = 0; i < 10; i++)
-		{
-			Assert.NotEqual(Guid.Empty, fuzzr.Generate().AProperty);
-		}
-	}
-
-	[Fact]
-	public void NullableProperty()
-	{
-		var fuzzr = Fuzzr.One<SomeThingToGenerate>();
-		var isSomeTimesNull = false;
-		var isSomeTimesNotNull = false;
-		for (int i = 0; i < 50; i++)
-		{
-			var value = fuzzr.Generate().ANullableProperty;
-			if (value.HasValue)
-			{
-				isSomeTimesNotNull = true;
-				Assert.NotEqual(Guid.Empty, value.Value);
-			}
-			else
-				isSomeTimesNull = true;
-		}
-		Assert.True(isSomeTimesNull);
-		Assert.True(isSomeTimesNotNull);
-	}
-
-	public class SomeThingToGenerate
-	{
-		public Guid AProperty { get; set; }
-		public Guid? ANullableProperty { get; set; }
 	}
 }

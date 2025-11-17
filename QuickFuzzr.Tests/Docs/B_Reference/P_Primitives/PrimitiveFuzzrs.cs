@@ -16,6 +16,7 @@ All range-based numeric fuzzrs follow .NET conventions: the lower bound is inclu
 > Each Fuzzr also supports `.Nullable(...)` / `.NullableRef(...)` as appropriate.*
 ")]
 [DocTable(nameof(Methods), Columns.Fuzzr, Columns.Description)]
+[DocTable(nameof(Ranged), Columns.Fuzzr, Columns.Description)]
 public class PrimitiveFuzzrs
 {
     public static class Columns

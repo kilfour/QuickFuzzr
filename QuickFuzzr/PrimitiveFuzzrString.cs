@@ -44,7 +44,7 @@ public static partial class Fuzzr
 	private static FuzzrOf<string> StringInternal(FuzzrOf<char> charFuzzr, int min, int max)
 	{
 		ArgumentOutOfRangeException.ThrowIfNegative(min);
-		MinMax.Check(min, max);
+		ArgumentOutOfRangeException.ThrowIfGreaterThan(min, max);
 		return state =>
 			{
 				int numberOfChars = state.Random.Next(min, max + 1);

@@ -18,10 +18,10 @@ public static partial class Fuzzr
 	public static FuzzrOf<byte> Byte(byte min, byte max)
 	{
 		ArgumentOutOfRangeException.ThrowIfGreaterThan(min, max);
-		return s =>
+		return state =>
 		{
-			var value = (byte)s.Random.Next(min, max + 1);
-			return new Result<byte>(value, s);
+			var value = (byte)state.Random.Next(min, max + 1);
+			return new Result<byte>(value, state);
 		};
 	}
 }

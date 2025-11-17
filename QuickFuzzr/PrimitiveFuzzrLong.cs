@@ -19,7 +19,7 @@ public static partial class Fuzzr
 	/// </summary>
 	public static FuzzrOf<long> Long(long min, long max)
 	{
-		MinMax.Check(min, max);
+		ArgumentOutOfRangeException.ThrowIfGreaterThan(min, max);
 		return s =>
 		{
 			if (min == max)

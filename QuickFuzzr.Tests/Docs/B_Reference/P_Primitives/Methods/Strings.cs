@@ -26,7 +26,7 @@ public class Strings
 	[Fact]
 	[DocContent("- Throws an `ArgumentException` when `min` > `max`.")]
 	public void MinGreaterThanMax_Throws()
-		=> Assert.Throws<ArgumentException>(() => Fuzzr.String(5, 4).Generate());
+		=> Assert.Throws<ArgumentOutOfRangeException>(() => Fuzzr.String(5, 4).Generate());
 
 	[Fact]
 	[DocContent("- The overload `Fuzzr.String(int length)` generates a string of exactly `length` ... erm ... length.")]

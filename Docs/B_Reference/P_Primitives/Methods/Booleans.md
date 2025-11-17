@@ -1,3 +1,3 @@
 # Booleans
 Use `Fuzzr.Bool()`.  
-- Generates True or False.  
+- Generates `true` or `false`.  

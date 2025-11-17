@@ -10,6 +10,6 @@ public static partial class Fuzzr
 	/// </summary>
 	public static FuzzrOf<bool> Bool()
 	{
-		return s => new Result<bool>(s.Random.Next(0, 2) > 0, s);
+		return state => new Result<bool>(state.Random.Next(0, 2) > 0, state);
 	}
 }

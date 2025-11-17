@@ -19,7 +19,7 @@ public static partial class Fuzzr
 	/// </summary>
 	public static FuzzrOf<double> Double(double min, double max)
 	{
-		MinMax.Check(min, max);
-		return s => new Result<double>((s.Random.NextDouble() * (max - min)) + min, s);
+		ArgumentOutOfRangeException.ThrowIfGreaterThan(min, max);
+		return state => new Result<double>((state.Random.NextDouble() * (max - min)) + min, state);
 	}
 }
