@@ -8,9 +8,6 @@ namespace QuickFuzzr.Tests.Docs.B_Reference.P_Primitives.A_Ranged.A_Continuous;
 For these, the upper bound is conceptually exclusive ([min, max)),
 but floating-point rounding may occasionally allow max to appear.
 This behaviour is explicitly tested and documented.
-
-Values come from a dense numeric space (floating-point types).
-Examples: Double, Float, Half, Decimal.
 ")]
 [DocInclude(typeof(Decimals))]
 [DocInclude(typeof(Doubles))]

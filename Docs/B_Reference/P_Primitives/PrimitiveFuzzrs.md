@@ -25,9 +25,6 @@ Values come from a dense numeric space (floating-point types).
 For these, the upper bound is conceptually exclusive ([min, max)),
 but floating-point rounding may occasionally allow max to appear.
 This behaviour is explicitly tested and documented.
-
-Values come from a dense numeric space (floating-point types).
-Examples: Double, Float, Half, Decimal.
   
 #### Decimals
 Use `Fuzzr.Decimal()`.  
@@ -46,7 +43,7 @@ Use `Fuzzr.Float()`.
 #### Halfs
 Use `Fuzzr.Half()`.  
 - **Default Range:** min = 1, max = 100).  
-*Note:* Due to floatinging-point rounding, max may occasionally be produced.  
+*Note:* Due to floating-point rounding, max may occasionally be produced.  
 ### Discrete
 Values come from a countable set (integers, shorts, bytes, dates snapped to seconds, etc.).
 

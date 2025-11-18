@@ -6,7 +6,7 @@ namespace QuickFuzzr.Tests.Docs.B_Reference.P_Primitives.A_Ranged.A_Continuous;
 [DocContent("Use `Fuzzr.Half()`.")]
 [DocColumn(PrimitiveFuzzrs.Columns.Description, "Generates random 16-bit Halfing-point numbers (default 1-100).")]
 [DocContent("- **Default Range:** min = 1, max = 100).")]
-[DocContent("*Note:* Due to floatinging-point rounding, max may occasionally be produced.")]
+[DocContent("*Note:* Due to floating-point rounding, max may occasionally be produced.")]
 public class Halfs : RangedPrimitive<Half>
 {
     protected override FuzzrOf<Half> CreateFuzzr() => Fuzzr.Half();
