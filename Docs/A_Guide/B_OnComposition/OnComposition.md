@@ -18,7 +18,7 @@ The `select` then combines those using string interpolation, meaning that the wh
 
 
 *Sidenote:* There's usually more than one way to get things done in QuickFuzzr.
-As an example of that, here is another social security Fuzzr, this time using `char`'s and `string`'s:  
+As an example of that, here is another social security number Fuzzr, this time using `char`'s and `string`'s:  
 ```csharp
 var digit = Fuzzr.Char('0', '9');
 var ssnFuzzr =
