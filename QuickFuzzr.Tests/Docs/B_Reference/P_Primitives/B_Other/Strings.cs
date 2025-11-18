@@ -4,7 +4,7 @@ using QuickPulse.Explains;
 
 namespace QuickFuzzr.Tests.Docs.B_Reference.P_Primitives.B_Other;
 
-[DocFile]
+
 [DocContent("Use `Fuzzr.String()`.")]
 [DocColumn(PrimitiveFuzzrs.Columns.Description, "Creates random lowercase strings (default length 1-10).")]
 public class Strings
