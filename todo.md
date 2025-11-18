@@ -1,4 +1,5 @@
 # TODO's 
+- configr retry limit doc, use DocExceptions
 ## After 0.1.7
 - test depthcontrol many interaction (lists mainly)
 

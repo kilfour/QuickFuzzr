@@ -22,7 +22,7 @@ public class A_ConfigrIgnoreT
         from person in Fuzzr.One<Person>()
         select person;
         // Results in => 
-        // ( Person { Name: "", Age: 0 }, Address { Street: "", City: "" } )
+        // Person { Name: "", Age: 67}
     }
 
     [Fact]

@@ -204,7 +204,7 @@ from ignore in Configr<Person>.Ignore(a => a.Name)
 from person in Fuzzr.One<Person>()
 select person;
 // Results in => 
-// ( Person { Name: "", Age: 0 }, Address { Street: "", City: "" } )
+// Person { Name: "", Age: 67}
 ```
 - Derived classes generated also ignore the base property.  
 
@@ -248,7 +248,7 @@ from person in Fuzzr.One<Person>()
 from address in Fuzzr.One<Address>()
 select (person, address);
 // Results in => 
-// ( Person { Name: "", Age: 0 }, Address { Street: "", City: "" } )
+// ( Person { Name: "", Age: 0 }, Address { Street: "ddnegsn", City: "tg" } )
 ```
 - `IgnoreAll()`does not cause properties on derived classes to be ignored, even inherited properties.  
 ### Configr.IgnoreAll
@@ -746,7 +746,7 @@ In this reference we categorize these Fuzzrs as follows:
 Ranged primitives generate numeric or temporal values between a minimum and a maximum.
 
 For all of these the following is true:
-- They have a paremeterless function whcich returns a value in a default range.
+- They have a paremeterless function which returns a value in a default range.
 - They have an overload which allows you to specify a min and max value.
 - They throw a `ArgumentOutOfRangeException` if the min is greater than the max.
 
