@@ -5,7 +5,7 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
 
-    <Version>0.1.6</Version>
+    <Version>0.1.7</Version>
     <Authors>Kilfour</Authors>
 
     <PackageId>QuickFuzzr</PackageId>
