@@ -27,11 +27,12 @@ per category ? construction problems, value exhausted ...
 * Benchmarks
 * Add the missing Primitives
 
-## QuickFuzzr.Evil 
-Configr.EnableFieldAccess() 
-static class name:
-- Breakr 
-- Chaosr *
-- Hexr
-- just use a type per category 
+## QuickFuzzr.Evil (namespace for now)
+* Configr.EnableFieldAccess() 
+* Structure & Static Factory classes
+  * Configr.Primitive as the hook = exactly right.
+  * Evilr.* as FuzzrOf<string> (and maybe later more types) = good separation.
+  * Evilizr.* as “install a profile of Evilr + normal into primitives” = great ergonomics.
+  * Weighted evil is the default mode; hardcore / soft modes are just different mixes.
+  * Domain-focused evil (JsonStrings, HtmlStrings) is content curation, not scope creep.
 
