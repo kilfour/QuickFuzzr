@@ -9,7 +9,7 @@
 
   <ItemGroup>
     <PackageReference Include="BenchmarkDotNet" Version="0.15.6" />
-    <PackageReference Include="QuickPulse.Show" Version="0.1.9" /> 
+    <PackageReference Include="QuickPulse.Show" Version="0.1.10" /> 
   </ItemGroup>
 
   <ItemGroup>
