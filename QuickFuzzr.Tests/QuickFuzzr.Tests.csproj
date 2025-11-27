@@ -18,19 +18,18 @@
   <ItemGroup>
     <Using Include="Xunit" />
   </ItemGroup>
-  
-  <ItemGroup>
-    <!-- <PackageReference Include="QuickAcid" Version="0.0.2" />  -->
-    <!-- <PackageReference Include="QuickPulse" Version="0.3.2" />  -->
-    <PackageReference Include="QuickPulse.Explains" Version="0.3.10" /> 
-  </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\QuickFuzzr\QuickFuzzr.csproj" />
   </ItemGroup>
+  
+  <ItemGroup>
+    <PackageReference Include="QuickCheckr" Version="0.0.1" /> 
+    <PackageReference Include="QuickPulse.Explains" Version="0.3.10" /> 
+  </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\QuickCheckr\QuickCheckr\QuickCheckr.csproj" />
+    <!-- <ProjectReference Include="..\..\QuickCheckr\QuickCheckr\QuickCheckr.csproj" /> -->
     <!-- <ProjectReference Include="..\..\QuickPulse.Explains\QuickPulse.Explains\QuickPulse.Explains.csproj" /> -->
   </ItemGroup>
 
