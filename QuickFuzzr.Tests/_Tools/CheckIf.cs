@@ -1,9 +1,8 @@
 using System.Diagnostics;
-using QuickAcid;
-using QuickAcid.Bolts;
+using QuickCheckr;
+using QuickCheckr.UnderTheHood;
 using QuickFuzzr;
 using QuickPulse;
-using StringExtensionCombinators;
 
 namespace QuickFuzzr.Tests._Tools;
 
@@ -37,17 +36,17 @@ public static class CheckIf
         params (string, Func<T, bool>)[] labeledChecks)
     {
         var signal = Signal.From<T>(a => Pulse.Trace(a!));
-        var run =
-            from inspector in "inspector".Stashed(
+        var check =
+            from inspector in Trackr.Stashed(
                 () => signal.SetAndReturnArtery(new DistinctValueInspector<T>()))
-            from input in "Fuzzr".Input(fuzzr)
-            from inspect in "Inspect".Act(() => signal.Pulse(input))
-            from _e in "early exit".TestifyProvenWhen(
+            from input in Checkr.Input("Fuzzr", fuzzr)
+            from inspect in Checkr.Act("Inspect", () => signal.Pulse(input))
+            from _e in Trackr.ProvenWhen("early exit",
                 () => inspector.SeenSatisfyEach([.. labeledChecks.Select(a => a.Item2)]))
-            from _s in "Assayer".Assay(
+            from _s in Trackr.Assay("Assayer",
                 [.. labeledChecks.Select(a => (a.Item1, (Func<bool>)(() => inspector.HasValueThatSatisfies(a.Item2))))])
-            select Acid.Test;
-        QState.Run(run).WithOneRun().And(numberOfExecutions.ExecutionsPerRun());
+            select Case.Closed;
+        check.Run(numberOfExecutions.ExecutionsPerRun());
     }
 
     [StackTraceHidden]
@@ -64,21 +63,21 @@ public static class CheckIf
         FuzzrOf<T> fuzzr,
         params (string, Func<T, bool>)[] labeledChecks)
     {
-        var run =
-            from input in "Fuzzr".Input(fuzzr)
-            from t in "input".Trace(() => input.ToString()!)
-            from _ in CombineSpecs(input, labeledChecks) // Move this to QuickAcid
-            select Acid.Test;
-        QState.Run(run).WithOneRun().And(numberOfExecutions.ExecutionsPerRun());
+        var check =
+            from input in Checkr.Input("Fuzzr", fuzzr)
+            from t in Checkr.Trace("input", () => input.ToString()!)
+            from _ in CombineSpecs(input, labeledChecks) // Move this to QuickCheckr maybe
+            select Case.Closed;
+        check.Run(numberOfExecutions.ExecutionsPerRun());
     }
 
-    private static QAcidScript<Acid> CombineSpecs<T>(T input, IEnumerable<(string, Func<T, bool>)> checks)
+    private static CheckrOf<Case> CombineSpecs<T>(T input, IEnumerable<(string, Func<T, bool>)> checks)
     {
         return checks
-            .Select(c => c.Item1.Spec(() => c.Item2(input)))
-            .Aggregate(Acc, (acc, next) => from _ in acc from __ in next select Acid.Test);
+            .Select(c => Checkr.Spec(c.Item1, () => c.Item2(input)))
+            .Aggregate(Acc, (acc, next) => from _ in acc from __ in next select Case.Closed);
     }
 
-    private static readonly QAcidScript<Acid> Acc =
-        s => Vessel.AcidOnly(s);
+    private static readonly CheckrOf<Case> Acc =
+        s => CheckrResult.CaseOnly(s);
 }
