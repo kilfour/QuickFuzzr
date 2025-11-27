@@ -17,13 +17,13 @@ Generate realistic test data and *fuzz* your domain models using composable LINQ
 [![Docs](https://img.shields.io/badge/docs-QuickFuzzr-blue?style=flat-square&logo=readthedocs)](https://github.com/kilfour/QuickFuzzr/blob/main/Docs/ToC.md)
 [![NuGet](https://img.shields.io/nuget/v/QuickFuzzr.svg?style=flat-square&logo=nuget)](https://www.nuget.org/packages/QuickFuzzr)
 [![License: MIT](https://img.shields.io/badge/license-MIT-success?style=flat-square)](https://github.com/kilfour/QuickFuzzr/blob/main/LICENSE)")]
-public class ReadMe
+public class CreateReadMe
 {
     private readonly bool ToFile = false;
     [Fact]
     [DocHeader("Examples")]
     [DocHeader("It Just Works", 1)]
-    [DocExample(typeof(ReadMe), nameof(Example_Simple_Fuzzr))]
+    [DocExample(typeof(CreateReadMe), nameof(Example_Simple_Fuzzr))]
     public void Example_Simple()
     {
         var result = Example_Simple_Fuzzr();
@@ -42,7 +42,7 @@ public class ReadMe
 
     [Fact]
     [DocHeader("Configurable", 1)]
-    [DocExample(typeof(ReadMe), nameof(Example_Configr_Fuzzr))]
+    [DocExample(typeof(CreateReadMe), nameof(Example_Configr_Fuzzr))]
     [DocOutput]
     [DocCodeFile("readme-example-output.txt")]
     public void Example_Configr()
