@@ -12,6 +12,6 @@ Explain.This<Documentation>("full-doc.md");
 Explain.This<Guide>("guide.md");
 Explain.This<Reference>("reference.md");
 Explain.This<Cookbook>("cookbook.md");
-Explain.This<QuickFuzzrEvil>("quickfuzzr-evil.md");
+//Explain.This<QuickFuzzrEvil>("quickfuzzr-evil.md");
 
 Explain.OnlyThis<CreateReadMe>("README.md");

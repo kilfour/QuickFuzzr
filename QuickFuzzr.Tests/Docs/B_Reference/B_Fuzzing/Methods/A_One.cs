@@ -79,6 +79,15 @@ public class A_One
     }
 
     [Fact]
+    [DocContent(
+@" - QuickFuzzr does not automatically detect whether a reference-type property was declared nullable.
+  Properties declared like so `public Person? Person { get; set; }` will never have null values, unless configured explicitly.")]
+    public void FuzzrOne_NullableNestedObjectProperty()
+        => CheckIf.GeneratedValuesShouldAllSatisfy(Fuzzr.One<TheUniverse>(),
+            ("Property is not null", a => a.Everything is not null));
+
+
+    [Fact]
     [DocContent("- Field generation is not supported.")]
     public void FuzzrOne_No_Fields()
     {

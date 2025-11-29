@@ -921,6 +921,8 @@ Fuzzr.One<Person>();
 - By default, only properties with public setters are auto-generated.  
 - Collections remain empty. Lists, arrays, dictionaries, etc. aren't auto-populated.  
 - Recursive object creation is off by default.  
+ - QuickFuzzr does not automatically detect whether a reference-type property was declared nullable.
+  Properties declared like so `public Person? Person { get; set; }` will never have null values, unless configured explicitly.  
 - Field generation is not supported.  
 
 **Overloads:**  
