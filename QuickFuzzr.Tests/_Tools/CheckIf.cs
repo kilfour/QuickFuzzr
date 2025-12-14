@@ -41,9 +41,9 @@ public static class CheckIf
                 () => signal.SetAndReturnArtery(new DistinctValueInspector<T>()))
             from input in Checkr.Input("Fuzzr", fuzzr)
             from inspect in Checkr.Act("Inspect", () => signal.Pulse(input))
-            from _e in Trackr.ProvenWhen("early exit",
+            from _e in Trackr.StopWhenProven("early exit",
                 () => inspector.SeenSatisfyEach([.. labeledChecks.Select(a => a.Item2)]))
-            from _s in Trackr.Assay("Assayer",
+            from _s in Trackr.Verify("Verifier",
                 [.. labeledChecks.Select(a => (a.Item1, (Func<bool>)(() => inspector.HasValueThatSatisfies(a.Item2))))])
             select Case.Closed;
         check.Run(numberOfExecutions.ExecutionsPerRun());
@@ -74,7 +74,7 @@ public static class CheckIf
     private static CheckrOf<Case> CombineSpecs<T>(T input, IEnumerable<(string, Func<T, bool>)> checks)
     {
         return checks
-            .Select(c => Checkr.Spec(c.Item1, () => c.Item2(input)))
+            .Select(c => Checkr.Expect(c.Item1, () => c.Item2(input)))
             .Aggregate(Acc, (acc, next) => from _ in acc from __ in next select Case.Closed);
     }
 

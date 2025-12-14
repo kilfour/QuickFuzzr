@@ -10,3 +10,5 @@ temp*.md
 settings.json
 
 BenchmarkDotNet.Artifacts/
+
+nuget.md

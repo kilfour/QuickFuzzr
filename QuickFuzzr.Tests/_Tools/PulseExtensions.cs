@@ -17,7 +17,7 @@ public static class PulseExtensions
         var fullPath = Path.Combine(dir, $"{testName}.log");
         Signal.From<string>(a => Pulse.Trace(a))
            .SetArtery(FileLog.Write(fullPath))
-           .Pulse(Please.AllowMe().ToAddSomeClass().IntroduceThis(item!, false));
+           .Pulse(Please.AllowMe().ToAddSomeClass().IntroduceThis(item!));
         return item;
     }
 }

@@ -24,13 +24,13 @@
   </ItemGroup>
   
   <ItemGroup>
-    <PackageReference Include="QuickCheckr" Version="0.0.2" /> 
-    <PackageReference Include="QuickPulse.Explains" Version="0.3.10" /> 
+    <PackageReference Include="QuickCheckr" Version="0.0.5" />  
+    <PackageReference Include="QuickPulse.Explains" Version="0.3.11" /> 
   </ItemGroup>
 
   <ItemGroup>
-    <!-- <ProjectReference Include="..\..\QuickCheckr\QuickCheckr\QuickCheckr.csproj" /> -->
-    <!-- <ProjectReference Include="..\..\QuickPulse.Explains\QuickPulse.Explains\QuickPulse.Explains.csproj" /> -->
+    <!-- <ProjectReference Include="..\..\QuickCheckr\QuickCheckr\QuickCheckr.csproj" />
+    <ProjectReference Include="..\..\QuickPulse.Explains\QuickPulse.Explains\QuickPulse.Explains.csproj" /> -->
   </ItemGroup>
 
 </Project>
