@@ -10,7 +10,7 @@ namespace QuickFuzzr.Tests.Docs.B_Reference.B_Fuzzing.Methods;
 Useful for generating unique sequential IDs or counters.  
 ")]
 [DocSignature("Fuzzr.Counter(object key)")]
-public class D_Counter
+public class E_Counter
 {
 	[CodeSnippet]
 	[CodeRemove("return ")]
@@ -22,7 +22,7 @@ public class D_Counter
 
 	[Fact]
 	[DocUsage]
-	[DocExample(typeof(D_Counter), nameof(Usage_Example))]
+	[DocExample(typeof(E_Counter), nameof(Usage_Example))]
 	public void Counter_Many_Produces_Expected_Run()
 		=> Assert.Equal([1, 2, 3, 4, 5], Usage_Example());
 

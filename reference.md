@@ -36,6 +36,7 @@ All entries return a `FuzzrOf<T>` and can be composed using standard LINQ syntax
 | -| - |
 | [One](#one)| Creates a Fuzzr that produces an instances of type `T`. |
 | [OneOf](#oneof)| Randomly selects one of the provided values. |
+| [From Each](#from-each)| Creates a Fuzzr that produces an IEnumerable based on the elements of a source IEnumerable. |
 | [Shuffle](#shuffle)| Creates a Fuzzr that randomly shuffles an input sequence. |
 | [Counter](#counter)| Generates a sequential integer per key, starting at 1. |
 | [Constant](#constant)| Wraps a fixed value in a Fuzzr, producing the same result every time. |
@@ -107,6 +108,20 @@ Fuzzr.OneOf(params T[] values)
   - `NegativeWeightException`: When one or more weights are negative.  
   - `ZeroTotalWeightException`: When the total of all weights is zero or negative.  
   - `ArgumentNullException`: When the provided sequence is null.  
+### From Each
+Creates a Fuzzr that produces an IEnumerable based on the elements of a source IEnumerable.  
+
+**Signature:**  
+```csharp
+FromEach<T, U>(IEnumerable<T> source, Func<T, FuzzrOf<U>> func)
+```
+  
+
+**Usage:**  
+```csharp
+Fuzzr.FromEach([1, 100, 1000], a => Fuzzr.Int(1, a));
+// Results in => [ 1, 67, 141 ]
+```
 ### Shuffle
 Creates a Fuzzr that produces a random permutation of the provided sequence.  
 Use for randomized ordering, unbiased sampling without replacement.

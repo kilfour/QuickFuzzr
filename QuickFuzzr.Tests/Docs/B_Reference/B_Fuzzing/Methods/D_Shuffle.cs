@@ -10,7 +10,7 @@ namespace QuickFuzzr.Tests.Docs.B_Reference.B_Fuzzing.Methods;
 Use for randomized ordering, unbiased sampling without replacement.
 ")]
 [DocSignature("Fuzzr.Shuffle(params T[] values)")]
-public class C_Shuffle
+public class D_Shuffle
 {
     [CodeSnippet]
     [CodeRemove("return ")]
@@ -22,7 +22,7 @@ public class C_Shuffle
 
     [Fact]
     [DocUsage]
-    [DocExample(typeof(C_Shuffle), nameof(Shuffle_Example_Fuzzr))]
+    [DocExample(typeof(D_Shuffle), nameof(Shuffle_Example_Fuzzr))]
     public void Shuffle_Example()
     {
         var result = Shuffle_Example_Fuzzr()
