@@ -23,7 +23,6 @@ public class ExtFuzzrApply
         return seen;
     }
 
-
     [Fact]
     [DocUsage]
     [DocExample(typeof(ExtFuzzrApply), nameof(Apply_Action_PerformsSideEffect_Example))]
@@ -34,33 +33,13 @@ public class ExtFuzzrApply
         Assert.Equal(67, seen[0]);
     }
 
-    [CodeSnippet]
-    [CodeRemove("return ")]
-    private static FuzzrOf<int> Apply_Func_TransformsValue_Fuzzr()
-    {
-        return Fuzzr.Constant(41).Apply(x => x + 1);
-        // Results in => 42
-    }
-
-    [DocOverloads]
-    [DocOverload("Apply(this FuzzrOf<T> fuzzr, Func<T,T> func)")]
-    [DocContent("  Transforms generated values while preserving generation context.")]
-    [DocExample(typeof(ExtFuzzrApply), nameof(Apply_Func_TransformsValue_Fuzzr))]
-    [Fact]
-    public void Apply_Func_TransformsValue()
-    {
-        Assert.Equal(42, Apply_Func_TransformsValue_Fuzzr().Generate());
-    }
-
     [Fact]
     [DocExceptions]
-    [DocException("ArgumentNullException", "When the provided `Action` or `Func` is null.")]
+    [DocException("ArgumentNullException", "When the provided `Action` is null.")]
     public void Counter_Null_Key()
     {
-        var ex = Assert.Throws<ArgumentNullException>(() => Fuzzr.Constant(42).Apply((Action<int>)null!));
+        var ex = Assert.Throws<ArgumentNullException>(() => Fuzzr.Constant(42).Apply(null!));
         Assert.Equal("Value cannot be null. (Parameter 'action')", ex.Message);
-        ex = Assert.Throws<ArgumentNullException>(() => Fuzzr.Constant(42).Apply(null!));
-        Assert.Equal("Value cannot be null. (Parameter 'func')", ex.Message);
     }
 }
 

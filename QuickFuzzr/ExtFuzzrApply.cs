@@ -1,35 +1,19 @@
-﻿using QuickFuzzr.UnderTheHood;
-
-namespace QuickFuzzr;
+﻿namespace QuickFuzzr;
 
 public static partial class ExtFuzzr
 {
-	/// <summary>
-	/// Creates a Fuzzr that executes a side-effect action on each generated value without modifying the value itself.
-	/// Use for performing operations like logging, adding to collections, or calling methods that have side effects but don't transform the data.
-	/// </summary>
-	public static FuzzrOf<T> Apply<T>(this FuzzrOf<T> fuzzr, Action<T> action)
-	{
-		ArgumentNullException.ThrowIfNull(action);
-		return state =>
-		{
-			var result = fuzzr(state);
-			action(result.Value);
-			return result;
-		};
-	}
-
-	/// <summary>
-	/// Creates a Fuzzr that transforms each generated value using the provided function.
-	/// Use for modifying or enriching generated data while maintaining the generation context and state.
-	/// </summary>
-	public static FuzzrOf<T> Apply<T>(this FuzzrOf<T> fuzzr, Func<T, T> func)
-	{
-		ArgumentNullException.ThrowIfNull(func);
-		return state =>
-		{
-			var result = fuzzr(state);
-			return new Result<T>(func(result.Value), state);
-		};
-	}
+    /// <summary>
+    /// Creates a Fuzzr that executes a side-effect action on each generated value without modifying the value itself.
+    /// Use for performing operations like logging, adding to collections, or calling methods that have side effects but don't transform the data.
+    /// </summary>
+    public static FuzzrOf<T> Apply<T>(this FuzzrOf<T> fuzzr, Action<T> action)
+    {
+        ArgumentNullException.ThrowIfNull(action);
+        return state =>
+        {
+            var result = fuzzr(state);
+            action(result.Value);
+            return result;
+        };
+    }
 }
