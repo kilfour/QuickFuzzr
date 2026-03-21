@@ -9,7 +9,7 @@ namespace QuickFuzzr.Tests.Docs.B_Reference.B_Fuzzing.Methods;
 @"This Fuzzr wraps the value provided of type `T` in a `FuzzrOf<T>`.
 It is most useful in combination with others and is often used to inject constants into combined Fuzzrs.")]
 [DocSignature("Fuzzr.Constant(T value)")]
-public class F_Constant
+public class T_Constant
 {
     [CodeSnippet]
     [CodeRemove("return ")]
@@ -21,7 +21,7 @@ public class F_Constant
 
     [Fact]
     [DocUsage]
-    [DocExample(typeof(F_Constant), nameof(Returns_Value_Fuzzr))]
+    [DocExample(typeof(T_Constant), nameof(Returns_Value_Fuzzr))]
     public void Returns_Value()
     {
         Assert.Equal(42, Returns_Value_Fuzzr().Generate());
