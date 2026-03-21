@@ -82,9 +82,9 @@ var nameCfg =
 ```csharp
 var folderCfg =
     from files in Configr<FolderEntry>.Property(a => a.Files,
-        from fs in Fuzzr.One<FileEntry>().Many(1, 2) select fs.ToList())
+        Fuzzr.One<FileEntry>().Many(1, 2).ToList())
     from folders in Configr<FolderEntry>.Property(a => a.Folders,
-        from fs in Fuzzr.One<FolderEntry>().Many(1, 2) select fs.ToList())
+        Fuzzr.One<FolderEntry>().Many(1, 2).ToList())
     select Intent.Fixed;
 ```
 **Combined Fuzzr**  

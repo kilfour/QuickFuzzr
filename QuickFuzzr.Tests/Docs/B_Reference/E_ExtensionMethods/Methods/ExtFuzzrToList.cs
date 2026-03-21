@@ -7,7 +7,10 @@ namespace QuickFuzzr.Tests.Docs.B_Reference.E_ExtensionMethods.Methods;
 [DocFileHeader("ToList")]
 [DocColumn(FuzzrExtensionMethods.Columns.Description,
 "Creates a Fuzzr that materializes the sequence produced by the source Fuzzr as a `List<T>`.")]
-[DocContent("Creates a Fuzzr that materializes the sequence produced by the source Fuzzr as a `List<T>`.")]
+[DocContent(
+@"Creates a Fuzzr that materializes the sequence produced by the source Fuzzr as a `List<T>`.  
+This is a convenience method.
+The equivalent behavior can be expressed with LINQ Select, but it removes boilerplate.")]
 [DocSignature("ExtFuzzr.ToList(this FuzzrOf<T> fuzzr)")]
 public class ExtFuzzrToList
 {
