@@ -161,7 +161,9 @@ public class Genesis : ICreationEngine
             HandleProperty(instance, state, propertyInfo);
         }
 
-        if (state.FieldAccessEnabled)
+        if (state.FieldAccessEnabled ||
+            state.FieldCustomizations.Count > 0 ||
+            state.GeneralFieldCustomizations.Count > 0)
         {
             foreach (var fieldInfo in GetCachedFields(instanceType))
             {
@@ -172,6 +174,9 @@ public class Genesis : ICreationEngine
 
     private void HandleField(object instance, State state, FieldInfo fieldInfo)
     {
+        if (CustomizeField(instance, fieldInfo, state)) return;
+        if (GenerallyCustomizeField(instance, fieldInfo, state)) return;
+        if (!state.FieldAccessEnabled) return;
         if (fieldInfo.IsInitOnly || fieldInfo.IsLiteral) return;
 
         if (SetPrimitive(instance, fieldInfo, state)) return;
@@ -196,6 +201,45 @@ public class Genesis : ICreationEngine
             var result = MakeOneOfThese(fieldInfo.FieldType)(state);
             fieldInfo.SetValue(instance, result.Value);
         }
+    }
+
+    private static bool CustomizeField(object target, FieldInfo fieldInfo, State state)
+    {
+        var fuzzr = FindFieldCustomizationFor(state, fieldInfo);
+        if (fuzzr is null) return false;
+
+        fieldInfo.SetValue(target, fuzzr(state).Value);
+        return true;
+    }
+
+    private static FuzzrOf<object>? FindFieldCustomizationFor(State state, FieldInfo fieldInfo)
+    {
+        var type = fieldInfo.ReflectedType ?? fieldInfo.DeclaringType;
+        while (type is not null)
+        {
+            if (state.FieldCustomizations.TryGetValue((type, fieldInfo.Name), out var fuzzr))
+                return fuzzr;
+            type = type.BaseType;
+        }
+        return null;
+    }
+
+    private static bool GenerallyCustomizeField(object target, FieldInfo fieldInfo, State state)
+    {
+        Func<FieldInfo, FuzzrOf<object>>? factory = null;
+        for (var i = state.GeneralFieldCustomizationOrder.Count - 1; i >= 0; i--)
+        {
+            var predicate = state.GeneralFieldCustomizationOrder[i];
+            if (predicate(fieldInfo))
+            {
+                factory = state.GeneralFieldCustomizations[predicate];
+                break;
+            }
+        }
+        if (factory is null) return false;
+
+        fieldInfo.SetValue(target, factory(fieldInfo)(state).Value);
+        return true;
     }
 
     private static bool ShouldGenerateProperty(PropertyInfo prop, State state)

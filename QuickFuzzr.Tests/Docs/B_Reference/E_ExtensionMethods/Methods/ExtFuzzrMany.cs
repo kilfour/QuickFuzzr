@@ -10,6 +10,11 @@ namespace QuickFuzzr.Tests.Docs.B_Reference.E_ExtensionMethods.Methods;
 [DocSignature("ExtFuzzr.Many(this FuzzrOf<T> fuzzr, int number)")]
 public class ExtFuzzrMany
 {
+    private sealed class RecursiveListNode
+    {
+        public List<RecursiveListNode> Children { get; set; } = [];
+    }
+
     [CodeSnippet]
     [CodeRemove("return ")]
     private static FuzzrOf<IEnumerable<int>> Fixed_Count_Fuzzr()
@@ -41,5 +46,47 @@ public class ExtFuzzrMany
             ("Count == 1", numbers => numbers.Count() == 1),
             ("Count == 2", numbers => numbers.Count() == 2),
             ("Count == 3", numbers => numbers.Count() == 3));
+    }
+
+    private static FuzzrOf<RecursiveListNode> RecursiveNodes(int minDepth, int maxDepth) =>
+        from children in Configr<RecursiveListNode>.Property(
+            node => node.Children,
+            Fuzzr.One<RecursiveListNode>().Many(2).ToList())
+        from depth in Configr<RecursiveListNode>.Depth(minDepth, maxDepth)
+        from node in Fuzzr.One<RecursiveListNode>()
+        select node;
+
+    [Fact]
+    [DocContent("- For recursive collections, `Many` returns an empty collection at the configured maximum depth.")]
+    public void RecursiveCollectionStopsAtMaximumDepth()
+    {
+        var root = RecursiveNodes(1, 3).Generate();
+
+        Assert.Equal(2, root.Children.Count);
+        Assert.All(root.Children, child => Assert.Equal(2, child.Children.Count));
+        Assert.All(root.Children.SelectMany(child => child.Children),
+            grandchild => Assert.Empty(grandchild.Children));
+    }
+
+    [Fact]
+    public void RecursiveCollectionAtMaximumDepthIsEmpty()
+    {
+        var root = RecursiveNodes(1, 1).Generate();
+
+        Assert.Empty(root.Children);
+    }
+
+    [Fact]
+    public void TopLevelManyIsNotLimitedByElementDepth()
+    {
+        var nodes =
+            (from depth in Configr<RecursiveListNode>.Depth(1, 1)
+             from values in Fuzzr.One<RecursiveListNode>().Many(5)
+             select values)
+            .Generate()
+            .ToList();
+
+        Assert.Equal(5, nodes.Count);
+        Assert.All(nodes, node => Assert.Empty(node.Children));
     }
 }

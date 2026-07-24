@@ -21,3 +21,6 @@ select derived types, or wire dynamic behaviors that apply when calling `Fuzzr.O
 | [Configr&lt;T&gt;.With](Methods/N_ConfigrWithT.md)| Applies configuration for T based on a generated value. |
 | [Configr.Primitive](Methods/O_ConfigrPrimitiveT.md)| Overrides the default Fuzzr for a primitive type. |
 | [Property Access](Methods/P_ConfigrPropertyAccess.md)| Controls auto-generation for specific property access levels. |
+| [Configr.EnableFieldAccess](Methods/Q_ConfigrFieldAccess.md)| Enables auto-generation for public mutable fields. |
+| [Configr&lt;T&gt;.Field](Methods/R_ConfigrFieldT.md)| Sets a custom Fuzzr or value for one public field on type T. |
+| [Configr.Field](Methods/S_ConfigrField.md)| Applies a custom Fuzzr or value to matching public fields across all types. |

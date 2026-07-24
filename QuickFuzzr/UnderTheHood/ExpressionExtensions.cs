@@ -22,4 +22,17 @@ public static class ExpressionExtensions
 
 		throw new PropertyConfigurationException(typeof(TTarget).Name, expression.ToString());
 	}
+
+	public static FieldInfo AsFieldInfo<TTarget, TField>(this Expression<Func<TTarget, TField>> expression)
+	{
+		if (expression.Body is MemberExpression memberExpr && memberExpr.Member is FieldInfo field)
+			return field;
+
+		if (expression.Body is UnaryExpression unary &&
+			unary.Operand is MemberExpression unaryMember &&
+			unaryMember.Member is FieldInfo convertedField)
+			return convertedField;
+
+		throw new FieldConfigurationException(typeof(TTarget).Name, expression.ToString());
+	}
 }

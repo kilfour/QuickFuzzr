@@ -15,6 +15,7 @@
 * Added `Fuzzr.Sequence(...)` for returning values in order, repeating from the
   beginning when it reaches the end.
 * Added opt-in generation for public mutable fields with
-  `Configr.EnableFieldAccess()`.
+  `Configr.EnableFieldAccess()`, plus targeted field configuration with
+  `Configr<T>.Field(...)` and `Configr.Field(...)`.
 * Default primitive fuzzrs now respect replacements configured with
   `Configr.Primitive(...)`.

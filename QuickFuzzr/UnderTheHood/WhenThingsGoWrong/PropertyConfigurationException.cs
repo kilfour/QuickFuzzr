@@ -17,5 +17,6 @@ Fields and methods are not supported by default.
 Possible solutions:
 - Use a property selector (e.g. a => a.PropertyName).
 - Then pass it to Configr<{typeName}>.Property(...) to configure generation.
+- To configure a field instead, use Configr<{typeName}>.Field(...).
 ";
 }

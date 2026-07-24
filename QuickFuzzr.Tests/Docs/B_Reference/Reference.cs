@@ -2,6 +2,7 @@ using QuickFuzzr.Tests.Docs.B_Reference.P_Primitives;
 using QuickFuzzr.Tests.Docs.B_Reference.B_Fuzzing;
 using QuickFuzzr.Tests.Docs.B_Reference.E_ExtensionMethods;
 using QuickFuzzr.Tests.Docs.B_Reference.D_Configuration;
+using QuickFuzzr.Tests.Docs.B_Reference.S_WhenThingsGoWrong;
 using QuickPulse.Explains;
 
 namespace QuickFuzzr.Tests.Docs.B_Reference;
@@ -11,6 +12,7 @@ namespace QuickFuzzr.Tests.Docs.B_Reference;
 [DocLink(typeof(Fuzzing), "Fuzzing")]
 [DocLink(typeof(FuzzrExtensionMethods), "FuzzrExtensionMethods")]
 [DocLink(typeof(Configuring), "Configuring")]
+[DocLink(typeof(WhenThingsGoWrong), "WhenThingsGoWrong")]
 [DocContent(
 @"This reference provides a **complete, factual overview** of QuickFuzzr's public API.
 It lists all available Fuzzrs, configuration points, and extension methods, organized by category.  
@@ -31,5 +33,6 @@ If you're looking for examples or background explanations, see the guide or cook
 - [Configuration][Configuring]
 - [Fuzzr Extension Methods][FuzzrExtensionMethods]
 - [Primitive Fuzzrs][PrimitiveFuzzrs]
+- [When Things Go Wrong][WhenThingsGoWrong]
 ")]
 public class Reference { }

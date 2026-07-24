@@ -878,6 +878,7 @@ If you're looking for examples or background explanations, see the guide or cook
 - [Configuration][Configuring]
 - [Fuzzr Extension Methods][FuzzrExtensionMethods]
 - [Primitive Fuzzrs][PrimitiveFuzzrs]
+- [When Things Go Wrong][WhenThingsGoWrong]
   
 
 [PrimitiveFuzzrs]: #primitive-fuzzrs
@@ -887,6 +888,8 @@ If you're looking for examples or background explanations, see the guide or cook
 [FuzzrExtensionMethods]: #fuzzr-extension-methods
 
 [Configuring]: #configuring
+
+[WhenThingsGoWrong]: #when-things-go-wrong
 ### Fuzzing
 This section lists the core Fuzzrs responsible for object creation and composition.  
 They provide controlled randomization, sequencing, and structural assembly beyond primitive value generation.  
@@ -1109,6 +1112,9 @@ select derived types, or wire dynamic behaviors that apply when calling `Fuzzr.O
 | [Configr&lt;T&gt;.With](#configrtwith)| Applies configuration for T based on a generated value. |
 | [Configr.Primitive](#configrprimitive)| Overrides the default Fuzzr for a primitive type. |
 | [Property Access](#property-access)| Controls auto-generation for specific property access levels. |
+| [Configr.EnableFieldAccess](#configrenablefieldaccess)| Enables auto-generation for public mutable fields. |
+| [Configr&lt;T&gt;.Field](#configrtfield)| Sets a custom Fuzzr or value for one public field on type T. |
+| [Configr.Field](#configrfield)| Applies a custom Fuzzr or value to matching public fields across all types. |
 #### Configr&lt;T&gt;.Ignore
 The property specified will be ignored during generation.  
 
@@ -1488,6 +1494,65 @@ select (person1, person2);
 - The default value is `PropertyAccess.PublicSetters`.  
 - `ReadOnly` only applies to get-only **auto-properties**.  
 - Getter-only properties *without* a compiler-generated backing field (i.e.: calculated or manually-backed) are never auto-generated.  
+#### Configr.EnableFieldAccess
+Field access is opt-in. By default, QuickFuzzr only populates properties.  
+
+**Signature:**  
+```csharp
+Configr.EnableFieldAccess()
+```
+  
+
+**Usage:**  
+```csharp
+    from _ in Configr.EnableFieldAccess()
+    from person in Fuzzr.One<PersonOutInTheFields>()
+    select person;
+```
+- Populates public instance fields.  
+- Static, constant, readonly, and non-public fields are not populated.  
+#### Configr&lt;T&gt;.Field
+Explicitly configures a public field. This does not require `Configr.EnableFieldAccess()`.  
+
+**Signature:**  
+```csharp
+Configr<T>.Field<TField>(Expression<Func<T, TField>> expression, FuzzrOf<TField> fuzzr)
+```
+  
+
+**Usage:**  
+```csharp
+ Configr<PersonOutInTheFields>.Field(person => person.Age, Fuzzr.Constant(42));
+```
+
+**Overloads:**  
+- `Configr<T>.Field<TField>(Expression<Func<T, TField>> expression, TField value)`  
+  Allows for passing a value instead of a Fuzzr.  
+
+**Exceptions:**  
+- `FieldConfigurationException`: When the expression points to something other than a field.  
+- `ArgumentNullException`: When the expression or Fuzzr is `null`.  
+#### Configr.Field
+Any public field matching the predicate uses the configured Fuzzr.  
+
+**Signature:**  
+```csharp
+Configr.Field<TField>(Func<FieldInfo, bool> predicate, FuzzrOf<TField> fuzzr)
+```
+  
+
+**Usage:**  
+```csharp
+ Configr.Field(field => field.Name == "Age", Fuzzr.Constant(42));
+```
+
+**Overloads:**  
+- `Configr.Field<TField>(Func<FieldInfo, bool> predicate, TField value)`  
+- `Configr.Field<TField>(Func<FieldInfo, bool> predicate, Func<FieldInfo, FuzzrOf<TField>> factory)`  
+- `Configr.Field<TField>(Func<FieldInfo, bool> predicate, Func<FieldInfo, TField> factory)`  
+
+**Exceptions:**  
+- `ArgumentNullException`: When the predicate, Fuzzr, or factory is `null`.  
 ### Fuzzr Extension Methods
 QuickFuzzr provides a collection of extension methods that enhance the expressiveness and composability of `FuzzrOf<T>`.
 These methods act as modifiers, they wrap existing Fuzzrs to alter behavior, add constraints,
@@ -1559,6 +1624,7 @@ Fuzzr.Constant(6).Many(3);
 **Overloads:**  
 - `Many(this FuzzrOf<T> fuzzr, int min, int max)`  
   Produces a variable number of values within bounds.  
+- For recursive collections, `Many` returns an empty collection at the configured maximum depth.  
 #### NeverReturnNull
 Filters out nulls from a nullable Fuzzr, retrying up to the retry limit.  
 
@@ -1810,6 +1876,48 @@ Use `Fuzzr.String()`.
 - The default Fuzzr always generates every char element of the string to be between lower case 'a' and lower case 'z'.  
 - A version exists for all methods mentioned above that takes a `FuzzrOf<char>` as parameter and then this one will be used to build up the resulting string.  
 - The default string generator can be replaced for the current generation run with `Configr.Primitive(...)`.  
+### When Things Go Wrong
+QuickFuzzr exceptions derive from `QuickFuzzrException`, so callers can catch
+that base type when they do not need to distinguish between individual failures.
+
+## Construction and instantiation
+
+| Exception | Thrown when |
+|---|---|
+| `ConstructionException` | A type has no parameterless constructor and no custom construction has been configured. |
+| `ConstructorNotFoundException` | `Configr<T>.Construct(...)` cannot find a constructor matching the configured argument types. |
+| `FactoryConstructionException` | A factory passed to `Fuzzr.One(...)` returns `null`. |
+| `InstantiationException` | QuickFuzzr attempts to instantiate an abstract type. |
+
+## Configuration and type hierarchy
+
+| Exception | Thrown when |
+|---|---|
+| `PropertyConfigurationException` | A property configuration expression refers to something other than a property. |
+| `FieldConfigurationException` | A field configuration expression refers to something other than a field. |
+| `RetryLimitOutOfRangeException` | `Configr.RetryLimit(...)` is set outside the allowed range of 1-1024. |
+| `DerivedTypeIsNullException` | `Configr<T>.AsOneOf(...)` receives a `null` derived type. |
+| `EmptyDerivedTypesException` | `Configr<T>.AsOneOf(...)` receives no derived types. |
+| `DuplicateDerivedTypesException` | `Configr<T>.AsOneOf(...)` receives the same derived type more than once. |
+| `DerivedTypeNotAssignableException` | A type passed to `AsOneOf(...)` or `EndOn<TEnd>()` is not assignable to the configured base type. |
+
+## Value exhaustion and retries
+
+| Exception | Thrown when |
+|---|---|
+| `PredicateUnsatisfiedException` | `.Where(...)` cannot produce a value satisfying its predicate within the retry limit. |
+| `UniqueValueExhaustedException` | `.Unique(...)` cannot produce a new value within the retry limit. |
+| `NonNullValueExhaustedException` | `.NeverReturnNull()` cannot produce a non-null value within the retry limit. |
+
+## Selection and combinator misuse
+
+| Exception | Thrown when |
+|---|---|
+| `OneOfEmptyOptionsException` | `Fuzzr.OneOf(...)` is asked to select from an empty sequence. |
+| `NegativeWeightException` | A weighted `Fuzzr.OneOf(...)` receives one or more negative weights. |
+| `ZeroTotalWeightException` | The total weight passed to `Fuzzr.OneOf(...)` is zero or less. |
+
+Exception messages include possible solutions tailored to the failure.  
 ## Cooking Up a Fuzzr
 ### Contents
 

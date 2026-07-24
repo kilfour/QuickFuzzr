@@ -16,3 +16,4 @@ Fuzzr.Constant(6).Many(3);
 **Overloads:**  
 - `Many(this FuzzrOf<T> fuzzr, int min, int max)`  
   Produces a variable number of values within bounds.  
+- For recursive collections, `Many` returns an empty collection at the configured maximum depth.  

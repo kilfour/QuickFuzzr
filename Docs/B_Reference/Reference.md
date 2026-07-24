@@ -17,6 +17,7 @@ If you're looking for examples or background explanations, see the guide or cook
 - [Configuration][Configuring]
 - [Fuzzr Extension Methods][FuzzrExtensionMethods]
 - [Primitive Fuzzrs][PrimitiveFuzzrs]
+- [When Things Go Wrong][WhenThingsGoWrong]
   
 
 [PrimitiveFuzzrs]: P_Primitives/PrimitiveFuzzrs.md
@@ -26,3 +27,5 @@ If you're looking for examples or background explanations, see the guide or cook
 [FuzzrExtensionMethods]: E_ExtensionMethods/FuzzrExtensionMethods.md
 
 [Configuring]: D_Configuration/Configuring.md
+
+[WhenThingsGoWrong]: S_WhenThingsGoWrong/WhenThingsGoWrong.md
