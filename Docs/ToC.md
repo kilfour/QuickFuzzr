@@ -51,3 +51,4 @@
   - [Cooking Up a Fuzzr](C_Cookbook/Cookbook.md)
     - [A Deep Dark Forest](C_Cookbook/A_ADeepDarkForest/ADeepDarkForest.md)
     - [Sometimes the Cheetah Needs to Run](C_Cookbook/B_SometimesTheCheetahNeedsToRun/SometimesTheCheetahNeedsToRun.md)
+    - [A Heap of Trouble](C_Cookbook/C_AHeapOfTrouble/AHeapOfTrouble.md)
