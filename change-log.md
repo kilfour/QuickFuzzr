@@ -10,7 +10,7 @@
 * Removed the `Func<T, T>` overload of `.Apply(...)`.  
   Use LINQ `Select` instead.
 
-### 0.2.0: Paint It Black
+### 0.2.1: Paint It Black
 
 * Added `Fuzzr.Sequence(...)` for returning values in order, repeating from the
   beginning when it reaches the end.

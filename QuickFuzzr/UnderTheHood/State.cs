@@ -128,6 +128,14 @@ public class State
 
     // ---------------------------------------------------------------------
     // Primitive Fuzzr Registry
+    private readonly HashSet<Type> resolvingPrimitiveFuzzrs = [];
+
+    public bool StartResolvingPrimitive(Type type)
+        => resolvingPrimitiveFuzzrs.Add(type);
+
+    public void StopResolvingPrimitive(Type type)
+        => resolvingPrimitiveFuzzrs.Remove(type);
+
     public readonly Dictionary<Type, FuzzrOf<object>> PrimitiveFuzzrs
         = new()
             {

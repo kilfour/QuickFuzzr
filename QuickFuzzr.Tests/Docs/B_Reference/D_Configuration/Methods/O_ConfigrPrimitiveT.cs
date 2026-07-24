@@ -54,6 +54,32 @@ public class O_ConfigrPrimitiveT
     }
 
     [Fact]
+    public void RegistryAwareFuzzrDoesNotRecurse()
+    {
+        var fuzzr =
+            from _ in Configr.Primitive(Fuzzr.Int())
+            from generated in Fuzzr.Int()
+            select generated;
+
+        var result = fuzzr.Generate(42);
+
+        Assert.InRange(result, 1, 99);
+    }
+
+    [Fact]
+    public void RegistryAwareFuzzrDoesNotRecurseForNullableCounterpart()
+    {
+        var fuzzr =
+            from _ in Configr.Primitive(Fuzzr.Int())
+            from generated in Fuzzr.One<NullablePerson>()
+            select generated;
+
+        var result = fuzzr.Generate(42);
+
+        Assert.True(result.Age is null or >= 1 and < 100);
+    }
+
+    [Fact]
     [DocOverloads]
     [DocContent("- `Primitive<T>(this FuzzrOf<T?> fuzzr)`:")]
     [DocContent("  Registers a global default Fuzzr for nullable primitives `T?`, overriding all nullable values produced across generated objects.")]
