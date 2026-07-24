@@ -7,6 +7,16 @@ public abstract class Primitive<T> where T : struct
 {
     protected abstract FuzzrOf<T> CreateFuzzr();
 
+    protected void AssertDefaultGeneratorCanBeReplaced(T replacement)
+    {
+        var fuzzr =
+            from _ in Configr.Primitive(Fuzzr.Constant(replacement))
+            from value in CreateFuzzr()
+            select value;
+
+        Assert.Equal(replacement, fuzzr.Generate());
+    }
+
     [Fact]
     public void Nullable()
         => CheckIf.GeneratesNullAndNotNull(CreateFuzzr().Nullable());

@@ -13,6 +13,7 @@
       - [Counter](B_Reference/B_Fuzzing/Methods/E_Counter.md)
       - [Tuple](B_Reference/B_Fuzzing/Methods/K_Tuple.md)
       - [Constant](B_Reference/B_Fuzzing/Methods/T_Constant.md)
+      - [Sequence](B_Reference/B_Fuzzing/Methods/V_Sequence.md)
     - [Configuring](B_Reference/D_Configuration/Configuring.md)
       - [Configr&lt;T&gt;.Ignore](B_Reference/D_Configuration/Methods/A_ConfigrIgnoreT.md)
       - [Configr.Ignore](B_Reference/D_Configuration/Methods/B_ConfigrIgnore.md)

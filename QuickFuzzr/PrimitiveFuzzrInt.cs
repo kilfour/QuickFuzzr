@@ -10,7 +10,7 @@ public static partial class Fuzzr
 	/// </summary>
 	public static FuzzrOf<int> Int()
 	{
-		return Int(1, 100);
+		return PrimitiveDefault(Int(1, 100));
 	}
 
 	/// <summary>

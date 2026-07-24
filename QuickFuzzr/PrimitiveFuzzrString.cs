@@ -9,7 +9,7 @@ public static partial class Fuzzr
 	/// Creates a Fuzzr that produces random strings of lowercase letters with length between 1 and 10 (inclusive) characters .
 	/// Use for generating simple text data like names, identifiers, or any scenario requiring basic string content.
 	/// </summary>
-	public static FuzzrOf<string> String() => StringInternal(Char(), 1, 10);
+	public static FuzzrOf<string> String() => PrimitiveDefault(StringInternal(Char('a', 'z'), 1, 10));
 
 	/// <summary>
 	/// Creates a Fuzzr that produces random strings of lowercase letters with exactly the specified length.

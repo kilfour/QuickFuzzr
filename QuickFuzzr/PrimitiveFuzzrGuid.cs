@@ -10,6 +10,9 @@ public static partial class Fuzzr
 	/// This Fuzzr never generates Guid.Empty and is deterministic when using a seed.
 	/// </summary>
 	public static FuzzrOf<Guid> Guid()
+		=> PrimitiveDefault(BuiltInGuid());
+
+	private static FuzzrOf<Guid> BuiltInGuid()
 	{
 		return s =>
 		{

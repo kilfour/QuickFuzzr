@@ -10,7 +10,7 @@ public static partial class Fuzzr
 	/// </summary>
 	public static FuzzrOf<TimeSpan> TimeSpan()
 	{
-		return TimeSpan(1, 1000);
+		return PrimitiveDefault(TimeSpan(1, 1000));
 	}
 
 	/// <summary>

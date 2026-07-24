@@ -29,4 +29,9 @@ public class DateTimes : RangedPrimitive<DateTime>
 			.To(1.January(2000).At(1.OClock().Seconds(1)));
 
 	protected override bool UpperBoundExclusive => false;
+
+	[Fact]
+	[DocContent("- `Configr.Primitive(...)` can replace the default `Fuzzr.DateTime()` generator for the current generation run.")]
+	public void ReplaceDefaultGenerator()
+		=> AssertDefaultGeneratorCanBeReplaced(new DateTime(2000, 1, 2, 3, 4, 5));
 }

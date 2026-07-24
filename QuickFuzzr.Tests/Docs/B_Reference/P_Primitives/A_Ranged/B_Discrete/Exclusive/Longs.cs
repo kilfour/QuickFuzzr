@@ -14,4 +14,9 @@ public class Longs : RangedPrimitive<long>
 	protected override (long Min, long Max) ExampleRange => (5, 7);
 	protected override (long Min, long Max) MinimalRange => (0, 1);
 	protected override long GetUpperBoundarySample(long min, long max) => max - 1;
+
+	[Fact]
+	[DocContent("- `Configr.Primitive(...)` can replace the default `Fuzzr.Long()` generator for the current generation run.")]
+	public void ReplaceDefaultGenerator()
+		=> AssertDefaultGeneratorCanBeReplaced(42L);
 }

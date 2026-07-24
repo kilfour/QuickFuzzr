@@ -127,42 +127,53 @@ public class State
     public readonly Dictionary<Type, FuzzrOf<object>> PrimitiveFuzzrs
         = new()
             {
-                { typeof(string), Fuzzr.String().AsObject() },
-                { typeof(int), Fuzzr.Int().AsObject() },
-                { typeof(int?), Fuzzr.Int().Nullable().AsObject() },
-                { typeof(char), Fuzzr.Char().AsObject() },
-                { typeof(char?), Fuzzr.Char().Nullable().AsObject() },
-                { typeof(bool), Fuzzr.Bool().AsObject() },
-                { typeof(bool?), Fuzzr.Bool().Nullable().AsObject() },
-                { typeof(byte), Fuzzr.Byte().AsObject() },
-                { typeof(byte?), Fuzzr.Byte().Nullable().AsObject() },
-                { typeof(decimal), Fuzzr.Decimal().AsObject() },
-                { typeof(decimal?), Fuzzr.Decimal().Nullable().AsObject() },
-                { typeof(DateTime), Fuzzr.DateTime().AsObject() },
-                { typeof(DateTime?), Fuzzr.DateTime().Nullable().AsObject() },
-                { typeof(long), Fuzzr.Long().AsObject() },
-                { typeof(long?), Fuzzr.Long().Nullable().AsObject() },
-                { typeof(double), Fuzzr.Double().AsObject() },
-                { typeof(double?), Fuzzr.Double().Nullable().AsObject() },
-                { typeof(float), Fuzzr.Float().AsObject() },
-                { typeof(float?), Fuzzr.Float().Nullable().AsObject() },
-                { typeof(Guid), Fuzzr.Guid().AsObject() },
-                { typeof(Guid?), Fuzzr.Guid().Nullable().AsObject() },
-                { typeof(Half), Fuzzr.Half().AsObject() },
-                { typeof(Half?), Fuzzr.Half().Nullable().AsObject() },
-                { typeof(short), Fuzzr.Short().AsObject() },
-                { typeof(short?), Fuzzr.Short().Nullable().AsObject() },
-                { typeof(TimeSpan), Fuzzr.TimeSpan().AsObject() },
-                { typeof(TimeSpan?), Fuzzr.TimeSpan().Nullable().AsObject() },
-                { typeof(DateOnly), Fuzzr.DateOnly().AsObject() },
-                { typeof(DateOnly?), Fuzzr.DateOnly().Nullable().AsObject() },
-                { typeof(TimeOnly), Fuzzr.TimeOnly().AsObject() },
-                { typeof(TimeOnly?), Fuzzr.TimeOnly().Nullable().AsObject() },
-                { typeof(ushort), Fuzzr.UShort().AsObject() },
-                { typeof(ushort?), Fuzzr.UShort().Nullable().AsObject() },
-                { typeof(ulong), Fuzzr.ULong().AsObject() },
-                { typeof(ulong?), Fuzzr.ULong().Nullable().AsObject() },
-                { typeof(uint), Fuzzr.UInt().AsObject() },
-                { typeof(uint?), Fuzzr.UInt().Nullable().AsObject() }
+                { typeof(string), Fuzzr.String(Fuzzr.Char(), 1, 10).AsObject() },
+                { typeof(int), Fuzzr.Int(1, 100).AsObject() },
+                { typeof(int?), Fuzzr.Int(1, 100).Nullable().AsObject() },
+                { typeof(char), Fuzzr.Char('a', 'z').AsObject() },
+                { typeof(char?), Fuzzr.Char('a', 'z').Nullable().AsObject() },
+                { typeof(bool), BuiltInBool().AsObject() },
+                { typeof(bool?), BuiltInBool().Nullable().AsObject() },
+                { typeof(byte), Fuzzr.Byte(byte.MinValue, byte.MaxValue).AsObject() },
+                { typeof(byte?), Fuzzr.Byte(byte.MinValue, byte.MaxValue).Nullable().AsObject() },
+                { typeof(decimal), Fuzzr.Decimal(1, 100, 2).AsObject() },
+                { typeof(decimal?), Fuzzr.Decimal(1, 100, 2).Nullable().AsObject() },
+                { typeof(DateTime), Fuzzr.DateTime(new DateTime(1970, 1, 1), new DateTime(2020, 12, 31)).AsObject() },
+                { typeof(DateTime?), Fuzzr.DateTime(new DateTime(1970, 1, 1), new DateTime(2020, 12, 31)).Nullable().AsObject() },
+                { typeof(long), Fuzzr.Long(1, 100).AsObject() },
+                { typeof(long?), Fuzzr.Long(1, 100).Nullable().AsObject() },
+                { typeof(double), Fuzzr.Double(1, 100).AsObject() },
+                { typeof(double?), Fuzzr.Double(1, 100).Nullable().AsObject() },
+                { typeof(float), Fuzzr.Float(1, 100).AsObject() },
+                { typeof(float?), Fuzzr.Float(1, 100).Nullable().AsObject() },
+                { typeof(Guid), BuiltInGuid().AsObject() },
+                { typeof(Guid?), BuiltInGuid().Nullable().AsObject() },
+                { typeof(Half), Fuzzr.Half((Half)1, (Half)100).AsObject() },
+                { typeof(Half?), Fuzzr.Half((Half)1, (Half)100).Nullable().AsObject() },
+                { typeof(short), Fuzzr.Short(1, 100).AsObject() },
+                { typeof(short?), Fuzzr.Short(1, 100).Nullable().AsObject() },
+                { typeof(TimeSpan), Fuzzr.TimeSpan(1, 1000).AsObject() },
+                { typeof(TimeSpan?), Fuzzr.TimeSpan(1, 1000).Nullable().AsObject() },
+                { typeof(DateOnly), Fuzzr.DateOnly(new DateOnly(1970, 1, 1), new DateOnly(2020, 12, 31)).AsObject() },
+                { typeof(DateOnly?), Fuzzr.DateOnly(new DateOnly(1970, 1, 1), new DateOnly(2020, 12, 31)).Nullable().AsObject() },
+                { typeof(TimeOnly), Fuzzr.TimeOnly(System.TimeOnly.MinValue, System.TimeOnly.MaxValue).AsObject() },
+                { typeof(TimeOnly?), Fuzzr.TimeOnly(System.TimeOnly.MinValue, System.TimeOnly.MaxValue).Nullable().AsObject() },
+                { typeof(ushort), Fuzzr.UShort(1, 100).AsObject() },
+                { typeof(ushort?), Fuzzr.UShort(1, 100).Nullable().AsObject() },
+                { typeof(ulong), Fuzzr.ULong(1, 100).AsObject() },
+                { typeof(ulong?), Fuzzr.ULong(1, 100).Nullable().AsObject() },
+                { typeof(uint), Fuzzr.UInt(1, 100).AsObject() },
+                { typeof(uint?), Fuzzr.UInt(1, 100).Nullable().AsObject() }
             };
+
+    private static FuzzrOf<bool> BuiltInBool() =>
+        state => new Result<bool>(state.Random.Next(0, 2) > 0, state);
+
+    private static FuzzrOf<Guid> BuiltInGuid() =>
+        state =>
+        {
+            var bytes = new byte[16];
+            state.Random.NextBytes(bytes);
+            return new Result<Guid>(new Guid(bytes), state);
+        };
 }

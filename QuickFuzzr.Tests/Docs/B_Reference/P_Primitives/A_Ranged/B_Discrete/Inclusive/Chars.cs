@@ -14,4 +14,9 @@ public class Chars : RangedPrimitive<char>
 	protected override (char Min, char Max) ExampleRange => ('5', '7');
 	protected override (char Min, char Max) MinimalRange => ('0', '1');
 	protected override bool UpperBoundExclusive => false;
+
+	[Fact]
+	[DocContent("- `Configr.Primitive(...)` can replace the default `Fuzzr.Char()` generator for the current generation run.")]
+	public void ReplaceDefaultGenerator()
+		=> AssertDefaultGeneratorCanBeReplaced('!');
 }

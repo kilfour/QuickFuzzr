@@ -10,7 +10,7 @@ public static partial class Fuzzr
 	/// </summary>
 	public static FuzzrOf<ulong> ULong()
 	{
-		return ULong(1, 100);
+		return PrimitiveDefault(ULong(1, 100));
 	}
 
 	/// <summary>

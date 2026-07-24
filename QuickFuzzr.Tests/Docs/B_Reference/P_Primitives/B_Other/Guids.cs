@@ -10,6 +10,11 @@ public class Guids : Primitive<Guid>
 	protected override FuzzrOf<Guid> CreateFuzzr() => Fuzzr.Guid();
 
 	[Fact]
+	[DocContent("- `Configr.Primitive(...)` can replace the default `Fuzzr.Guid()` generator for the current generation run.")]
+	public void ReplaceDefaultGenerator()
+		=> AssertDefaultGeneratorCanBeReplaced(new Guid("00000000-0000-0000-0000-000000000042"));
+
+	[Fact]
 	[DocContent("- The default Fuzzr never generates Guid.Empty.")]
 	public void NeverGuidEmpty()
 	{

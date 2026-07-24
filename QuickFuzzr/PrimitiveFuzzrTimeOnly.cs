@@ -9,7 +9,7 @@ public static partial class Fuzzr
 	/// Use for generating time values to test time-based logic, scheduling systems, or any scenario requiring complete temporal coverage.
 	/// </summary>
 	public static FuzzrOf<TimeOnly> TimeOnly()
-		=> TimeOnly(System.TimeOnly.MinValue, System.TimeOnly.MaxValue);
+		=> PrimitiveDefault(TimeOnly(System.TimeOnly.MinValue, System.TimeOnly.MaxValue));
 
 	/// <summary>
 	/// Creates a Fuzzr that produces random TimeOnly values within the specified inclusive time range.

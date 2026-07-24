@@ -17,4 +17,8 @@ public class Halfs : RangedPrimitive<Half>
     protected override bool UpperBoundExclusive => false; // due to the floating-point rounding
     protected override bool CheckExactBoundaries => false;
 
+    [Fact]
+    [DocContent("- `Configr.Primitive(...)` can replace the default `Fuzzr.Half()` generator for the current generation run.")]
+    public void ReplaceDefaultGenerator()
+        => AssertDefaultGeneratorCanBeReplaced((Half)42);
 }

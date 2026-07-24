@@ -18,6 +18,11 @@ public class Booleans : Primitive<bool>
 	protected override FuzzrOf<bool> CreateFuzzr() => Fuzzr.Bool();
 
 	[Fact]
+	[DocContent("- `Configr.Primitive(...)` can replace the default `Fuzzr.Bool()` generator for the current generation run.")]
+	public void ReplaceDefaultGenerator()
+		=> AssertDefaultGeneratorCanBeReplaced(true);
+
+	[Fact]
 	public override void Property()
 	{
 		CheckIf.TheseValuesAreGenerated(

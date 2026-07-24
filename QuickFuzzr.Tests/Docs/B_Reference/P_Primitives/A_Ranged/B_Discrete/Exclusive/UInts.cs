@@ -14,4 +14,9 @@ public class UInts : RangedPrimitive<uint>
 	protected override (uint Min, uint Max) ExampleRange => (5, 7);
 	protected override (uint Min, uint Max) MinimalRange => (0, 1);
 	protected override uint GetUpperBoundarySample(uint min, uint max) => max - 1;
+
+	[Fact]
+	[DocContent("- `Configr.Primitive(...)` can replace the default `Fuzzr.UInt()` generator for the current generation run.")]
+	public void ReplaceDefaultGenerator()
+		=> AssertDefaultGeneratorCanBeReplaced(42U);
 }

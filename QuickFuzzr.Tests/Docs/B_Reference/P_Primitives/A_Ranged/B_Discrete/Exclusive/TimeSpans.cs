@@ -15,4 +15,9 @@ public class TimeSpans : RangedPrimitive<TimeSpan>
 	protected override (TimeSpan Min, TimeSpan Max) ExampleRange => (new TimeSpan(5), new TimeSpan(7));
 	protected override (TimeSpan Min, TimeSpan Max) MinimalRange => (new TimeSpan(0), new TimeSpan(1));
 	protected override TimeSpan GetUpperBoundarySample(TimeSpan min, TimeSpan max) => max.Add(new TimeSpan(-1));
+
+	[Fact]
+	[DocContent("- `Configr.Primitive(...)` can replace the default `Fuzzr.TimeSpan()` generator for the current generation run.")]
+	public void ReplaceDefaultGenerator()
+		=> AssertDefaultGeneratorCanBeReplaced(System.TimeSpan.FromMinutes(42));
 }

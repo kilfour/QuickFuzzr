@@ -13,6 +13,11 @@ public class Enums : Primitive<Enums.MyEnumeration>
 	protected override FuzzrOf<MyEnumeration> CreateFuzzr() => Fuzzr.Enum<MyEnumeration>();
 
 	[Fact]
+	[DocContent("- `Configr.Primitive(...)` can replace the default `Fuzzr.Enum<T>()` generator for the current generation run.")]
+	public void ReplaceDefaultGenerator()
+		=> AssertDefaultGeneratorCanBeReplaced(MyEnumeration.Mytwo);
+
+	[Fact]
 	[DocContent("- The default Fuzzr just picks a random value from all enumeration values.")]
 	public void DefaultFuzzr()
 	{

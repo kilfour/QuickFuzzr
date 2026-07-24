@@ -14,4 +14,9 @@ public class Floats : RangedPrimitive<float>
 	protected override (float Min, float Max) ExampleRange => (5, 7);
 	protected override (float Min, float Max) MinimalRange => (0, 1);
 	protected override bool CheckExactBoundaries => false;
+
+	[Fact]
+	[DocContent("- `Configr.Primitive(...)` can replace the default `Fuzzr.Float()` generator for the current generation run.")]
+	public void ReplaceDefaultGenerator()
+		=> AssertDefaultGeneratorCanBeReplaced(42f);
 }

@@ -8,7 +8,7 @@ public static partial class Fuzzr
 	/// Creates a Fuzzr that produces random short integer values in the range [1, 100) (min inclusive, max exclusive).
 	/// Use for generating compact numeric data like small counters, port numbers, or any scenario requiring 16-bit whole numbers within a typical range.
 	/// </summary>
-	public static FuzzrOf<short> Short() => Short(1, 100);
+	public static FuzzrOf<short> Short() => PrimitiveDefault(Short(1, 100));
 
 	/// <summary>
 	/// Creates a Fuzzr that produces random short integer values in the range [min, max) (min inclusive, max exclusive).

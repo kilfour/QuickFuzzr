@@ -14,4 +14,9 @@ public class ULongs : RangedPrimitive<ulong>
 	protected override (ulong Min, ulong Max) ExampleRange => (5, 7);
 	protected override (ulong Min, ulong Max) MinimalRange => (0, 1);
 	protected override ulong GetUpperBoundarySample(ulong min, ulong max) => max - 1;
+
+	[Fact]
+	[DocContent("- `Configr.Primitive(...)` can replace the default `Fuzzr.ULong()` generator for the current generation run.")]
+	public void ReplaceDefaultGenerator()
+		=> AssertDefaultGeneratorCanBeReplaced(42UL);
 }

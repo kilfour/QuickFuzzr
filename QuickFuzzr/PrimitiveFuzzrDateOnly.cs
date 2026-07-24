@@ -9,7 +9,7 @@ public static partial class Fuzzr
 	/// Use for generating realistic date values within a common historical range for testing temporal logic.
 	/// </summary>
 	public static FuzzrOf<DateOnly> DateOnly()
-		=> DateOnly(new DateOnly(1970, 1, 1), new DateOnly(2020, 12, 31));
+		=> PrimitiveDefault(DateOnly(new DateOnly(1970, 1, 1), new DateOnly(2020, 12, 31)));
 
 	/// <summary>
 	/// Creates a Fuzzr that produces random DateOnly values within the specified inclusive date range.

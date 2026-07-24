@@ -14,7 +14,7 @@ public static partial class Fuzzr
 	{
 		if (!typeof(T).IsEnum)
 			throw new ArgumentException("T must be an enumerated type");
-		return s => new Result<T>((T)GetEnumValue(typeof(T), s), s);
+		return PrimitiveDefault<T>(s => new Result<T>((T)GetEnumValue(typeof(T), s), s));
 	}
 
 	internal static object GetEnumValue(Type type, State s)

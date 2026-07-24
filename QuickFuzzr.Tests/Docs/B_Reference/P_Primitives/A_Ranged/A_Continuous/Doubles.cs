@@ -14,4 +14,9 @@ public class Doubles : RangedPrimitive<double>
 	protected override (double Min, double Max) ExampleRange => (5, 7);
 	protected override (double Min, double Max) MinimalRange => (0, 1);
 	protected override bool CheckExactBoundaries => false;
+
+	[Fact]
+	[DocContent("- `Configr.Primitive(...)` can replace the default `Fuzzr.Double()` generator for the current generation run.")]
+	public void ReplaceDefaultGenerator()
+		=> AssertDefaultGeneratorCanBeReplaced(42d);
 }

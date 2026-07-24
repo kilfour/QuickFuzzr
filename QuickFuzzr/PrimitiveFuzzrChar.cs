@@ -8,7 +8,7 @@ public static partial class Fuzzr
 	/// Creates a Fuzzr that produces random lowercase alphabetic characters ('a'-'z').
 	/// Use for generating simple text fragments, identifiers, or single-character fields.
 	/// </summary>
-	public static FuzzrOf<char> Char() => Char('a', 'z');
+	public static FuzzrOf<char> Char() => PrimitiveDefault(Char('a', 'z'));
 
 	/// <summary>
 	/// Creates a Fuzzr that produces random characters within the inclusive range [min, max].

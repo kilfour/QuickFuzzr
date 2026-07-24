@@ -10,7 +10,7 @@ public static partial class Fuzzr
 	/// </summary>
 	public static FuzzrOf<long> Long()
 	{
-		return Long(1, 100);
+		return PrimitiveDefault(Long(1, 100));
 	}
 
 	/// <summary>

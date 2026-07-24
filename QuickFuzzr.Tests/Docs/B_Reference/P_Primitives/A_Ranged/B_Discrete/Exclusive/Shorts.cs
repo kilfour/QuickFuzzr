@@ -13,4 +13,9 @@ public class Shorts : RangedPrimitive<short>
 	protected override (short Min, short Max) ExampleRange => (5, 7);
 	protected override (short Min, short Max) MinimalRange => (0, 1);
 	protected override short GetUpperBoundarySample(short min, short max) => (short)(max - 1);
+
+	[Fact]
+	[DocContent("- `Configr.Primitive(...)` can replace the default `Fuzzr.Short()` generator for the current generation run.")]
+	public void ReplaceDefaultGenerator()
+		=> AssertDefaultGeneratorCanBeReplaced((short)42);
 }

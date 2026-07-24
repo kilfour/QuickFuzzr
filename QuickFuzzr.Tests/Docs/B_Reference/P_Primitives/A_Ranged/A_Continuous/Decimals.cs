@@ -18,6 +18,11 @@ public class Decimals : RangedPrimitive<decimal>
 	protected override bool CheckExactBoundaries => false;
 
 	[Fact]
+	[DocContent("- `Configr.Primitive(...)` can replace the default `Fuzzr.Decimal()` generator for the current generation run.")]
+	public void ReplaceDefaultGenerator()
+		=> AssertDefaultGeneratorCanBeReplaced(42m);
+
+	[Fact]
 	public void DefaultFuzzrPrecision()
 		=> CheckIf.GeneratedValuesShouldAllSatisfy(Fuzzr.Decimal(),
 			("precision <= 2", a => GetPrecision(a) <= 2));

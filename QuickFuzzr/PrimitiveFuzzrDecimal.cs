@@ -10,7 +10,7 @@ public static partial class Fuzzr
     /// Use for generating precise numeric data suitable for financial calculations,
     /// currency values, or exact decimal arithmetic.
     /// </summary>
-    public static FuzzrOf<decimal> Decimal() => Decimal(1, 100, 2);
+    public static FuzzrOf<decimal> Decimal() => PrimitiveDefault(Decimal(1, 100, 2));
 
     /// <summary>
     /// Creates a Fuzzr that produces random decimal values in the range [1, 100)

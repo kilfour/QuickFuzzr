@@ -13,3 +13,4 @@ All entries return a `FuzzrOf<T>` and can be composed using standard LINQ syntax
 | [Counter](Methods/E_Counter.md)| Generates a sequential integer per key, starting at 1. |
 | [Tuple](Methods/K_Tuple.md)| Creates a Fuzzr that combines two source Fuzzrs into a tuple of their generated values. |
 | [Constant](Methods/T_Constant.md)| Wraps a fixed value in a Fuzzr, producing the same result every time. |
+| [Sequence](Methods/V_Sequence.md)| Returns the provided values in order, repeating when it reaches the end. |

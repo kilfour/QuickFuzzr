@@ -9,7 +9,7 @@ public static partial class Fuzzr
 	/// Use for generating small numeric values, flags, or when working with binary data formats.
 	/// </summary>
 	public static FuzzrOf<byte> Byte()
-		=> Byte(byte.MinValue, byte.MaxValue);
+		=> PrimitiveDefault(Byte(byte.MinValue, byte.MaxValue));
 
 	/// <summary>
 	/// Creates a Fuzzr that produces random byte values within the inclusive range [min, max].

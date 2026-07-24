@@ -14,4 +14,9 @@ public class Bytes : RangedPrimitive<byte>
     protected override (byte Min, byte Max) ExampleRange => (5, 7);
     protected override (byte Min, byte Max) MinimalRange => (0, 1);
     protected override bool UpperBoundExclusive => false;
+
+    [Fact]
+    [DocContent("- `Configr.Primitive(...)` can replace the default `Fuzzr.Byte()` generator for the current generation run.")]
+    public void ReplaceDefaultGenerator()
+        => AssertDefaultGeneratorCanBeReplaced((byte)42);
 }

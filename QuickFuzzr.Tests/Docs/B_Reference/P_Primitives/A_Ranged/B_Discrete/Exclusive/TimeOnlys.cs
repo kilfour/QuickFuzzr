@@ -27,4 +27,9 @@ public class TimeOnlys : RangedPrimitive<TimeOnly>
 		=> (new TimeOnly(0), new TimeOnly(1));
 
 	protected override bool UpperBoundExclusive => false;
+
+	[Fact]
+	[DocContent("- `Configr.Primitive(...)` can replace the default `Fuzzr.TimeOnly()` generator for the current generation run.")]
+	public void ReplaceDefaultGenerator()
+		=> AssertDefaultGeneratorCanBeReplaced(new TimeOnly(12, 34, 56));
 }

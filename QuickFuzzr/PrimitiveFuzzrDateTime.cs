@@ -10,7 +10,7 @@ public static partial class Fuzzr
 	/// </summary>
 	public static FuzzrOf<DateTime> DateTime()
 	{
-		return DateTime(new DateTime(1970, 1, 1), new DateTime(2020, 12, 31));
+		return PrimitiveDefault(DateTime(new DateTime(1970, 1, 1), new DateTime(2020, 12, 31)));
 	}
 
 	/// <summary>

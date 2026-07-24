@@ -41,6 +41,7 @@ All entries return a `FuzzrOf<T>` and can be composed using standard LINQ syntax
 | [Counter](#counter)| Generates a sequential integer per key, starting at 1. |
 | [Tuple](#tuple)| Creates a Fuzzr that combines two source Fuzzrs into a tuple of their generated values. |
 | [Constant](#constant)| Wraps a fixed value in a Fuzzr, producing the same result every time. |
+| [Sequence](#sequence)| Returns the provided values in order, repeating when it reaches the end. |
 ### One
 Creates a Fuzzr that produces complete instances of type `T` using QuickFuzzr's automatic construction rules.  
 
@@ -198,6 +199,32 @@ Fuzzr.Constant(T value)
 Fuzzr.Constant(42);
 // Results in => 42
 ```
+### Sequence
+Creates a Fuzzr that produces each provided value in order.  
+After the final value, it starts again at the beginning.
+  
+
+**Signature:**  
+```csharp
+Fuzzr.Sequence(params T[] values)
+```
+  
+
+**Usage:**  
+```csharp
+Fuzzr.Sequence(42, 43, 44);
+// Generate once results in => 42
+// second generate => 43
+// third generate => 44
+// fourth generate => 42
+// ...
+```
+- Sequence state resets between separate `Generate()` calls.  
+- The provided values are captured when the Fuzzr is created.  
+
+**Exceptions:**  
+- `ArgumentNullException`: When the provided values are null.  
+- `ArgumentException`: When no values are provided.  
 ## Configuring
 `Configr` provides a configuration pipeline to influence how QuickFuzzr builds objects.
 Use it to set global defaults, customize properties, control recursion depth,
@@ -819,6 +846,7 @@ This behaviour is explicitly tested and documented.
 Use `Fuzzr.Decimal()`.  
 **Default Range and Precision:** min = 1, max = 100, precision = 2).  
 Apart from the usual ranged primitive min/max overload, `Fuzzr.Decimal()` adds two more allowing the user to specify a precision.  
+- `Configr.Primitive(...)` can replace the default `Fuzzr.Decimal()` generator for the current generation run.  
 - The overload `Decimal(int precision)` generates a decimal with up to `precision` decimal places.  
 - Throws an `ArgumentException` when `precision` < `0`.  
 - The overload `Decimal(decimal min, decimal max, int precision)` generates a decimal in the range [min, max) (min inclusive, max exclusive), with up to `precision` decimal places.  
@@ -826,13 +854,16 @@ Apart from the usual ranged primitive min/max overload, `Fuzzr.Decimal()` adds t
 ##### Doubles
 Use `Fuzzr.Double()`.  
 - **Default Range:** min = 1, max = 100).  
+- `Configr.Primitive(...)` can replace the default `Fuzzr.Double()` generator for the current generation run.  
 ##### Floats
 Use `Fuzzr.Float()`.  
 - **Default Range:** min = 1, max = 100).  
+- `Configr.Primitive(...)` can replace the default `Fuzzr.Float()` generator for the current generation run.  
 ##### Halfs
 Use `Fuzzr.Half()`.  
 - **Default Range:** min = 1, max = 100).  
 *Note:* Due to floating-point rounding, max may occasionally be produced.  
+- `Configr.Primitive(...)` can replace the default `Fuzzr.Half()` generator for the current generation run.  
 #### Discrete
 Values come from a countable set (integers, shorts, bytes, dates snapped to seconds, etc.).
 
@@ -843,54 +874,69 @@ Used when C# conventions or data types naturally use [min, max] (e.g. DateOnly, 
 ##### Bytes
 Use `Fuzzr.Byte()`.  
 - **Default Range:** min = 1, max = 255.  
+- `Configr.Primitive(...)` can replace the default `Fuzzr.Byte()` generator for the current generation run.  
 ##### Chars
 Use `Fuzzr.Char()`.  
 - **Default Range:** min = 'a', max = 'z'.  
+- `Configr.Primitive(...)` can replace the default `Fuzzr.Char()` generator for the current generation run.  
 ##### DateOnlys
 Use `Fuzzr.DateOnly()`.  
 - **Default Range:** min = 'DateOnly(1970, 1, 1)', max = 'DateOnly(2020, 12, 31)'.  
+- `Configr.Primitive(...)` can replace the default `Fuzzr.DateOnly()` generator for the current generation run.  
 ##### DateTimes
 Use `Fuzzr.DateTime()`.  
 - **Default Range:** min = 'DateOnly(1970, 1, 1)', max = 'DateOnly(2020, 12, 31)'.  
 - Resulting values are snapped to whole seconds.  
+- `Configr.Primitive(...)` can replace the default `Fuzzr.DateTime()` generator for the current generation run.  
 ##### Exclusive upper bound.
 The maximum value is never produced.  
 Matches the C# RNG convention used by Random.Next(min, max) and applies to most integer fuzzrs.  
 ##### Ints
 Use `Fuzzr.Int()`.  
 - **Default Range:** min = 1, max = 100).  
+- `Configr.Primitive(...)` can replace the default `Fuzzr.Int()` generator for the current generation run.  
 ##### Longs
 Use `Fuzzr.Long()`.  
 - **Default: Range** min = 1, max = 100).  
+- `Configr.Primitive(...)` can replace the default `Fuzzr.Long()` generator for the current generation run.  
 ##### Shorts
 Use `Fuzzr.Short()`.  
 - **Default Range:** min = 1, max = 100).  
+- `Configr.Primitive(...)` can replace the default `Fuzzr.Short()` generator for the current generation run.  
 ##### TimeOnlys
 Use `Fuzzr.TimeOnly()`.  
 - **Default Range:** min = 00:00:00, max = 23:59:59.9999999).  
+- `Configr.Primitive(...)` can replace the default `Fuzzr.TimeOnly()` generator for the current generation run.  
 ##### TimeSpans
 Use `Fuzzr.TimeSpan()`.  
 - **Default Range:** min = 1, max = 1000).  
+- `Configr.Primitive(...)` can replace the default `Fuzzr.TimeSpan()` generator for the current generation run.  
 ##### UInts
 Use `Fuzzr.UInt()`.  
 - **Default Range:** min = 1, max = 100).  
+- `Configr.Primitive(...)` can replace the default `Fuzzr.UInt()` generator for the current generation run.  
 ##### ULongs
 Use `Fuzzr.ULong()`.  
 - **Default Range:** min = 1, max = 100).  
+- `Configr.Primitive(...)` can replace the default `Fuzzr.ULong()` generator for the current generation run.  
 ##### UShorts
 Use `Fuzzr.UShort()`.  
 - **Default Range:** min = 1, max = 100).  
+- `Configr.Primitive(...)` can replace the default `Fuzzr.UShort()` generator for the current generation run.  
 ### Non Ranged Primitives
 #### Booleans
 Use `Fuzzr.Bool()`.  
 - Generates `true` or `false`.  
+- `Configr.Primitive(...)` can replace the default `Fuzzr.Bool()` generator for the current generation run.  
 #### Enums
 Use `Fuzzr.Enum<T>()`, where T is the type of Enum you want to generate.  
 > Enums are included here for convenience. While not numeric primitives themselves, they are generated as atomic values from their defined members.  
+- `Configr.Primitive(...)` can replace the default `Fuzzr.Enum<T>()` generator for the current generation run.  
 - The default Fuzzr just picks a random value from all enumeration values.  
 - Passing in a non Enum type for T throws an ArgumentException.  
 #### Guids
 Use `Fuzzr.Guid()`.  
+- `Configr.Primitive(...)` can replace the default `Fuzzr.Guid()` generator for the current generation run.  
 - The default Fuzzr never generates Guid.Empty.  
 - `Fuzzr.Guid()` is deterministic when seeded.  
 #### Strings
@@ -902,3 +948,4 @@ Use `Fuzzr.String()`.
 - Throws an `ArgumentOutOfRangeException` when `length` < 0.  
 - The default Fuzzr always generates every char element of the string to be between lower case 'a' and lower case 'z'.  
 - A version exists for all methods mentioned above that takes a `FuzzrOf<char>` as parameter and then this one will be used to build up the resulting string.  
+- The default string generator can be replaced for the current generation run with `Configr.Primitive(...)`.  
