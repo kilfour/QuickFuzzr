@@ -1,7 +1,7 @@
 # TODO's 
 - test depthcontrol many interaction (lists mainly)
 * Generate a valid Heap
-  A heap is a binary tree where every node’s value is less than or equal to the values of its children.
+  A heap is a binary tree where every node's value is less than or equal to the values of its children.
 
 ## DOC
 - configr retry limit doc, use DocExceptions
@@ -24,10 +24,5 @@ per category ? construction problems, value exhausted ...
   * NegativeWeightException
 * OneOf / combinator misuses
   * OneOfEmptyOptionsException
-
-## QuickFuzzr.Evil (namespace for now)
-* Configr.EnableFieldAccess() 
-
-
 
 

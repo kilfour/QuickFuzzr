@@ -136,9 +136,14 @@ public class Genesis : ICreationEngine
     }
 
     private static readonly ConcurrentDictionary<Type, PropertyInfo[]> PropertyCache = new();
+    private static readonly ConcurrentDictionary<Type, FieldInfo[]> FieldCache = new();
 
     private static PropertyInfo[] GetCachedProperties(Type type) =>
         PropertyCache.GetOrAdd(type, t => t.GetProperties(MyBinding.Flags));
+
+    private static FieldInfo[] GetCachedFields(Type type) =>
+        FieldCache.GetOrAdd(type, t => t.GetFields(
+            BindingFlags.Public | BindingFlags.Instance | BindingFlags.FlattenHierarchy));
 
     private void FillProperties(object instance, State state)
     {
@@ -154,6 +159,42 @@ public class Genesis : ICreationEngine
         foreach (var propertyInfo in GetCachedProperties(instanceType))
         {
             HandleProperty(instance, state, propertyInfo);
+        }
+
+        if (state.FieldAccessEnabled)
+        {
+            foreach (var fieldInfo in GetCachedFields(instanceType))
+            {
+                HandleField(instance, state, fieldInfo);
+            }
+        }
+    }
+
+    private void HandleField(object instance, State state, FieldInfo fieldInfo)
+    {
+        if (fieldInfo.IsInitOnly || fieldInfo.IsLiteral) return;
+
+        if (SetPrimitive(instance, fieldInfo, state)) return;
+
+        if (fieldInfo.FieldType.IsEnum)
+        {
+            fieldInfo.SetValue(instance, Fuzzr.GetEnumValue(fieldInfo.FieldType, state));
+            return;
+        }
+
+        if (IsANullableEnum(fieldInfo.FieldType))
+        {
+            SetNullableEnum(state, fieldInfo, instance);
+            return;
+        }
+
+        if (typeof(IEnumerable).IsAssignableFrom(fieldInfo.FieldType))
+            return;
+
+        if (fieldInfo.FieldType.IsClass && fieldInfo.FieldType != typeof(string))
+        {
+            var result = MakeOneOfThese(fieldInfo.FieldType)(state);
+            fieldInfo.SetValue(instance, result.Value);
         }
     }
 
@@ -299,8 +340,19 @@ public class Genesis : ICreationEngine
         return true;
     }
 
+    private static bool SetPrimitive(object target, FieldInfo fieldInfo, State state)
+    {
+        if (!state.PrimitiveFuzzrs.TryGetValue(fieldInfo.FieldType, out FuzzrOf<object>? fuzzr))
+            return false;
+        if (fieldInfo.FieldType == typeof(string) && StringAllowsNull(fieldInfo))
+            fuzzr = fuzzr.NullableRef()!;
+        fieldInfo.SetValue(target, fuzzr(state).Value);
+        return true;
+    }
+
     private static readonly NullabilityInfoContext Nullability = new();
     private static readonly Dictionary<PropertyInfo, bool> StringNullability = new();
+    private static readonly Dictionary<FieldInfo, bool> FieldStringNullability = new();
 
     private static bool StringAllowsNull(PropertyInfo propertyInfo)
     {
@@ -313,6 +365,23 @@ public class Genesis : ICreationEngine
                     var info = Nullability.Create(propertyInfo);
                     allowsNull = info.ReadState == NullabilityState.Nullable;
                     StringNullability[propertyInfo] = allowsNull;
+                }
+            }
+        }
+        return allowsNull;
+    }
+
+    private static bool StringAllowsNull(FieldInfo fieldInfo)
+    {
+        if (!FieldStringNullability.TryGetValue(fieldInfo, out var allowsNull))
+        {
+            lock (FieldStringNullability)
+            {
+                if (!FieldStringNullability.TryGetValue(fieldInfo, out allowsNull))
+                {
+                    var info = Nullability.Create(fieldInfo);
+                    allowsNull = info.ReadState == NullabilityState.Nullable;
+                    FieldStringNullability[fieldInfo] = allowsNull;
                 }
             }
         }
@@ -345,13 +414,16 @@ public class Genesis : ICreationEngine
     }
 
     private static bool IsANullableEnum(PropertyInfo propertyInfo)
+        => IsANullableEnum(propertyInfo.PropertyType);
+
+    private static bool IsANullableEnum(Type type)
     {
-        if (!propertyInfo.PropertyType.IsGenericType)
+        if (!type.IsGenericType)
             return false;
-        var genericType = propertyInfo.PropertyType.GetGenericTypeDefinition();
+        var genericType = type.GetGenericTypeDefinition();
         if (genericType != typeof(Nullable<>))
             return false;
-        var genericArgument = propertyInfo.PropertyType.GetGenericArguments()[0];
+        var genericArgument = type.GetGenericArguments()[0];
         return genericArgument.IsEnum;
     }
 
@@ -366,6 +438,20 @@ public class Genesis : ICreationEngine
             var genericArgument = propertyInfo.PropertyType.GetGenericArguments()[0];
             var value = Fuzzr.GetEnumValue(genericArgument, state);
             SetPropertyValue(propertyInfo, instance, Enum.ToObject(genericArgument, value));
+        }
+    }
+
+    private static void SetNullableEnum(State state, FieldInfo fieldInfo, object instance)
+    {
+        if (state.Random.Next(0, 5) == 0)
+        {
+            fieldInfo.SetValue(instance, null);
+        }
+        else
+        {
+            var genericArgument = fieldInfo.FieldType.GetGenericArguments()[0];
+            var value = Fuzzr.GetEnumValue(genericArgument, state);
+            fieldInfo.SetValue(instance, Enum.ToObject(genericArgument, value));
         }
     }
 

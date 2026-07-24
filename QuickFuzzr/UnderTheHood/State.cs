@@ -23,6 +23,7 @@ public class State
     }
 
     public PropertyAccess PropertyAccess { get; set; } = PropertyAccess.PublicSetters;
+    public bool FieldAccessEnabled { get; set; }
 
     // ---------------------------------------------------------------------
     // Retrying Uniques et al
