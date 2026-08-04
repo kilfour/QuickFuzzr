@@ -88,7 +88,7 @@ public class A_One
 
 
     [Fact]
-    [DocContent("- Field generation is not supported.")]
+    [DocContent("- Field generation is not supported, unless explicitely enabled.")]
     public void FuzzrOne_No_Fields()
     {
         var result = Fuzzr.One<PersonOutInTheFields>().Generate(42);

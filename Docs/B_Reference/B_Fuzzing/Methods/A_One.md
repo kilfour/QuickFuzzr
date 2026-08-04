@@ -21,7 +21,7 @@ Fuzzr.One<Person>();
 - Recursive object creation is off by default.  
  - QuickFuzzr does not automatically detect whether a reference-type property was declared nullable.
   Properties declared like so `public Person? Person { get; set; }` will never have null values, unless configured explicitly.  
-- Field generation is not supported.  
+- Field generation is not supported, unless explicitely enabled.  
 
 **Overloads:**  
 - `Fuzzr.One<T>(Func<T> constructor)`:  

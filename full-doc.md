@@ -929,7 +929,7 @@ Fuzzr.One<Person>();
 - Recursive object creation is off by default.  
  - QuickFuzzr does not automatically detect whether a reference-type property was declared nullable.
   Properties declared like so `public Person? Person { get; set; }` will never have null values, unless configured explicitly.  
-- Field generation is not supported.  
+- Field generation is not supported, unless explicitely enabled.  
 
 **Overloads:**  
 - `Fuzzr.One<T>(Func<T> constructor)`:  
@@ -1266,9 +1266,21 @@ Configr<MultiCtorContainer>.Construct(Fuzzr.Constant(42));
 - `Construct<T1, T2, T3>(FuzzrOf<T1> arg1, FuzzrOf<T2> arg2, FuzzrOf<T3> arg3)`  
 - `Construct<T1, T2, T3, T4>(FuzzrOf<T1> arg1, FuzzrOf<T2> arg2, FuzzrOf<T3> arg3, FuzzrOf<T4> arg4)`  
 - `Construct<T1, T2, T3, T4, T5>(FuzzrOf<T1> arg1, FuzzrOf<T2> arg2, FuzzrOf<T3> arg3, FuzzrOf<T4> arg4, FuzzrOf<T5> arg5)`  
+- `Construct<TArg>(FuzzrOf<TArg> fuzzr, Func<TArg, T> factory)`  
+  Generates one argument value and passes it to a factory. Use a tuple or custom type to express dependent constructor arguments. The Fuzzr and factory remain lazy until an instance of `T` is generated.  
+```csharp
+var arguments =
+    from start in Fuzzr.Constant(new DateOnly(2026, 1, 1))
+    from duration in Fuzzr.Int(1, 30)
+    select (Start: start, End: start.AddDays(duration));
+Configr<DateRange>.Construct(
+    arguments,
+    range => new DateRange(range.Start, range.End));
+```
 
 **Exceptions:**  
-- `ArgumentNullException`: If one of the `TArg` parameters is null.  
+- `ArgumentNullException`: If one of the Fuzzr or factory parameters is `null`.  
+- `FactoryConstructionException`: If the factory returns `null`.  
 - `ConstructorNotFoundException`: If no matching constructor is found on type T.  
 #### Configr&lt;T&gt;AsOneOf
 Configures inheritance resolution for BaseType, 

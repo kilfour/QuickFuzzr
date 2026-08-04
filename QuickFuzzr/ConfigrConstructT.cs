@@ -8,6 +8,19 @@ namespace QuickFuzzr;
 public static partial class Configr<T>
 {
     /// <summary>
+    /// Creates a Fuzzr that configures construction of type T by generating an argument value and passing it to the specified factory.
+    /// Use when constructor arguments depend on one another or when construction requires custom logic that the positional overloads cannot express.
+    /// The argument Fuzzr and factory are evaluated only when an instance of T is generated, not when the configuration is registered.
+    /// </summary>
+    public static FuzzrOf<Intent> Construct<TArg>(FuzzrOf<TArg> fuzzr, Func<TArg, T> factory)
+    {
+        ArgumentNullException.ThrowIfNull(fuzzr);
+        ArgumentNullException.ThrowIfNull(factory);
+        return state => Add(state,
+            s => factory(fuzzr(s).Value)!);
+    }
+
+    /// <summary>
     /// Creates a Fuzzr that configures a single-parameter constructor for type T using the specified parameter fuzzr.
     /// Use for types that require constructor arguments when automatic parameterless construction is not available or desired.
     /// </summary>
