@@ -20,7 +20,7 @@
 * Default primitive fuzzrs now respect replacements configured with
   `Configr.Primitive(...)`.
 
-### 0.2.2: ... (*not yet released*)
+### 0.2.2: Start Me Up (*not yet released*)
 
 * Added `Configr<T>.Construct(FuzzrOf<TArg>, Func<TArg, T>)` for lazily
   constructing objects from composed or dependent constructor arguments.
