@@ -33,6 +33,7 @@
       - [Configr.EnableFieldAccess](B_Reference/D_Configuration/Methods/Q_ConfigrFieldAccess.md)
       - [Configr&lt;T&gt;.Field](B_Reference/D_Configuration/Methods/R_ConfigrFieldT.md)
       - [Configr.Field](B_Reference/D_Configuration/Methods/S_ConfigrField.md)
+      - [Configr.Combine](B_Reference/D_Configuration/Methods/U_ConfigrCombine.md)
     - [Fuzzr Extension Methods](B_Reference/E_ExtensionMethods/FuzzrExtensionMethods.md)
       - [Apply](B_Reference/E_ExtensionMethods/Methods/ExtFuzzrApply.md)
       - [AsObject](B_Reference/E_ExtensionMethods/Methods/ExtFuzzrAsObject.md)

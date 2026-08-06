@@ -24,3 +24,4 @@ select derived types, or wire dynamic behaviors that apply when calling `Fuzzr.O
 | [Configr.EnableFieldAccess](Methods/Q_ConfigrFieldAccess.md)| Enables auto-generation for public mutable fields. |
 | [Configr&lt;T&gt;.Field](Methods/R_ConfigrFieldT.md)| Sets a custom Fuzzr or value for one public field on type T. |
 | [Configr.Field](Methods/S_ConfigrField.md)| Applies a custom Fuzzr or value to matching public fields across all types. |
+| [Configr.Combine](Methods/U_ConfigrCombine.md)| Combines multiple configuration operations into one. |

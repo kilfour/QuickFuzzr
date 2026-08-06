@@ -24,3 +24,5 @@
 
 * Added `Configr<T>.Construct(FuzzrOf<TArg>, Func<TArg, T>)` for lazily
   constructing objects from composed or dependent constructor arguments.
+* Added `Configr.Combine(...)` for applying multiple configuration operations
+  in argument order.
