@@ -1,14 +1,13 @@
-### 0.1.8: You Can't Always Get What You Want
+### 0.2.3: So Long And Thanks For All The FishPeople
 
-* Added `Fuzzr.FromEach`.
 
-### 0.1.9: Mother's Little Helpers
+### 0.2.2: Start Me Up
 
-* Added `.ToList()`.
-* Added `.ToArray()`.
-* Added `Fuzzr.Tuple(...)`.
-* Removed the `Func<T, T>` overload of `.Apply(...)`.  
-  Use LINQ `Select` instead.
+* Added `Configr<T>.Construct(FuzzrOf<TArg>, Func<TArg, T>)` for lazily
+  constructing objects from composed or dependent constructor arguments.
+* Added `Configr.Combine(...)` for applying multiple configuration operations
+  in argument order.
+
 
 ### 0.2.1: Paint It Black
 
@@ -20,9 +19,17 @@
 * Default primitive fuzzrs now respect replacements configured with
   `Configr.Primitive(...)`.
 
-### 0.2.2: Start Me Up
 
-* Added `Configr<T>.Construct(FuzzrOf<TArg>, Func<TArg, T>)` for lazily
-  constructing objects from composed or dependent constructor arguments.
-* Added `Configr.Combine(...)` for applying multiple configuration operations
-  in argument order.
+### 0.1.9: Mother's Little Helpers
+
+* Added `.ToList()`.
+* Added `.ToArray()`.
+* Added `Fuzzr.Tuple(...)`.
+* Removed the `Func<T, T>` overload of `.Apply(...)`.  
+  Use LINQ `Select` instead.
+
+
+### 0.1.8: You Can't Always Get What You Want
+
+* Added `Fuzzr.FromEach`.
+

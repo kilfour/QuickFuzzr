@@ -38,6 +38,7 @@
       - [Apply](B_Reference/E_ExtensionMethods/Methods/ExtFuzzrApply.md)
       - [AsObject](B_Reference/E_ExtensionMethods/Methods/ExtFuzzrAsObject.md)
       - [Many](B_Reference/E_ExtensionMethods/Methods/ExtFuzzrMany.md)
+      - [Mutate](B_Reference/E_ExtensionMethods/Methods/ExtFuzzrMutate.md)
       - [NeverReturnNull](B_Reference/E_ExtensionMethods/Methods/ExtFuzzrNeverReturnNull.md)
       - [Nullable](B_Reference/E_ExtensionMethods/Methods/ExtFuzzrNullable.md)
       - [NullableRef](B_Reference/E_ExtensionMethods/Methods/ExtFuzzrNullableRef.md)
