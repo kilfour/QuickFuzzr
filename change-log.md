@@ -1,5 +1,13 @@
 ### 0.2.3: So Long And Thanks For All The FishPeople
 
+* Added `.Mutate(...)` for choosing and repeating a generator transformation,
+  using `(mutation, times)` or `(mutation, min, max)` tuple arguments.
+  Ranged repetition uses an exclusive upper bound. equal bounds give an exact count.
+* Added string insertion and replacement transformations in `QuickFuzzr.Strings`:
+  `.InsertOneOf(...)`, `.ReplaceOneOf(...).WithOneOf(...)`, and `.ReplaceOneWithOneOf(...)`.
+  Replacement leaves the source unchanged when no candidate matches or the source is empty.
+* Added `CharSet` groups for ASCII digits, letters, alphanumerics, hexadecimal digits,
+  quotation marks, line breaks, and control characters.
 
 ### 0.2.2: Start Me Up
 
@@ -32,4 +40,3 @@
 ### 0.1.8: You Can't Always Get What You Want
 
 * Added `Fuzzr.FromEach`.
-
