@@ -13,11 +13,11 @@ public class Branch : Tree
 ```
 We can generate a forest like so:  
 ```csharp
-    from depth in Configr<Tree>.Depth(2, 5)
-    from inheritance in Configr<Tree>.AsOneOf(typeof(Branch), typeof(Leaf))
-    from terminator in Configr<Tree>.EndOn<Leaf>()
-    from tree in Fuzzr.One<Tree>()
-    select tree;
+from depth in Configr<Tree>.Depth(2, 5)
+from inheritance in Configr<Tree>.AsOneOf(typeof(Branch), typeof(Leaf))
+from terminator in Configr<Tree>.EndOn<Leaf>()
+from tree in Fuzzr.One<Tree>()
+select tree;
 ```
 **Output:**  
 ```text

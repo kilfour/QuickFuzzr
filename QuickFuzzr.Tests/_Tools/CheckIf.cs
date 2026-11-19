@@ -65,7 +65,7 @@ public static class CheckIf
     {
         var check =
             from input in Checkr.Input("Fuzzr", fuzzr)
-            from t in Checkr.Trace("input", () => input.ToString()!)
+            from t in Checkr.Trace("input", a => [input.ToString()!])
             from _ in CombineSpecs(input, labeledChecks) // Move this to QuickCheckr maybe
             select Case.Closed;
         check.Run(numberOfExecutions.ExecutionsPerRun());

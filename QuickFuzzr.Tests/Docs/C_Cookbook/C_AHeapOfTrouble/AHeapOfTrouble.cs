@@ -21,8 +21,7 @@ result a complete binary tree and gives the recursion an explicit stopping
 point.")]
 public class AHeapOfTrouble
 {
-    [CodeSnippet]
-    [CodeRemove("private ")]
+    [CodeExample]
     private static FuzzrOf<HeapNode?> HeapFuzzr(int depth, int minimum)
     {
         if (depth == 0)

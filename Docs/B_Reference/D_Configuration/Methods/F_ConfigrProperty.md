@@ -9,7 +9,7 @@ Configr.Property<TProperty>(Func<PropertyInfo, bool> predicate, FuzzrOf<TPropert
 
 **Usage:**  
 ```csharp
- Configr.Property(a => a.Name == "Id", Fuzzr.Constant(42));
+Configr.Property(a => a.Name == "Id", Fuzzr.Constant(42));
 ```
 
 **Overloads:**  

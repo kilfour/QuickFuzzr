@@ -420,6 +420,7 @@ This record does not have a default constructor, so `Fuzzr.One<PersonRecord>()`
 will throw an exception with the following message if used as is:  
 ```text
 Cannot generate instance of PersonRecord.
+
 Possible solutions:
 - Add a parameterless constructor
 - Register a custom constructor: Configr<PersonRecord>.Construct(...)
@@ -432,6 +433,7 @@ so here are the concrete ones (ignoring the parameterless constructor suggestion
 **Configr.Construct:** Best for reusable configurations.  
 ```csharp
 var vowel = Fuzzr.OneOf('a', 'e', 'o', 'u', 'i');
+
 from cfg in Configr<PersonRecord>.Construct(Fuzzr.String(vowel, 2, 10), Fuzzr.Int())
 from person in Fuzzr.One<PersonRecord>() // <= 'One' now works, thanks to Configr
 select person;
@@ -583,6 +585,7 @@ public class FolderEntry : FileSystemEntry
 {
     public List<FileEntry> Files { get; set; } = [];
     public List<FolderEntry> Folders { get; set; } = [];
+
 }
 ```
 A bit complicated to fuzz, but let's have a go:
@@ -951,7 +954,7 @@ Fuzzr.OneOf(params T[] values)
 
 **Usage:**  
 ```csharp
- Fuzzr.OneOf("a", "b", "c");
+Fuzzr.OneOf("a", "b", "c");
 ```
 - Selection is uniform unless weights are specified (see below).  
 - **null items** are allowed in `params T[] values`.  
@@ -964,7 +967,7 @@ Fuzzr.OneOf(params T[] values)
 - `Fuzzr.OneOf(params (int Weight, T Value)[] weightedValues)`:  
   Selects a value using weighted probability. The higher the weight, the more likely the value is to be chosen.  
 ```csharp
- Fuzzr.OneOf((1, "a"), (2, "b"), (3, "c"));
+Fuzzr.OneOf((1, "a"), (2, "b"), (3, "c"));
 ```
 - `Fuzzr.OneOf(params (int Weight, FuzzrOf<T> fuzzr)[] weightedFuzzrs)`:  
   Like the weighted values overload, but applies weights to Fuzzrs.  
@@ -1207,7 +1210,7 @@ Configr<T>.Property<TProperty>(Func<PropertyInfo, bool> predicate, FuzzrOf<TProp
 
 **Usage:**  
 ```csharp
- Configr<Person>.Property(s => s.Age, Fuzzr.Constant(42));
+Configr<Person>.Property(s => s.Age, Fuzzr.Constant(42));
 ```
 - Derived classes generated also use the custom property.  
 
@@ -1230,7 +1233,7 @@ Configr.Property<TProperty>(Func<PropertyInfo, bool> predicate, FuzzrOf<TPropert
 
 **Usage:**  
 ```csharp
- Configr.Property(a => a.Name == "Id", Fuzzr.Constant(42));
+Configr.Property(a => a.Name == "Id", Fuzzr.Constant(42));
 ```
 
 **Overloads:**  
@@ -1274,6 +1277,7 @@ var arguments =
     from start in Fuzzr.Constant(new DateOnly(2026, 1, 1))
     from duration in Fuzzr.Int(1, 30)
     select (Start: start, End: start.AddDays(duration));
+
 Configr<DateRange>.Construct(
     arguments,
     range => new DateRange(range.Start, range.End));
@@ -1385,13 +1389,15 @@ Configr.RetryLimit(int limit)
 
 **Usage:**  
 ```csharp
- Configr.RetryLimit(256);
+Configr.RetryLimit(256);
 ```
 - Throws when trying to set limit to a value lesser than 1.  
 - Throws when trying to set limit to a value greater than 1024.  
 ```text
 Invalid retry limit value: 1025
+
 Allowed range: 1-1024
+
 Possible solutions:
 - Use a value within the allowed range
 - Check for unintended configuration overrides
@@ -1518,9 +1524,9 @@ Configr.EnableFieldAccess()
 
 **Usage:**  
 ```csharp
-    from _ in Configr.EnableFieldAccess()
-    from person in Fuzzr.One<PersonOutInTheFields>()
-    select person;
+from _ in Configr.EnableFieldAccess()
+from person in Fuzzr.One<PersonOutInTheFields>()
+select person;
 ```
 - Populates public instance fields.  
 - Static, constant, readonly, and non-public fields are not populated.  
@@ -1535,7 +1541,7 @@ Configr<T>.Field<TField>(Expression<Func<T, TField>> expression, FuzzrOf<TField>
 
 **Usage:**  
 ```csharp
- Configr<PersonOutInTheFields>.Field(person => person.Age, Fuzzr.Constant(42));
+Configr<PersonOutInTheFields>.Field(person => person.Age, Fuzzr.Constant(42));
 ```
 
 **Overloads:**  
@@ -1556,7 +1562,7 @@ Configr.Field<TField>(Func<FieldInfo, bool> predicate, FuzzrOf<TField> fuzzr)
 
 **Usage:**  
 ```csharp
- Configr.Field(field => field.Name == "Age", Fuzzr.Constant(42));
+Configr.Field(field => field.Name == "Age", Fuzzr.Constant(42));
 ```
 
 **Overloads:**  
@@ -2029,11 +2035,11 @@ public class Branch : Tree
 ```
 We can generate a forest like so:  
 ```csharp
-    from depth in Configr<Tree>.Depth(2, 5)
-    from inheritance in Configr<Tree>.AsOneOf(typeof(Branch), typeof(Leaf))
-    from terminator in Configr<Tree>.EndOn<Leaf>()
-    from tree in Fuzzr.One<Tree>()
-    select tree;
+from depth in Configr<Tree>.Depth(2, 5)
+from inheritance in Configr<Tree>.AsOneOf(typeof(Branch), typeof(Leaf))
+from terminator in Configr<Tree>.EndOn<Leaf>()
+from tree in Fuzzr.One<Tree>()
+select tree;
 ```
 **Output:**  
 ```text
@@ -2155,13 +2161,17 @@ public record HeapNode(int Value, HeapNode? Left, HeapNode? Right);
 ```
 The recursive generator receives the remaining `depth` and the current `minimum` value:  
 ```csharp
-if (depth == 0)
-    return Fuzzr.Constant<HeapNode?>(null);
-return
-    from value in Fuzzr.Int(minimum, 101)
-    from left in HeapFuzzr(depth - 1, value)
-    from right in HeapFuzzr(depth - 1, value)
-    select new HeapNode(value, left, right);
+private static FuzzrOf<HeapNode?> HeapFuzzr(int depth, int minimum)
+{
+    if (depth == 0)
+        return Fuzzr.Constant<HeapNode?>(null);
+
+    return
+        from value in Fuzzr.Int(minimum, 101)
+        from left in HeapFuzzr(depth - 1, value)
+        from right in HeapFuzzr(depth - 1, value)
+        select new HeapNode(value, left, right);
+}
 ```
 `HeapFuzzr` first chooses the current value, then uses it as the lower bound
 while recursively generating both children. The depth argument makes the
@@ -2169,7 +2179,7 @@ result a complete binary tree and gives the recursion an explicit stopping
 point.  
 Generate heaps of varying depths:  
 ```csharp
-    from depth in Fuzzr.Int(2, 5)
-    from heap in HeapFuzzr(depth, 1)
-    select heap!;
+from depth in Fuzzr.Int(2, 5)
+from heap in HeapFuzzr(depth, 1)
+select heap!;
 ```

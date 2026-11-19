@@ -9,7 +9,7 @@ Configr<T>.Field<TField>(Expression<Func<T, TField>> expression, FuzzrOf<TField>
 
 **Usage:**  
 ```csharp
- Configr<PersonOutInTheFields>.Field(person => person.Age, Fuzzr.Constant(42));
+Configr<PersonOutInTheFields>.Field(person => person.Age, Fuzzr.Constant(42));
 ```
 
 **Overloads:**  

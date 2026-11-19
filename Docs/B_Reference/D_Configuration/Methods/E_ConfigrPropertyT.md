@@ -9,7 +9,7 @@ Configr<T>.Property<TProperty>(Func<PropertyInfo, bool> predicate, FuzzrOf<TProp
 
 **Usage:**  
 ```csharp
- Configr<Person>.Property(s => s.Age, Fuzzr.Constant(42));
+Configr<Person>.Property(s => s.Age, Fuzzr.Constant(42));
 ```
 - Derived classes generated also use the custom property.  
 

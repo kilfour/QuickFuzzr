@@ -27,6 +27,7 @@ var arguments =
     from start in Fuzzr.Constant(new DateOnly(2026, 1, 1))
     from duration in Fuzzr.Int(1, 30)
     select (Start: start, End: start.AddDays(duration));
+
 Configr<DateRange>.Construct(
     arguments,
     range => new DateRange(range.Start, range.End));

@@ -24,8 +24,8 @@
   </ItemGroup>
   
   <ItemGroup>
-    <PackageReference Include="QuickCheckr" Version="0.0.5" />  
-    <PackageReference Include="QuickPulse.Explains" Version="0.3.11" /> 
+    <PackageReference Include="QuickCheckr" Version="0.4.5" />  
+    <PackageReference Include="QuickPulse.Explains" Version="0.3.19" /> 
   </ItemGroup>
 
   <ItemGroup>

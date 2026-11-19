@@ -57,6 +57,7 @@ public class FolderEntry : FileSystemEntry
 {
     public List<FileEntry> Files { get; set; } = [];
     public List<FolderEntry> Folders { get; set; } = [];
+
 }
 ```
 A bit complicated to fuzz, but let's have a go:

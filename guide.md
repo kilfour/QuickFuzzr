@@ -420,6 +420,7 @@ This record does not have a default constructor, so `Fuzzr.One<PersonRecord>()`
 will throw an exception with the following message if used as is:  
 ```text
 Cannot generate instance of PersonRecord.
+
 Possible solutions:
 - Add a parameterless constructor
 - Register a custom constructor: Configr<PersonRecord>.Construct(...)
@@ -432,6 +433,7 @@ so here are the concrete ones (ignoring the parameterless constructor suggestion
 **Configr.Construct:** Best for reusable configurations.  
 ```csharp
 var vowel = Fuzzr.OneOf('a', 'e', 'o', 'u', 'i');
+
 from cfg in Configr<PersonRecord>.Construct(Fuzzr.String(vowel, 2, 10), Fuzzr.Int())
 from person in Fuzzr.One<PersonRecord>() // <= 'One' now works, thanks to Configr
 select person;
@@ -583,6 +585,7 @@ public class FolderEntry : FileSystemEntry
 {
     public List<FileEntry> Files { get; set; } = [];
     public List<FolderEntry> Folders { get; set; } = [];
+
 }
 ```
 A bit complicated to fuzz, but let's have a go:

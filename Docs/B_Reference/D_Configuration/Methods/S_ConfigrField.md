@@ -9,7 +9,7 @@ Configr.Field<TField>(Func<FieldInfo, bool> predicate, FuzzrOf<TField> fuzzr)
 
 **Usage:**  
 ```csharp
- Configr.Field(field => field.Name == "Age", Fuzzr.Constant(42));
+Configr.Field(field => field.Name == "Age", Fuzzr.Constant(42));
 ```
 
 **Overloads:**  

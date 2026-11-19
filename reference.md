@@ -90,7 +90,7 @@ Fuzzr.OneOf(params T[] values)
 
 **Usage:**  
 ```csharp
- Fuzzr.OneOf("a", "b", "c");
+Fuzzr.OneOf("a", "b", "c");
 ```
 - Selection is uniform unless weights are specified (see below).  
 - **null items** are allowed in `params T[] values`.  
@@ -103,7 +103,7 @@ Fuzzr.OneOf(params T[] values)
 - `Fuzzr.OneOf(params (int Weight, T Value)[] weightedValues)`:  
   Selects a value using weighted probability. The higher the weight, the more likely the value is to be chosen.  
 ```csharp
- Fuzzr.OneOf((1, "a"), (2, "b"), (3, "c"));
+Fuzzr.OneOf((1, "a"), (2, "b"), (3, "c"));
 ```
 - `Fuzzr.OneOf(params (int Weight, FuzzrOf<T> fuzzr)[] weightedFuzzrs)`:  
   Like the weighted values overload, but applies weights to Fuzzrs.  
@@ -346,7 +346,7 @@ Configr<T>.Property<TProperty>(Func<PropertyInfo, bool> predicate, FuzzrOf<TProp
 
 **Usage:**  
 ```csharp
- Configr<Person>.Property(s => s.Age, Fuzzr.Constant(42));
+Configr<Person>.Property(s => s.Age, Fuzzr.Constant(42));
 ```
 - Derived classes generated also use the custom property.  
 
@@ -369,7 +369,7 @@ Configr.Property<TProperty>(Func<PropertyInfo, bool> predicate, FuzzrOf<TPropert
 
 **Usage:**  
 ```csharp
- Configr.Property(a => a.Name == "Id", Fuzzr.Constant(42));
+Configr.Property(a => a.Name == "Id", Fuzzr.Constant(42));
 ```
 
 **Overloads:**  
@@ -413,6 +413,7 @@ var arguments =
     from start in Fuzzr.Constant(new DateOnly(2026, 1, 1))
     from duration in Fuzzr.Int(1, 30)
     select (Start: start, End: start.AddDays(duration));
+
 Configr<DateRange>.Construct(
     arguments,
     range => new DateRange(range.Start, range.End));
@@ -524,13 +525,15 @@ Configr.RetryLimit(int limit)
 
 **Usage:**  
 ```csharp
- Configr.RetryLimit(256);
+Configr.RetryLimit(256);
 ```
 - Throws when trying to set limit to a value lesser than 1.  
 - Throws when trying to set limit to a value greater than 1024.  
 ```text
 Invalid retry limit value: 1025
+
 Allowed range: 1-1024
+
 Possible solutions:
 - Use a value within the allowed range
 - Check for unintended configuration overrides
@@ -657,9 +660,9 @@ Configr.EnableFieldAccess()
 
 **Usage:**  
 ```csharp
-    from _ in Configr.EnableFieldAccess()
-    from person in Fuzzr.One<PersonOutInTheFields>()
-    select person;
+from _ in Configr.EnableFieldAccess()
+from person in Fuzzr.One<PersonOutInTheFields>()
+select person;
 ```
 - Populates public instance fields.  
 - Static, constant, readonly, and non-public fields are not populated.  
@@ -674,7 +677,7 @@ Configr<T>.Field<TField>(Expression<Func<T, TField>> expression, FuzzrOf<TField>
 
 **Usage:**  
 ```csharp
- Configr<PersonOutInTheFields>.Field(person => person.Age, Fuzzr.Constant(42));
+Configr<PersonOutInTheFields>.Field(person => person.Age, Fuzzr.Constant(42));
 ```
 
 **Overloads:**  
@@ -695,7 +698,7 @@ Configr.Field<TField>(Func<FieldInfo, bool> predicate, FuzzrOf<TField> fuzzr)
 
 **Usage:**  
 ```csharp
- Configr.Field(field => field.Name == "Age", Fuzzr.Constant(42));
+Configr.Field(field => field.Name == "Age", Fuzzr.Constant(42));
 ```
 
 **Overloads:**  
@@ -821,7 +824,7 @@ Supply mutations as (mutation, times) tuples for fixed repetition or (mutation, 
 return Fuzzr.Constant(10).Mutate((source => source.Select(value => value + 1), 1));
 // Always generates 11: the transformation is applied once.
 ```
-A (mutation, times) tuple repeats that transformation exactly times times. Repetition composes transformations. It does not produce a collection of independently mutated values.  
+A (mutation, times) tuple repeats that transformation exactly times times. Repetition composes transformations; it does not produce a collection of independently mutated values.  
 ```csharp
 return Fuzzr.Constant(10).Mutate(
     (source => source.Select(value => value + 1), 3));

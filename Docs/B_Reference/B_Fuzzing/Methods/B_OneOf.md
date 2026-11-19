@@ -9,7 +9,7 @@ Fuzzr.OneOf(params T[] values)
 
 **Usage:**  
 ```csharp
- Fuzzr.OneOf("a", "b", "c");
+Fuzzr.OneOf("a", "b", "c");
 ```
 - Selection is uniform unless weights are specified (see below).  
 - **null items** are allowed in `params T[] values`.  
@@ -22,7 +22,7 @@ Fuzzr.OneOf(params T[] values)
 - `Fuzzr.OneOf(params (int Weight, T Value)[] weightedValues)`:  
   Selects a value using weighted probability. The higher the weight, the more likely the value is to be chosen.  
 ```csharp
- Fuzzr.OneOf((1, "a"), (2, "b"), (3, "c"));
+Fuzzr.OneOf((1, "a"), (2, "b"), (3, "c"));
 ```
 - `Fuzzr.OneOf(params (int Weight, FuzzrOf<T> fuzzr)[] weightedFuzzrs)`:  
   Like the weighted values overload, but applies weights to Fuzzrs.  

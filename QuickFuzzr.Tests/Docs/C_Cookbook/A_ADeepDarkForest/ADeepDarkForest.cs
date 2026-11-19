@@ -15,7 +15,7 @@ public class ADeepDarkForest
 @"Using `Fuzzr<T>.Depth()` together with the `Fuzzr<T>.AsOneOf(...)` combinator and `Fuzzr<T>.EndOn<TEnd>()`
 allows you to build tree type hierarchies.  
 Given the canonical abstract `Tree`, concrete `Branch` and `Leaf` example model: ")]
-    [DocCodeFile("Forest.cs", "csharp", 2, "QuickFuzzr.Tests\\_Tools\\Models\\")]
+    [DocCodeFile("Forest.cs", "csharp", 2, path: "QuickFuzzr.Tests\\_Tools\\Models\\")]
     [DocContent("We can generate a forest like so:")]
     [DocExample(typeof(ADeepDarkForest), nameof(TreesTest_Fuzzr))]
     [DocOutput]
